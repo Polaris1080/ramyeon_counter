@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
             builder: (context, _) => IconButton(
               icon: const Icon(Icons.search_rounded),
               tooltip: '検索',
-              color: switch (vm.isCatalogMode) {
+              color: switch (vm.isSearchBarVisible) {
                 true => Colors.yellow,
                 false => Theme.of(context).colorScheme.tertiaryContainer,
               },
@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
           // Sort
           MenuAnchor(
             menuChildren: [
-              for (({String data, RamyeonListOrder order}) t in [
+              for (({String data, RamyeonListOrder order}) item in [
                 (data: '名前', order: .normal),
                 (data: '評価', order: .rating),
                 (data: '価格', order: .price),
@@ -57,16 +57,18 @@ class HomePage extends StatelessWidget {
                 (data: '期限', order: .limit),
               ])
                 MenuItemButton(
-                  child: Text(t.data),
-                  onPressed: () => vm.orderBy = t.order,
+                  child: Text(item.data),
+                  onPressed: () => vm.orderBy = item.order,
                 ),
             ],
             builder: (_, MenuController controller, _) {
               return IconButton(
                 icon: const Icon(Icons.list_alt),
                 tooltip: '並替',
-                onPressed: () =>
-                    controller.isOpen ? controller.close() : controller.open(),
+                onPressed: () => switch (controller.isOpen) {
+                  true => controller.close(), // 開いている→閉じる
+                  false => controller.open(), // 閉じている→開く
+                },
               );
             },
           ),
