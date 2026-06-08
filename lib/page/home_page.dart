@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = HomePageViewModel();
-    final TextEditingController searchbarController = TextEditingController();
+    final searchbarController = TextEditingController();
 
     return Scaffold(
       /* AppBar */
@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
               tooltip: '在庫',
               color: switch (vm.isCatalogMode) {
                 true => Colors.yellow,
-                false => Theme.of(context).colorScheme.tertiaryContainer,
+                false => ColorScheme.of(context).tertiaryContainer,
               },
               onPressed: () => vm.isCatalogMode = !vm.isCatalogMode,
             ),
@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
               tooltip: '検索',
               color: switch (vm.isSearchBarVisible) {
                 true => Colors.yellow,
-                false => Theme.of(context).colorScheme.tertiaryContainer,
+                false => ColorScheme.of(context).tertiaryContainer,
               },
               onPressed: () => vm.isSearchBarVisible = !vm.isSearchBarVisible,
             ),
@@ -117,7 +117,7 @@ class HomePage extends StatelessWidget {
                   // Loading...
                   else {
                     return LinearProgressIndicator(
-                      color: Theme.of(context).colorScheme.tertiary,
+                      color: ColorScheme.of(context).tertiary,
                     );
                   }
                 },
