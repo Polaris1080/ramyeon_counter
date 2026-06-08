@@ -1,6 +1,6 @@
 // Package
-import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 // Widget
 import 'package:ramyeon_counter/widget/layered_text.dart';
 // Other
@@ -14,29 +14,30 @@ class HomeAppBar extends CustomAppBarBase {
           listenable: vm,
           builder: (context, _) {
             final windowWidth = MediaQuery.of(context).size.width;
-            return vm.isCatalogMode
-                ? Text(
-                    switch (windowWidth) {
-                      > 270 => '在庫一覧',
-                      _ => '',
-                    },
-                    style: TextStyle(
-                      // [300:20, 330:22, 360:24...]
-                      fontSize: min(max((windowWidth ~/ 30) * 2, 20), 32),
-                    ),
-                    overflow: .visible,
-                  )
-                : LayeredText(
-                    switch (windowWidth) {
-                      > 320 => 'Ramyeon Counter',
-                      > 270 => 'Ramyeon',
-                      _ => '',
-                    },
-                    color: .tertiary,
-                    // [300:16, 315:17, 330:18...]
-                    fontSize: min(max(((windowWidth ~/ 15) - 4), 16), 36),
-                    overflow: .visible,
-                  );
+            return switch (vm.isCatalogMode) {
+              true => Text(
+                switch (windowWidth) {
+                  > 270 => '在庫一覧',
+                  _ => '',
+                },
+                style: TextStyle(
+                  // [300:20, 330:22, 360:24...]
+                  fontSize: (windowWidth ~/ 30).minmax(20, 32).toDouble(),
+                ),
+                overflow: .visible,
+              ),
+              false => LayeredText(
+                switch (windowWidth) {
+                  > 320 => 'Ramyeon Counter',
+                  > 270 => 'Ramyeon',
+                  _ => '',
+                },
+                color: .tertiary,
+                // [300:16, 315:17, 330:18...]
+                fontSize: ((windowWidth ~/ 15) - 4).minmax(16, 36).toDouble(),
+                overflow: .visible,
+              ),
+            };
           },
         ),
         centerTitle: MediaQuery.of(context).size.width >= 360,
