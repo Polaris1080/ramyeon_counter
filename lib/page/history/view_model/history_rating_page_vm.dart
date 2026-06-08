@@ -1,0 +1,83 @@
+import 'history_page_vm_base.dart';
+// Package
+import 'package:darq/darq.dart';
+import 'package:flutter/material.dart';
+// Model
+import 'package:ramyeon_counter/model/rating.dart';
+import 'package:ramyeon_counter/model/repository/rating_repository.dart';
+//  Widget
+import 'package:ramyeon_counter/widget/rating/selecter/rating_range_selecter_vm.dart';
+// Other
+import 'package:ramyeon_counter/utility/extension_methods/em_datetime.dart';
+
+class HistoryRatingPageViewModel extends HistoryPageViewModelBase {
+  HistoryRatingPageViewModel(int? brandId) {
+    final repository = RatingRepository();
+    (brandId != null ? repository.readByBrandId(brandId) : repository.readAll())
+        .then((result) => source = result);
+  }
+
+  /* ViewSource */
+  List<Rating>? get source => _source;
+  List<Rating>? _source; // late initialize
+  set source(List<Rating> value) {
+    if (_source == null) {
+      if (value.isNotEmpty) {
+        _source = _view = value;
+        dateRange = dateRangeDefault = DateTimeRange(
+          start: value.orderBy((x) => x.date).first.date,
+          end: DateTime.now(),
+        );
+        notifyListeners();
+      }
+      // value.isEmpty
+      else {
+        _source = _view = value;
+        notifyListeners();
+      }
+    }
+  }
+
+  /// 表示内容
+  List<Rating>? get view => _view;
+  List<Rating>? _view;
+
+  /* SearchSheet */
+  RatingRangeSelecterViewModel get ratingRange => _ratingRange;
+  final RatingRangeSelecterViewModel _ratingRange = .new();
+
+  /* Command */
+  /// 検索
+  @override
+  void search() {
+    _view = _source!
+        .where((x) => ratingRange.min <= x.rating)
+        .where((x) => x.rating <= ratingRange.max)
+        .where((x) => dateRange.start.isBeforeAndSame(x.date))
+        .where((x) => dateRange.end.isAfterAndSame(x.date))
+        .toList();
+    notifyListeners();
+  }
+
+  /// リセット
+  @override
+  void reset() {
+    _view = _source!;
+    _ratingRange.ratingReset();
+    resetDateRange();
+    notifyListeners();
+  }
+
+  /* Override */
+  @override
+  bool get isSourceEmpty => _source!.isEmpty;
+
+  @override
+  bool get isSourceNotNull => _source != null;
+
+  @override
+  bool get isSourceNull => _source == null;
+
+  @override
+  int get listviewCount => view != null ? view!.length : 0;
+}
