@@ -14,9 +14,6 @@ class HomePage extends StatelessWidget {
     final vm = HomePageViewModel();
     final TextEditingController searchbarController = TextEditingController();
 
-    Color iconColor(bool f) =>
-        f ? Colors.yellow : Theme.of(context).colorScheme.tertiaryContainer;
-
     return Scaffold(
       /* AppBar */
       appBar: HomeAppBar(
@@ -26,26 +23,28 @@ class HomePage extends StatelessWidget {
           // Catalog
           ListenableBuilder(
             listenable: vm,
-            builder: (_, _) {
-              return IconButton(
-                icon: const Icon(Icons.warehouse_rounded),
-                tooltip: '在庫',
-                color: iconColor(vm.isCatalogMode),
-                onPressed: () => vm.isCatalogMode = !vm.isCatalogMode,
-              );
-            },
+            builder: (_, _) => IconButton(
+              icon: const Icon(Icons.warehouse_rounded),
+              tooltip: '在庫',
+              color: switch (vm.isCatalogMode) {
+                true => Colors.yellow,
+                false => Theme.of(context).colorScheme.tertiaryContainer,
+              },
+              onPressed: () => vm.isCatalogMode = !vm.isCatalogMode,
+            ),
           ),
           // Search
           ListenableBuilder(
             listenable: vm,
-            builder: (context, _) {
-              return IconButton(
-                icon: const Icon(Icons.search_rounded),
-                tooltip: '検索',
-                color: iconColor(vm.isSearchBarVisible),
-                onPressed: () => vm.isSearchBarVisible = !vm.isSearchBarVisible,
-              );
-            },
+            builder: (context, _) => IconButton(
+              icon: const Icon(Icons.search_rounded),
+              tooltip: '検索',
+              color: switch (vm.isCatalogMode) {
+                true => Colors.yellow,
+                false => Theme.of(context).colorScheme.tertiaryContainer,
+              },
+              onPressed: () => vm.isSearchBarVisible = !vm.isSearchBarVisible,
+            ),
           ),
           // Sort
           MenuAnchor(
