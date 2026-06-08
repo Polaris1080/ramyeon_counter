@@ -11,8 +11,6 @@ class HomeDrawer extends Drawer {
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextStyle aboutTextStyle = Theme.of(context).textTheme.bodyMedium!;
-    final Color tileHoverColor = colorScheme.tertiaryFixedDim;
-    final Color tileIconColor = colorScheme.onTertiaryFixed;
 
     return Drawer(
       backgroundColor: colorScheme.tertiaryFixed,
@@ -29,37 +27,21 @@ class HomeDrawer extends Drawer {
               fontSize: 40,
             ),
           ),
-          ListTile(
-            hoverColor: tileHoverColor,
-            iconColor: tileIconColor,
-            leading: const Icon(Icons.add),
-            title: const Text('登録'),
-            // TODO:Inline?
-            onTap: () {
-              context.push('/regist');
-            },
-          ),
-          ListTile(
-            hoverColor: tileHoverColor,
-            iconColor: tileIconColor,
-            leading: const Icon(Icons.warehouse),
-            title: const Text('在庫'),
-            onTap: () {
-              context.push('/stock');
-            },
-          ),
-          ListTile(
-            hoverColor: tileHoverColor,
-            iconColor: tileIconColor,
-            leading: const Icon(Icons.list),
-            title: const Text('統計'),
-            onTap: () {
-              context.push('/stat');
-            },
-          ),
+          for (({IconData icon, String title, String location}) item in [
+            (icon: Icons.add, title: '登録', location: '/regist'),
+            (icon: Icons.warehouse, title: '在庫', location: '/stock'),
+            (icon: Icons.list, title: '統計', location: '/stat'),
+          ])
+            ListTile(
+              hoverColor: colorScheme.tertiaryFixedDim,
+              iconColor: colorScheme.onTertiaryFixed,
+              leading: Icon(item.icon),
+              title: Text(item.title),
+              onTap: () => context.push(item.location),
+            ),
           // TODO:remainder About
           AboutListTile(
-            icon: Icon(Icons.info, color: tileIconColor),
+            icon: Icon(Icons.info, color: colorScheme.onTertiaryFixed),
             applicationIcon: const FlutterLogo(),
             applicationName: 'App',
             applicationVersion: 'August 2019',
