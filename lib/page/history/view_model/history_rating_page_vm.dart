@@ -13,8 +13,11 @@ import 'package:ramyeon_counter/utility/extension_methods/em_datetime.dart';
 class HistoryRatingPageViewModel extends HistoryPageViewModelBase {
   HistoryRatingPageViewModel(int? brandId) {
     final repository = RatingRepository();
-    (brandId != null ? repository.readByBrandId(brandId) : repository.readAll())
-        .then((result) => source = result);
+    final query = switch (brandId) {
+      int id => repository.readByBrandId(id),
+      _ => repository.readAll(),
+    };
+    query.then((result) => source = result);
   }
 
   /* ViewSource */

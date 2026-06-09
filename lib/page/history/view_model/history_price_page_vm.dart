@@ -12,8 +12,11 @@ import 'package:ramyeon_counter/utility/extension_methods/em_datetime.dart';
 class HistoryPricePageViewModel extends HistoryPageViewModelBase {
   HistoryPricePageViewModel(int? brandId) {
     final repository = StockRepository();
-    (brandId != null ? repository.readByBrandId(brandId) : repository.readAll())
-        .then((result) => source = result);
+    final query = switch (brandId) {
+      int id => repository.readByBrandId(id),
+      _ => repository.readAll(),
+    };
+    query.then((result) => source = result);
   }
 
   /* ViewSource */

@@ -14,6 +14,6 @@ class RamyeonTagViewer extends StatelessWidget {
       _ => [],
     };
 
-    return Wrap(children: [for (var e in t) Chip(label: Text(e))]);
+    return Wrap(children: [for (var e in ramyeon.tag) Chip(label: Text(e))]);
   }
 }
