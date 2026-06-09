@@ -1,3 +1,4 @@
+import 'package:ramyeon_counter/model/context/ramyeon_list_context.dart';
 import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
 
 import 'home_page_vm.dart';
@@ -82,7 +83,7 @@ class HomePage extends StatelessWidget {
             listenable: vm,
             builder: (context, child) {
               return FutureBuilder(
-                future: RamyeonRepository().readByBrand(vm.searchWord),
+                future: RamyeonListDataContext().readByBrand(vm.searchWord),
                 builder: (context, asyncSnapshot) {
                   if (asyncSnapshot.hasData) {
                     return RamyeonList(
