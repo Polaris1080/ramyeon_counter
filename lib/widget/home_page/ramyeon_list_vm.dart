@@ -1,5 +1,6 @@
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
+import 'package:ramyeon_counter/model/context/tag_data_context.dart';
 import 'package:ramyeon_counter/model/ramyeon.dart';
 import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 import 'package:ramyeon_counter/model/rating.dart';
@@ -57,7 +58,8 @@ class RamyeonTileViewModel extends ChangeNotifier {
       brand = ramyeon!.brand,
       rate = ramyeon!.rating {
     StockRepository().readByBrandId(id).then((s) => {stock = s});
-    //RatingRepository().readByBrandId(id).then((r) => {rating = r});
+
+    TagDataContext().readRanking().then((r) => {});
     notifyListeners();
   }
 }

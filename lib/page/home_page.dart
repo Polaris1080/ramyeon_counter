@@ -1,4 +1,4 @@
-import 'package:ramyeon_counter/model/context/ramyeon_list_context.dart';
+import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
 import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
 
 import 'home_page_vm.dart';
