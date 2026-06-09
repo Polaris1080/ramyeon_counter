@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // Model
 import 'package:ramyeon_counter/model/ramyeon.dart';
+import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 // Page
 import 'package:ramyeon_counter/page/detail/detail_page.dart';
 import 'package:ramyeon_counter/page/history/history_page.dart';
@@ -20,7 +21,7 @@ final goRouter = GoRouter(
       name: 'detail',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
-        child: DetailPage(ramyeon: state.extra as Ramyeon),
+        child: DetailPage(ramyeon: state.extra as RamyeonListData),
       ),
       routes: [
         // 編集

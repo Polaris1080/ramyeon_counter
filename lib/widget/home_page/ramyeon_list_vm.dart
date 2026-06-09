@@ -45,17 +45,17 @@ class RamyeonTileViewModel extends ChangeNotifier {
   double? rate;
   int? price;
 
-  Ramyeon? ramyeon;
+  RamyeonListData? ramyeon;
 
   RamyeonTileViewModel(this.id, this.brand) {
     StockRepository().readByBrandId(id).then((s) => {stock = s});
     RatingRepository().readByBrandId(id).then((r) => {rating = r});
     notifyListeners();
   }
-  RamyeonTileViewModel.fromModel(RamyeonListData ramyeon)
-    : id = ramyeon.id,
-      brand = ramyeon.brand,
-      rate = ramyeon.rating {
+  RamyeonTileViewModel.fromModel(this.ramyeon)
+    : id = ramyeon!.id,
+      brand = ramyeon!.brand,
+      rate = ramyeon!.rating {
     StockRepository().readByBrandId(id).then((s) => {stock = s});
     //RatingRepository().readByBrandId(id).then((r) => {rating = r});
     notifyListeners();

@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/model/ramyeon.dart';
+import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 import 'ramyeon_image_base_vm.dart';
 
 abstract class RamyeonImageBase extends StatelessWidget {
-  RamyeonImageBase(this.vm,Ramyeon? ramyeon, {super.key})
+  RamyeonImageBase(this.vm, RamyeonListData? ramyeon, {super.key})
     : packageColor = ramyeon != null && ramyeon.packageColor != null
           ? Color(ramyeon.packageColor!)
           : null {

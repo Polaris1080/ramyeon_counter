@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ramyeon_counter/model/ramyeon.dart';
+import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 import 'package:ramyeon_counter/page/detail/detail_bottom_appbar.dart';
 import 'package:ramyeon_counter/widget/add_dialog.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
@@ -12,7 +13,7 @@ import 'package:ramyeon_counter/widget/rating/rating_viewer.dart';
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key, required this.ramyeon});
 
-  final Ramyeon ramyeon;
+  final RamyeonListData ramyeon;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,7 @@ class DetailPage extends StatelessWidget {
 class RamyeonDataViewer extends StatelessWidget {
   const RamyeonDataViewer({super.key, required this.ramyeon});
 
-  final Ramyeon ramyeon;
+  final RamyeonListData ramyeon;
 
   @override
   Widget build(BuildContext context) {

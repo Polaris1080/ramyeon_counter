@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/model/ramyeon.dart';
+import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 
 class RamyeonTagViewer extends StatelessWidget {
   const RamyeonTagViewer({super.key, required this.ramyeon});
 
-  final Ramyeon ramyeon;
+  final RamyeonListData ramyeon;
 
   @override
   Widget build(BuildContext context) {

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ramyeon_counter/model/ramyeon.dart';
+import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 import 'package:ramyeon_counter/widget/add_dialog.dart';
 import 'package:ramyeon_counter/widget/eat_sheet.dart';
 
 class DetailBottomAppbar extends StatelessWidget {
   DetailBottomAppbar(this.subject, {super.key});
 
-  final Ramyeon subject;
+  final RamyeonListData subject;
   final choiceChipSelected = ValueNotifier<int>(0);
 
   @override
