@@ -1,9 +1,9 @@
 import '../rating.dart';
-import '../base/model_base.dart';
+import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-class RatingRepository extends RamyeonModelBase {
+class RatingRepository extends RamyeonRepositoryBase {
   @override
   RamyeonDatabaseTable get table => .rating;
 
@@ -26,7 +26,9 @@ class RatingRepository extends RamyeonModelBase {
 
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {
-    db.execute(RamyeonModelBase.sqlCreateTable(table, Rating.tableDefinition));
+    db.execute(
+      RamyeonRepositoryBase.sqlCreateTable(table, Rating.tableDefinition),
+    );
     for (Rating x in [
       .new(id: 0, brandId: 0, rating: 6, date: DateTime(2026, 4, 11)),
       .new(id: 1, brandId: 0, rating: 8, date: DateTime(2026, 4, 12)),
@@ -50,7 +52,7 @@ class TestRatingRepository extends RatingRepository {
   @override
   Future onCreate(Database db) async {
     await db.execute(
-      RamyeonModelBase.sqlCreateTable(table, Rating.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(table, Rating.tableDefinition),
     );
   }
 }

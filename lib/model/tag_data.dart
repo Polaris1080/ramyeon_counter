@@ -1,6 +1,6 @@
-import 'base/i_mapperble.dart';
+import 'base/model_base.dart';
 
-class TagData implements IMapperble {
+class TagData extends VirtualModelBase {
   /// タグ
   final String tag;
 
@@ -23,12 +23,4 @@ class TagData implements IMapperble {
       'count': count,
     };
   }
-
-  @override
-  String toString() =>
-      'TagData{'
-      'tag: $tag, '
-      'rank: $rank'
-      'count: $count'
-      '}';
 }

@@ -1,12 +1,14 @@
-import 'base/i_mapperble.dart';
+import 'base/model_base.dart';
 import 'ramyeon.dart';
 
 /// 在庫（情報）
-class Stock implements IMapperble {
+class Stock extends ModelBase {
   /// [Stock].id
+  /// PrimaryKey (>= 0)
   final int id;
 
   /// [Ramyeon].id
+  /// >= 0 (PrimaryKey)
   final int brandId;
 
   /// 購入日
@@ -16,6 +18,7 @@ class Stock implements IMapperble {
   final DateTime expirationDate;
 
   /// 購入価格
+  /// >= 0
   final int price;
 
   /// 食べた？
@@ -38,7 +41,6 @@ class Stock implements IMapperble {
     if (price < 0) {
       throw RangeError.value(price, 'price', 'price >= 0');
     }
-
     return {
       // INTEGER(int)PrimaryKey
       'id': id >= 0 ? id : null,
@@ -54,17 +56,6 @@ class Stock implements IMapperble {
       'ate': isDB ? (ate ? 1 : 0) : ate,
     };
   }
-
-  @override
-  String toString() =>
-      'Stock{'
-      'id: $id, '
-      'brandId: $brandId, '
-      'purchaseDate: $purchaseDate, '
-      'expirationDate: $expirationDate, '
-      'price: $price, '
-      'ate: $ate'
-      '}';
 
   static List<String> get tableDefinition => [
     'id INTEGER PRIMARY KEY',

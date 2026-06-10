@@ -1,9 +1,9 @@
 import '../barcode.dart';
-import '../base/model_base.dart';
+import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-class BarcodeRepository extends RamyeonModelBase {
+class BarcodeRepository extends RamyeonRepositoryBase {
   @override
   RamyeonDatabaseTable get table => .barcode;
 
@@ -26,7 +26,9 @@ class BarcodeRepository extends RamyeonModelBase {
 
   /// [RamyeonDatabase] onCreate
   void onCreate(Database db) async {
-    db.execute(RamyeonModelBase.sqlCreateTable(table, Barcode.tableDefinition));
+    db.execute(
+      RamyeonRepositoryBase.sqlCreateTable(table, Barcode.tableDefinition),
+    );
     for (Barcode x in [
       // ちょうど手元にあった
       .new(id: 0, brandId: 5, count: 1, jam: 8801073114920),
@@ -49,7 +51,7 @@ class TestBarcodeRepository extends BarcodeRepository {
   @override
   Future onCreate(Database db) async {
     await db.execute(
-      RamyeonModelBase.sqlCreateTable(table, Barcode.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(table, Barcode.tableDefinition),
     );
   }
 }

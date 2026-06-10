@@ -1,9 +1,9 @@
 import '../company.dart';
-import '../base/model_base.dart';
+import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-class CompanyRepository extends RamyeonModelBase {
+class CompanyRepository extends RamyeonRepositoryBase {
   @override
   RamyeonDatabaseTable get table => .company;
 
@@ -35,7 +35,7 @@ class CompanyRepository extends RamyeonModelBase {
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {
     await db.execute(
-      RamyeonModelBase.sqlCreateTable(table, Company.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(table, Company.tableDefinition),
     );
     ['三養', '農心'].asMap().forEach((int i, String v) async {
       db.insert(
@@ -55,7 +55,7 @@ class TestCompanyRepository extends CompanyRepository {
   @override
   Future onCreate(Database db) async {
     await db.execute(
-      RamyeonModelBase.sqlCreateTable(table, Company.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(table, Company.tableDefinition),
     );
   }
 }

@@ -1,14 +1,17 @@
-import 'base/i_mapperble.dart';
+import 'base/model_base.dart';
 import 'ramyeon.dart';
 
-class Rating implements IMapperble {
+class Rating extends ModelBase {
   /// [Rating] id
+  /// PrimaryKey (>= 0)
   final int id;
 
   /// [Ramyeon] id
+  /// >= 0 (PrimaryKey)
   final int brandId;
 
-  /// 評価（1-10）
+  /// 評価
+  /// 1 ~ 10
   final int rating;
 
   /// 評価日
@@ -40,15 +43,6 @@ class Rating implements IMapperble {
       'date': isDB ? date.toString() : date,
     };
   }
-
-  @override
-  String toString() =>
-      'Rating{'
-      'id: $id, '
-      'brandId: $brandId, '
-      'rating: $rating, '
-      'date: $date'
-      '}';
 
   static List<String> get tableDefinition => [
     'id INTEGER PRIMARY KEY',

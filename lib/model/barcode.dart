@@ -1,18 +1,23 @@
-import 'base/i_mapperble.dart';
+import 'base/model_base.dart';
 import 'ramyeon.dart';
+// Extension
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 
-class Barcode implements IMapperble {
+class Barcode extends ModelBase {
   /// [Barcode].id
+  /// PrimaryKey (>= 0)
   final int id;
 
   /// [Ramyeon].id
+  /// >= 0 (PrimaryKey)
   final int brandId;
 
   /// 個数
+  /// >= 1
   final int count;
 
   /// バーコード
+  /// 8桁・13桁
   final int jam;
 
   Barcode({
@@ -44,15 +49,6 @@ class Barcode implements IMapperble {
       'jam': jam,
     };
   }
-
-  @override
-  String toString() =>
-      'Ramyeon{'
-      'id: $id, '
-      'brandId: $brandId, '
-      'count: $count, '
-      'jam: $jam'
-      '}';
 
   static List<String> get tableDefinition => [
     'id INTEGER PRIMARY KEY',

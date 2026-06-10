@@ -1,4 +1,4 @@
-import 'i_mapperble.dart';
+import 'model_base.dart';
 import '../../ramyeon_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';

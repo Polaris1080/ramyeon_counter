@@ -1,8 +1,9 @@
-import 'base/i_mapperble.dart';
+import 'base/model_base.dart';
 import 'ramyeon.dart';
 
-class Company implements IMapperble {
+class Company extends ModelBase {
   /// [Company].id & [Ramyeon].companyId
+  /// PrimaryKey (>= 0)
   final int id;
 
   /// 会社
@@ -17,13 +18,6 @@ class Company implements IMapperble {
     // TEXT(String)
     'company': company,
   };
-
-  @override
-  String toString() =>
-      'Ramyeon{'
-      'id: $id, '
-      'company: $company'
-      '}';
 
   static List<String> get tableDefinition => [
     'id INTEGER PRIMARY KEY',

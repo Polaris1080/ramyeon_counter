@@ -1,7 +1,8 @@
-import 'base/i_mapperble.dart';
+import 'base/model_base.dart';
 import 'company.dart';
+import 'ramyeon.dart';
 
-class RamyeonListData implements IMapperble {
+class RamyeonListData extends VirtualModelBase {
   /// [Ramyeon].id
   final int id;
 
@@ -33,15 +34,6 @@ class RamyeonListData implements IMapperble {
     required this.rating,
   });
 
-  RamyeonListData.toInsert({
-    required this.id,
-    required this.brand,
-    required this.company,
-    required this.tag,
-    this.packageColor,
-  }) : companyId = -1,
-       rating = 0;
-
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     return <String, Object?>{
@@ -57,14 +49,4 @@ class RamyeonListData implements IMapperble {
       'packageColor': packageColor,
     };
   }
-
-  @override
-  String toString() =>
-      'Ramyeon{'
-      'id: $id, '
-      'companyId: $companyId, '
-      'brand: $brand, '
-      'tag: ${tag.join(',')}, '
-      'company: $company'
-      '}';
 }

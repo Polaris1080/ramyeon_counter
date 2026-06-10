@@ -1,9 +1,9 @@
 import '../stock.dart';
-import '../base/model_base.dart';
+import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-class StockRepository extends RamyeonModelBase {
+class StockRepository extends RamyeonRepositoryBase {
   @override
   RamyeonDatabaseTable get table => .stock;
 
@@ -26,7 +26,9 @@ class StockRepository extends RamyeonModelBase {
 
   /// [RamyeonDatabase] onCreate
   void onCreate(Database db) async {
-    db.execute(RamyeonModelBase.sqlCreateTable(table, Stock.tableDefinition));
+    db.execute(
+      RamyeonRepositoryBase.sqlCreateTable(table, Stock.tableDefinition),
+    );
     for (Stock x in [
       .new(
         id: 0,
@@ -82,7 +84,7 @@ class TestStockRepository extends StockRepository {
   @override
   Future onCreate(Database db) async {
     await db.execute(
-      RamyeonModelBase.sqlCreateTable(table, Stock.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(table, Stock.tableDefinition),
     );
   }
 }

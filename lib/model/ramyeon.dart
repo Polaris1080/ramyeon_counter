@@ -1,11 +1,13 @@
-import 'base/i_mapperble.dart';
+import 'base/model_base.dart';
 import 'company.dart';
 
-class Ramyeon implements IMapperble {
+class Ramyeon extends ModelBase {
   /// [Ramyeon].id
+  /// PrimaryKey (>= 0)
   final int id;
 
   /// [Company].id
+  /// >= 0 (PrimaryKey)
   final int companyId;
 
   /// 商品
@@ -39,6 +41,9 @@ class Ramyeon implements IMapperble {
 
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
+    if (companyId < 0) {
+      throw RangeError.value(companyId, 'brandId', 'brandId >= 0');
+    }
     return <String, Object?>{
       // INTEGER(int)PrimaryKey
       'id': id >= 0 ? id : null,
@@ -52,16 +57,6 @@ class Ramyeon implements IMapperble {
       'packageColor': packageColor,
     };
   }
-
-  @override
-  String toString() =>
-      'Ramyeon{'
-      'id: $id, '
-      'companyId: $companyId, '
-      'brand: $brand, '
-      'tag: ${tag.join(',')}, '
-      'company: $company'
-      '}';
 
   static List<String> get tableDefinition => [
     'id INTEGER PRIMARY KEY',
