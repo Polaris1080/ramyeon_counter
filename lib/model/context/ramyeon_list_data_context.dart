@@ -1,5 +1,6 @@
 // Package
 import 'package:darq/darq.dart';
+import 'package:ramyeon_counter/model/repository/stock_repository.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // Model
 import '../ramyeon_list_data.dart';
@@ -49,9 +50,10 @@ extension on List<Map<String, Object?>> {
     late var r = <RamyeonListData>[];
     for (final t in this) {
       final id = t['id'] as int, companyId = t['companyId'] as int;
-      final (rating, company) = await (
+      final (rating, company, stock) = await (
         RatingRepository().readByBrandId(id),
         CompanyRepository().read(companyId),
+        StockRepository().readByBrandId(id),
       ).wait;
       r.add(
         RamyeonListData(
@@ -64,6 +66,7 @@ extension on List<Map<String, Object?>> {
           rating: rating.isNotEmpty
               ? rating.average((r) => r.rating).toDouble()
               : double.nan,
+          count: stock.isNotEmpty ? stock.count((x) => x.ate) : 0,
         ),
       );
     }

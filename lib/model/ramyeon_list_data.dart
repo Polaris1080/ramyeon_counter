@@ -24,6 +24,9 @@ class RamyeonListData extends VirtualModelBase {
   /// 評価（平均）
   final double? rating;
 
+  /// 個数
+  final int count;
+
   RamyeonListData({
     required this.id,
     required this.companyId,
@@ -32,6 +35,7 @@ class RamyeonListData extends VirtualModelBase {
     required this.tag,
     this.packageColor,
     required this.rating,
+    required this.count,
   });
 
   @override
