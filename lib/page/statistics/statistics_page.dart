@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/page/statistics/graph/eat_pie_chart.dart';
-import 'package:ramyeon_counter/page/statistics/graph/rating_scatter_chart.dart';
 import 'package:ramyeon_counter/page/statistics/graph/stock_bar_chart.dart';
 
 class StatisticsPage extends StatelessWidget {
@@ -23,11 +22,8 @@ class StatisticsPage extends StatelessWidget {
             ),
             // ｛stock｝  購入価格：合計 購入価格（ヒストグラム）
             2 => Padding(padding: EdgeInsets.all(8.0), child: StockBarChart()),
-            // ｛rating｝ 評価：ランキング 評価／価格（点グラフ）
-            3 => Padding(
-              padding: EdgeInsets.all(8.0),
-              child: RatingScatterChart(),
-            ),
+            // ｛rating｝ 評価：ランキング
+            3 => Padding(padding: EdgeInsets.all(8.0)),
             _ => Center(
               child: Text('''
           『全体』
@@ -41,7 +37,6 @@ class StatisticsPage extends StatelessWidget {
           購入価格（ヒストグラム）
           ｛rating｝
           評価：ランキング
-          評価／価格（点グラフ）
         '''),
             ),
           };
