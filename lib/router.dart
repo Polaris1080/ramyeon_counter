@@ -8,7 +8,7 @@ import 'package:ramyeon_counter/page/detail/detail_page.dart';
 import 'package:ramyeon_counter/page/history/history_page.dart';
 import 'package:ramyeon_counter/page/home_page.dart';
 import 'package:ramyeon_counter/page/regist/regist_page.dart';
-import 'package:ramyeon_counter/page/stat_page.dart';
+import 'package:ramyeon_counter/page/statistics/statistics_page.dart';
 import 'package:ramyeon_counter/page/stock_page.dart';
 
 final goRouter = GoRouter(
@@ -91,7 +91,7 @@ final goRouter = GoRouter(
       path: '/stat',
       name: 'stat',
       pageBuilder: (context, state) =>
-          MaterialPage(key: state.pageKey, child: const StatPage()),
+          MaterialPage(key: state.pageKey, child: StatisticsPage()),
     ),
     // 在庫（全体）
     GoRoute(
