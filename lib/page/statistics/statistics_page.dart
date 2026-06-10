@@ -34,7 +34,7 @@ class StatisticsPage extends StatelessWidget {
           食べた個数（円グラフ）
           ｛stock｝
           購入価格：合計
-          購入価格（ヒストグラム）
+          購入価格（ヒストグラム）年／月
           ｛rating｝
           評価：ランキング
         '''),
