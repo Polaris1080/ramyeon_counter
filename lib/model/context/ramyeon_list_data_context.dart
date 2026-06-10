@@ -55,23 +55,24 @@ class TestRamyeonListContext extends RamyeonListDataContext {
 
 extension on List<Map<String, Object?>> {
   Future<List<RamyeonListData>> decode() async {
-    List<RamyeonListData> r = [];
+    late var r = <RamyeonListData>[];
     for (final t in this) {
       final id = t['id'] as int, companyId = t['companyId'] as int;
-
-      final rat = await RatingRepository().readByBrandId(id);
-      final rating = rat.isNotEmpty
-          ? rat.average((r) => r.rating).toDouble()
-          : double.nan;
+      final (rating, company) = await (
+        RatingRepository().readByBrandId(id),
+        CompanyRepository().read(companyId),
+      ).wait;
       r.add(
         RamyeonListData(
           id: id,
           companyId: companyId,
           brand: t['brand'] as String,
-          company: (await CompanyRepository().read(companyId))!.company,
+          company: company!.company,
           tag: (t['tag'] as String).split(','),
           packageColor: t['packageColor'] as int?,
-          rating: rating,
+          rating: rating.isNotEmpty
+              ? rating.average((r) => r.rating).toDouble()
+              : double.nan,
         ),
       );
     }

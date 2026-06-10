@@ -1,5 +1,3 @@
-import 'package:darq/darq.dart';
-
 import '../stock.dart';
 import '../base/model_base.dart';
 import '../../ramyeon_database.dart';
