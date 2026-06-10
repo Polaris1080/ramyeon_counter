@@ -1,3 +1,5 @@
+import 'package:darq/darq.dart';
+
 import '../stock.dart';
 import '../base/model_base.dart';
 import '../../ramyeon_database.dart';
@@ -88,25 +90,15 @@ class TestStockRepository extends StockRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Stock> decode() {
-    return [
-      for (final {
-            'id': id as int,
-            'brandId': brandId as int,
-            'purchaseDate': purchaseDate as String,
-            'expirationDate': expirationDate as String,
-            'price': price as int,
-            'ate': ate as int,
-          }
-          in this)
-        Stock(
-          id: id,
-          brandId: brandId,
-          purchaseDate: DateTime.parse(purchaseDate),
-          expirationDate: DateTime.parse(expirationDate),
-          price: price,
-          ate: ate > 0,
-        ),
-    ];
-  }
+  List<Stock> decode() => [
+    for (final t in this)
+      .new(
+        id: t['id'] as int,
+        brandId: t['brandId'] as int,
+        purchaseDate: DateTime.parse(t['purchaseDate'] as String),
+        expirationDate: DateTime.parse(t['expirationDate'] as String),
+        price: t['price'] as int,
+        ate: t['ate'] as int > 0,
+      ),
+  ];
 }

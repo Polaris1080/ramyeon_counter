@@ -37,7 +37,7 @@ class CompanyRepository extends RamyeonModelBase {
     await db.execute(
       RamyeonModelBase.sqlCreateTable(table, Company.tableDefinition),
     );
-    ['三養','農心'].asMap().forEach((int i, String v) async {
+    ['三養', '農心'].asMap().forEach((int i, String v) async {
       db.insert(
         table.name,
         (Company(id: i, company: v).toMap()),
@@ -61,10 +61,8 @@ class TestCompanyRepository extends CompanyRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Company> decode() {
-    return [
-      for (final {'id': id as int, 'company': company as String} in this)
-        Company(id: id, company: company),
-    ];
-  }
+  List<Company> decode() => [
+    for (final t in this)
+      .new(id: t['id'] as int, company: t['company'] as String),
+  ];
 }

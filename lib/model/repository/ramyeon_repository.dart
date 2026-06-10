@@ -103,24 +103,18 @@ class TestRamyeonRepository extends RamyeonRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  Future<List<Ramyeon>> decode() async {
-    return [
-      for (final {
-            'id': id as int,
-            'companyId': companyId as int,
-            'brand': brand as String,
-            'tag': tag as String,
-            'packageColor': packageColor as int?,
-          }
-          in this)
-        Ramyeon(
-          id: id,
-          companyId: companyId,
-          brand: brand,
-          company: (await CompanyRepository().read(companyId))!.company,
-          tag: tag.split(','),
-          packageColor: packageColor,
-        ),
-    ];
-  }
+  // DarQは非同期に非対応
+  Future<List<Ramyeon>> decode() async => [
+    for (final t in this)
+      .new(
+        id: t['id'] as int,
+        companyId: t['companyId'] as int,
+        brand: t['brand'] as String,
+        company: (await CompanyRepository().read(
+          t['companyId'] as int,
+        ))!.company,
+        tag: (t['tag'] as String).split(','),
+        packageColor: t['packageColor'] as int?,
+      ),
+  ];
 }

@@ -55,16 +55,13 @@ class TestBarcodeRepository extends BarcodeRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Barcode> decode() {
-    return [
-      for (final {
-            'id': id as int,
-            'brandId': brandId as int,
-            'count': count as int,
-            'jam': jam as int,
-          }
-          in this)
-        Barcode(id: id, brandId: brandId, count: count, jam: jam),
-    ];
-  }
+  List<Barcode> decode() => [
+    for (final t in this)
+      .new(
+        id: t['id'] as int,
+        brandId: t['brandId'] as int,
+        count: t['count'] as int,
+        jam: t['jam'] as int,
+      ),
+  ];
 }

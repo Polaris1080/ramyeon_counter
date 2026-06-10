@@ -55,52 +55,26 @@ class TestRamyeonListContext extends RamyeonListDataContext {
 
 extension on List<Map<String, Object?>> {
   Future<List<RamyeonListData>> decode() async {
-    List<RamyeonListData> ret = [];
+    List<RamyeonListData> r = [];
+    for (final t in this) {
+      final id = t['id'] as int, companyId = t['companyId'] as int;
 
-    for (final {
-          'id': id as int,
-          'companyId': companyId as int,
-          'brand': brand as String,
-          'tag': tag as String,
-          'packageColor': packageColor as int?,
-        }
-        in this) {
       final rat = await RatingRepository().readByBrandId(id);
       final rating = rat.isNotEmpty
           ? rat.average((r) => r.rating).toDouble()
           : double.nan;
-      ret.add(
+      r.add(
         RamyeonListData(
           id: id,
           companyId: companyId,
-          brand: brand,
+          brand: t['brand'] as String,
           company: (await CompanyRepository().read(companyId))!.company,
-          tag: tag.split(','),
-          packageColor: packageColor,
+          tag: (t['tag'] as String).split(','),
+          packageColor: t['packageColor'] as int?,
           rating: rating,
         ),
       );
     }
-
-    return ret;
-    [
-      for (final {
-            'id': id as int,
-            'companyId': companyId as int,
-            'brand': brand as String,
-            'tag': tag as String,
-            'packageColor': packageColor as int?,
-          }
-          in this)
-        RamyeonListData(
-          id: id,
-          companyId: companyId,
-          brand: brand,
-          company: (await CompanyRepository().read(companyId))!.company,
-          tag: tag.split(','),
-          packageColor: packageColor,
-          rating: (await RatingRepository().readByBrandId(id)).average((r) => r.rating).toDouble(),
-        ),
-    ];
+    return r;
   }
 }
