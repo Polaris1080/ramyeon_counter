@@ -1,7 +1,9 @@
-import 'model_base.dart';
-import '../../ramyeon_database.dart';
+// Package
 import 'package:flutter/foundation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+// Other
+import 'model_base.dart';
+import '../../ramyeon_database.dart';
 
 abstract class ContextBase {
   @protected
@@ -23,9 +25,6 @@ abstract class ContextBase {
     Database db,
     String table,
   ) async => await db.query(table);
-
-  static String sqlCreateTable(String table, List<String> tableDefinition) =>
-      'CREATE TABLE $table(${tableDefinition.join(', ')})';
 }
 
 abstract class RamyeonContextBase extends ContextBase {
@@ -33,37 +32,37 @@ abstract class RamyeonContextBase extends ContextBase {
 
   abstract final RamyeonDatabaseTable table;
 
-  // @protected
-  // Future<int> insertBase(
-  //   IMapperble value, {
-  //   String? nullColumnHack,
-  //   ConflictAlgorithm? conflictAlgorithm,
-  // }) async => await ContextBase.insert(
-  //   await db,
-  //   table.name,
-  //   value.toMap(isDB: true),
-  //   nullColumnHack: nullColumnHack,
-  //   conflictAlgorithm: conflictAlgorithm,
-  // );
+  @protected
+  Future<int> insertBase(
+    ModelBase value, {
+    String? nullColumnHack,
+    ConflictAlgorithm? conflictAlgorithm,
+  }) async => await ContextBase.insert(
+    await db,
+    table.name,
+    value.toMap(isDB: true),
+    nullColumnHack: nullColumnHack,
+    conflictAlgorithm: conflictAlgorithm,
+  );
 
-  // @protected
-  // Future<List<Map<String, Object?>>> readAllBase() async =>
-  //     await ContextBase.readAll(await db, table.name);
+  @protected
+  Future<List<Map<String, Object?>>> readAllBase() async =>
+      await ContextBase.readAll(await db, table.name);
 
-  // @protected
-  // Future<int> updateBase(
-  //   IMapperble value, {
-  //   String? where,
-  //   List<Object?>? whereArgs,
-  //   ConflictAlgorithm? conflictAlgorithm,
-  // }) async => await (await db).update(
-  //   table.name,
-  //   value.toMap(),
-  //   where: where,
-  //   whereArgs: whereArgs,
-  // );
+  @protected
+  Future<int> updateBase(
+    ModelBase value, {
+    String? where,
+    List<Object?>? whereArgs,
+    ConflictAlgorithm? conflictAlgorithm,
+  }) async => await (await db).update(
+    table.name,
+    value.toMap(),
+    where: where,
+    whereArgs: whereArgs,
+  );
 
-  // @protected
-  // Future<int> deleteBase({String? where, List<Object?>? whereArgs}) async =>
-  //     await (await db).delete(table.name, where: where, whereArgs: whereArgs);
+  @protected
+  Future<int> deleteBase({String? where, List<Object?>? whereArgs}) async =>
+      await (await db).delete(table.name, where: where, whereArgs: whereArgs);
 }

@@ -1,13 +1,12 @@
+// Package
 import 'package:darq/darq.dart';
-import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
-import 'package:ramyeon_counter/model/repository/rating_repository.dart';
-
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+// Model
+import '../ramyeon_list_data.dart';
 import '../base/context_base.dart';
 import '../repository/company_repository.dart';
-import '../ramyeon.dart';
-import '../base/repository_base.dart';
+import '../repository/rating_repository.dart';
 import '../../ramyeon_database.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class RamyeonListDataContext extends RamyeonContextBase {
   @override
@@ -43,14 +42,6 @@ class RamyeonListDataContext extends RamyeonContextBase {
 class TestRamyeonListContext extends RamyeonListDataContext {
   @override
   Future<Database> get db => TestRamyeonDatabase().open();
-
-  /// [TestRamyeonDatabase] onCreate
-  @override
-  Future onCreate(Database db) async {
-    await db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Ramyeon.tableDefinition),
-    );
-  }
 }
 
 extension on List<Map<String, Object?>> {

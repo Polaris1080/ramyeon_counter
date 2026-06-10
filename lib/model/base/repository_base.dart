@@ -1,7 +1,9 @@
-import 'model_base.dart';
-import '../../ramyeon_database.dart';
+// Package
 import 'package:flutter/foundation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+// Other
+import 'model_base.dart';
+import '../../ramyeon_database.dart';
 
 abstract class RepositoryBase {
   @protected

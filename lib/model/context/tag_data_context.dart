@@ -1,11 +1,9 @@
 // Package
 import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-
-import 'package:ramyeon_counter/model/tag_data.dart';
+// Model
+import '../tag_data.dart';
 import '../base/context_base.dart';
-import '../ramyeon.dart';
-import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
 
 class TagDataContext extends RamyeonContextBase {
@@ -83,12 +81,4 @@ class TagDataContext extends RamyeonContextBase {
 class TestTagDataContext extends TagDataContext {
   @override
   Future<Database> get db => TestRamyeonDatabase().open();
-
-  /// [TestRamyeonDatabase] onCreate
-  @override
-  Future onCreate(Database db) async {
-    await db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Ramyeon.tableDefinition),
-    );
-  }
 }
