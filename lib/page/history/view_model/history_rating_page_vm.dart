@@ -1,4 +1,7 @@
+// Base
 import 'history_page_vm_base.dart';
+// Extention
+import 'package:ramyeon_counter/utility/extension_methods/em_datetime.dart';
 // Package
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +10,6 @@ import 'package:ramyeon_counter/model/rating.dart';
 import 'package:ramyeon_counter/model/repository/rating_repository.dart';
 //  Widget
 import 'package:ramyeon_counter/widget/rating/selecter/rating_range_selecter_vm.dart';
-// Other
-import 'package:ramyeon_counter/utility/extension_methods/em_datetime.dart';
 
 class HistoryRatingPageViewModel extends HistoryPageViewModelBase {
   HistoryRatingPageViewModel(int? brandId) {

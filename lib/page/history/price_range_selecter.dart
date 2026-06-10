@@ -1,6 +1,7 @@
-import 'view_model/price_range_selecter_vm.dart';
 // Package
 import 'package:flutter/material.dart';
+// ViewModel
+import 'view_model/price_range_selecter_vm.dart';
 
 class PriceRangeSelecter extends StatelessWidget {
   const PriceRangeSelecter(this.vm, {super.key});

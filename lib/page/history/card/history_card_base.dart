@@ -63,6 +63,7 @@ abstract class HistoryCardBase extends Card {
          ),
        );
 
+  /// 内容
   static ExcludeSemantics _leading(
     BuildContext context,
     int digit,
