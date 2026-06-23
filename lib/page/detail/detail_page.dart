@@ -82,7 +82,7 @@ class DetailPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: DetailBottomAppbar(ramyeon),
+      bottomNavigationBar: DetailBottomAppbar(ramyeon, ramyeonId: ramyeon.id),
     );
   }
 }

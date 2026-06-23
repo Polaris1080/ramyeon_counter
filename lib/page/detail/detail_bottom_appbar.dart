@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ramyeon_counter/model/ramyeon.dart';
 import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
+import 'package:ramyeon_counter/model/repository/rating_repository.dart';
+import 'package:ramyeon_counter/model/repository/stock_repository.dart';
 import 'package:ramyeon_counter/widget/add_dialog.dart';
 import 'package:ramyeon_counter/widget/eat_sheet.dart';
 
 class DetailBottomAppbar extends StatelessWidget {
-  DetailBottomAppbar(this.subject, {super.key});
+  DetailBottomAppbar(this.subject, {super.key, required this.ramyeonId});
 
   final RamyeonListData subject;
+  final int ramyeonId;
   final choiceChipSelected = ValueNotifier<int>(0);
 
   @override
@@ -59,29 +62,45 @@ class DetailBottomAppbar extends StatelessWidget {
                 child: Row(
                   spacing: 10,
                   children: [
-                    ActionChip(
-                      avatar: Icon(Icons.star),
-                      label: const Text('評価'),
-                      onPressed: () {
-                        context.push(
-                          '/detail/rating/${subject.id}',
-                          extra: subject.packageColor != null
-                              ? Color(subject.packageColor!)
-                              : null,
-                        );
-                      },
+                    /* History_Rating */
+                    FutureBuilder(
+                      future: RatingRepository().countByBrandId(ramyeonId),
+                      builder: (context, snapshot) => ActionChip(
+                        avatar: const Icon(Icons.star),
+                        label: const Text('評価'),
+                        onPressed: switch (snapshot.data) {
+                          int count when count > 0 => () {
+                            context.push(
+                              '/detail/rating/$ramyeonId',
+                              extra: subject.packageColor != null
+                                  ? Color(subject.packageColor!)
+                                  : null,
+                            );
+                          },
+                          _ => null,
+                        },
+                      ),
+                      initialData: 0,
                     ),
-                    ActionChip(
-                      avatar: Icon(Icons.currency_yen),
-                      label: const Text('価格'),
-                      onPressed: () {
-                        context.push(
-                          '/detail/price/${subject.id}',
-                          extra: subject.packageColor != null
-                              ? Color(subject.packageColor!)
-                              : null,
-                        );
-                      },
+                    /* History_Price */
+                    FutureBuilder(
+                      future: StockRepository().countByBrandId(ramyeonId),
+                      builder: (context, snapshot) => ActionChip(
+                        avatar: const Icon(Icons.currency_yen),
+                        label: const Text('価格'),
+                        onPressed: switch (snapshot.data) {
+                          int count when count > 0 => () {
+                            context.push(
+                              '/detail/price/$ramyeonId',
+                              extra: subject.packageColor != null
+                                  ? Color(subject.packageColor!)
+                                  : null,
+                            );
+                          },
+                          _ => null,
+                        },
+                      ),
+                      initialData: 0,
                     ),
                     ActionChip(
                       avatar: Icon(Icons.favorite),

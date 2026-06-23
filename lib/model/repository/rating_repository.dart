@@ -1,3 +1,5 @@
+import 'package:darq/darq.dart';
+
 import '../rating.dart';
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
@@ -23,6 +25,14 @@ class RatingRepository extends RamyeonRepositoryBase {
 
   Future<int> delete(int id) async =>
       await deleteBase(where: 'id = ?', whereArgs: [id]);
+
+  Future<int> countByBrandId(int brandId) async {
+    const count = 'count';
+    return (await (await db).rawQuery(
+      'SELECT COUNT(*) as $count FROM ${table.name} WHERE brandId = ?',
+      [brandId],
+    )).select((s, _) => s[count] as int).first;
+  }
 
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {
