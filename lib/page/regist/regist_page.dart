@@ -1,13 +1,17 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
+// Extention
+import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
+// Model
 import 'package:ramyeon_counter/model/company.dart';
 import 'package:ramyeon_counter/model/repository/company_repository.dart';
 import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
+// Package
+import 'dart:math';
+import 'package:flutter/material.dart';
+// ViewModel
 import 'package:ramyeon_counter/page/regist/view_model/regist_page_vm.dart';
-import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
-import 'package:ramyeon_counter/widget/custom_app_bar.dart';
+// Widget
 import 'package:ramyeon_counter/page/regist/barcode_register.dart';
+import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 import 'package:ramyeon_counter/widget/detail_regist_page/tag/tag_register.dart';
 import 'package:ramyeon_counter/widget/ramyeon_image/ramyeon_image_register.dart';
 import 'package:ramyeon_counter/widget/ramyeon_image/ramyeon_image_register_vm.dart';
@@ -62,8 +66,10 @@ class RegistPage extends StatelessWidget {
                       tag: [],
                     ),
                   );
-                  // return [HomePage]
-                  Navigator.of(context).pop();
+                  if (context.mounted) {
+                    // return [HomePage]
+                    Navigator.of(context).pop();
+                  }
                 }
               },
             ),
@@ -137,7 +143,7 @@ class RegistPage extends StatelessWidget {
                   child: RamyeonTagRegister(vm),
                 ),
               ),
-              /* Barcode */
+              /* 3rd Row(Barcode) */
               Container(
                 color: ColorScheme.of(context).primaryFixed,
                 child: Padding(
@@ -145,14 +151,10 @@ class RegistPage extends StatelessWidget {
                   child: BarcodeRegister(vm.barcodeRegister),
                 ),
               ),
-              /* 4th Row(Empty) */
-              Container(
-                color: ColorScheme.of(context).primaryFixedDim,
-                child: SizedBox(),
-              ),
             ],
           ),
         ),
+        backgroundColor: ColorScheme.of(context).primaryFixedDim,
         //,
       ),
     );
