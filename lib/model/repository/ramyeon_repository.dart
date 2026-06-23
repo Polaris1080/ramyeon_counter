@@ -1,3 +1,5 @@
+import 'package:darq/darq.dart';
+
 import 'company_repository.dart';
 import '../ramyeon.dart';
 import '../base/repository_base.dart';
@@ -17,6 +19,16 @@ class RamyeonRepository extends RamyeonRepositoryBase {
     where: 'id = ?',
     whereArgs: [id],
   )).decode()).first;
+
+  Future<List<String>?> readTag(int id) async {
+    const tag = 'tag';
+    return ((await (await db).query(
+      table.name,
+      columns: [tag],
+      where: 'id = ?',
+      whereArgs: [id],
+    )).select((s, _) => (s[tag] as String).split(','))).firstOrNull;
+  }
 
   Future<List<Ramyeon>> readByBrand(String brand) async =>
       (await (await db).query(
