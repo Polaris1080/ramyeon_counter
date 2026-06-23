@@ -2,23 +2,22 @@
 import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
 // Package
 import 'package:flutter/material.dart';
-import 'package:nil/nil.dart';
 
 class RamyeonTagViewer extends StatelessWidget {
-  const RamyeonTagViewer({super.key, required this.id});
+  const RamyeonTagViewer({super.key, required this.ramyeonId});
 
-  final int id;
+  final int ramyeonId;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: RamyeonRepository().readTag(id),
+      future: RamyeonRepository().readTag(ramyeonId),
       builder: (_, snapshot) {
         return switch (snapshot.data) {
           List<String> tags => Wrap(
             children: [for (var tag in tags) Chip(label: Text(tag))],
           ),
-          _ => nil,
+          _ => const SizedBox(),
         };
       },
       initialData: null,

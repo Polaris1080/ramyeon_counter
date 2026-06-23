@@ -77,7 +77,7 @@ class DetailPage extends StatelessWidget {
                 ),
               ],
             ),
-            RamyeonTagViewer(id: ramyeon.id),
+            RamyeonTagViewer(ramyeonId: ramyeon.id),
             Spacer(),
           ],
         ),
