@@ -1,7 +1,4 @@
-import 'package:darq/darq.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
+part of '../statistics_page.dart';
 
 class EatPieChart extends StatelessWidget {
   const EatPieChart({super.key});

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:nil/nil.dart';
-import 'package:ramyeon_counter/model/context/statistics/ranking_rating_context.dart';
-import 'package:ramyeon_counter/page/statistics/graph/eat_pie_chart.dart';
-import 'package:ramyeon_counter/page/statistics/graph/stock_bar_chart.dart';
+import 'package:ramyeon_counter/page/statistics/statistics_page_vm.dart';
+import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:ramyeon_counter/model/context/stock_chart_data_context.dart';
+import 'package:darq/darq.dart';
+import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
+part 'sub_page/eat_pie_chart.dart';
+part 'sub_page/stock_bar_chart.dart';
+part 'sub_page/ranking_rating_sub_page.dart';
 
 class StatisticsPage extends StatelessWidget {
   StatisticsPage({super.key});
+
+  final StatisticsPageViewModel vm = .new();
 
   final ValueNotifier<int> counter = ValueNotifier<int>(0);
 
@@ -23,16 +31,26 @@ class StatisticsPage extends StatelessWidget {
               child: EatPieChart(),
             ),
             // ｛stock｝  購入価格：合計 購入価格（ヒストグラム）
-            2 => Padding(padding: EdgeInsets.all(8.0), child: StockBarChart()),
+            2 => Padding(padding: EdgeInsets.all(8.0), child: _StockBarChart()),
             // ｛rating｝ 評価：ランキング
             3 => Padding(
               padding: EdgeInsets.all(8.0),
-              child: FutureBuilder(future: RankingRatingContext().read(),
-               builder:(context, snapshot) => switch (snapshot.data) {
-                  Map<String, double> m => nil,
-                 _ => nil,
-               },
-               ),
+              child: FutureBuilder(
+                future: vm.rankingRatingData,
+                builder: (context, snapshot) => switch (snapshot.data) {
+                  Map<String, double> m => RankingRatingSubPage(),
+                  _ => FutureBuilder(
+                    future: Future.delayed(const Duration(milliseconds: 100)),
+                    builder: (_, ss) {
+                      if (ss.connectionState == ConnectionState.done) {
+                        return LoadingProgressIndicator.normal(context);
+                      } else {
+                        return nil;
+                      }
+                    },
+                  ),
+                },
+              ),
             ),
             _ => Center(
               child: Text('''
@@ -84,7 +102,7 @@ class StatisticsPage extends StatelessWidget {
                   label: Text('2'),
                   child: Icon(Icons.messenger_sharp),
                 ),
-                label: 'Rating',
+                label: '評価',
               ),
             ],
           );

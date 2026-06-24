@@ -8,7 +8,7 @@ import 'package:ramyeon_counter/model/base/context_base.dart';
 class RankingRatingContext extends RamyeonContextBase {
   @override
   RamyeonDatabaseTable get table => .rating;
-  RamyeonDatabaseTable get subTable => .rating;
+  RamyeonDatabaseTable get subTable => .ramyeon;
 
   Future<Map<String, double>> read({int? year}) async =>
       (await (await db).rawQuery(

@@ -1,9 +1,7 @@
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/model/context/stock_chart_data_context.dart';
+part of '../statistics_page.dart';
 
-class StockBarChart extends StatelessWidget {
-  const StockBarChart({super.key});
+class _StockBarChart extends StatelessWidget {
+  const _StockBarChart();
 
   @override
   Widget build(BuildContext context) {
