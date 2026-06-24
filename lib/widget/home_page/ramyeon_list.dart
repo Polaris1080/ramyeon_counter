@@ -92,7 +92,12 @@ class RamyeonList extends StatelessWidget {
                             maxLines: 1,
                           ),
                           onTap: () => {
-                            context.push('/detail', extra: tileVM.ramyeon!),
+                            context.push(
+                              '/detail/${tileVM.id}',
+                              extra: tileVM.ramyeon!.packageColor != null
+                                  ? Color(tileVM.ramyeon!.packageColor!)
+                                  : null,
+                            ),
                           },
                         );
                 },

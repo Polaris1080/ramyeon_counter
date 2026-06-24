@@ -17,11 +17,14 @@ final goRouter = GoRouter(
     GoRoute(path: '/', name: 'index', builder: (context, state) => HomePage()),
     // 詳細
     GoRoute(
-      path: '/detail',
+      path: '/detail/:packageId',
       name: 'detail',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
-        child: DetailPage(ramyeon: state.extra as RamyeonListData),
+        child: DetailPage(
+          ramyeonId: int.parse(state.pathParameters['packageId']!),
+          packageColor: state.extra as Color?,
+        ),
       ),
       routes: [
         // 編集

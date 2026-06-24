@@ -8,8 +8,11 @@ import 'ramyeon_image_base.dart';
 import 'ramyeon_image_viewer_vm.dart';
 
 class RamyeonImageViewer extends RamyeonImageBase {
-  RamyeonImageViewer({super.key, required RamyeonListData ramyeon})
-    : super(RamyeonImageViewerViewModel(), ramyeon);
+  RamyeonImageViewer({
+    super.key,
+    required Color? packageColor,
+    required int ramyeonId,
+  }) : super(RamyeonImageViewerViewModel(), packageColor, ramyeonId);
 
   @override
   Widget build(BuildContext context) {

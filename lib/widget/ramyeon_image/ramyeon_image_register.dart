@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ramyeon_counter/model/ramyeon.dart';
+import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 
 import 'ramyeon_image_base.dart';
 import 'ramyeon_image_register_vm.dart';
@@ -12,7 +13,8 @@ import 'package:path_provider/path_provider.dart';
 class RamyeonImageRegister extends RamyeonImageBase {
   RamyeonImageRegister(
     RamyeonImageRegisterViewModel super.vm,
-    super.ramyeon, {
+    super.ramyeon,
+    super.ramyeonId, {
     super.key,
   });
 

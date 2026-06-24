@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/widget/rating/rating_viewer.dart';
 
 class RamyeonDataViewer extends StatelessWidget {
-  const RamyeonDataViewer({super.key, required this.ramyeon});
+  const RamyeonDataViewer({super.key, required this.ramyeonId});
 
-  final RamyeonListData ramyeon;
+  final int ramyeonId;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class RamyeonDataViewer extends StatelessWidget {
       mainAxisSize: .min,
       spacing: 8,
       children: [
-        Text(ramyeon.brand),
+        Text("ramyeon.brand"),
         RatingViewer(1),
         Text('価格133円'),
         Text('期間2025/4/31-2026/4/31'),

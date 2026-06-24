@@ -11,9 +11,10 @@ import 'package:ramyeon_counter/widget/detail_regist_page/tag/tag_viewer.dart';
 import 'package:ramyeon_counter/widget/ramyeon_image/ramyeon_image_viewer.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({super.key, required this.ramyeon});
+  const DetailPage({super.key, required this.ramyeonId, this.packageColor});
 
-  final RamyeonListData ramyeon;
+  final int ramyeonId;
+  final Color? packageColor;
 
   @override
   Widget build(BuildContext context) {
@@ -26,28 +27,23 @@ class DetailPage extends StatelessWidget {
             icon: const Icon(Icons.edit),
             tooltip: '編集',
             onPressed: () {
-              context.push(
-                '/detail/edit/${ramyeon.id}',
-                extra: ramyeon.packageColor != null
-                    ? Color(ramyeon.packageColor!)
-                    : null,
-              );
+              context.push('/detail/edit/$ramyeonId', extra: packageColor);
             },
           ),
         ],
-        overrideColor: ramyeon.packageColor != null
-            ? Color(ramyeon.packageColor!)
-            : null,
+        overrideColor: packageColor,
       ),
       body: Center(
         child: Column(
           children: [
+            /* 1st Row(Image/Data) */
             Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Wrap(
                     children: [
+                      /* 1st Columu(Image) */
                       LayoutBuilder(
                         builder:
                             (BuildContext context, BoxConstraints constraints) {
@@ -60,29 +56,37 @@ class DetailPage extends StatelessWidget {
                                 ),
                                 height:
                                     MediaQuery.of(context).size.width * 0.25,
-                                child: RamyeonImageViewer(ramyeon: ramyeon),
+                                child: RamyeonImageViewer(
+                                  packageColor: packageColor,
+                                  ramyeonId: ramyeonId,
+                                ),
                               );
                             },
                       ),
+                      /* 2nd Columu(Data) */
                       Container(
                         constraints: BoxConstraints(
                           //minWidth: 180,
                           maxWidth: 240,
                         ),
                         //height: 200,
-                        child: RamyeonDataViewer(ramyeon: ramyeon),
+                        child: RamyeonDataViewer(ramyeonId: ramyeonId),
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-            RamyeonTagViewer(ramyeonId: ramyeon.id),
+            /* 2nd Row(Tag) */
+            RamyeonTagViewer(ramyeonId: ramyeonId),
             Spacer(),
           ],
         ),
       ),
-      bottomNavigationBar: DetailBottomAppbar(ramyeon, ramyeonId: ramyeon.id),
+      bottomNavigationBar: DetailBottomAppbar(
+        packageColor,
+        ramyeonId: ramyeonId,
+      ),
     );
   }
 }

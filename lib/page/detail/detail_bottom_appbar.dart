@@ -8,9 +8,9 @@ import 'package:ramyeon_counter/widget/add_dialog.dart';
 import 'package:ramyeon_counter/widget/eat_sheet.dart';
 
 class DetailBottomAppbar extends StatelessWidget {
-  DetailBottomAppbar(this.subject, {super.key, required this.ramyeonId});
+  DetailBottomAppbar(this.packageColor, {super.key, required this.ramyeonId});
 
-  final RamyeonListData subject;
+  final Color? packageColor;
   final int ramyeonId;
   final choiceChipSelected = ValueNotifier<int>(0);
 
@@ -72,9 +72,7 @@ class DetailBottomAppbar extends StatelessWidget {
                           int count when count > 0 => () {
                             context.push(
                               '/detail/rating/$ramyeonId',
-                              extra: subject.packageColor != null
-                                  ? Color(subject.packageColor!)
-                                  : null,
+                              extra: packageColor,
                             );
                           },
                           _ => null,
@@ -92,9 +90,7 @@ class DetailBottomAppbar extends StatelessWidget {
                           int count when count > 0 => () {
                             context.push(
                               '/detail/price/$ramyeonId',
-                              extra: subject.packageColor != null
-                                  ? Color(subject.packageColor!)
-                                  : null,
+                              extra: packageColor,
                             );
                           },
                           _ => null,
