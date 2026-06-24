@@ -6,6 +6,21 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:ramyeon_counter/model/base/context_base.dart';
 
 class StatisticsDataContext extends RamyeonContextBase {
+  Future<Map<int, double>> readStockChartData({int? year}) async {
+    const RamyeonDatabaseTable mainTable = .stock, subTable = .ramyeon;
+    const String keyRow = 'brandId', valueRow = 'amount';
+    return (await (await db).rawQuery(
+      '''
+        select $keyRow, sum(price) as $valueRow from ${mainTable.name}
+        INNER JOIN ${subTable.name} ON ${mainTable.name}.brandId = ${subTable.name}.id
+        ${year != null && year >= 0 ? "WHERE date BETWEEN '$year-01-01' AND '$year-12-31'" : ''}
+        group by $keyRow ORDER BY $valueRow
+      ''',
+    )).toMap(
+      (r) => MapEntry(r[keyRow] as int, (r[valueRow] as int).toDouble()),
+    );
+  }
+
   Future<Map<String, double>> readRankingRatingData({int? year}) async {
     const RamyeonDatabaseTable mainTable = .rating, subTable = .ramyeon;
     const String keyRow = 'brand', valueRow = 'rate';
