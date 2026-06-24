@@ -59,7 +59,7 @@ class RamyeonTileViewModel extends ChangeNotifier {
       rate = ramyeon!.rating {
     StockRepository().readByBrandId(id).then((s) => {stock = s});
 
-    TagDataContext().readRanking().then((r) => {});
+    TagDataContext().readRankingTagData().then((r) => {});
     notifyListeners();
   }
 }

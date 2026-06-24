@@ -21,7 +21,7 @@ abstract class ContextBase {
   );
 
   @protected
-  static Future<List<Map<String, Object?>>> readAll(
+  static Future<List<Map<String, Object?>>> readAllTagData(
     Database db,
     String table,
   ) async => await db.query(table);
@@ -47,7 +47,7 @@ abstract class RamyeonContextBase extends ContextBase {
   @protected
   Future<List<Map<String, Object?>>> readAllBase(
     RamyeonDatabaseTable table,
-  ) async => await ContextBase.readAll(await db, table.name);
+  ) async => await ContextBase.readAllTagData(await db, table.name);
 
   @protected
   Future<int> updateBase(

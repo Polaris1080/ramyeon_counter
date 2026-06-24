@@ -7,10 +7,9 @@ import '../base/context_base.dart';
 import '../../ramyeon_database.dart';
 
 class TagDataContext extends RamyeonContextBase {
-  @override
   RamyeonDatabaseTable get table => .ramyeon;
 
-  Future<List<TagData>> readAll({int? limit}) async {
+  Future<List<TagData>> readAllTagData({int? limit}) async {
     final database = await db;
     final tags = (await database.query(
       table.name,
@@ -43,7 +42,7 @@ class TagDataContext extends RamyeonContextBase {
     return tagData;
   }
 
-  Future<List<TagData>> readRanking({int? limit}) async {
+  Future<List<TagData>> readRankingTagData({int? limit}) async {
     final database = await db;
     final tags = (await database.query(
       table.name,
