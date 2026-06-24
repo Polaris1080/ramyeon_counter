@@ -30,10 +30,9 @@ abstract class ContextBase {
 abstract class RamyeonContextBase extends ContextBase {
   Future<Database> get db => RamyeonDatabase().open();
 
-  abstract final RamyeonDatabaseTable table;
-
   @protected
   Future<int> insertBase(
+    RamyeonDatabaseTable table,
     ModelBase value, {
     String? nullColumnHack,
     ConflictAlgorithm? conflictAlgorithm,
@@ -46,11 +45,13 @@ abstract class RamyeonContextBase extends ContextBase {
   );
 
   @protected
-  Future<List<Map<String, Object?>>> readAllBase() async =>
-      await ContextBase.readAll(await db, table.name);
+  Future<List<Map<String, Object?>>> readAllBase(
+    RamyeonDatabaseTable table,
+  ) async => await ContextBase.readAll(await db, table.name);
 
   @protected
   Future<int> updateBase(
+    RamyeonDatabaseTable table,
     ModelBase value, {
     String? where,
     List<Object?>? whereArgs,
@@ -63,6 +64,10 @@ abstract class RamyeonContextBase extends ContextBase {
   );
 
   @protected
-  Future<int> deleteBase({String? where, List<Object?>? whereArgs}) async =>
+  Future<int> deleteBase(
+    RamyeonDatabaseTable table, {
+    String? where,
+    List<Object?>? whereArgs,
+  }) async =>
       await (await db).delete(table.name, where: where, whereArgs: whereArgs);
 }

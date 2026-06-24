@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nil/nil.dart';
 import 'package:ramyeon_counter/page/statistics/statistics_page_vm.dart';
 import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -88,6 +87,7 @@ class StatisticsPage extends StatelessWidget {
                 ),
                 label: 'Stock',
               ),
+              /* RankingRatingSubPage */
               NavigationDestination(
                 icon: Badge(
                   label: Text('2'),
