@@ -39,16 +39,7 @@ class StatisticsPage extends StatelessWidget {
                 future: vm.rankingRatingData,
                 builder: (context, snapshot) => switch (snapshot.data) {
                   Map<String, double> m => RankingRatingSubPage(),
-                  _ => FutureBuilder(
-                    future: Future.delayed(const Duration(milliseconds: 100)),
-                    builder: (_, ss) {
-                      if (ss.connectionState == ConnectionState.done) {
-                        return LoadingProgressIndicator.normal(context);
-                      } else {
-                        return nil;
-                      }
-                    },
-                  ),
+                  _ => DelayedLoadingProgressIndicator.normal(context),
                 },
               ),
             ),
