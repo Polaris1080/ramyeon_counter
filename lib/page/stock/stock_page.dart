@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ramyeon_counter/page/stock_page_vm.dart';
+import 'package:ramyeon_counter/model/stock.dart';
+import 'package:ramyeon_counter/page/stock/stock_page_vm.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
+part './stock_postit_vm.dart';
+part './stock_postit.dart';
 
 class Stockpage extends StatelessWidget {
   const Stockpage({super.key, this.brandId, this.packageColor});
@@ -26,24 +29,7 @@ class Stockpage extends StatelessWidget {
             return GridView.builder(
               itemCount: viewModel.count,
               itemBuilder: (context, index) {
-                return SizedBox(
-                  height: 50,
-                  child: Container(
-                    color: Colors.blueGrey,
-                    child: Column(
-                      children: [
-                        Text('${viewModel.stock![index].brandId}'),
-                        Text(
-                          '購入日：${DateFormat('yyyy年MM月dd日').format(viewModel.stock![index].purchaseDate)}',
-                        ),
-                        Text(
-                          '賞味期限：${DateFormat('yyyy年MM月dd日').format(viewModel.stock![index].purchaseDate)}',
-                        ),
-                        Text('価格：${viewModel.stock![index].price}円'),
-                      ],
-                    ),
-                  ),
-                );
+                return StockPostit(viewModel: .new(viewModel.stock![index]));
               },
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,

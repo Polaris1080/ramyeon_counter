@@ -9,7 +9,7 @@ import 'package:ramyeon_counter/page/history/history_page.dart';
 import 'package:ramyeon_counter/page/home_page.dart';
 import 'package:ramyeon_counter/page/regist/regist_page.dart';
 import 'package:ramyeon_counter/page/statistics/statistics_page.dart';
-import 'package:ramyeon_counter/page/stock_page.dart';
+import 'package:ramyeon_counter/page/stock/stock_page.dart';
 
 final goRouter = GoRouter(
   initialLocation: '/',
