@@ -13,4 +13,6 @@ class StockPostitViewModel extends ChangeNotifier {
   late final int _brandId;
 
   late Stock stock;
+
+  bool selected = false;
 }

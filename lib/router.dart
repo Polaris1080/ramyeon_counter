@@ -22,12 +22,9 @@ final goRouter = GoRouter(
       pageBuilder: (context, state) {
         final (ramyeonId, packageColor) = state.extra as (int, Color?);
         return MaterialPage(
-        key: state.pageKey,
-        child: DetailPage(
-          ramyeonId: ramyeonId,
-          packageColor: packageColor,
-        ),
-      );
+          key: state.pageKey,
+          child: DetailPage(ramyeonId: ramyeonId, packageColor: packageColor),
+        );
       },
       routes: [
         // 編集
@@ -104,7 +101,7 @@ final goRouter = GoRouter(
       path: '/stock',
       name: 'stock_all',
       pageBuilder: (context, state) =>
-          MaterialPage(key: state.pageKey, child: Stockpage(brandId: null)),
+          MaterialPage(key: state.pageKey, child: StockPage(brandId: null)),
     ),
     // 在庫（個別）
     GoRoute(
@@ -112,7 +109,7 @@ final goRouter = GoRouter(
       name: 'stock',
       pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
-        child: Stockpage(
+        child: StockPage(
           brandId: int.parse(state.pathParameters['brandId']!),
           packageColor: state.extra as Color?,
         ),
