@@ -12,35 +12,32 @@ import 'package:ramyeon_counter/model/repository/rating_repository.dart';
 import 'package:ramyeon_counter/widget/rating/selecter/rating_range_selecter_vm.dart';
 
 class HistoryRatingPageViewModel extends HistoryPageViewModelBase {
-  HistoryRatingPageViewModel(int? brandId) {
-    final repository = RatingRepository();
-    final query = switch (brandId) {
-      int id => repository.readByBrandId(id),
-      _ => repository.readAll(),
-    };
-    query.then((result) => source = result);
-  }
+  HistoryRatingPageViewModel(int? brandId) : _brandId = brandId;
+
+  final int? _brandId;
+  final RatingRepository _repository = .new();
 
   /* ViewSource */
-  List<Rating>? get source => _source;
-  List<Rating>? _source; // late initialize
-  set source(List<Rating> value) {
-    if (_source == null) {
-      if (value.isNotEmpty) {
-        _source = _view = value;
-        dateRange = dateRangeDefault = DateTimeRange(
-          start: value.orderBy((x) => x.date).first.date,
-          end: DateTime.now(),
-        );
+  @override
+  Future loadSource() async => switch (_source) {
+    List<Rating> _ => null,
+    null =>
+      await (switch (_brandId) {
+        int id => _repository.readByBrandId(id),
+        _ => _repository.readAll(),
+      }).then((result) {
+        _source = _view = result;
+        if (result.isNotEmpty) {
+          dateRange = dateRangeDefault = DateTimeRange(
+            start: result.orderBy((x) => x.date).first.date,
+            end: DateTime.now(),
+          );
+        }
         notifyListeners();
-      }
-      // value.isEmpty
-      else {
-        _source = _view = value;
-        notifyListeners();
-      }
-    }
-  }
+        return null;
+      }),
+  };
+  List<Rating>? _source;
 
   /// 表示内容
   List<Rating>? get view => _view;
@@ -74,7 +71,7 @@ class HistoryRatingPageViewModel extends HistoryPageViewModelBase {
 
   /* Override */
   @override
-  bool get isSourceEmpty => _source!.isEmpty;
+  bool get isSourceEmpty => _source != null ? _source!.isEmpty : false;
 
   @override
   bool get isSourceNotNull => _source != null;

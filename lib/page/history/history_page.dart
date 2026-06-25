@@ -88,23 +88,12 @@ abstract class HistoryPageBase extends StatelessWidget {
             ),
           ],
         ),
-        body: ListenableBuilder(
-          listenable: vm,
-          builder: (context, _) {
-            // Loading
-            if (vm.isSourceNull) {
-              return switch (packageColor) {
-                Color c => LoadingProgressIndicator.override(c),
-                null => LoadingProgressIndicator.normal(context),
-              };
-            }
-            // Empty
-            else if (vm.isSourceEmpty) {
-              return _emptyCard(context);
-            }
-            /* ListView */
-            else {
-              return ListenableBuilder(
+        body: FutureBuilder(
+          future: vm.loadSource(),
+          builder: (context, snapshot) => switch (snapshot.connectionState) {
+            .done => switch (vm.isSourceEmpty) {
+              true => _emptyCard(context),
+              false => ListenableBuilder(
                 listenable: vm,
                 builder: (context, _) => ListView.builder(
                   padding: .symmetric(vertical: _cardPadding / 2),
@@ -117,8 +106,12 @@ abstract class HistoryPageBase extends StatelessWidget {
                     child: _historyCard(context, index),
                   ),
                 ),
-              );
-            }
+              ),
+            },
+            _ => switch (packageColor) {
+              Color c => LoadingProgressIndicator.override(c),
+              null => LoadingProgressIndicator.normal(context),
+            },
           },
         ),
         backgroundColor: Color(0xFFBF9767), // Corkboard-color

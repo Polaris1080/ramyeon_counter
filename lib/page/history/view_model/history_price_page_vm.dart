@@ -12,36 +12,33 @@ import 'package:ramyeon_counter/model/repository/stock_repository.dart';
 import 'price_range_selecter_vm.dart';
 
 class HistoryPricePageViewModel extends HistoryPageViewModelBase {
-  HistoryPricePageViewModel(int? brandId) {
-    final repository = StockRepository();
-    final query = switch (brandId) {
-      int id => repository.readByBrandId(id),
-      _ => repository.readAll(),
-    };
-    query.then((result) => source = result);
-  }
+  HistoryPricePageViewModel(int? brandId) : _brandId = brandId;
+
+  final int? _brandId;
+  final StockRepository _repository = .new();
 
   /* ViewSource */
-  List<Stock>? get source => _source;
-  List<Stock>? _source; // late initialize
-  set source(List<Stock> value) {
-    if (_source == null) {
-      if (value.isNotEmpty) {
-        _source = _view = value;
-        dateRange = dateRangeDefault = DateTimeRange(
-          start: value.orderBy((x) => x.purchaseDate).first.purchaseDate,
-          end: DateTime.now(),
-        );
-        _priceRange.maxPrice = value.orderBy((x) => x.price).first.price;
+  @override
+  Future loadSource() async => switch (_source) {
+    List<Stock> _ => null,
+    null =>
+      await (switch (_brandId) {
+        int id => _repository.readByBrandId(id),
+        _ => _repository.readAll(),
+      }).then((result) {
+        _source = _view = result;
+        if (result.isNotEmpty) {
+          dateRange = dateRangeDefault = DateTimeRange(
+            start: result.orderBy((x) => x.purchaseDate).first.purchaseDate,
+            end: DateTime.now(),
+          );
+          _priceRange.maxPrice = result.orderBy((x) => x.price).first.price;
+        }
         notifyListeners();
-      }
-      // value.isEmpty
-      else {
-        _source = _view = value;
-        notifyListeners();
-      }
-    }
-  }
+        return null;
+      }),
+  };
+  List<Stock>? _source;
 
   /// 表示内容
   List<Stock>? get view => _view;
@@ -75,7 +72,7 @@ class HistoryPricePageViewModel extends HistoryPageViewModelBase {
 
   /* Override */
   @override
-  bool get isSourceEmpty => _source!.isEmpty;
+  bool get isSourceEmpty => _source != null ? _source!.isEmpty : false;
 
   @override
   bool get isSourceNotNull => _source != null;

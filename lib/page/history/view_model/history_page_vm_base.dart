@@ -3,6 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 abstract class HistoryPageViewModelBase extends ChangeNotifier {
+  /* ViewSource */
+  Future loadSource();
+
   /* Visible */
   bool get searchButtonVisible => isSourceNotNull && !isSourceEmpty;
 
