@@ -10,29 +10,39 @@ import 'package:ramyeon_counter/page/stock/stock_page.dart';
 class StockPageViewModel extends ChangeNotifier {
   int count = 0;
 
-  Future loading(int? brandId) async {
-    if (stock is List<Stock> &&
-        brand is Map<int, String> &&
-        color is Map<int, int>) {
-      return null;
-    } else {
-      final model1 = StockRepository();
-      final model2 = RamyeonRepository();
-      final (result1, result2) = await (
-        brandId != null ? model1.readByBrandId(brandId) : model1.readAll(),
-        model2.readAll(),
-      ).wait;
-      stock = result1.where((x) => !(x.ate)).toList();
-      count = stock!.length;
-      _brand = result2.toMap((x) => MapEntry(x.id, x.brand));
-      _color = result2.toMap((x) => MapEntry(x.id, x.packageColor));
-      post = stock!.select((s, _) => StockPostitViewModel(s)).toList();
+  StockPageViewModel(this.brandId);
 
-      notifyListeners();
+  final int? brandId;
+
+  List<StockPostitViewModel>? post;
+  Future<List<StockPostitViewModel>?> get postit async {
+    if (post is List<StockPostitViewModel>) {
+      return post;
+    } else {
+      await reload();
+      return post;
     }
   }
 
-  List<StockPostitViewModel>? post;
+  void reset() {
+    post = null;
+    notifyListeners();
+  }
+
+  Future<void> reload() async {
+    final model1 = StockRepository();
+    final model2 = RamyeonRepository();
+    final (result1, result2) = await (
+      brandId != null ? model1.readByBrandId(brandId!) : model1.readAll(),
+      model2.readAll(),
+    ).wait;
+    stock = result1.where((x) => !(x.ate)).toList();
+    count = stock!.length;
+    _brand = result2.toMap((x) => MapEntry(x.id, x.brand));
+    _color = result2.toMap((x) => MapEntry(x.id, x.packageColor));
+    post = stock!.select((s, _) => StockPostitViewModel(s)).toList();
+    notifyListeners();
+  }
 
   List<Stock>? stock;
 
@@ -47,6 +57,12 @@ class StockPageViewModel extends ChangeNotifier {
   bool _isSelectMode = false;
   set isSelectMode(bool value) {
     if (isSelectMode != value) {
+      // true->false
+      if (value == false && post != null) {
+        for (var element in post!) {
+          element.selected = false;
+        }
+      }
       _isSelectMode = value;
       notifyListeners();
     }

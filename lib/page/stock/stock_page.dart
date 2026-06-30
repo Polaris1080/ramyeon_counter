@@ -1,21 +1,28 @@
+// Package
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nil/nil.dart';
+// Model
 import 'package:ramyeon_counter/model/stock.dart';
+import 'package:ramyeon_counter/model/repository/stock_repository.dart';
+// Other
 import 'package:ramyeon_counter/page/stock/stock_page_vm.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
+// Widget
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
+import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
 import 'package:ramyeon_counter/widget/spacing_grid_view/spacing_grid_view.dart';
+// Partial
 part './stock_postit_vm.dart';
 part './stock_postit.dart';
+part 'actions/select_mode_action.dart';
 
 class StockPage extends StatelessWidget {
-  StockPage({super.key, this.brandId, this.packageColor});
+  StockPage({super.key, required int? brandId, this.packageColor})
+    : vm = .new(brandId);
 
-  final int? brandId;
+  final StockPageViewModel vm;
   final Color? packageColor;
-  final vm = StockPageViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -24,69 +31,22 @@ class StockPage extends StatelessWidget {
     Theme(
       data: Theme.of(context).override(packageColor),
       child: Scaffold(
-        appBar: DefaultAppBar(
-          context,
-          '在庫',
-          actions: [
-            // Select
-            ListenableBuilder(
-              listenable: vm,
-              builder: (context, _) => IconButton(
-                icon: switch (vm.isSelectMode) {
-                  true => const Icon(Icons.delete_forever),
-                  false => const Icon(Icons.delete),
+        appBar: DefaultAppBar(context, '在庫', actions: [SelectModeAction(vm)]),
+        body: ListenableBuilder(
+          listenable: vm,
+          builder: (context, _) {
+            return FutureBuilder(
+              future: vm.postit,
+              builder: (context, snapshot) => switch (snapshot.data) {
+                List<StockPostitViewModel> post => SpacingGridView(
+                  viewModel: vm,
+                ),
+                _ => switch (packageColor) {
+                  Color c => DelayedLoadingProgressIndicator.override(c),
+                  _ => DelayedLoadingProgressIndicator.normal(context),
                 },
-                tooltip: '検索',
-                color: switch (vm.isSelectMode) {
-                  true => Colors.yellow,
-                  false => ColorScheme.of(context).tertiaryContainer,
-                },
-                onPressed: () {
-                  // true->false
-                  if (vm.isSelectMode) {
-                    final c = vm.post!.count((c) => c.selected);
-                    if (c > 0) {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text("タイトル"),
-                          content: Text("メッセージ内容"),
-                          actions: [
-                            TextButton(
-                              child: Text("Cancel"),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                            TextButton(
-                              child: Text("OK"),
-                              onPressed: () {
-                                print(
-                                  vm.post!
-                                      .where((c) => c.selected)
-                                      .select((s, _) => s.stock.id),
-                                );
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    vm.isSelectMode = false;
-                  }
-                  // true<-false
-                  else {
-                    vm.isSelectMode = true;
-                  }
-                },
-              ),
-            ),
-          ],
-        ),
-        body: FutureBuilder(
-          future: Future.wait([vm.loading(brandId)]),
-          builder: (context, snapshot) => switch (snapshot.connectionState) {
-            .done => SpacingGridView(viewModel: vm),
-            _ => nil,
+              },
+            );
           },
         ),
       ),

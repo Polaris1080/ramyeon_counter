@@ -26,6 +26,9 @@ class StockRepository extends RamyeonRepositoryBase {
   Future<int> delete(int id) async =>
       await deleteBase(where: 'id = ?', whereArgs: [id]);
 
+  Future<List<int>> deleteMany(List<int> ids) async =>
+      await Future.wait(ids.select((s, _) => delete(s)));
+
   Future<int> countByBrandId(int brandId) async {
     const count = 'count';
     return (await (await db).rawQuery(

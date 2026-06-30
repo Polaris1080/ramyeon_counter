@@ -50,7 +50,7 @@ class DelayedLoadingProgressIndicator extends StatelessWidget {
     future: Future.delayed(Duration(milliseconds: time)),
     builder: (_, snapshot) => switch (snapshot.connectionState) {
       ConnectionState.done => LinearProgressIndicator(color: color),
-      _ => nil,
+      _ => SizedBox(),
     },
   );
 }
