@@ -18,17 +18,16 @@ class SpacingGridView extends StatelessWidget {
       visible: spacing.gridviewVisible,
       child: Padding(
         padding: spacing.gridviewPadding,
-        child: ListenableBuilder(
-          listenable: viewModel,
-          builder: (context, child) {
-            return GridView.builder(
-              itemCount: viewModel.count,
-              itemBuilder: (context, index) {
-                return StockPostit(viewModel: .new(viewModel.stock![index]));
-              },
-              gridDelegate: spacing.gridviewDelegate,
+        child: GridView.builder(
+          itemCount: viewModel.count,
+          itemBuilder: (context, index) {
+            return StockPostit(
+              viewModel: .new(viewModel.stock![index]),
+              brand: viewModel.brand![index]!,
+              color: viewModel.color![index],
             );
           },
+          gridDelegate: spacing.gridviewDelegate,
         ),
       ),
     );

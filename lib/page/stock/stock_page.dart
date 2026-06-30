@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nil/nil.dart';
 import 'package:ramyeon_counter/model/stock.dart';
 import 'package:ramyeon_counter/page/stock/stock_page_vm.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
@@ -17,8 +17,7 @@ class StockPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = StockPageViewModel(brandId);
-
+    final viewModel = StockPageViewModel();
 
     return
     /* Color change */
@@ -26,7 +25,13 @@ class StockPage extends StatelessWidget {
       data: Theme.of(context).override(packageColor),
       child: Scaffold(
         appBar: DefaultAppBar(context, '在庫'),
-        body: SpacingGridView(viewModel: viewModel),
+        body: FutureBuilder(
+          future: Future.wait([viewModel.loading(brandId)]),
+          builder: (context, snapshot) => switch (snapshot.connectionState) {
+            .done => SpacingGridView(viewModel: viewModel),
+            _ => nil,
+          },
+        ),
       ),
     );
   }
