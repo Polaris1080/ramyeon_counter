@@ -12,7 +12,7 @@ class StockPostit extends StatelessWidget {
   final String brand;
   final int? color;
 
-  static const size = 150;
+  static const Size size = .square(150);
 
   @override
   Widget build(BuildContext context) {

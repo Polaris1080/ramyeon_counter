@@ -3,10 +3,14 @@ part of 'spacing_grid_view.dart';
 class SpacingGridViewManager {
   static const _minVerticalSpacing = 10.0, _minHorizontalSpacing = 5.0;
 
-  SpacingGridViewManager(double windowWidth) : _windowWidth = windowWidth {
+  SpacingGridViewManager({
+    required double windowWidth,
+    required Size itemSize
+  }) : _windowWidth = windowWidth,
+       _itemSize= itemSize {
     crossAxisCount = _calculateCrossAxisCount();
     horizontalSpacing =
-        (_windowWidth - crossAxisCount * StockPostit.size) /
+        (_windowWidth - crossAxisCount * _itemSize.width) /
         (crossAxisCount + 1); // 両端＋列間
     verticalSpacing = min(
       // 最低値
@@ -19,12 +23,15 @@ class SpacingGridViewManager {
   /// 画面の横幅
   final double _windowWidth;
 
+  /// アイテムの縦幅・横幅
+  final Size _itemSize;
+
   /// [GridView]の列数
   late final int crossAxisCount;
-  int _calculateCrossAxisCount({int c = 1}) =>
-      StockPostit.size * c + _minHorizontalSpacing * (c + 1) < _windowWidth
-      ? _calculateCrossAxisCount(c: ++c)
-      : c - 1;
+  int _calculateCrossAxisCount({int count = 1}) =>
+      _itemSize.width * count + _minHorizontalSpacing * (count + 1) < _windowWidth
+      ? _calculateCrossAxisCount(count: ++count)
+      : count - 1;
 
   /// 縦の間隔
   late final double verticalSpacing;
@@ -40,13 +47,13 @@ class SpacingGridViewManager {
 
   /// 内
   SliverGridDelegateWithMaxCrossAxisExtent get gridviewDelegate => .new(
-    maxCrossAxisExtent: StockPostit.size.toDouble(),
+    maxCrossAxisExtent: _itemSize.width,
     mainAxisSpacing: verticalSpacing,
     crossAxisSpacing: horizontalSpacing,
-    mainAxisExtent: StockPostit.size.toDouble(),
+    mainAxisExtent: _itemSize.height,
   );
 
   /// エラー対策用：[GridView]が表示できる横幅があるか？
   bool get gridviewVisible =>
-      _windowWidth > StockPostit.size + _minHorizontalSpacing * 2;
+      _windowWidth > _itemSize.width + _minHorizontalSpacing * 2;
 }

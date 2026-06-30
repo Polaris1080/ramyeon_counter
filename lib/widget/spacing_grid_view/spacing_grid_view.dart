@@ -1,32 +1,35 @@
+// Package
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/page/stock/stock_page.dart';
-import 'package:ramyeon_counter/page/stock/stock_page_vm.dart';
+// Partial
 part './spacing_grid_view_manager.dart';
 
 class SpacingGridView extends StatelessWidget {
-  const SpacingGridView({super.key, required this.viewModel});
+  const SpacingGridView({
+    super.key,
+    required this.itemBuilder,
+    required this.itemSize,
+    this.itemCount,
+  });
 
-  final StockPageViewModel viewModel;
+  final Widget? Function(BuildContext, int) itemBuilder;
+  final Size itemSize;
+  final int? itemCount;
 
   @override
   Widget build(BuildContext context) {
-    final spacing = SpacingGridViewManager(MediaQuery.of(context).size.width);
+    final spacing = SpacingGridViewManager(
+      windowWidth: MediaQuery.of(context).size.width,
+      itemSize: itemSize,
+    );
 
     return Visibility(
       visible: spacing.gridviewVisible,
       child: Padding(
         padding: spacing.gridviewPadding,
         child: GridView.builder(
-          itemCount: viewModel.count,
-          itemBuilder: (context, index) {
-            return StockPostit(
-              viewModel: viewModel.post![index],
-              brand: viewModel.brand![index]!,
-              color: viewModel.color![index],
-            );
-          },
+          itemCount: itemCount,
+          itemBuilder: itemBuilder,
           gridDelegate: spacing.gridviewDelegate,
         ),
       ),
