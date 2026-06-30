@@ -1,9 +1,9 @@
-part of './stock_page.dart';
+part of 'spacing_grid_view.dart';
 
-class StockPageSpacingManager {
+class SpacingGridViewManager {
   static const _minVerticalSpacing = 10.0, _minHorizontalSpacing = 5.0;
 
-  StockPageSpacingManager(double windowWidth) : _windowWidth = windowWidth {
+  SpacingGridViewManager(double windowWidth) : _windowWidth = windowWidth {
     crossAxisCount = _calculateCrossAxisCount();
     horizontalSpacing =
         (_windowWidth - crossAxisCount * StockPostit.size) /
