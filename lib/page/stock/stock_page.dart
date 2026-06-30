@@ -1,3 +1,4 @@
+import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nil/nil.dart';
@@ -10,25 +11,81 @@ part './stock_postit_vm.dart';
 part './stock_postit.dart';
 
 class StockPage extends StatelessWidget {
-  const StockPage({super.key, this.brandId, this.packageColor});
+  StockPage({super.key, this.brandId, this.packageColor});
 
   final int? brandId;
   final Color? packageColor;
+  final vm = StockPageViewModel();
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = StockPageViewModel();
-
     return
     /* Color change */
     Theme(
       data: Theme.of(context).override(packageColor),
       child: Scaffold(
-        appBar: DefaultAppBar(context, '在庫'),
+        appBar: DefaultAppBar(
+          context,
+          '在庫',
+          actions: [
+            // Select
+            ListenableBuilder(
+              listenable: vm,
+              builder: (context, _) => IconButton(
+                icon: switch (vm.isSelectMode) {
+                  true => const Icon(Icons.delete_forever),
+                  false => const Icon(Icons.delete),
+                },
+                tooltip: '検索',
+                color: switch (vm.isSelectMode) {
+                  true => Colors.yellow,
+                  false => ColorScheme.of(context).tertiaryContainer,
+                },
+                onPressed: () {
+                  // true->false
+                  if (vm.isSelectMode) {
+                    final c = vm.post!.count((c) => c.selected);
+                    if (c > 0) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text("タイトル"),
+                          content: Text("メッセージ内容"),
+                          actions: [
+                            TextButton(
+                              child: Text("Cancel"),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                            TextButton(
+                              child: Text("OK"),
+                              onPressed: () {
+                                print(
+                                  vm.post!
+                                      .where((c) => c.selected)
+                                      .select((s, _) => s.stock.id),
+                                );
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    vm.isSelectMode = false;
+                  }
+                  // true<-false
+                  else {
+                    vm.isSelectMode = true;
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
         body: FutureBuilder(
-          future: Future.wait([viewModel.loading(brandId)]),
+          future: Future.wait([vm.loading(brandId)]),
           builder: (context, snapshot) => switch (snapshot.connectionState) {
-            .done => SpacingGridView(viewModel: viewModel),
+            .done => SpacingGridView(viewModel: vm),
             _ => nil,
           },
         ),

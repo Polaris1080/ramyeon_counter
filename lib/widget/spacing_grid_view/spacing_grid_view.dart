@@ -22,7 +22,7 @@ class SpacingGridView extends StatelessWidget {
           itemCount: viewModel.count,
           itemBuilder: (context, index) {
             return StockPostit(
-              viewModel: .new(viewModel.stock![index]),
+              viewModel: viewModel.post![index],
               brand: viewModel.brand![index]!,
               color: viewModel.color![index],
             );

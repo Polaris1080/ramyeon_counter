@@ -14,5 +14,14 @@ class StockPostitViewModel extends ChangeNotifier {
 
   late Stock stock;
 
-  bool selected = false;
+  bool selectVisible = true;
+
+  bool get selected => _selected;
+  bool _selected = false;
+  set selected(bool value) {
+    if (_selected != value) {
+      _selected = value;
+      notifyListeners();
+    }
+  }
 }

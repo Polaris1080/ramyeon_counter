@@ -24,46 +24,64 @@ class StockPostit extends StatelessWidget {
         minHeight: 150,
       ),
       color: Colors.blueGrey,
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Column(
-          children: [
-            // brandid
-            Text('${brand}'),
-            Spacer(),
-            Column(
-              crossAxisAlignment: .stretch,
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
               children: [
-                const Text('購入日：', textAlign: .start),
-                Text(
-                  DateFormat(
-                    'yyyy年MM月dd日',
-                  ).format(viewModel.stock.expirationDate),
-                  textAlign: .end,
+                // brandid
+                Text('${brand}'),
+                Spacer(),
+                Column(
+                  crossAxisAlignment: .stretch,
+                  children: [
+                    const Text('購入日：', textAlign: .start),
+                    Text(
+                      DateFormat(
+                        'yyyy年MM月dd日',
+                      ).format(viewModel.stock.expirationDate),
+                      textAlign: .end,
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: .stretch,
+                  children: [
+                    const Text('賞味期限：', textAlign: .start),
+                    Text(
+                      DateFormat(
+                        'yyyy年MM月dd日',
+                      ).format(viewModel.stock.purchaseDate),
+                      textAlign: .end,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: .spaceBetween,
+                  children: [
+                    const Text('価格：', textAlign: .start),
+                    Text('${viewModel.stock.price}円', textAlign: .end),
+                  ],
                 ),
               ],
             ),
-            Column(
-              crossAxisAlignment: .stretch,
-              children: [
-                const Text('賞味期限：', textAlign: .start),
-                Text(
-                  DateFormat(
-                    'yyyy年MM月dd日',
-                  ).format(viewModel.stock.purchaseDate),
-                  textAlign: .end,
+          ),
+          ListenableBuilder(
+            listenable: viewModel,
+            builder: (context, _) {
+              return Align(
+                alignment: Alignment.topRight,
+                child: Checkbox(
+                  value: viewModel.selected,
+                  onChanged: (value) {
+                    viewModel.selected = !viewModel.selected;
+                  },
                 ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: .spaceBetween,
-              children: [
-                const Text('価格：', textAlign: .start),
-                Text('${viewModel.stock.price}円', textAlign: .end),
-              ],
-            ),
-          ],
-        ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
