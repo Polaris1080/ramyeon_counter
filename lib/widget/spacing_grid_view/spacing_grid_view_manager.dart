@@ -1,22 +1,20 @@
 part of 'spacing_grid_view.dart';
 
 class SpacingGridViewManager {
-  static const _minVerticalSpacing = 10.0, _minHorizontalSpacing = 5.0;
+  static const Size _minSpacing = .new(5.0, 10.0);
 
-  SpacingGridViewManager({
-    required double windowWidth,
-    required Size itemSize
-  }) : _windowWidth = windowWidth,
-       _itemSize= itemSize {
+  SpacingGridViewManager({required double windowWidth, required Size itemSize})
+    : _windowWidth = windowWidth,
+      _itemSize = itemSize {
     crossAxisCount = _calculateCrossAxisCount();
     horizontalSpacing =
         (_windowWidth - crossAxisCount * _itemSize.width) /
         (crossAxisCount + 1); // 両端＋列間
     verticalSpacing = min(
       // 最低値
-      max(horizontalSpacing, _minVerticalSpacing),
+      max(horizontalSpacing, _minSpacing.height),
       // 最高値
-      crossAxisCount * _minHorizontalSpacing,
+      crossAxisCount * _minSpacing.width,
     );
   }
 
@@ -29,7 +27,7 @@ class SpacingGridViewManager {
   /// [GridView]の列数
   late final int crossAxisCount;
   int _calculateCrossAxisCount({int count = 1}) =>
-      _itemSize.width * count + _minHorizontalSpacing * (count + 1) < _windowWidth
+      _itemSize.width * count + _minSpacing.width * (count + 1) < _windowWidth
       ? _calculateCrossAxisCount(count: ++count)
       : count - 1;
 
@@ -55,5 +53,5 @@ class SpacingGridViewManager {
 
   /// エラー対策用：[GridView]が表示できる横幅があるか？
   bool get gridviewVisible =>
-      _windowWidth > _itemSize.width + _minHorizontalSpacing * 2;
+      _windowWidth > _itemSize.width + _minSpacing.width * 2;
 }
