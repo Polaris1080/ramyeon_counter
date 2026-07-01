@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:nil/nil.dart';
 import 'package:ramyeon_counter/model/context/statistics_data_context.dart';
+import 'package:ramyeon_counter/model/tag_data.dart';
 import 'package:ramyeon_counter/page/statistics/statistics_page_vm.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
@@ -12,6 +13,7 @@ import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
 part 'sub_page/eat_pie_chart.dart';
 part 'sub_page/stock_bar_chart.dart';
 part 'sub_page/ranking_rating_sub_page.dart';
+part 'sub_page/ranking_tag_sub_page.dart';
 
 class StatisticsPage extends StatelessWidget {
   StatisticsPage({super.key});
@@ -44,19 +46,26 @@ class StatisticsPage extends StatelessWidget {
               },
             ),
             _ => Center(
-              child: Text('''
-          『全体』
-          タグ：ランキング
-          タグ：すべて表示
-          『全期間／年度』
-          ｛company｝
-          食べた個数（円グラフ）
-          ｛stock｝
-          購入価格：合計
-          購入価格（ヒストグラム）年／月
-          ｛rating｝
-          評価：ランキング
-        '''),
+              child: FutureBuilder(
+                future: vm.rankingTagData,
+                builder: (context, snapshot) => switch (snapshot.data) {
+                  List<TagData> data => RankingTagSubPage(data, vm),
+                  _ => DelayedLoadingProgressIndicator.normal(context),
+                },
+              ),
+              //       Text('''
+              //   『全体』
+              //   タグ：ランキング
+              //   タグ：すべて表示
+              //   『全期間／年度』
+              //   ｛company｝
+              //   食べた個数（円グラフ）
+              //   ｛stock｝
+              //   購入価格：合計
+              //   購入価格（ヒストグラム）年／月
+              //   ｛rating｝
+              //   評価：ランキング
+              // '''),
             ),
           };
         },
@@ -75,18 +84,18 @@ class StatisticsPage extends StatelessWidget {
               NavigationDestination(
                 selectedIcon: Icon(Icons.home),
                 icon: Icon(Icons.home_outlined),
-                label: 'Home',
+                label: 'タグ',
               ),
               NavigationDestination(
                 icon: Badge(child: Icon(Icons.notifications_sharp)),
-                label: 'Company',
+                label: '食べた個数',
               ),
               NavigationDestination(
                 icon: Badge(
                   label: Text('2'),
                   child: Icon(Icons.messenger_sharp),
                 ),
-                label: 'Stock',
+                label: '購入金額',
               ),
               /* RankingRatingSubPage */
               NavigationDestination(
