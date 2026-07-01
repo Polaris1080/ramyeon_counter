@@ -15,10 +15,10 @@ class SelectModeAction extends StatelessWidget {
               icon: const Icon(Icons.delete_forever),
               tooltip: '削除',
               color: Colors.yellow,
-              onPressed: () {
-                final selected = vm.post!.where((w) => w.selected);
+              onPressed: () async {
+                final selected = (await vm.source).where((w) => w.selected);
                 // selected > 0
-                if (selected.isNotEmpty) {
+                if (selected.isNotEmpty && context.mounted) {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -39,7 +39,7 @@ class SelectModeAction extends StatelessWidget {
                               selected.select((s, _) => s.id).toList(),
                             );
                             // VM再読込
-                            await vm.reload();
+                            await vm.load();
                             vm.isSelectMode = false;
                             if (context.mounted) {
                               Navigator.pop(context);

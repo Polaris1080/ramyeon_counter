@@ -20,6 +20,7 @@ class StockPostitViewModel extends Stock with ChangeNotifier {
   set isSelectMode(bool value) {
     if (isSelectMode != value) {
       _isSelectMode = value;
+      _selected = false;
       notifyListeners();
     }
   }

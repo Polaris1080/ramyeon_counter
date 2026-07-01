@@ -14,9 +14,10 @@ class StockPostit extends StatelessWidget {
     return Container(
       width: size.width,
       height: size.height,
-      color: vm.color != null
-          ? ColorScheme.fromSeed(seedColor: vm.color!).primaryFixed
-          : ColorScheme.of(context).primaryFixed,
+      color: switch (vm.color) {
+        Color c => ColorScheme.fromSeed(seedColor: c),
+        _ => ColorScheme.of(context),
+      }.primaryFixed,
       child: Stack(
         children: [
           Padding(
@@ -25,9 +26,12 @@ class StockPostit extends StatelessWidget {
               children: [
                 Text(vm.title),
                 Spacer(),
-                term(context, '購入日：', _dateFormat.format(vm.expirationDate)),
-                term(context, '賞味期限：', _dateFormat.format(vm.purchaseDate)),
-                term(context, '価格：', '${vm.price}円'),
+                for ((String, String) item in [
+                  ('購入日', _dateFormat.format(vm.expirationDate)),
+                  ('賞味期限', _dateFormat.format(vm.purchaseDate)),
+                  ('価格', '${vm.price}円'),
+                ])
+                  term(context, item),
               ],
             ),
           ),
@@ -53,9 +57,10 @@ class StockPostit extends StatelessWidget {
     );
   }
 
-  Widget term(BuildContext context, String heading, String content) {
+  Widget term(BuildContext context, (String, String) item) {
+    final heading = item.$1, content = item.$2;
     final painter = TextPainter(
-      text: TextSpan(text: heading + content),
+      text: TextSpan(text: "$heading：$content"),
       textDirection: Directionality.of(context),
     )..layout(minWidth: 0, maxWidth: size.width - _padding);
     final line = painter.computeLineMetrics().length;
@@ -63,15 +68,15 @@ class StockPostit extends StatelessWidget {
         ? Column(
             crossAxisAlignment: .stretch,
             children: [
-              const Text('購入日：', textAlign: .start),
-              Text(_dateFormat.format(vm.expirationDate), textAlign: .end),
+              Text('$heading：', textAlign: .start),
+              Text(content, textAlign: .end),
             ],
           )
         : Row(
             mainAxisAlignment: .spaceBetween,
             children: [
-              const Text('価格：', textAlign: .start),
-              Text('${vm.price}円', textAlign: .end),
+              Text('$heading：', textAlign: .start),
+              Text(content, textAlign: .end),
             ],
           );
   }

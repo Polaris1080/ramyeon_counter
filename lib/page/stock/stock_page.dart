@@ -36,7 +36,7 @@ class StockPage extends StatelessWidget {
           listenable: vm,
           builder: (context, _) {
             return FutureBuilder(
-              future: vm.postit,
+              future: vm.source,
               builder: (context, snapshot) => switch (snapshot.data) {
                 List<StockPostitViewModel> postitVM => SpacingGridView(
                   itemSize: StockPostit.size,
@@ -44,7 +44,7 @@ class StockPage extends StatelessWidget {
                   itemBuilder: (context, index) =>
                       StockPostit(vm: postitVM[index]),
                 ),
-                _ => LoadingProgressIndicator.normal(context),
+                _ => DelayedLoadingProgressIndicator.normal(context),
               },
             );
           },
