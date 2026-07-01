@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:nil/nil.dart';
 import 'package:ramyeon_counter/model/context/statistics_data_context.dart';
 import 'package:ramyeon_counter/page/statistics/statistics_page_vm.dart';
+import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:darq/darq.dart';
@@ -33,15 +36,12 @@ class StatisticsPage extends StatelessWidget {
             // ｛stock｝  購入価格：合計 購入価格（ヒストグラム）
             2 => Padding(padding: EdgeInsets.all(8.0), child: _StockBarChart()),
             // ｛rating｝ 評価：ランキング
-            3 => Padding(
-              padding: EdgeInsets.all(8.0),
-              child: FutureBuilder(
-                future: vm.rankingRatingData,
-                builder: (context, snapshot) => switch (snapshot.data) {
-                  Map<String, double> m => RankingRatingSubPage(),
-                  _ => DelayedLoadingProgressIndicator.normal(context),
-                },
-              ),
+            3 => FutureBuilder(
+              future: vm.rankingRatingData,
+              builder: (context, snapshot) => switch (snapshot.data) {
+                Map<String, double> data => RankingRatingSubPage(data),
+                _ => DelayedLoadingProgressIndicator.normal(context),
+              },
             ),
             _ => Center(
               child: Text('''
