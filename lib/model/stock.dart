@@ -32,6 +32,15 @@ class Stock extends ModelBase {
     required this.price,
     this.ate = false, //備蓄してすぐに食べるわけがない
   });
+  Stock.self(Stock stock)
+    : this(
+        id: stock.id,
+        brandId: stock.brandId,
+        purchaseDate: stock.purchaseDate,
+        expirationDate: stock.expirationDate,
+        price: stock.price,
+        ate: stock.ate,
+      );
 
   @override
   Map<String, Object?> toMap({bool isDB = false}) {

@@ -36,7 +36,7 @@ class SelectModeAction extends StatelessWidget {
                           onPressed: () async {
                             // DB削除
                             await StockRepository().deleteMany(
-                              selected.select((s, _) => s.stock.id).toList(),
+                              selected.select((s, _) => s.id).toList(),
                             );
                             // VM再読込
                             await vm.reload();

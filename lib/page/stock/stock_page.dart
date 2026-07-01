@@ -38,21 +38,13 @@ class StockPage extends StatelessWidget {
             return FutureBuilder(
               future: vm.postit,
               builder: (context, snapshot) => switch (snapshot.data) {
-                List<StockPostitViewModel> p => SpacingGridView(
+                List<StockPostitViewModel> postitVM => SpacingGridView(
                   itemSize: StockPostit.size,
-                  itemCount: p.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return StockPostit(
-                      viewModel: vm.post![index],
-                      brand: vm.brand![index]!,
-                      color: vm.color![index],
-                    );
-                  },
+                  itemCount: postitVM.length,
+                  itemBuilder: (context, index) =>
+                      StockPostit(vm: postitVM[index]),
                 ),
-                _ => switch (packageColor) {
-                  Color c => DelayedLoadingProgressIndicator.override(c),
-                  _ => DelayedLoadingProgressIndicator.normal(context),
-                },
+                _ => LoadingProgressIndicator.normal(context),
               },
             );
           },

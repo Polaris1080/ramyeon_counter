@@ -8,8 +8,6 @@ import 'package:ramyeon_counter/model/repository/stock_repository.dart';
 import 'package:ramyeon_counter/page/stock/stock_page.dart';
 
 class StockPageViewModel extends ChangeNotifier {
-  int count = 0;
-
   StockPageViewModel(this.brandId);
 
   final int? brandId;
@@ -24,11 +22,6 @@ class StockPageViewModel extends ChangeNotifier {
     }
   }
 
-  void reset() {
-    post = null;
-    notifyListeners();
-  }
-
   Future<void> reload() async {
     final model1 = StockRepository();
     final model2 = RamyeonRepository();
@@ -37,10 +30,22 @@ class StockPageViewModel extends ChangeNotifier {
       model2.readAll(),
     ).wait;
     stock = result1.where((x) => !(x.ate)).toList();
-    count = stock!.length;
     _brand = result2.toMap((x) => MapEntry(x.id, x.brand));
-    _color = result2.toMap((x) => MapEntry(x.id, x.packageColor));
-    post = stock!.select((s, _) => StockPostitViewModel(s)).toList();
+    _color = result2.toMap(
+      (x) => MapEntry(
+        x.id,
+        x.packageColor != null ? Color(x.packageColor!) : null,
+      ),
+    );
+    post = stock!
+        .select(
+          (s, _) => StockPostitViewModel(
+            s,
+            brandName: brand![s.brandId]!,
+            color: color![s.brandId],
+          ),
+        )
+        .toList();
     notifyListeners();
   }
 
@@ -49,8 +54,8 @@ class StockPageViewModel extends ChangeNotifier {
   Map<int, String>? get brand => _brand;
   Map<int, String>? _brand;
 
-  Map<int, int?>? get color => _color;
-  Map<int, int?>? _color;
+  Map<int, Color?>? get color => _color;
+  Map<int, Color?>? _color;
 
   ///（削除）選択モード
   bool get isSelectMode => _isSelectMode;
@@ -61,6 +66,11 @@ class StockPageViewModel extends ChangeNotifier {
       if (value == false && post != null) {
         for (var element in post!) {
           element.selected = false;
+        }
+      }
+      if (post != null) {
+        for (var element in post!) {
+          element.isSelectMode = value;
         }
       }
       _isSelectMode = value;

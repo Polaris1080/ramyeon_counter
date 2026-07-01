@@ -1,6 +1,5 @@
 /* Package */
 import 'package:flutter/material.dart';
-import 'package:nil/nil.dart';
 
 class LoadingProgressIndicator extends LinearProgressIndicator {
   LoadingProgressIndicator.override(Color overrideColor, {super.key})
