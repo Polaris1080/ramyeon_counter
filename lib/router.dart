@@ -6,7 +6,7 @@ import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 // Page
 import 'package:ramyeon_counter/page/detail/detail_page.dart';
 import 'package:ramyeon_counter/page/history/history_page.dart';
-import 'package:ramyeon_counter/page/home_page.dart';
+import 'package:ramyeon_counter/page/home/home_page.dart';
 import 'package:ramyeon_counter/page/regist/regist_page.dart';
 import 'package:ramyeon_counter/page/statistics/statistics_page.dart';
 import 'package:ramyeon_counter/page/stock/stock_page.dart';

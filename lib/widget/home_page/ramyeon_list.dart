@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:ramyeon_counter/model/ramyeon.dart';
 import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
-import 'package:ramyeon_counter/page/home_page.dart';
-import 'package:ramyeon_counter/page/home_page_vm.dart';
+import 'package:ramyeon_counter/page/home/home_page.dart';
+import 'package:ramyeon_counter/page/home/home_page_vm.dart';
 
 import 'ramyeon_list_vm.dart';
 
