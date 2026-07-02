@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/page/home/home_page_vm.dart';
+import 'package:ramyeon_counter/page/home/home_page.dart';
 
 class HomeSearchBar extends StatelessWidget {
-  const HomeSearchBar({
-    super.key,
-    required this.vm,
-    required this.searchbarController,
-  });
+  HomeSearchBar({super.key, required this.vm});
 
   final HomePageViewModel vm;
-  final TextEditingController searchbarController;
+  final TextEditingController searchbarController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +16,7 @@ class HomeSearchBar extends StatelessWidget {
           listenable: vm,
           builder: (_, w) {
             return Visibility(
-              visible: vm.isSearchBarVisible,
+              visible: true, // vm.isSearchBarVisible,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Center(child: w!),

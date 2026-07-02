@@ -1,6 +1,8 @@
 part of '../home_page.dart';
 
 class CatalogModeAction extends StatelessWidget {
+  static const tooltip = '在庫';
+
   const CatalogModeAction(this.vm, {super.key});
 
   final HomePageViewModel vm;
@@ -11,12 +13,12 @@ class CatalogModeAction extends StatelessWidget {
       listenable: vm,
       builder: (_, _) => IconButton(
         icon: const Icon(Icons.warehouse_rounded),
-        tooltip: '在庫',
+        tooltip: tooltip,
         color: switch (vm.isCatalogMode) {
           true => Colors.yellow,
           false => ColorScheme.of(context).tertiaryContainer,
         },
-        onPressed: () => vm.isCatalogMode = !vm.isCatalogMode,
+        onPressed: vm.onCatalogModeActionPressed,
       ),
     );
   }

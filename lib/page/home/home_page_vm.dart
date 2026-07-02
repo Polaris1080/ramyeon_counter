@@ -1,41 +1,32 @@
-import 'home_page.dart';
-import 'package:flutter/material.dart';
+part of 'home_page.dart';
 
 class HomePageViewModel extends ChangeNotifier {
+  static const _orderByDefault = RamyeonListOrder.normal;
+
   bool get isCatalogMode => _isCatalogMode;
   bool _isCatalogMode = false;
-  set isCatalogMode(bool value) {
-    if (isCatalogMode != value) {
-      _isCatalogMode = value;
-      notifyListeners();
-    }
-  }
-
-  bool get isSearchBarVisible => _isSearchBarVisible;
-  bool _isSearchBarVisible = false;
-  set isSearchBarVisible(bool value) {
-    if (isSearchBarVisible != value) {
-      _isSearchBarVisible = value;
-      notifyListeners();
-    }
-  }
 
   RamyeonListOrder get orderBy => _orderBy;
-  RamyeonListOrder _orderBy = .normal;
-  set orderBy(RamyeonListOrder value) {
-    if (orderBy != value) {
-      _orderBy = value;
-      notifyListeners();
-    }
-  }
+  RamyeonListOrder _orderBy = _orderByDefault;
 
   String get searchWord => _searchWord;
   String _searchWord = '';
   set searchWord(String value) {
     if (searchWord != value) {
       _searchWord = value;
-      _orderBy = .normal;
+      _orderBy = _orderByDefault;
       notifyListeners();
     }
+  }
+
+  /* onPressed */
+  void onCatalogModeActionPressed() {
+    _isCatalogMode = !_isCatalogMode;
+    notifyListeners();
+  }
+
+  void onSortListActionPressed(RamyeonListOrder value) {
+    _orderBy = value;
+    notifyListeners();
   }
 }

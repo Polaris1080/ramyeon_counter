@@ -1,6 +1,8 @@
 part of '../home_page.dart';
 
 class SearchBarAction extends StatelessWidget {
+  static const tooltip = '検索';
+
   const SearchBarAction(this.vm, {super.key});
 
   final HomePageViewModel vm;
@@ -11,12 +13,12 @@ class SearchBarAction extends StatelessWidget {
       listenable: vm,
       builder: (context, _) => IconButton(
         icon: const Icon(Icons.search_rounded),
-        tooltip: '検索',
-        color: switch (vm.isSearchBarVisible) {
-          true => Colors.yellow,
-          false => ColorScheme.of(context).tertiaryContainer,
-        },
-        onPressed: () => vm.isSearchBarVisible = !vm.isSearchBarVisible,
+        tooltip: tooltip,
+        color: ColorScheme.of(context).tertiaryContainer,
+        onPressed: () => showModalBottomSheet(
+          context: context,
+          builder: (context) => HomeSearchBar(vm: vm),
+        ),
       ),
     );
   }

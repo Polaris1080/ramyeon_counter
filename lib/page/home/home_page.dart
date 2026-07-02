@@ -1,12 +1,13 @@
+import 'package:darq/darq.dart';
 import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
 import 'package:ramyeon_counter/page/home/home_search_bar.dart';
 
-import 'home_page_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 import 'package:ramyeon_counter/widget/home_page/home_drawer.dart';
 import 'package:ramyeon_counter/widget/home_page/ramyeon_list.dart';
 // Partial
+part './home_page_vm.dart';
 part './actions/catalog_mode_action.dart';
 part './actions/search_bar_action.dart';
 part './actions/sort_list_action.dart';
@@ -17,7 +18,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = HomePageViewModel();
-    final searchbarController = TextEditingController();
 
     return Scaffold(
       appBar: HomeAppBar(
@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
           ),
 
           //TODO 要整備（ロゴ：List-style）
-          HomeSearchBar(vm: vm, searchbarController: searchbarController),
+          //HomeSearchBar(vm: vm),
         ],
       ),
     );
