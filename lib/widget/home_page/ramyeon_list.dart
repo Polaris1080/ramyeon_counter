@@ -1,8 +1,6 @@
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
-import 'package:ramyeon_counter/model/ramyeon.dart';
 import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 import 'package:ramyeon_counter/page/home/home_page.dart';
 

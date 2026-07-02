@@ -1,6 +1,5 @@
 import 'package:darq/darq.dart';
 import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
-import 'package:ramyeon_counter/page/home/home_search_bar.dart';
 
 import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
@@ -8,6 +7,8 @@ import 'package:ramyeon_counter/widget/home_page/home_drawer.dart';
 import 'package:ramyeon_counter/widget/home_page/ramyeon_list.dart';
 // Partial
 part './home_page_vm.dart';
+part './home_search_bar.dart';
+part './ramyeon_list_order.dart';
 part './actions/catalog_mode_action.dart';
 part './actions/search_bar_action.dart';
 part './actions/sort_list_action.dart';
@@ -79,13 +80,8 @@ class HomePage extends StatelessWidget {
               );
             },
           ),
-
-          //TODO 要整備（ロゴ：List-style）
-          //HomeSearchBar(vm: vm),
         ],
       ),
     );
   }
 }
-
-enum RamyeonListOrder { normal, rating, price, count, limit }

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/page/home/home_page.dart';
+// import 'package:flutter/material.dart';
+// import 'package:ramyeon_counter/page/home/home_page.dart';
+part of './home_page.dart';
 
 class HomeSearchBar extends StatelessWidget {
   HomeSearchBar({super.key, required this.vm});
