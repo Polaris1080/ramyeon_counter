@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
 // Widget
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
-import 'package:ramyeon_counter/widget/home_page/home_drawer.dart';
-import 'package:ramyeon_counter/widget/home_page/ramyeon_list_view.dart';
+import 'package:ramyeon_counter/page/home/parts/home_drawer.dart';
+import 'package:ramyeon_counter/page/home/parts/ramyeon_list_view.dart';
 // Partial
 part 'home_page_vm.dart';
 part 'home_search_bar.dart';
