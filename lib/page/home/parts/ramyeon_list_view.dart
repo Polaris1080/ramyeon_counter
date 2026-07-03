@@ -7,8 +7,6 @@ import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
 import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 import 'package:ramyeon_counter/page/home/home_page.dart';
 
-import 'ramyeon_list_view_vm.dart';
-
 class RamyeonListView extends StatelessWidget {
   RamyeonListView(
     //List<RamyeonListData> view,
@@ -16,79 +14,48 @@ class RamyeonListView extends StatelessWidget {
     this.orderBy,
     this.isCatalogMode, {
     super.key,
-  }) {
-    // tile = sortedList(
-    //   view.select((c, _) => RamyeonTileViewModel.fromModel(c)).toList(),
-    // );
-  }
+  }) : assert(limit > 0),
+       cou = .new(limit);
 
   final int limit;
   final bool isCatalogMode;
   final RamyeonListOrder orderBy;
-  //late final List<RamyeonTileViewModel> tile;
 
-  List<RamyeonTileViewModel> sortedList(List<RamyeonTileViewModel> value) {
-    value.sort(
-      (a, b) => switch (orderBy) {
-        .normal => a.brand.compareTo(b.brand),
-        .rating => a.rate!.compareTo(b.rate!),
-        .price => a.price!.compareTo(b.price!),
-        .count => a.count!.compareTo(b.count!),
-        .limit => a.limit!.compareTo(b.limit!),
-      },
-    );
-    return value;
-  }
-
-  final ValueNotifier<int> cou = .new(5);
+  final ValueNotifier<int> cou;
 
   @override
   Widget build(BuildContext context) {
-    return true //tile.isNotEmpty
-        ? ValueListenableBuilder(
-            valueListenable: cou,
-            builder: (context, value, child) {
-              return NotificationListener<ScrollEndNotification>(
-                onNotification: (ScrollEndNotification notification) {
-                  final isScrollToEnd = notification.metrics.extentAfter == 0;
+    return ValueListenableBuilder(
+      valueListenable: cou,
+      builder: (context, value, child) {
+        return NotificationListener<ScrollEndNotification>(
+          onNotification: (ScrollEndNotification notification) {
+            final isScrollToEnd = notification.metrics.extentAfter == 0;
 
-                  if (isScrollToEnd) {
-                    cou.value++;
-                  }
-                  return false;
+            if (isScrollToEnd) {
+              cou.value++;
+            }
+            return false;
+          },
+          child: ListView.builder(
+            itemCount: min(limit, cou.value),
+            itemBuilder: (context, index) {
+              //RamyeonTileViewModel tileVM = tile[index];
+              return FutureBuilder(
+                future: RamyeonListDataContext().readBy("brand", index),
+                builder: (context, snapshot) {
+                  return switch (snapshot.data) {
+                    RamyeonListData data =>
+                      isCatalogMode ? TileA(data: data) : TileB(data: data),
+                    _ => SizedBox(),
+                  };
                 },
-                child: ListView.builder(
-                  itemCount: min(limit, cou.value),
-                  itemBuilder: (context, index) {
-                    //RamyeonTileViewModel tileVM = tile[index];
-                    return FutureBuilder(
-                      future: RamyeonListDataContext().readBy("brand", index),
-                      builder: (context, snapshot) {
-                        return switch (snapshot.data) {
-                          RamyeonListData data =>
-                            isCatalogMode
-                                ? TileA(data: data)
-                                : TileB(data: data),
-                          _ => SizedBox(),
-                        };
-                      },
-                    );
-                  },
-                ),
               );
             },
-          )
-        // 結果なし(vm.tile is empty)
-        : Center(
-            child: Text(
-              '見つかりません',
-              style: TextStyle(
-                fontFamily: 'ZenKakuGothic',
-                fontSize: 24,
-                fontWeight: .w500,
-              ),
-            ),
-          );
+          ),
+        );
+      },
+    );
   }
 }
 

@@ -17,12 +17,12 @@ part 'actions/sort_list_action.dart';
 part 'parts/ramyeon_list_area.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final HomePageViewModel vm = .new();
 
   @override
   Widget build(BuildContext context) {
-    final vm = HomePageViewModel();
-
     return Scaffold(
       appBar: HomeAppBar(
         context,
