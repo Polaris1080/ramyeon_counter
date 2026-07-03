@@ -1,17 +1,20 @@
+// Package
 import 'package:darq/darq.dart';
-import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
-
 import 'package:flutter/material.dart';
+// Model
+import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
+// Widget
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 import 'package:ramyeon_counter/widget/home_page/home_drawer.dart';
-import 'package:ramyeon_counter/widget/home_page/ramyeon_list.dart';
+import 'package:ramyeon_counter/widget/home_page/ramyeon_list_view.dart';
 // Partial
-part './home_page_vm.dart';
-part './home_search_bar.dart';
-part './ramyeon_list_order.dart';
-part './actions/catalog_mode_action.dart';
-part './actions/search_bar_action.dart';
-part './actions/sort_list_action.dart';
+part 'home_page_vm.dart';
+part 'home_search_bar.dart';
+part 'enum/ramyeon_list_order.dart';
+part 'actions/catalog_mode_action.dart';
+part 'actions/search_bar_action.dart';
+part 'actions/sort_list_action.dart';
+part 'parts/ramyeon_list_area.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -31,57 +34,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       drawer: HomeDrawer(),
-      body: Stack(
-        children: [
-          /* ListView */
-          ListenableBuilder(
-            listenable: vm,
-            builder: (context, child) {
-              return FutureBuilder(
-                future: RamyeonListDataContext().readByBrand(vm.searchWord),
-                builder: (context, asyncSnapshot) {
-                  if (asyncSnapshot.hasData) {
-                    return RamyeonList(
-                      asyncSnapshot.data!,
-                      vm.orderBy,
-                      vm.isCatalogMode,
-                    );
-                  } else if (asyncSnapshot.hasData &&
-                      asyncSnapshot.data!.isEmpty) {
-                    return Center(
-                      child: Text(
-                        '見つかりません',
-                        style: TextStyle(
-                          fontFamily: 'ZenKakuGothic',
-                          fontSize: 24,
-                          fontWeight: .w500,
-                        ),
-                      ),
-                    );
-                  } else if (asyncSnapshot.hasError) {
-                    return Center(
-                      child: Text(
-                        'エラーが発生しました',
-                        style: TextStyle(
-                          fontFamily: 'ZenKakuGothic',
-                          fontSize: 24,
-                          fontWeight: .w500,
-                        ),
-                      ),
-                    );
-                  }
-                  // Loading...
-                  else {
-                    return LinearProgressIndicator(
-                      color: ColorScheme.of(context).tertiary,
-                    );
-                  }
-                },
-              );
-            },
-          ),
-        ],
-      ),
+      body: RamyeonListArea(vm),
     );
   }
 }

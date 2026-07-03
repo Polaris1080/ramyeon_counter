@@ -43,6 +43,15 @@ class RamyeonRepository extends RamyeonRepositoryBase {
   Future<int> delete(int id) async =>
       await deleteBase(where: 'id = ?', whereArgs: [id]);
 
+  Future<int> countByBrand(String brand) async {
+    var result = await (await db).rawQuery(
+      'SELECT COUNT(*) as count FROM ${table.name} WHERE brand Like ?',
+      ['%$brand%'],
+    );
+    var t1 = result.select((s, _) => s['count'] as int).first;
+    return t1;
+  }
+
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {
     db.execute(

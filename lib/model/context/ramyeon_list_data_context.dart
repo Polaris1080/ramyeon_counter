@@ -33,6 +33,28 @@ class RamyeonListDataContext extends RamyeonContextBase {
     return a;
   }
 
+  Future<List<RamyeonListData>> readAllBy(String? brand) async {
+    final database = await db;
+    final a = (await database.query(
+      table.name,
+      orderBy: brand,
+      //where: 'brand Like ?',
+      //whereArgs: ['%$brand%'],
+    )).decode();
+    return a;
+  }
+
+  Future<RamyeonListData> readBy(String? brand, int id) async {
+    final database = await db;
+    final a = await (await database.query(
+      table.name,
+      orderBy: brand,
+      where: 'id =  ?',
+      whereArgs: ['$id'],
+    )).decode();
+    return a.first;
+  }
+
   // Future<int> update(Ramyeon value) async =>
   //     await updateBase(value, where: 'id = ?', whereArgs: [value.id]);
 
