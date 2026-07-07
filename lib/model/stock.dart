@@ -1,4 +1,7 @@
+// Base
 import 'base/model_base.dart';
+import 'context/em_table_definition.dart';
+// Model
 import 'ramyeon.dart';
 
 /// 在庫（情報）
@@ -67,11 +70,11 @@ class Stock extends ModelBase {
   }
 
   static List<String> get tableDefinition => [
-    'id INTEGER PRIMARY KEY',
-    'brandId INTEGER not null',
-    'purchaseDate TEXT not null',
-    'expirationDate TEXT not null',
-    'price INTEGER not null',
-    'ate INTEGER not null',
+    'id'.integer.primary,
+    'brandId'.integer.notnull,
+    'purchaseDate'.text.notnull,
+    'expirationDate'.text.notnull,
+    'price'.integer.notnull,
+    'ate'.integer.notnull,
   ];
 }

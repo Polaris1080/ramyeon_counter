@@ -1,4 +1,7 @@
+// Base
 import 'base/model_base.dart';
+import 'context/em_table_definition.dart';
+// Model
 import 'ramyeon.dart';
 
 class Company extends ModelBase {
@@ -20,7 +23,7 @@ class Company extends ModelBase {
   };
 
   static List<String> get tableDefinition => [
-    'id INTEGER PRIMARY KEY',
-    'company TEXT not null',
+    'id'.integer.primary,
+    'company'.text.notnull,
   ];
 }

@@ -33,55 +33,52 @@ class DetailPage extends StatelessWidget {
         ],
         overrideColor: packageColor,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            /* 1st Row(Image/Data) */
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Wrap(
-                    children: [
-                      /* 1st Columu(Image) */
-                      LayoutBuilder(
-                        builder:
-                            (BuildContext context, BoxConstraints constraints) {
-                              return Container(
-                                constraints: BoxConstraints(
-                                  minWidth: 96,
-                                  minHeight: 96,
-                                  maxWidth: 256,
-                                  maxHeight: 256,
-                                ),
-                                height:
-                                    MediaQuery.of(context).size.width * 0.25,
-                                child: RamyeonImageViewer(
-                                  packageColor: packageColor,
-                                  ramyeonId: ramyeonId,
-                                ),
-                              );
-                            },
+      body: Column(
+        children: [
+          /* 1st Row(Image/Data) */
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Wrap(
+                  children: [
+                    /* 1st Columu(Image) */
+                    LayoutBuilder(
+                      builder:
+                          (BuildContext context, BoxConstraints constraints) {
+                            return Container(
+                              constraints: BoxConstraints(
+                                minWidth: 96,
+                                minHeight: 96,
+                                maxWidth: 256,
+                                maxHeight: 256,
+                              ),
+                              height: MediaQuery.of(context).size.width * 0.25,
+                              child: RamyeonImageViewer(
+                                packageColor: packageColor,
+                                ramyeonId: ramyeonId,
+                              ),
+                            );
+                          },
+                    ),
+                    /* 2nd Columu(Data) */
+                    Container(
+                      constraints: BoxConstraints(
+                        //minWidth: 180,
+                        maxWidth: 240,
                       ),
-                      /* 2nd Columu(Data) */
-                      Container(
-                        constraints: BoxConstraints(
-                          //minWidth: 180,
-                          maxWidth: 240,
-                        ),
-                        //height: 200,
-                        child: RamyeonDataViewer(ramyeonId: ramyeonId),
-                      ),
-                    ],
-                  ),
+                      //height: 200,
+                      child: RamyeonDataViewer(ramyeonId: ramyeonId),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            /* 2nd Row(Tag) */
-            RamyeonTagViewer(ramyeonId: ramyeonId),
-            Spacer(),
-          ],
-        ),
+              ),
+            ],
+          ),
+          /* 2nd Row(Tag) */
+          RamyeonTagViewer(ramyeonId: ramyeonId),
+          Spacer(),
+        ],
       ),
       bottomNavigationBar: DetailBottomAppbar(
         packageColor,

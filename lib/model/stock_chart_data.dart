@@ -1,3 +1,4 @@
+// Base
 import 'base/model_base.dart';
 
 class StockChartData extends VirtualModelBase {
@@ -7,10 +8,7 @@ class StockChartData extends VirtualModelBase {
   /// 価格（合計）
   final List<int> price;
 
-  StockChartData({
-    required this.brand,
-    required this.price
-  });
+  StockChartData({required this.brand, required this.price});
 
   @override
   Map<String, Object?> toMap({bool isDB = false}) {

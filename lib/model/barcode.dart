@@ -1,4 +1,7 @@
+// Base
 import 'base/model_base.dart';
+import 'context/em_table_definition.dart';
+// Model
 import 'ramyeon.dart';
 // Extension
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
@@ -51,9 +54,9 @@ class Barcode extends ModelBase {
   }
 
   static List<String> get tableDefinition => [
-    'id INTEGER PRIMARY KEY',
-    'brandId INTEGER not null',
-    'count INTEGER not null',
-    'jam INTEGER not null',
+    'id'.integer.primary,
+    'brandId'.integer.notnull,
+    'count'.integer.notnull,
+    'jam'.integer.notnull,
   ];
 }
