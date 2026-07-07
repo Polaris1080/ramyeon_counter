@@ -39,20 +39,4 @@ class RamyeonListData extends VirtualModelBase {
     required this.rating,
     required this.count,
   });
-
-  @override
-  Map<String, Object?> toMap({bool isDB = false}) {
-    return <String, Object?>{
-      // INTEGER(int)PrimaryKey
-      'id': id >= 0 ? id : null,
-      // INTEGER(int)
-      'companyId': companyId,
-      // TEXT(String)
-      'brand': brand,
-      // TEXT | List<String>
-      'tag': isDB ? tag.join(',') : tag,
-      // INTEGER(int?)
-      'packageColor': packageColor,
-    };
-  }
 }

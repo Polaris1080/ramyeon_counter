@@ -37,7 +37,7 @@ abstract class RamyeonRepositoryBase extends RepositoryBase {
 
   @protected
   Future<int> insertBase(
-    VirtualModelBase value, {
+    ModelBase value, {
     String? nullColumnHack,
     ConflictAlgorithm? conflictAlgorithm,
   }) async => await RepositoryBase.insert(
@@ -54,7 +54,7 @@ abstract class RamyeonRepositoryBase extends RepositoryBase {
 
   @protected
   Future<int> updateBase(
-    VirtualModelBase value, {
+    ModelBase value, {
     String? where,
     List<Object?>? whereArgs,
     ConflictAlgorithm? conflictAlgorithm,

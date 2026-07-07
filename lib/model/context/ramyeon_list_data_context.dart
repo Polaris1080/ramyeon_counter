@@ -10,18 +10,7 @@ import '../repository/rating_repository.dart';
 import '../../ramyeon_database.dart';
 
 class RamyeonListDataContext extends RamyeonContextBase {
-  @override
   RamyeonDatabaseTable get table => .ramyeon;
-
-  // Future<int> insert(Ramyeon value) async => await super.insertBase(value);
-
-  // Future<List<Ramyeon>> readAll() async => (await readAllBase()).decode();
-
-  // Future<Ramyeon> read(int id) async => (await (await (await db).query(
-  //   table.name,
-  //   where: 'id = ?',
-  //   whereArgs: [id],
-  // )).decode()).first;
 
   Future<List<RamyeonListData>> readByBrand(
     String brand, {
@@ -33,17 +22,6 @@ class RamyeonListDataContext extends RamyeonContextBase {
       orderBy: order,
       where: 'brand Like ?',
       whereArgs: ['%$brand%'],
-    )).decode();
-    return a;
-  }
-
-  Future<List<RamyeonListData>> readAllBy(String? brand) async {
-    final database = await db;
-    final a = (await database.query(
-      table.name,
-      orderBy: brand,
-      //where: 'brand Like ?',
-      //whereArgs: ['%$brand%'],
     )).decode();
     return a;
   }

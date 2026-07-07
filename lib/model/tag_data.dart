@@ -1,3 +1,4 @@
+// Base
 import 'base/model_base.dart';
 
 class TagData extends VirtualModelBase {
@@ -11,16 +12,4 @@ class TagData extends VirtualModelBase {
   final int count;
 
   TagData({required this.tag, required this.rank, required this.count});
-
-  @override
-  Map<String, Object?> toMap({bool isDB = false}) {
-    return <String, Object?>{
-      // Text(String)
-      'tag': tag,
-      // INTEGER(int)
-      'rank': rank,
-      // INTEGER(int)
-      'count': count,
-    };
-  }
 }

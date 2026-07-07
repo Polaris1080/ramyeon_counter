@@ -17,7 +17,7 @@ class StatisticsDataContext extends RamyeonContextBase {
         group by $keyRow ORDER BY $valueRow
       ''',
     )).toMap(
-      (r) => MapEntry(r[keyRow] as int, (r[valueRow] as int).toDouble()),
+      (t) => MapEntry(t[keyRow] as int, (t[valueRow] as int).toDouble()),
     );
   }
 
@@ -28,8 +28,8 @@ class StatisticsDataContext extends RamyeonContextBase {
         select $keyRow, avg(rating) as $valueRow from ${mainTable.name}
         INNER JOIN ${subTable.name} ON ${mainTable.name}.brandId = ${subTable.name}.id
         ${year != null && year >= 0 ? "WHERE date BETWEEN '$year-01-01' AND '$year-12-31'" : ''}
-        group by brandId ORDER BY rate DESC
-      ''')).toMap((r) => MapEntry(r[keyRow] as String, r[valueRow] as double));
+        group by brandId ORDER BY $valueRow DESC
+      ''')).toMap((t) => MapEntry(t[keyRow] as String, t[valueRow] as double));
   }
 }
 
