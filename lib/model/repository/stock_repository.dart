@@ -103,15 +103,5 @@ class TestStockRepository extends StockRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Stock> decode() => [
-    for (final t in this)
-      .new(
-        id: t['id'] as int,
-        brandId: t['brandId'] as int,
-        purchaseDate: DateTime.parse(t['purchaseDate'] as String),
-        expirationDate: DateTime.parse(t['expirationDate'] as String),
-        price: t['price'] as int,
-        ate: t['ate'] as int > 0,
-      ),
-  ];
+  List<Stock> decode() => select((s, _) => Stock.fromMap(s)).toList();
 }

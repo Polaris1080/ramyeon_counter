@@ -1,3 +1,5 @@
+import 'package:darq/darq.dart';
+
 import '../barcode.dart';
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
@@ -57,13 +59,5 @@ class TestBarcodeRepository extends BarcodeRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Barcode> decode() => [
-    for (final t in this)
-      .new(
-        id: t['id'] as int,
-        brandId: t['brandId'] as int,
-        count: t['count'] as int,
-        jam: t['jam'] as int,
-      ),
-  ];
+  List<Barcode> decode() => select((s, _) => Barcode.fromMap(s)).toList();
 }

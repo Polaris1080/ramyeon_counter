@@ -27,6 +27,14 @@ class Rating extends ModelBase {
     required this.date,
   });
 
+  /* From:To */
+  factory Rating.fromMap(Map<String, Object?> map) => Rating(
+    id: map['id'] as int,
+    brandId: map['brandId'] as int,
+    rating: map['rating'] as int,
+    date: DateTime.parse(map['date'] as String),
+  );
+
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     if (brandId < 0) {

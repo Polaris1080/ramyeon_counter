@@ -42,6 +42,16 @@ class Ramyeon extends ModelBase {
     this.packageColor,
   }) : companyId = -1;
 
+  /* From:To */
+  factory Ramyeon.fromMap(Map<String, Object?> map) => Ramyeon(
+    id: map['id'] as int,
+    companyId: map['companyId'] as int,
+    brand: map['brand'] as String,
+    company: map['company'] as String,
+    tag: (map['tag'] as String).split(','),
+    packageColor: map['packageColor'] as int?,
+  );
+
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     if (companyId < 0) {

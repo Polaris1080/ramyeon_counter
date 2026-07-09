@@ -68,13 +68,5 @@ class TestRatingRepository extends RatingRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Rating> decode() => [
-    for (final t in this)
-      .new(
-        id: t['id'] as int,
-        brandId: t['brandId'] as int,
-        rating: t['rating'] as int,
-        date: DateTime.parse(t['date'] as String),
-      ),
-  ];
+  List<Rating> decode() => select((s, _) => Rating.fromMap(s)).toList();
 }

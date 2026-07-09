@@ -30,6 +30,14 @@ class Barcode extends ModelBase {
     required this.jam,
   });
 
+  /* From:To */
+  factory Barcode.fromMap(Map<String, Object?> map) => Barcode(
+    id: map['id'] as int,
+    brandId: map['brandId'] as int,
+    count: map['count'] as int,
+    jam: map['jam'] as int,
+  );
+
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     if (brandId < 0) {

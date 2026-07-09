@@ -1,3 +1,5 @@
+import 'package:darq/darq.dart';
+
 import '../company.dart';
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
@@ -61,8 +63,5 @@ class TestCompanyRepository extends CompanyRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Company> decode() => [
-    for (final t in this)
-      .new(id: t['id'] as int, company: t['company'] as String),
-  ];
+  List<Company> decode() => select((s, _) => Company.fromMap(s)).toList();
 }

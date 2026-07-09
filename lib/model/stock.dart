@@ -45,6 +45,16 @@ class Stock extends ModelBase {
         ate: stock.ate,
       );
 
+  /* From:To */
+  factory Stock.fromMap(Map<String, Object?> map) => Stock(
+    id: map['id'] as int,
+    brandId: map['brandId'] as int,
+    purchaseDate: DateTime.parse(map['purchaseDate'] as String),
+    expirationDate: DateTime.parse(map['expirationDate'] as String),
+    price: map['price'] as int,
+    ate: map['ate'] as int > 0,
+  );
+
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     if (brandId < 0) {

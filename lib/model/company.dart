@@ -14,6 +14,10 @@ class Company extends ModelBase {
 
   Company({required this.id, required this.company});
 
+  /* From:To */
+  factory Company.fromMap(Map<String, Object?> map) =>
+      Company(id: map['id'] as int, company: map['company'] as String);
+
   @override
   Map<String, Object?> toMap({bool isDB = false}) => {
     // INTEGER(int)PrimaryKey

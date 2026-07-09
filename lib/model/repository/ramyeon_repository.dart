@@ -12,22 +12,20 @@ class RamyeonRepository extends RamyeonRepositoryBase {
 
   Future<int> insert(Ramyeon value) async => await super.insertBase(value);
 
-  Future<List<Ramyeon>> readAll() async => (await readAllBase()).decode();
+  Future<List<Ramyeon>> readAll() async => await (await (await db).rawQuery(
+    'SELECT * FROM ramyeon INNER JOIN company ON ramyeon.companyId = company.id',
+  )).decode();
 
-  Future<Ramyeon> read(int id) async => (await (await (await db).query(
-    table.name,
-    where: 'id = ?',
-    whereArgs: [id],
+  Future<Ramyeon> read(int id) async => (await (await (await db).rawQuery(
+    'SELECT * FROM ramyeon INNER JOIN company ON ramyeon.companyId = company.id WHERE ramyeon.id = ? ',
+    [id],
   )).decode()).first;
 
   Future<List<String>?> readTag(int id) async {
-    const tag = 'tag';
-    return ((await (await db).query(
-      table.name,
-      columns: [tag],
-      where: 'id = ?',
-      whereArgs: [id],
-    )).select((s, _) => (s[tag] as String).split(','))).firstOrNull;
+    return ((await (await db).rawQuery(
+      'SELECT tag FROM ramyeon  INNER JOIN company ON ramyeon.companyId = company.id WHERE ramyeon.id = ?',
+      [id],
+    )).select((s, _) => (s['tag'] as String).split(','))).firstOrNull;
   }
 
   Future<List<Ramyeon>> readByBrand(String brand) async =>
@@ -126,23 +124,5 @@ class TestRamyeonRepository extends RamyeonRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  // DarQは非同期に非対応
-  Future<List<Ramyeon>> decode() async {
-    late var r = <Ramyeon>[];
-    for (final t in this) {
-      final companyId = t['companyId'] as int;
-      final company = (await CompanyRepository().read(companyId))!.company;
-      r.add(
-        Ramyeon(
-          id: t['id'] as int,
-          companyId: companyId,
-          brand: t['brand'] as String,
-          company: company,
-          tag: (t['tag'] as String).split(','),
-          packageColor: t['packageColor'] as int?,
-        ),
-      );
-    }
-    return r;
-  }
+  List<Ramyeon> decode() => select((s, _) => Ramyeon.fromMap(s)).toList();
 }
