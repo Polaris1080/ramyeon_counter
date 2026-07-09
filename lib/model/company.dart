@@ -15,19 +15,23 @@ class Company extends ModelBase {
   Company({required this.id, required this.company});
 
   /* From:To */
-  factory Company.fromMap(Map<String, Object?> map) =>
-      Company(id: map['id'] as int, company: map['company'] as String);
+  factory Company.fromMap(Map<String, Object?> map) => Company(
+    id: map[CompanyTableRow.id.name] as int,
+    company: map[CompanyTableRow.company.name] as String,
+  );
 
   @override
   Map<String, Object?> toMap({bool isDB = false}) => {
     // INTEGER(int)PrimaryKey
-    'id': id >= 0 ? id : null,
+    CompanyTableRow.id.name: id >= 0 ? id : null,
     // TEXT(String)
-    'company': company,
+    CompanyTableRow.company.name: company,
   };
 
   static List<String> get tableDefinition => [
-    'id'.integer.primary,
-    'company'.text.notnull,
+    CompanyTableRow.id.name.integer.primary,
+    CompanyTableRow.company.name.text.notnull,
   ];
 }
+
+enum CompanyTableRow { id, company }

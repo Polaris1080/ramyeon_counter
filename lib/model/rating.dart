@@ -29,36 +29,46 @@ class Rating extends ModelBase {
 
   /* From:To */
   factory Rating.fromMap(Map<String, Object?> map) => Rating(
-    id: map['id'] as int,
-    brandId: map['brandId'] as int,
-    rating: map['rating'] as int,
-    date: DateTime.parse(map['date'] as String),
+    id: map[RatingTableRow.id.name] as int,
+    brandId: map[RatingTableRow.brandId.name] as int,
+    rating: map[RatingTableRow.rating.name] as int,
+    date: DateTime.parse(map[RatingTableRow.date.name] as String),
   );
 
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     if (brandId < 0) {
-      throw RangeError.value(brandId, 'brandId', 'brandId >= 0');
+      throw RangeError.value(
+        brandId,
+        RatingTableRow.brandId.name,
+        '${RatingTableRow.brandId.name} >= 0',
+      );
     }
     if (rating < 1 || 10 < rating) {
-      throw RangeError.value(rating, 'rating', '1 <= rating <= 10');
+      throw RangeError.value(
+        rating,
+        RatingTableRow.rating.name,
+        '1 <= ${RatingTableRow.rating.name} <= 10',
+      );
     }
     return {
       // INTEGER(int)PrimaryKey
-      'id': id >= 0 ? id : null,
+      RatingTableRow.id.name: id >= 0 ? id : null,
       // INTEGER(int)
-      'brandId': brandId,
+      RatingTableRow.brandId.name: brandId,
       // INTEGER(int)
-      'rating': rating,
+      RatingTableRow.rating.name: rating,
       // TEXT | DateTime
-      'date': isDB ? date.toString() : date,
+      RatingTableRow.date.name: isDB ? date.toString() : date,
     };
   }
 
   static List<String> get tableDefinition => [
-    'id'.integer.primary,
-    'brandId'.integer.notnull,
-    'rating'.integer.notnull,
-    'date'.text.notnull,
+    RatingTableRow.id.name.integer.primary,
+    RatingTableRow.brandId.name.integer.notnull,
+    RatingTableRow.rating.name.integer.notnull,
+    RatingTableRow.date.name.text.notnull,
   ];
 }
+
+enum RatingTableRow { id, brandId, rating, date }

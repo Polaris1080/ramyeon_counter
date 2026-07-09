@@ -1,54 +1,61 @@
-import 'package:darq/darq.dart';
-
-import 'company_repository.dart';
-import '../ramyeon.dart';
+// Base
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
+// Model
+import '../company.dart';
+import '../ramyeon.dart';
+// Package
+import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class RamyeonRepository extends RamyeonRepositoryBase {
   @override
   RamyeonDatabaseTable get table => .ramyeon;
+  static const RamyeonDatabaseTable _subTable = .company;
 
   Future<int> insert(Ramyeon value) async => await super.insertBase(value);
 
-  Future<List<Ramyeon>> readAll() async => await (await (await db).rawQuery(
-    'SELECT * FROM ramyeon INNER JOIN company ON ramyeon.companyId = company.id',
-  )).decode();
+  Future<List<Ramyeon>> readAll() async => (await (await db).rawQuery('''
+    SELECT * FROM ${table.name} INNER JOIN ${_subTable.name}
+      ON ${table.name}.${RamyeonTableRow.companyId.name} = ${_subTable.name}.${CompanyTableRow.id.name}
+  ''')).decode();
 
-  Future<Ramyeon> read(int id) async => (await (await (await db).rawQuery(
-    'SELECT * FROM ramyeon INNER JOIN company ON ramyeon.companyId = company.id WHERE ramyeon.id = ? ',
+  Future<Ramyeon> read(int id) async => ((await (await db).rawQuery(
+    '''
+    SELECT * FROM ${table.name} INNER JOIN ${_subTable.name}
+      ON ${table.name}.${RamyeonTableRow.companyId.name} = ${_subTable.name}.${CompanyTableRow.id.name}
+      WHERE ${table.name}.${RamyeonTableRow.id.name} = ?
+    ''',
     [id],
   )).decode()).first;
 
-  Future<List<String>?> readTag(int id) async {
-    return ((await (await db).rawQuery(
-      'SELECT tag FROM ramyeon  INNER JOIN company ON ramyeon.companyId = company.id WHERE ramyeon.id = ?',
-      [id],
-    )).select((s, _) => (s['tag'] as String).split(','))).firstOrNull;
-  }
+  Future<List<String>?> readTag(int id) async => ((await (await db).rawQuery(
+    '''
+    SELECT tag FROM ${table.name} INNER JOIN company
+      ON ${table.name}.${RamyeonTableRow.companyId.name} = ${_subTable.name}.${CompanyTableRow.id.name}
+      WHERE ${table.name}.${RamyeonTableRow.id.name} = ?
+    ''',
+    [id],
+  )).select((s, _) => (s['tag'] as String).split(','))).firstOrNull;
 
-  Future<List<Ramyeon>> readByBrand(String brand) async =>
-      (await (await db).query(
-        table.name,
-        where: 'brand Like ?',
-        whereArgs: ['%$brand%'],
-      )).decode();
+  Future<int> update(Ramyeon value) async => await updateBase(
+    value,
+    where: '${RamyeonTableRow.id.name} = ?',
+    whereArgs: [value.id],
+  );
 
-  Future<int> update(Ramyeon value) async =>
-      await updateBase(value, where: 'id = ?', whereArgs: [value.id]);
+  Future<int> delete(int id) async => await deleteBase(
+    where: '${RamyeonTableRow.id.name} = ?',
+    whereArgs: [id],
+  );
 
-  Future<int> delete(int id) async =>
-      await deleteBase(where: 'id = ?', whereArgs: [id]);
-
-  Future<int> countByBrand(String brand) async {
-    var result = await (await db).rawQuery(
-      'SELECT COUNT(*) as count FROM ${table.name} WHERE brand Like ?',
-      ['%$brand%'],
-    );
-    var t1 = result.select((s, _) => s['count'] as int).first;
-    return t1;
-  }
+  Future<int> countByBrand(String brand) async => (await (await db).rawQuery(
+    '''
+    SELECT COUNT(*) as count FROM ${table.name}
+      WHERE ${RamyeonTableRow.brand.name} Like ?
+    ''',
+    ['%$brand%'],
+  )).select((s, _) => s['count'] as int).first;
 
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {

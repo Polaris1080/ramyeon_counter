@@ -32,39 +32,53 @@ class Barcode extends ModelBase {
 
   /* From:To */
   factory Barcode.fromMap(Map<String, Object?> map) => Barcode(
-    id: map['id'] as int,
-    brandId: map['brandId'] as int,
-    count: map['count'] as int,
-    jam: map['jam'] as int,
+    id: map[BarcodeTableRow.id.name] as int,
+    brandId: map[BarcodeTableRow.brandid.name] as int,
+    count: map[BarcodeTableRow.count.name] as int,
+    jam: map[BarcodeTableRow.jam.name] as int,
   );
 
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     if (brandId < 0) {
-      throw RangeError.value(brandId, 'brandId', 'brandId >= 0');
+      throw RangeError.value(
+        brandId,
+        BarcodeTableRow.brandid.name,
+        '${BarcodeTableRow.brandid.name} >= 0',
+      );
     }
     if (count < 1) {
-      throw RangeError.value(count, 'count', 'count >= 1');
+      throw RangeError.value(
+        count,
+        BarcodeTableRow.count.name,
+        '${BarcodeTableRow.count.name} >= 1',
+      );
     }
     if (!(jam.digit == 8 || jam.digit == 13)) {
-      throw RangeError.value(jam, 'jam', 'jam digit is 8 or 13.');
+      throw RangeError.value(
+        jam,
+        BarcodeTableRow.jam.name,
+        '${BarcodeTableRow.jam.name} digit is 8 or 13.',
+      );
     }
     return {
       // INTEGER(int) PrimaryKey
-      'id': id >= 0 ? id : null,
+      BarcodeTableRow.id.name: id >= 0 ? id : null,
       // INTEGER(int) >=0
-      'brandId': brandId,
+      BarcodeTableRow.brandid.name: brandId,
       // INTEGER(int) >=1
-      'count': count,
+      BarcodeTableRow.count.name: count,
       // INTEGER(int) digit=8|13
-      'jam': jam,
+      BarcodeTableRow.jam.name: jam,
     };
   }
 
   static List<String> get tableDefinition => [
-    'id'.integer.primary,
-    'brandId'.integer.notnull,
-    'count'.integer.notnull,
-    'jam'.integer.notnull,
+    BarcodeTableRow.id.name.integer.primary,
+    BarcodeTableRow.brandid.name.integer.notnull,
+    BarcodeTableRow.count.name.integer.notnull,
+    BarcodeTableRow.jam.name.integer.notnull,
   ];
 }
+
+enum BarcodeTableRow { id, brandid, count, jam }

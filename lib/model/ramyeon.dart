@@ -44,38 +44,44 @@ class Ramyeon extends ModelBase {
 
   /* From:To */
   factory Ramyeon.fromMap(Map<String, Object?> map) => Ramyeon(
-    id: map['id'] as int,
-    companyId: map['companyId'] as int,
-    brand: map['brand'] as String,
-    company: map['company'] as String,
-    tag: (map['tag'] as String).split(','),
-    packageColor: map['packageColor'] as int?,
+    id: map[RamyeonTableRow.id.name] as int,
+    companyId: map[RamyeonTableRow.companyId.name] as int,
+    brand: map[RamyeonTableRow.brand.name] as String,
+    company: map[RamyeonTableRow.company.name] as String,
+    tag: (map[RamyeonTableRow.tag.name] as String).split(','),
+    packageColor: map[RamyeonTableRow.packageColor.name] as int?,
   );
 
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     if (companyId < 0) {
-      throw RangeError.value(companyId, 'brandId', 'brandId >= 0');
+      throw RangeError.value(
+        companyId,
+        RamyeonTableRow.brand.name,
+        '${RamyeonTableRow.brand.name} >= 0',
+      );
     }
     return <String, Object?>{
       // INTEGER(int)PrimaryKey
-      'id': id >= 0 ? id : null,
+      RamyeonTableRow.id.name: id >= 0 ? id : null,
       // INTEGER(int)
-      'companyId': companyId,
+      RamyeonTableRow.companyId.name: companyId,
       // TEXT(String)
-      'brand': brand,
+      RamyeonTableRow.brand.name: brand,
       // TEXT | List<String>
-      'tag': isDB ? tag.join(',') : tag,
+      RamyeonTableRow.tag.name: isDB ? tag.join(',') : tag,
       // INTEGER(int?)
-      'packageColor': packageColor,
+      RamyeonTableRow.packageColor.name: packageColor,
     };
   }
 
   static List<String> get tableDefinition => [
-    'id'.integer.primary,
-    'companyId'.integer.notnull,
-    'brand'.text.notnull,
-    'tag'.text.notnull,
-    'packageColor'.integer,
+    RamyeonTableRow.id.name.integer.primary,
+    RamyeonTableRow.companyId.name.integer.notnull,
+    RamyeonTableRow.brand.name.text.notnull,
+    RamyeonTableRow.tag.name.text.notnull,
+    RamyeonTableRow.packageColor.name.integer,
   ];
 }
+
+enum RamyeonTableRow { id, companyId, brand, company, tag, packageColor }

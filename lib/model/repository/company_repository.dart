@@ -1,8 +1,10 @@
-import 'package:darq/darq.dart';
-
-import '../company.dart';
+// Base
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
+// Model
+import '../company.dart';
+// Package
+import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class CompanyRepository extends RamyeonRepositoryBase {
@@ -16,23 +18,28 @@ class CompanyRepository extends RamyeonRepositoryBase {
 
   Future<Company?> read(int id) async => (await (await db).query(
     table.name,
-    where: 'id = ?',
+    where: '${CompanyTableRow.id.name} = ?',
     whereArgs: [id],
   )).decode().firstOrNull;
 
   Future<Company?> readByCompany(String company) async {
     return (await (await db).query(
       table.name,
-      where: 'company = ?',
+      where: '${CompanyTableRow.company.name} = ?',
       whereArgs: [company],
     )).decode().firstOrNull;
   }
 
-  Future<int> update(Company value) async =>
-      await updateBase(value, where: 'id = ?', whereArgs: [value.id]);
+  Future<int> update(Company value) async => await updateBase(
+    value,
+    where: '${CompanyTableRow.id.name} = ?',
+    whereArgs: [value.id],
+  );
 
-  Future<int> delete(int id) async =>
-      await deleteBase(where: 'id = ?', whereArgs: [id]);
+  Future<int> delete(int id) async => await deleteBase(
+    where: '${CompanyTableRow.id.name} = ?',
+    whereArgs: [id],
+  );
 
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {

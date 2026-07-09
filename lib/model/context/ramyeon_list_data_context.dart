@@ -25,6 +25,20 @@ class RamyeonListDataContext extends RamyeonContextBase {
     )).decode();
     return a;
   }
+
+    Future<List<RamyeonListData>> read(
+    String brand, {
+    String? order,
+  }) async {
+    final database = await db;
+    final a = (await database.query(
+      table.name,
+      orderBy: order,
+      where: 'brand Like ?',
+      whereArgs: ['%$brand%'],
+    )).decode();
+    return a;
+  }
 }
 
 class TestRamyeonListContext extends RamyeonListDataContext {

@@ -1,8 +1,10 @@
-import 'package:darq/darq.dart';
-
-import '../barcode.dart';
+// Base
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
+// Model
+import '../barcode.dart';
+// Package
+import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class BarcodeRepository extends RamyeonRepositoryBase {
@@ -14,17 +16,22 @@ class BarcodeRepository extends RamyeonRepositoryBase {
   Future<List<Barcode>> readByBrandId(int brandId) async =>
       (await (await db).query(
         table.name,
-        where: 'brandId = ?',
+        where: '${BarcodeTableRow.brandid.name} = ?',
         whereArgs: [brandId],
       )).decode();
 
   Future<List<Barcode>> readAll() async => (await readAllBase()).decode();
 
-  Future<int> update(Barcode value) async =>
-      await updateBase(value, where: 'id = ?', whereArgs: [value.id]);
+  Future<int> update(Barcode value) async => await updateBase(
+    value,
+    where: '${BarcodeTableRow.id.name} = ?',
+    whereArgs: [value.id],
+  );
 
-  Future<int> delete(int id) async =>
-      await deleteBase(where: 'id = ?', whereArgs: [id]);
+  Future<int> delete(int id) async => await deleteBase(
+    where: '${BarcodeTableRow.id.name} = ?',
+    whereArgs: [id],
+  );
 
   /// [RamyeonDatabase] onCreate
   void onCreate(Database db) async {

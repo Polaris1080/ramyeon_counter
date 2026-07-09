@@ -9,14 +9,4 @@ class StockChartData extends VirtualModelBase {
   final List<int> price;
 
   StockChartData({required this.brand, required this.price});
-
-  @override
-  Map<String, Object?> toMap({bool isDB = false}) {
-    return <String, Object?>{
-      // Text(String)
-      'brand': brand,
-      // INTEGER(int)
-      'rank': price,
-    };
-  }
 }

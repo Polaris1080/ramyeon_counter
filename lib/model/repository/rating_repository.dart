@@ -1,8 +1,10 @@
-import 'package:darq/darq.dart';
-
-import '../rating.dart';
+// Base
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
+// Model
+import '../rating.dart';
+// Package
+import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class RatingRepository extends RamyeonRepositoryBase {
@@ -14,25 +16,28 @@ class RatingRepository extends RamyeonRepositoryBase {
   Future<List<Rating>> readByBrandId(int brandId) async =>
       (await (await db).query(
         table.name,
-        where: 'brandId = ?',
+        where: '${RatingTableRow.brandId.name} = ?',
         whereArgs: [brandId],
       )).decode();
 
   Future<List<Rating>> readAll() async => (await readAllBase()).decode();
 
-  Future<int> update(Rating value) async =>
-      await updateBase(value, where: 'id = ?', whereArgs: [value.id]);
+  Future<int> update(Rating value) async => await updateBase(
+    value,
+    where: '${RatingTableRow.id.name} = ?',
+    whereArgs: [value.id],
+  );
 
   Future<int> delete(int id) async =>
-      await deleteBase(where: 'id = ?', whereArgs: [id]);
+      await deleteBase(where: '${RatingTableRow.id.name} = ?', whereArgs: [id]);
 
-  Future<int> countByBrandId(int brandId) async {
-    const count = 'count';
-    return (await (await db).rawQuery(
-      'SELECT COUNT(*) as $count FROM ${table.name} WHERE brandId = ?',
-      [brandId],
-    )).select((s, _) => s[count] as int).first;
-  }
+  Future<int> countByBrandId(int brandId) async => (await (await db).rawQuery(
+    '''
+    SELECT COUNT(*) as count FROM ${table.name}
+      WHERE ${RatingTableRow.brandId.name} = ?
+    ''',
+    [brandId],
+  )).select((s, _) => s['count'] as int).first;
 
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {

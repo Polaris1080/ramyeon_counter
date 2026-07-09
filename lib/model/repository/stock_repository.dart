@@ -1,8 +1,10 @@
-import 'package:darq/darq.dart';
-
-import '../stock.dart';
+// Base
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
+// Model
+import '../stock.dart';
+// Package
+import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class StockRepository extends RamyeonRepositoryBase {
@@ -14,28 +16,31 @@ class StockRepository extends RamyeonRepositoryBase {
   Future<List<Stock>> readByBrandId(int brandId) async =>
       (await (await db).query(
         table.name,
-        where: 'brandId = ?',
+        where: '${StockTableMap.brandId.name} = ?',
         whereArgs: [brandId],
       )).decode();
 
   Future<List<Stock>> readAll() async => (await readAllBase()).decode();
 
-  Future<int> update(Stock value) async =>
-      await updateBase(value, where: 'id = ?', whereArgs: [value.id]);
+  Future<int> update(Stock value) async => await updateBase(
+    value,
+    where: '${StockTableMap.id.name} = ?',
+    whereArgs: [value.id],
+  );
 
   Future<int> delete(int id) async =>
-      await deleteBase(where: 'id = ?', whereArgs: [id]);
+      await deleteBase(where: '${StockTableMap.id.name} = ?', whereArgs: [id]);
 
   Future<List<int>> deleteMany(List<int> ids) async =>
       await Future.wait(ids.select((s, _) => delete(s)));
 
-  Future<int> countByBrandId(int brandId) async {
-    const count = 'count';
-    return (await (await db).rawQuery(
-      'SELECT COUNT(*) as $count FROM ${table.name} WHERE brandId = ?',
-      [brandId],
-    )).select((s, _) => s[count] as int).first;
-  }
+  Future<int> countByBrandId(int brandId) async => (await (await db).rawQuery(
+    '''
+    SELECT COUNT(*) as count FROM ${table.name}
+      WHERE ${StockTableMap.brandId.name} = ?
+    ''',
+    [brandId],
+  )).select((s, _) => s['count'] as int).first;
 
   /// [RamyeonDatabase] onCreate
   void onCreate(Database db) async {
