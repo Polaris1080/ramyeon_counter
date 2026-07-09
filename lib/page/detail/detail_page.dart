@@ -3,6 +3,7 @@ import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 // Package
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ramyeon_counter/page/detail/actions/detail_to_edit_action.dart';
 // Widget
 import 'package:ramyeon_counter/page/detail/detail_bottom_appbar.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
@@ -22,15 +23,7 @@ class DetailPage extends StatelessWidget {
       appBar: DefaultAppBar(
         context,
         '詳細',
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            tooltip: '編集',
-            onPressed: () {
-              context.push('/detail/edit/$ramyeonId', extra: packageColor);
-            },
-          ),
-        ],
+        actions: [DetailToEditAction(ramyeonId, packageColor)],
         overrideColor: packageColor,
       ),
       body: Column(
