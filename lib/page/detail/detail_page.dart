@@ -3,13 +3,14 @@ import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 // Package
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ramyeon_counter/page/detail/actions/detail_to_edit_action.dart';
 // Widget
 import 'package:ramyeon_counter/page/detail/detail_bottom_appbar.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 import 'package:ramyeon_counter/widget/detail_regist_page/data/ramyeon_data_viewer.dart';
 import 'package:ramyeon_counter/widget/detail_regist_page/tag/tag_viewer.dart';
 import 'package:ramyeon_counter/widget/ramyeon_image/ramyeon_image_viewer.dart';
+// Partical
+part 'actions/detail_to_edit_action.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key, required this.ramyeonId, this.packageColor});

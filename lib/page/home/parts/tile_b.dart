@@ -9,6 +9,7 @@ class TileB extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = data.packageColor != null ? Color(data.packageColor!) : null;
     return ListTile(
       leading: ExcludeSemantics(
         // TODO
@@ -23,10 +24,11 @@ class TileB extends StatelessWidget {
       onTap: () => {
         context.push(
           '/detail',
-          extra: (
+          extra: [
             data.id,
-            data.packageColor != null ? Color(data.packageColor!) : null,
-          ),
+            data.packageColor
+            //color, //data.packageColor != null ? Color(data.packageColor!) : null,
+          ],
         ),
       },
     );

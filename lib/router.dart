@@ -20,10 +20,16 @@ final goRouter = GoRouter(
       path: '/detail',
       name: 'detail',
       pageBuilder: (context, state) {
-        final (ramyeonId, packageColor) = state.extra as (int, Color?);
+        final extra = state.extra as List<Object?>;
         return MaterialPage(
           key: state.pageKey,
-          child: DetailPage(ramyeonId: ramyeonId, packageColor: packageColor),
+          child: DetailPage(
+            ramyeonId: extra[0] as int,
+            packageColor: switch (extra[1]) {
+              int packageColor => Color(packageColor),
+              _ => null,
+            },
+          ),
         );
       },
       routes: [
@@ -31,13 +37,18 @@ final goRouter = GoRouter(
         GoRoute(
           path: 'edit/:brandId',
           name: 'edit',
-          pageBuilder: (context, state) => MaterialPage(
-            key: state.pageKey,
-            child: RegistPage(
-              brandId: int.parse(state.pathParameters['brandId']!),
-              packageColor: state.extra as Color?,
-            ),
-          ),
+          pageBuilder: (context, state) {
+            return MaterialPage(
+              key: state.pageKey,
+              child: RegistPage(
+                brandId: int.parse(state.pathParameters['brandId']!),
+                packageColor: switch (state.extra) {
+                  int packageColor => Color(packageColor),
+                  _ => null,
+                },
+              ),
+            );
+          },
         ),
         // 履歴：価格
         GoRoute(

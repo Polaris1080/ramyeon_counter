@@ -1,7 +1,4 @@
-// Model
-
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+part of '../detail_page.dart';
 
 class DetailToEditAction extends StatelessWidget {
   const DetailToEditAction(this.ramyeonId, this.packageColor, {super.key});
@@ -15,7 +12,10 @@ class DetailToEditAction extends StatelessWidget {
       icon: const Icon(Icons.edit),
       tooltip: '編集',
       onPressed: () {
-        context.push('/detail/edit/$ramyeonId', extra: packageColor);
+        context.push(
+          '/detail/edit/$ramyeonId',
+          extra: packageColor?.toARGB32(),
+        );
       },
     );
   }
