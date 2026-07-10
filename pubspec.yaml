@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  camera: ^0.12.0+1
   darq: ^2.1.0
   fl_chart: ^1.2.0
   go_router: ^17.2.0
