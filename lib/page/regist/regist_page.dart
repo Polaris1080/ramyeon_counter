@@ -1,4 +1,5 @@
 // Extention
+import 'package:ramyeon_counter/page/regist/actions/regist_ramyeon_action.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
 // Model
 import 'package:ramyeon_counter/model/company.dart';
@@ -46,34 +47,7 @@ class RegistPage extends StatelessWidget {
           context,
           '登録',
           actions: [
-            IconButton(
-              icon: const Icon(Icons.add),
-              tooltip: '登録',
-              onPressed: () async {
-                if (formKey.currentState!.validate()) {
-                  // companyID解決
-                  Company? company = await CompanyRepository().readByCompany(
-                    vm.company,
-                  );
-                  int companyId = company != null
-                      ? company.id
-                      : await CompanyRepository().insert(vm.company);
-                  await RamyeonRepository().insert(
-                    .new(
-                      id: -1,
-                      companyId: companyId,
-                      brand: vm.brand,
-                      company: vm.company,
-                      tag: [],
-                    ),
-                  );
-                  if (context.mounted) {
-                    // return [HomePage]
-                    Navigator.of(context).pop();
-                  }
-                }
-              },
-            ),
+            RegistRamyeonAction(formKey: formKey, vm: vm),
           ],
         ),
         body: SingleChildScrollView(
