@@ -1,7 +1,10 @@
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ramyeon_counter/page/regist/view_model/barcode_register_vm.dart';
+import 'package:ramyeon_counter/widget/detail_regist_page/barcode/register/barcode_register_vm.dart';
+
+part 'deletable_barcode_viewer.dart';
+part 'deletable_chip.dart';
 
 class BarcodeRegister extends StatelessWidget {
   const BarcodeRegister(this.vm, {super.key});
@@ -41,7 +44,7 @@ class BarcodeRegister extends StatelessWidget {
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'バーコード',
-                            helperText: '数字８桁or１３桁',
+                            helperText: '数字８／１３桁',
                           ),
                           onChanged: (value) {
                             vm.barcodeText = value;
@@ -91,69 +94,12 @@ class BarcodeRegister extends StatelessWidget {
                   ),
                 ],
               ),
-              /* 3rd Columu (Viewer) */
-              ListenableBuilder(
-                listenable: vm,
-                builder: (context, _) {
-                  return Wrap(
-                    children: [
-                      for (var entry in vm.source.entries)
-                        DeletableChip.fromBarcode(
-                          entry,
-                          onDel: () => vm.remove(entry.key),
-                        ),
-                    ],
-                  );
-                },
-              ),
+              /* 3rd Columu */
+              DeletableBarcodeViewer(vm),
             ],
           ),
         ),
       ],
-    );
-  }
-}
-
-class DeletableChip extends StatelessWidget {
-  const DeletableChip(this.data, {super.key, this.onDel});
-
-  DeletableChip.fromBarcode(
-    MapEntry<int, int> barcode, {
-    Key? key,
-    Function()? onDel,
-  }) : this('${barcode.key}個：${barcode.value}', key: key, onDel: onDel);
-
-  final String data;
-  final void Function()? onDel;
-
-  @override
-  Widget build(BuildContext context) {
-    return ActionChip(
-      label: Text(data),
-      padding: EdgeInsets.all(0),
-      onPressed: () => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("削除しますか？"),
-          content: Text(data),
-          actions: [
-            TextButton(
-              child: const Text("Cancel"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () {
-                onDel?.call();
-                //vm.remove(count);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
