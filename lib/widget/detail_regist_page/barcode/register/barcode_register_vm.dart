@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class BarcodeRegisterViewModel extends ChangeNotifier {
   BarcodeRegisterViewModel() {
-    selectCount();
+    selectCount(); // 初期化
   }
 
   Map<int, int> get source => _source;
@@ -32,14 +32,14 @@ class BarcodeRegisterViewModel extends ChangeNotifier {
   void append() {
     if (barcode != null && !source.containsKey(countSelected)) {
       _source.addAll({countSelected: barcode!});
-      selectCount();
+      selectCount(); // 変動
       notifyListeners();
     }
   }
 
   void remove(int key) {
     _source.remove(key);
-    selectCount();
+    selectCount(); // 変動
     notifyListeners();
   }
 

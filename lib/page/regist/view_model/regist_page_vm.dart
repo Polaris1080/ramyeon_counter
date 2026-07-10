@@ -2,6 +2,7 @@ import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
 import 'package:ramyeon_counter/widget/detail_regist_page/barcode/register/barcode_register_vm.dart';
+import 'package:ramyeon_counter/widget/detail_regist_page/tag/register/tag_register_vm.dart';
 
 class RegistPageViewModel extends ChangeNotifier {
   RegistPageViewModel(int? brandId) {
@@ -28,17 +29,6 @@ class RegistPageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Map<int, String> get tag => _tag;
-  final Map<int, String> _tag = {0: 'からい', 1: 'おいしい'};
-  void addTag(int a, String b) {
-    _tag.addAll({a: b});
-    notifyListeners();
-  }
-
-  void removeTag(int key) {
-    _tag.remove(key);
-    notifyListeners();
-  }
-
+  TagRegisterViewModel tagRegister = .new(0);
   BarcodeRegisterViewModel barcodeRegister = .new();
 }

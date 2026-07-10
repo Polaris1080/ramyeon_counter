@@ -14,7 +14,7 @@ import 'package:ramyeon_counter/page/regist/view_model/regist_page_vm.dart';
 import 'package:ramyeon_counter/widget/detail_regist_page/barcode/register/barcode_register.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 import 'package:ramyeon_counter/widget/detail_regist_page/data/ramyeon_data_register.dart';
-import 'package:ramyeon_counter/widget/detail_regist_page/tag/tag_register.dart';
+import 'package:ramyeon_counter/widget/detail_regist_page/tag/register/tag_register.dart';
 import 'package:ramyeon_counter/widget/ramyeon_image/ramyeon_image_register.dart';
 import 'package:ramyeon_counter/widget/ramyeon_image/ramyeon_image_register_vm.dart';
 
@@ -46,9 +46,7 @@ class RegistPage extends StatelessWidget {
         appBar: DefaultAppBar(
           context,
           '登録',
-          actions: [
-            RegistRamyeonAction(formKey: formKey, vm: vm),
-          ],
+          actions: [RegistRamyeonAction(formKey: formKey, vm: vm)],
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -116,7 +114,7 @@ class RegistPage extends StatelessWidget {
                 color: ColorScheme.of(context).primaryFixedDim,
                 child: Padding(
                   padding: const EdgeInsets.all(firstRowPadding),
-                  child: RamyeonTagRegister(vm),
+                  child: RamyeonTagRegister(vm.tagRegister),
                 ),
               ),
               /* 3rd Row(Barcode) */

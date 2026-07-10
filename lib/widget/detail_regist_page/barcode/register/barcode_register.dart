@@ -21,15 +21,11 @@ class BarcodeRegister extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: _verticalSpacing,
       children: [
-        Column(
-          spacing: _verticalSpacing,
-          children: [
-            BarcodeEntry(vm),
-            QuantitySelector(vm),
-            DeletableBarcodeViewer(vm),
-          ],
-        ),
+        BarcodeEntry(vm),
+        QuantitySelector(vm),
+        DeletableBarcodeViewer(vm),
       ],
     );
   }
