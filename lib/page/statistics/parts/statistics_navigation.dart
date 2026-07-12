@@ -1,6 +1,7 @@
 part of '../statistics_page.dart';
 
 class StatisticsNavigation extends StatelessWidget {
+  /* Setting */
   static const _duration = Duration(milliseconds: 500);
 
   const StatisticsNavigation(this.selected, {super.key});
@@ -33,7 +34,6 @@ class StatisticsNavigation extends StatelessWidget {
           backgroundColor: backgroundColor,
           indicatorColor: selectedBackgroundColor,
           indicatorShape: CircleBorder(),
-          selectedIndex: selectedIndex,
           destinations: const [
             /* 0:RankingTagSubPage */
             NavigationDestination(
@@ -60,6 +60,7 @@ class StatisticsNavigation extends StatelessWidget {
               tooltip: '評価',
             ),
           ],
+          selectedIndex: selectedIndex,
           onDestinationSelected: (index) => selected.value = index,
         ),
       ),
