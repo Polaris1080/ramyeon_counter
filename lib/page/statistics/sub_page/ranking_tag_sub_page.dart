@@ -12,8 +12,8 @@ class RankingTagSubPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: StatisticsPage.rankingPageHorizontalPadding,
-        horizontal: StatisticsPage.rankingPageVerticalPadding,
+        vertical: StatisticsPage.rankingPageVerticalPadding,
+        horizontal: StatisticsPage.rankingPageHorizontalPadding,
       ),
       child: Center(
         heightFactor: 1,
