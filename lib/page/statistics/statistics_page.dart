@@ -1,17 +1,19 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
-import 'package:nil/nil.dart';
-import 'package:ramyeon_counter/model/context/statistics_data_context.dart';
+// Model
 import 'package:ramyeon_counter/model/tag_data.dart';
-import 'package:ramyeon_counter/page/statistics/statistics_page_vm.dart';
-import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
-import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:darq/darq.dart';
+import 'package:ramyeon_counter/model/context/statistics_data_context.dart';
 import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
-
+// Package
+import 'package:darq/darq.dart';
+import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:nil/nil.dart';
+// ViewModel
+import 'package:ramyeon_counter/page/statistics/statistics_page_vm.dart';
+// Widget
 import 'parts/ranking_table.dart';
+import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
+// Partical
+part 'parts/statistics_navigation.dart';
 part 'sub_page/eat_pie_chart.dart';
 part 'sub_page/stock_bar_chart.dart';
 part 'sub_page/ranking_rating_sub_page.dart';
@@ -26,14 +28,14 @@ class StatisticsPage extends StatelessWidget {
 
   final StatisticsPageViewModel vm = .new();
 
-  final ValueNotifier<int> counter = ValueNotifier<int>(0);
+  final ValueNotifier<int> selected = .new(0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Sample App')),
       body: ValueListenableBuilder(
-        valueListenable: counter,
+        valueListenable: selected,
         builder: (context, value, child) {
           return switch (value) {
             // 『全期間／年度』｛company｝食べた個数（円グラフ）
@@ -61,45 +63,7 @@ class StatisticsPage extends StatelessWidget {
           };
         },
       ),
-
-      bottomNavigationBar: ValueListenableBuilder(
-        valueListenable: counter,
-        builder: (context, value, child) {
-          return NavigationBar(
-            onDestinationSelected: (int index) {
-              counter.value = index;
-            },
-            indicatorColor: Colors.amber,
-            selectedIndex: value,
-            destinations: const <Widget>[
-              NavigationDestination(
-                selectedIcon: Icon(Icons.home),
-                icon: Icon(Icons.home_outlined),
-                label: 'タグ',
-              ),
-              NavigationDestination(
-                icon: Badge(child: Icon(Icons.notifications_sharp)),
-                label: '食べた個数',
-              ),
-              NavigationDestination(
-                icon: Badge(
-                  label: Text('2'),
-                  child: Icon(Icons.messenger_sharp),
-                ),
-                label: '購入金額',
-              ),
-              /* RankingRatingSubPage */
-              NavigationDestination(
-                icon: Badge(
-                  label: Text('2'),
-                  child: Icon(Icons.messenger_sharp),
-                ),
-                label: '評価',
-              ),
-            ],
-          );
-        },
-      ),
+      bottomNavigationBar: StatisticsNavigation(selected),
     );
   }
 }
