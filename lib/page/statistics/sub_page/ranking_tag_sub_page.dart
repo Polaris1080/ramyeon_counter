@@ -1,57 +1,41 @@
 part of '../statistics_page.dart';
 
 class RankingTagSubPage extends StatelessWidget {
-  const RankingTagSubPage(this.data, this.vm, {super.key});
+  static const _tableTitle = "ランキング：タグ";
 
-  final List<TagData> data;
+  const RankingTagSubPage(this.vm, this.data, {super.key});
+
   final StatisticsPageViewModel vm;
+  final List<TagData> data;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Container(
-        constraints: BoxConstraints(maxWidth: 300),
-        child: Table(
-          border: TableBorder.all(),
-          columnWidths: <int, TableColumnWidth>{
-            // 順位
-            0: MinColumnWidth(
-              FixedColumnWidth(max((data.length.digit + 1) * 10, 40)),
-              FractionColumnWidth(0.3),
-            ),
-            // 品名
-            1: FlexColumnWidth(),
-            // 評価
-            2: FixedColumnWidth(40),
-          },
-          defaultVerticalAlignment: .middle,
-          children: data
-              .select(
-                (s, i) => TableRow(
-                  children: <Widget>[
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(s.rank.toString(), textAlign: .end),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(s.tag, textAlign: .end),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(s.count.toString(), textAlign: .end),
-                      ),
-                    ),
-                  ],
+      padding: const EdgeInsets.symmetric(
+        vertical: StatisticsPage.rankingPageHorizontalPadding,
+        horizontal: StatisticsPage.rankingPageVerticalPadding,
+      ),
+      child: Center(
+        heightFactor: 1,
+        child: Column(
+          children: [
+            // TODO:もっと見る[余裕があれば]
+            RankingTable(
+              [
+                ...data.select(
+                  (s, _) => RankingTableData(
+                    rank: s.rank,
+                    name: s.tag,
+                    value: s.count,
+                  ),
                 ),
-              )
-              .toList(),
+              ],
+              heading: ['順位', '品名', '個数'],
+              title: _tableTitle,
+              width: StatisticsPage.rankingPageTableWidth,
+            ),
+            // TODO:全部見る
+          ],
         ),
       ),
     );

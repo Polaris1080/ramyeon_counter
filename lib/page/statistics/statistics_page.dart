@@ -10,12 +10,18 @@ import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:darq/darq.dart';
 import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
+
+import 'parts/ranking_table.dart';
 part 'sub_page/eat_pie_chart.dart';
 part 'sub_page/stock_bar_chart.dart';
 part 'sub_page/ranking_rating_sub_page.dart';
 part 'sub_page/ranking_tag_sub_page.dart';
 
 class StatisticsPage extends StatelessWidget {
+  static const rankingPageHorizontalPadding = 10.0,
+      rankingPageVerticalPadding = 20.0,
+      rankingPageTableWidth = 300.0;
+
   StatisticsPage({super.key});
 
   final StatisticsPageViewModel vm = .new();
@@ -45,27 +51,12 @@ class StatisticsPage extends StatelessWidget {
                 _ => DelayedLoadingProgressIndicator.normal(context),
               },
             ),
-            _ => Center(
-              child: FutureBuilder(
-                future: vm.rankingTagData,
-                builder: (context, snapshot) => switch (snapshot.data) {
-                  List<TagData> data => RankingTagSubPage(data, vm),
-                  _ => DelayedLoadingProgressIndicator.normal(context),
-                },
-              ),
-              //       Text('''
-              //   『全体』
-              //   タグ：ランキング
-              //   タグ：すべて表示
-              //   『全期間／年度』
-              //   ｛company｝
-              //   食べた個数（円グラフ）
-              //   ｛stock｝
-              //   購入価格：合計
-              //   購入価格（ヒストグラム）年／月
-              //   ｛rating｝
-              //   評価：ランキング
-              // '''),
+            _ => FutureBuilder(
+              future: vm.rankingTagData,
+              builder: (context, snapshot) => switch (snapshot.data) {
+                List<TagData> data => RankingTagSubPage(vm, data),
+                _ => DelayedLoadingProgressIndicator.normal(context),
+              },
             ),
           };
         },
