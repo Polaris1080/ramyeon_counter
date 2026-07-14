@@ -1,4 +1,6 @@
 // Model
+import 'dart:core';
+
 import 'package:ramyeon_counter/model/tag_data.dart';
 import 'package:ramyeon_counter/model/context/statistics_data_context.dart';
 import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
@@ -10,12 +12,14 @@ import 'package:nil/nil.dart';
 // ViewModel
 import 'package:ramyeon_counter/page/statistics/statistics_page_vm.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_bool_notifier.dart';
+import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 // Widget
 import 'parts/ranking_table.dart';
 import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
 // Partical
 part 'parts/all_or_year_selector.dart';
+part 'parts/all_tag_view_area.dart';
 part 'parts/statistics_navigation.dart';
 part 'sub_page/eat_pie_chart.dart';
 part 'sub_page/stock_bar_chart.dart';
@@ -26,7 +30,16 @@ class StatisticsPage extends StatelessWidget {
   /* Setting */
   static const rankingPageHorizontalPadding = 10.0,
       rankingPageVerticalPadding = 10.0,
-      rankingPageTableWidth = 300.0;
+      rankingPageTableWidth = 300.0,
+      rainbow = [
+        Colors.red,
+        Colors.orange,
+        Colors.yellow,
+        Colors.green,
+        Colors.cyan,
+        Colors.blue,
+        Colors.purple,
+      ];
 
   StatisticsPage({super.key});
 
