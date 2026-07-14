@@ -1,13 +1,13 @@
+// Package
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
+// Model
+import 'package:ramyeon_counter/model/tag_data.dart';
+import 'package:ramyeon_counter/model/rating.dart';
 import 'package:ramyeon_counter/model/context/statistics_data_context.dart';
 import 'package:ramyeon_counter/model/context/tag_data_context.dart';
-import 'package:ramyeon_counter/model/rating.dart';
-import 'package:ramyeon_counter/model/tag_data.dart';
 
 class StatisticsPageViewModel extends ChangeNotifier {
-  //StatisticsPageViewModel() {}
-
   /// [Rating] 評価：ランキング
   Future<Map<String, double>> get rankingRatingData async =>
       (_rankingRatingData ??= await StatisticsDataContext()
@@ -24,7 +24,7 @@ class StatisticsPageViewModel extends ChangeNotifier {
 
   /// [TagData] タグ：すべて表示
   Future<List<TagData>> get allTagData async =>
-      (_allTagData ??= await TagDataContext().readRankingTagData().then(
+      (_allTagData ??= await TagDataContext().readAllTagData().then(
         (result) => _allTagData = result,
       ))!;
   List<TagData>? _allTagData;

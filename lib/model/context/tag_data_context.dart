@@ -38,7 +38,7 @@ class TagDataContext extends RamyeonContextBase {
     final (:tags, :ranks) = await _getTags();
     return tags
         .getCount // 個数を求める
-        .orderByDescending((o) => o.count) // 並び替え
+        .orderBy((o) => o.tag) // 並び替え
         .castData(ranks); // Dataに変換する
   }
 
@@ -46,7 +46,8 @@ class TagDataContext extends RamyeonContextBase {
     final (:tags, :ranks) = await _getTags();
     return tags
         .getCount // 個数を求める
-        .orderBy((o) => o.tag) // 並び替え
+        .orderByDescending((o) => o.count) // 並び替え
+        .thenBy((t) => t.tag)
         .take(limit ?? -1 >>> 1) // if limit is null, int.maxValue
         .castData(ranks); // Dataに変換する
   }
