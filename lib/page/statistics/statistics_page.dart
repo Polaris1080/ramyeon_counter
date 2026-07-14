@@ -9,11 +9,13 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:nil/nil.dart';
 // ViewModel
 import 'package:ramyeon_counter/page/statistics/statistics_page_vm.dart';
+import 'package:ramyeon_counter/utility/extension_methods/em_bool_notifier.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 // Widget
 import 'parts/ranking_table.dart';
 import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
 // Partical
+part 'parts/all_or_year_selector.dart';
 part 'parts/statistics_navigation.dart';
 part 'sub_page/eat_pie_chart.dart';
 part 'sub_page/stock_bar_chart.dart';
