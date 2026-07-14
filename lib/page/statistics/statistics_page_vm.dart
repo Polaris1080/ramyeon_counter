@@ -15,10 +15,17 @@ class StatisticsPageViewModel extends ChangeNotifier {
           .then((result) => _rankingRatingData = result))!;
   Map<String, double>? _rankingRatingData;
 
+  /// [TagData] タグ：ランキング
   Future<List<TagData>> get rankingTagData async =>
-      (_rankingTagData ??= await TagDataContext().readRankingTagData().then(
-        (result) => _rankingTagData = result,
-      ))!;
-
+      (_rankingTagData ??= await TagDataContext()
+          .readRankingTagData(limit: 10)
+          .then((result) => _rankingTagData = result))!;
   List<TagData>? _rankingTagData;
+
+  /// [TagData] タグ：すべて表示
+  Future<List<TagData>> get allTagData async =>
+      (_allTagData ??= await TagDataContext().readRankingTagData().then(
+        (result) => _allTagData = result,
+      ))!;
+  List<TagData>? _allTagData;
 }

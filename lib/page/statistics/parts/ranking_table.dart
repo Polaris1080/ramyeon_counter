@@ -103,7 +103,7 @@ class RankingTable extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5),
           child: Text(
-            header.elementAtOrDefault(1, defaultValue: ''),
+            header.elementAtOrDefault(2, defaultValue: ''),
             textAlign: .center,
           ),
         ),

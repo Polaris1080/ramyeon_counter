@@ -25,7 +25,7 @@ part 'sub_page/ranking_tag_sub_page.dart';
 class StatisticsPage extends StatelessWidget {
   /* Setting */
   static const rankingPageHorizontalPadding = 10.0,
-      rankingPageVerticalPadding = 20.0,
+      rankingPageVerticalPadding = 10.0,
       rankingPageTableWidth = 300.0;
 
   StatisticsPage({super.key});
