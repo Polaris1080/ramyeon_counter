@@ -36,7 +36,7 @@ class RankingRatingSubPage extends StatelessWidget {
                         Map<String, double> data => RankingTable(
                           [
                             ...data.entries.select(
-                              (s, i) => RankingTableData(
+                              (s, i) => (
                                 rank: i + 1,
                                 name: s.key,
                                 value: s.value,
@@ -54,7 +54,7 @@ class RankingRatingSubPage extends StatelessWidget {
                   : RankingTable(
                       [
                         ...data.entries.select(
-                          (s, i) => RankingTableData(
+                          (s, i) => (
                             rank: i + 1,
                             name: s.key,
                             value: s.value,

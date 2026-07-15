@@ -31,11 +31,7 @@ class RankingTagSubPage extends StatelessWidget {
             RankingTable(
               [
                 ...data.select(
-                  (s, _) => RankingTableData(
-                    rank: s.rank,
-                    name: s.tag,
-                    value: s.count,
-                  ),
+                  (s, _) => (rank: s.rank, name: s.tag, value: s.count),
                 ),
               ],
               heading: _tableHeading,

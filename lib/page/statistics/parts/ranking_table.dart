@@ -15,7 +15,7 @@ class RankingTable extends StatelessWidget {
   });
 
   /// 内容
-  final List<RankingTableData> data;
+  final List<({int rank, String name, num value})> data;
 
   /// 見出し
   final List<String> heading;
@@ -33,7 +33,7 @@ class RankingTable extends StatelessWidget {
       child: Column(
         children: [
           /* 1st Row(Title) */
-          Text(title),
+          Text(title, style: Theme.of(context).textTheme.headlineSmall),
           /* 2nd Row(Table) */
           Table(
             border: TableBorder.all(),
@@ -110,21 +110,4 @@ class RankingTable extends StatelessWidget {
       ),
     ],
   );
-}
-
-class RankingTableData {
-  /// 順位
-  final int rank;
-
-  /// 名称
-  final String name;
-
-  /// 値
-  final num value;
-
-  RankingTableData({
-    required this.rank,
-    required this.name,
-    required this.value,
-  });
 }
