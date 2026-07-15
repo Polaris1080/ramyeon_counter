@@ -10,6 +10,7 @@ import 'package:ramyeon_counter/page/stock/stock_page_vm.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
 // Widget
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
+import 'package:ramyeon_counter/widget/image_background.dart';
 import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
 import 'package:ramyeon_counter/widget/spacing_grid_view/spacing_grid_view.dart';
 // Partial
@@ -32,22 +33,24 @@ class StockPage extends StatelessWidget {
       data: Theme.of(context).override(packageColor),
       child: Scaffold(
         appBar: DefaultAppBar(context, '在庫', actions: [SelectModeAction(vm)]),
-        body: ListenableBuilder(
-          listenable: vm,
-          builder: (context, _) {
-            return FutureBuilder(
-              future: vm.source,
-              builder: (context, snapshot) => switch (snapshot.data) {
-                List<StockPostitViewModel> postitVM => SpacingGridView(
-                  itemSize: StockPostit.size,
-                  itemCount: postitVM.length,
-                  itemBuilder: (context, index) =>
-                      StockPostit(vm: postitVM[index]),
-                ),
-                _ => DelayedLoadingProgressIndicator.normal(context),
-              },
-            );
-          },
+        body: ImageBackground.cork(
+          child: ListenableBuilder(
+            listenable: vm,
+            builder: (context, _) {
+              return FutureBuilder(
+                future: vm.source,
+                builder: (context, snapshot) => switch (snapshot.data) {
+                  List<StockPostitViewModel> postitVM => SpacingGridView(
+                    itemSize: StockPostit.size,
+                    itemCount: postitVM.length,
+                    itemBuilder: (context, index) =>
+                        StockPostit(vm: postitVM[index]),
+                  ),
+                  _ => DelayedLoadingProgressIndicator.normal(context),
+                },
+              );
+            },
+          ),
         ),
       ),
     );

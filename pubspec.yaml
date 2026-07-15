@@ -29,6 +29,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/cork.png # https://free-texture.net/wood/cork.html
+    - assets/images/paper.png # https://free-texture.net/seamless-pattern/natural-paper-bg-set.html
   fonts:
     - family: ZenKakuGothicNew
       fonts:

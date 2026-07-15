@@ -13,10 +13,11 @@ import 'package:nil/nil.dart';
 import 'package:ramyeon_counter/page/statistics/statistics_page_vm.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_bool_notifier.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
-import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 // Widget
 import 'parts/ranking_table.dart';
 import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
+import 'package:ramyeon_counter/widget/custom_app_bar.dart';
+import 'package:ramyeon_counter/widget/image_background.dart';
 // Partical
 part 'parts/all_or_year_selector.dart';
 part 'parts/all_tag_view_area.dart';
@@ -51,29 +52,31 @@ class StatisticsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(context, '統計'),
-      body: ValueListenableBuilder(
-        valueListenable: selected,
-        builder: (context, selectedIndex, _) => switch (selectedIndex) {
-          1 => Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: EatPieChart(),
-          ),
-          2 => Padding(padding: EdgeInsets.all(8.0), child: _StockBarChart()),
-          3 => FutureBuilder(
-            future: vm.rankingRatingData,
-            builder: (context, snapshot) => switch (snapshot.data) {
-              Map<String, double> data => RankingRatingSubPage(data),
-              _ => DelayedLoadingProgressIndicator.normal(context),
-            },
-          ),
-          _ => FutureBuilder(
-            future: vm.rankingTagData,
-            builder: (context, snapshot) => switch (snapshot.data) {
-              List<TagData> data => RankingTagSubPage(vm, data),
-              _ => DelayedLoadingProgressIndicator.normal(context),
-            },
-          ),
-        },
+      body: ImageBackground.paper(
+        child: ValueListenableBuilder(
+          valueListenable: selected,
+          builder: (context, selectedIndex, _) => switch (selectedIndex) {
+            1 => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: EatPieChart(),
+            ),
+            2 => Padding(padding: EdgeInsets.all(8.0), child: _StockBarChart()),
+            3 => FutureBuilder(
+              future: vm.rankingRatingData,
+              builder: (context, snapshot) => switch (snapshot.data) {
+                Map<String, double> data => RankingRatingSubPage(data),
+                _ => DelayedLoadingProgressIndicator.normal(context),
+              },
+            ),
+            _ => FutureBuilder(
+              future: vm.rankingTagData,
+              builder: (context, snapshot) => switch (snapshot.data) {
+                List<TagData> data => RankingTagSubPage(vm, data),
+                _ => DelayedLoadingProgressIndicator.normal(context),
+              },
+            ),
+          },
+        ),
       ),
       bottomNavigationBar: StatisticsNavigation(selected),
       backgroundColor: ColorScheme.of(context).surface,

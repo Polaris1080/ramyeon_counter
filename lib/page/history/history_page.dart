@@ -13,6 +13,7 @@ import 'card/history_card_base.dart';
 import 'card/history_price_card.dart';
 import 'card/history_rating_card.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
+import 'package:ramyeon_counter/widget/image_background.dart';
 import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
 // Other
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
@@ -88,33 +89,34 @@ abstract class HistoryPageBase extends StatelessWidget {
             ),
           ],
         ),
-        body: FutureBuilder(
-          future: vm.loadSource(),
-          builder: (context, snapshot) => switch (snapshot.connectionState) {
-            .done => switch (vm.isSourceEmpty) {
-              true => _emptyCard(context),
-              false => ListenableBuilder(
-                listenable: vm,
-                builder: (context, _) => ListView.builder(
-                  padding: .symmetric(vertical: _cardPadding / 2),
-                  itemCount: vm.listviewCount,
-                  itemBuilder: (context, int index) => Padding(
-                    padding: .symmetric(
-                      vertical: _cardPadding / 2,
-                      horizontal: _cardPadding,
+        body: ImageBackground.cork(
+          child: FutureBuilder(
+            future: vm.loadSource(),
+            builder: (context, snapshot) => switch (snapshot.connectionState) {
+              .done => switch (vm.isSourceEmpty) {
+                true => _emptyCard(context),
+                false => ListenableBuilder(
+                  listenable: vm,
+                  builder: (context, _) => ListView.builder(
+                    padding: .symmetric(vertical: _cardPadding / 2),
+                    itemCount: vm.listviewCount,
+                    itemBuilder: (context, int index) => Padding(
+                      padding: .symmetric(
+                        vertical: _cardPadding / 2,
+                        horizontal: _cardPadding,
+                      ),
+                      child: _historyCard(context, index),
                     ),
-                    child: _historyCard(context, index),
                   ),
                 ),
-              ),
+              },
+              _ => switch (packageColor) {
+                Color c => LoadingProgressIndicator.override(c),
+                null => LoadingProgressIndicator.normal(context),
+              },
             },
-            _ => switch (packageColor) {
-              Color c => LoadingProgressIndicator.override(c),
-              null => LoadingProgressIndicator.normal(context),
-            },
-          },
+          ),
         ),
-        backgroundColor: Color(0xFFBF9767), // Corkboard-color
       ),
     );
   }
