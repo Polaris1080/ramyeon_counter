@@ -6,13 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 
 class RankingTable extends StatelessWidget {
-  const RankingTable(
+  /* Setting */
+  static const _contentPadding = 2.5;
+
+  RankingTable(
     this.data, {
     super.key,
-    required this.heading,
+    required List<String> heading,
     this.title = "",
     required this.width,
-  });
+  }) : heading = [
+         heading.elementAtOrDefault(0, defaultValue: '順位'),
+         heading.elementAtOrDefault(1, defaultValue: '品名'),
+         heading.elementAtOrDefault(2, defaultValue: ''),
+       ];
 
   /// 内容
   final List<({int rank, String name, num value})> data;
@@ -32,41 +39,79 @@ class RankingTable extends StatelessWidget {
       width: width,
       child: Column(
         children: [
-          /* 1st Row(Title) */
-          Text(title, style: Theme.of(context).textTheme.headlineSmall),
-          /* 2nd Row(Table) */
+          /* Title */
+          Text(
+            title,
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall!.copyWith(fontFamily: "ZenMaruGothicNew"),
+          ),
+          /* Table */
           Table(
-            border: TableBorder.all(),
             columnWidths: <int, TableColumnWidth>{
               0: MinColumnWidth(
-                FixedColumnWidth(max((data.length.digit + 1) * 10, 40)),
+                FixedColumnWidth(max((data.length.digit + 1) * 10, 50)),
                 FractionColumnWidth(0.3),
               ),
               1: FlexColumnWidth(),
-              2: FixedColumnWidth(40),
+              2: FixedColumnWidth(50),
             },
             defaultVerticalAlignment: .middle,
             children: [
-              header(heading),
+              /* Header */
+              TableRow(
+                children: [
+                  ...heading.select(
+                    (data, i) => TableCell(
+                      child: Text(
+                        data,
+                        textAlign: .center,
+                        style: Theme.of(context).textTheme.titleMedium!
+                            .copyWith(
+                              color: HSVColor.fromAHSV(
+                                1.0,
+                                i * 120,
+                                1.0,
+                                0.5,
+                              ).toColor(),
+                            ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              /* Content */
               ...data.select(
                 (s, _) => TableRow(
-                  children: <Widget>[
+                  children: [
                     TableCell(
                       child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text("${s.rank}位", textAlign: .end),
+                        padding: const EdgeInsets.all(_contentPadding),
+                        child: Text(
+                          "${s.rank}位",
+                          textAlign: .end,
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
                       ),
                     ),
                     TableCell(
                       child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(s.name, textAlign: .center),
+                        padding: const EdgeInsets.all(_contentPadding),
+                        child: Text(
+                          s.name,
+                          textAlign: .center,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
                       ),
                     ),
                     TableCell(
                       child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(s.value.toString(), textAlign: .end),
+                        padding: const EdgeInsets.all(_contentPadding),
+                        child: Text(
+                          s.value.toString(),
+                          textAlign: .end,
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ),
                       ),
                     ),
                   ],
@@ -78,36 +123,4 @@ class RankingTable extends StatelessWidget {
       ),
     );
   }
-
-  TableRow header(List<String> header) => TableRow(
-    children: [
-      TableCell(
-        child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            header.elementAtOrDefault(0, defaultValue: '順位'),
-            textAlign: .center,
-          ),
-        ),
-      ),
-      TableCell(
-        child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            header.elementAtOrDefault(1, defaultValue: '品名'),
-            textAlign: .center,
-          ),
-        ),
-      ),
-      TableCell(
-        child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Text(
-            header.elementAtOrDefault(2, defaultValue: ''),
-            textAlign: .center,
-          ),
-        ),
-      ),
-    ],
-  );
 }
