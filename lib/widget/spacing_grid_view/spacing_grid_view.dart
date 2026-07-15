@@ -22,8 +22,7 @@ class SpacingGridView extends StatelessWidget {
       windowWidth: MediaQuery.of(context).size.width,
       itemSize: itemSize,
     );
-
-    return Visibility(
+    return Visibility.maintain(
       visible: spacing.gridviewVisible,
       child: Padding(
         padding: spacing.gridviewPadding,
