@@ -1,6 +1,7 @@
 part of '../stock_page.dart';
 
 class SelectModeAction extends StatelessWidget {
+  /* Setting */
   static const _tooltip = '削除',
       _dialogTitle = '削除しますか？',
       _dialogOK = '削除',
@@ -8,17 +9,22 @@ class SelectModeAction extends StatelessWidget {
 
   const SelectModeAction(this.vm, {super.key});
 
+  /* Value */
   final StockPageViewModel vm;
 
   @override
   Widget build(BuildContext context) {
+    /* Color Setting */
+    const onColor = Colors.yellow;
+    final offColor = ColorScheme.of(context).tertiaryContainer;
+
     return ListenableBuilder(
       listenable: vm,
       builder: (context, _) => switch (vm.isSelectMode) {
         true => IconButton(
           icon: const Icon(Icons.delete_forever),
           tooltip: _tooltip,
-          color: Colors.yellow,
+          color: onColor,
           onPressed: () async {
             final selected = (await vm.source).where((w) => w.selected);
             // selected > 0
@@ -63,7 +69,7 @@ class SelectModeAction extends StatelessWidget {
         false => IconButton(
           icon: const Icon(Icons.delete),
           tooltip: _tooltip,
-          color: ColorScheme.of(context).tertiaryContainer,
+          color: offColor,
           onPressed: () => vm.isSelectMode = true,
         ),
       },

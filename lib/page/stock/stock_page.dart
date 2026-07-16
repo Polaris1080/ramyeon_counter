@@ -23,6 +23,7 @@ class StockPage extends StatelessWidget {
   StockPage({super.key, required int? brandId, this.packageColor})
     : vm = .new(brandId);
 
+  /* Value */
   final StockPageViewModel vm;
   final Color? packageColor;
 

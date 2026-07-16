@@ -35,6 +35,8 @@ class RankingTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tt = Theme.of(context).textTheme;
+
     return SizedBox(
       width: width,
       child: Column(
@@ -42,9 +44,7 @@ class RankingTable extends StatelessWidget {
           /* Title */
           Text(
             title,
-            style: Theme.of(
-              context,
-            ).textTheme.headlineSmall!.copyWith(fontFamily: "ZenMaruGothicNew"),
+            style: tt.headlineSmall!.copyWith(fontFamily: "ZenMaruGothicNew"),
           ),
           /* Table */
           Table(
@@ -66,61 +66,64 @@ class RankingTable extends StatelessWidget {
                       child: Text(
                         data,
                         textAlign: .center,
-                        style: Theme.of(context).textTheme.titleMedium!
-                            .copyWith(
-                              color: HSVColor.fromAHSV(
-                                1.0,
-                                i * 120,
-                                1.0,
-                                0.5,
-                              ).toColor(),
-                            ),
+                        style: tt.titleMedium!.copyWith(
+                          color: splitHue(i, split: heading.length, value: 0.5),
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
               /* Content */
-              ...data.select(
-                (s, _) => TableRow(
+              ...data.select((s, i) {
+                final (:rank, :name, :value) = s;
+                final split = data.length;
+                return TableRow(
                   children: [
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(_contentPadding),
-                        child: Text(
-                          "${s.rank}位",
-                          textAlign: .end,
-                          style: Theme.of(context).textTheme.labelLarge,
+                    ...<({String text, TextAlign align, TextStyle style})>[
+                      (text: "$rank位", align: .end, style: tt.labelLarge!),
+                      (text: name, align: .center, style: tt.bodyLarge!),
+                      (text: "$value", align: .end, style: tt.labelLarge!),
+                    ].select((s, _) {
+                      final (:text, :align, :style) = s;
+                      return TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(_contentPadding),
+                          child: Text(
+                            text,
+                            textAlign: align,
+                            style: style.copyWith(
+                              color: splitHue(i, split: split, value: 0.75),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(_contentPadding),
-                        child: Text(
-                          s.name,
-                          textAlign: .center,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(_contentPadding),
-                        child: Text(
-                          s.value.toString(),
-                          textAlign: .end,
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
-                      ),
-                    ),
+                      );
+                    }),
                   ],
-                ),
-              ),
+                );
+              }),
             ],
           ),
         ],
       ),
     );
+  }
+
+  Color splitHue(
+    int i, {
+    required int split,
+    double saturation = 1.0,
+    double value = 1.0,
+  }) {
+    assert(split > 0, "Out of range : split");
+    assert(0 <= saturation && saturation <= 1.0, "Out of range : saturation");
+    assert(0 <= value && value <= 1.0, "Out of range : value");
+    const hue = 360;
+    return HSVColor.fromAHSV(
+      1.0,
+      i * (hue / split) % hue,
+      saturation,
+      value,
+    ).toColor();
   }
 }

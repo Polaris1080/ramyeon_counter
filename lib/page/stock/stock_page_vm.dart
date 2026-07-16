@@ -4,6 +4,7 @@ part of 'package:ramyeon_counter/page/stock/stock_page.dart';
 class StockPageViewModel extends ChangeNotifier {
   StockPageViewModel(this.brandId);
 
+  /* Value */
   final int? brandId;
 
   /// 情報

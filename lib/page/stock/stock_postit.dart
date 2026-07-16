@@ -1,11 +1,13 @@
 part of './stock_page.dart';
 
 class StockPostit extends StatelessWidget {
+  /* Setting */
   static const size = Size.square(150), _padding = 5.0;
   static final _dateFormat = DateFormat('yyyy年MM月dd日');
 
   const StockPostit({super.key, required this.vm});
 
+  /* Value */
   final StockPostitViewModel vm;
 
   @override
