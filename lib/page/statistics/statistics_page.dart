@@ -1,6 +1,7 @@
 // Model
 import 'dart:core';
 
+import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 import 'package:ramyeon_counter/model/repository/rating_repository.dart';
 import 'package:ramyeon_counter/model/tag_data.dart';
 import 'package:ramyeon_counter/model/context/statistics_data_context.dart';
@@ -48,9 +49,12 @@ class StatisticsPage extends StatelessWidget {
         child: ValueListenableBuilder(
           valueListenable: selected,
           builder: (context, selectedIndex, _) => switch (selectedIndex) {
-            1 => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: EatPieChart(),
+            1 => FutureBuilder(
+              future: RamyeonListDataContext().readByBrand(''),
+              builder: (context, snapshot) => switch (snapshot.data) {
+                List<RamyeonListData> data => EatPieChart(data),
+                _ => DelayedLoadingProgressIndicator.normal(context),
+              },
             ),
             2 => Padding(padding: EdgeInsets.all(8.0), child: _StockBarChart()),
             3 => FutureBuilder(
