@@ -32,16 +32,7 @@ class StatisticsPage extends StatelessWidget {
   /* Setting */
   static const rankingPageHorizontalPadding = 10.0,
       rankingPageVerticalPadding = 10.0,
-      rankingPageTableWidth = 300.0,
-      rainbow = [
-        Colors.red,
-        Colors.orange,
-        Colors.yellow,
-        Colors.green,
-        Colors.cyan,
-        Colors.blue,
-        Colors.purple,
-      ];
+      rankingPageTableWidth = 300.0;
 
   StatisticsPage({super.key});
 
