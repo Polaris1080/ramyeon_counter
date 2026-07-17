@@ -1,6 +1,7 @@
 // Model
 import 'dart:core';
 
+import 'package:ramyeon_counter/model/repository/rating_repository.dart';
 import 'package:ramyeon_counter/model/tag_data.dart';
 import 'package:ramyeon_counter/model/context/statistics_data_context.dart';
 import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';

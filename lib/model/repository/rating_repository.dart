@@ -39,6 +39,12 @@ class RatingRepository extends RamyeonRepositoryBase {
     [brandId],
   )).select((s, _) => s['count'] as int).first;
 
+    Future<int> getLastYear() async => (await (await db).rawQuery(
+    '''
+    SELECT strftime('%Y', date) as lastyear FROM rating ORDER BY date LIMIT 1;
+    ''',
+  )).select((s, _) => s['lastyear'] as int).first;
+
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {
     db.execute(
