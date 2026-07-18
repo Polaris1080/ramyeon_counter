@@ -60,6 +60,7 @@ class SelectModeAction extends StatelessWidget {
       }
     }
 
+    /// 「モード」がOn->Offになったとき
     if (vm.isSelected.any((a) => a.value)) {
       showDialog(
         context: context,

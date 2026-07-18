@@ -7,8 +7,8 @@ import 'package:ramyeon_counter/model/ramyeon.dart';
 // Model
 import 'package:ramyeon_counter/model/stock.dart';
 import 'package:ramyeon_counter/model/base/model_base.dart';
-import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
 import 'package:ramyeon_counter/model/repository/stock_repository.dart';
+import 'package:ramyeon_counter/ramyeon_database.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_bool_notifier.dart';
 // Other
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
@@ -23,7 +23,6 @@ part 'actions/select_mode_action.dart';
 part 'postit/stock_postit.dart';
 part 'postit/stock_postit_context.dart';
 part 'postit/stock_postit_data.dart';
-part 'postit/stock_postit_vm.dart';
 
 class StockPage extends StatelessWidget {
   StockPage({super.key, required int? brandId, this.packageColor})
@@ -57,7 +56,7 @@ class StockPage extends StatelessWidget {
             listenable: vm,
             // vm.source.load
             builder: (context, _) => FutureBuilder(
-              future: StockPostitContext().readAll(),
+              future: vm.source,
               builder: (context, snapshot) {
                 switch (snapshot.data) {
                   case List<StockPostitData> postitVM:
