@@ -16,6 +16,8 @@ class StockPageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<ValueNotifier<bool>> isSelected = [];
+
   /// 企業（対照）
   Future<Map<int, String>> get brandDict async =>
       _brandDict ??
