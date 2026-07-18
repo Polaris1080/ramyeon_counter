@@ -1,4 +1,4 @@
-part of './stock_page.dart';
+part of '../stock_page.dart';
 
 class StockPostitViewModel extends Stock with ChangeNotifier {
   StockPostitViewModel(

@@ -16,7 +16,7 @@ class StockRepository extends RamyeonRepositoryBase {
   Future<List<Stock>> readByBrandId(int brandId) async =>
       (await (await db).query(
         table.name,
-        where: '${StockTableMap.brandId.name} = ?',
+        where: '${StockTableRow.brandId.name} = ?',
         whereArgs: [brandId],
       )).decode();
 
@@ -24,12 +24,12 @@ class StockRepository extends RamyeonRepositoryBase {
 
   Future<int> update(Stock value) async => await updateBase(
     value,
-    where: '${StockTableMap.id.name} = ?',
+    where: '${StockTableRow.id.name} = ?',
     whereArgs: [value.id],
   );
 
   Future<int> delete(int id) async =>
-      await deleteBase(where: '${StockTableMap.id.name} = ?', whereArgs: [id]);
+      await deleteBase(where: '${StockTableRow.id.name} = ?', whereArgs: [id]);
 
   Future<List<int>> deleteMany(List<int> ids) async =>
       await Future.wait(ids.select((s, _) => delete(s)));
@@ -37,7 +37,7 @@ class StockRepository extends RamyeonRepositoryBase {
   Future<int> countByBrandId(int brandId) async => (await (await db).rawQuery(
     '''
     SELECT COUNT(*) as count FROM ${table.name}
-      WHERE ${StockTableMap.brandId.name} = ?
+      WHERE ${StockTableRow.brandId.name} = ?
     ''',
     [brandId],
   )).select((s, _) => s['count'] as int).first;

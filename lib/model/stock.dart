@@ -47,16 +47,16 @@ class Stock extends ModelBase {
 
   /* From:To */
   factory Stock.fromMap(Map<String, Object?> map) => Stock(
-    id: map[StockTableMap.id.name] as int,
-    brandId: map[StockTableMap.brandId.name] as int,
+    id: map[StockTableRow.id.name] as int,
+    brandId: map[StockTableRow.brandId.name] as int,
     purchaseDate: DateTime.parse(
-      map[StockTableMap.purchaseDate.name] as String,
+      map[StockTableRow.purchaseDate.name] as String,
     ),
     expirationDate: DateTime.parse(
-      map[StockTableMap.expirationDate.name] as String,
+      map[StockTableRow.expirationDate.name] as String,
     ),
-    price: map[StockTableMap.price.name] as int,
-    ate: map[StockTableMap.ate.name] as int > 0,
+    price: map[StockTableRow.price.name] as int,
+    ate: map[StockTableRow.ate.name] as int > 0,
   );
 
   @override
@@ -64,45 +64,45 @@ class Stock extends ModelBase {
     if (brandId < 0) {
       throw RangeError.value(
         brandId,
-        StockTableMap.brandId.name,
-        '${StockTableMap.brandId.name} >= 0',
+        StockTableRow.brandId.name,
+        '${StockTableRow.brandId.name} >= 0',
       );
     }
     if (price < 0) {
       throw RangeError.value(
         price,
-        StockTableMap.price.name,
-        '${StockTableMap.price.name} >= 0',
+        StockTableRow.price.name,
+        '${StockTableRow.price.name} >= 0',
       );
     }
     return {
       // INTEGER(int)PrimaryKey
-      StockTableMap.id.name: id >= 0 ? id : null,
+      StockTableRow.id.name: id >= 0 ? id : null,
       // INTEGER(int)
-      StockTableMap.brandId.name: brandId,
+      StockTableRow.brandId.name: brandId,
       // TEXT | DateTime
-      StockTableMap.purchaseDate.name: isDB
+      StockTableRow.purchaseDate.name: isDB
           ? purchaseDate.toString()
           : purchaseDate,
       // TEXT | DateTime
-      StockTableMap.expirationDate.name: isDB
+      StockTableRow.expirationDate.name: isDB
           ? expirationDate.toString()
           : expirationDate,
       // INTEGER(int)
-      StockTableMap.price.name: price,
+      StockTableRow.price.name: price,
       // INTEGER | bool
-      StockTableMap.ate.name: isDB ? (ate ? 1 : 0) : ate,
+      StockTableRow.ate.name: isDB ? (ate ? 1 : 0) : ate,
     };
   }
 
   static List<String> get tableDefinition => [
-    StockTableMap.id.name.integer.primary,
-    StockTableMap.brandId.name.integer.notnull,
-    StockTableMap.purchaseDate.name.text.notnull,
-    StockTableMap.expirationDate.name.text.notnull,
-    StockTableMap.price.name.integer.notnull,
-    StockTableMap.ate.name.integer.notnull,
+    StockTableRow.id.name.integer.primary,
+    StockTableRow.brandId.name.integer.notnull,
+    StockTableRow.purchaseDate.name.text.notnull,
+    StockTableRow.expirationDate.name.text.notnull,
+    StockTableRow.price.name.integer.notnull,
+    StockTableRow.ate.name.integer.notnull,
   ];
 }
 
-enum StockTableMap { id, brandId, purchaseDate, expirationDate, price, ate }
+enum StockTableRow { id, brandId, purchaseDate, expirationDate, price, ate }

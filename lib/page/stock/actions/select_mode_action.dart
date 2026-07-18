@@ -21,7 +21,7 @@ class SelectModeAction extends StatelessWidget {
       icon: const Icon(Icons.delete_forever),
       tooltip: '削除',
       color: Colors.yellow,
-      onPressed: () => onModeButtonPressed(context),
+      onPressed: () => _onModeButtonPressed(context),
     );
   }
 
@@ -33,7 +33,8 @@ class SelectModeAction extends StatelessWidget {
   );
 
   /* Event */
-  Future onModeButtonPressed(BuildContext context) async {
+  Future _onModeButtonPressed(BuildContext context) async {
+    /// 「削除」ボタンが押されたとき
     Future onExecuteButtonPressed() async {
       // DB削除
       await StockRepository().deleteMany(

@@ -1,4 +1,4 @@
-part of './stock_page.dart';
+part of '../stock_page.dart';
 
 class StockPostit extends StatelessWidget {
   /* Setting */
@@ -13,7 +13,7 @@ class StockPostit extends StatelessWidget {
   });
 
   /* Value */
-  final StockPostitViewModel vm;
+  final StockPostitData vm;
   final ValueNotifier<bool> isSelectMode;
   final ValueNotifier<bool> isSelected;
 
@@ -46,7 +46,7 @@ class StockPostit extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  vm.title,
+                  vm.brand,
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     fontFamily: "ZenKakuGothicNew",
                   ),
