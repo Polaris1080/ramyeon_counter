@@ -1,78 +1,78 @@
 part of '../stock_page.dart';
 
 class SelectModeAction extends StatelessWidget {
-  /* Setting */
-  static const _tooltip = '削除',
-      _dialogTitle = '削除しますか？',
-      _dialogOK = '削除',
-      _dialogNG = 'キャンセル';
+  const SelectModeAction(this.vm, this.isSelectMode, {super.key});
 
-  const SelectModeAction(this.vm, {super.key});
-
-  /* Value */
+  /* Argument */
   final StockPageViewModel vm;
+  final ValueNotifier<bool> isSelectMode;
 
   @override
   Widget build(BuildContext context) {
-    /* Color Setting */
-    const onColor = Colors.yellow;
-    final offColor = ColorScheme.of(context).tertiaryContainer;
-
-    return ListenableBuilder(
-      listenable: vm,
-      builder: (context, _) => switch (vm.isSelectMode) {
-        true => IconButton(
-          icon: const Icon(Icons.delete_forever),
-          tooltip: _tooltip,
-          color: onColor,
-          onPressed: () async {
-            final selected = (await vm.source).where((w) => w.selected);
-            // selected > 0
-            if (selected.isNotEmpty && context.mounted) {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text(_dialogTitle),
-                  actions: [
-                    TextButton(
-                      child: const Text(_dialogNG),
-                      onPressed: () {
-                        vm.isSelectMode = false;
-                        Navigator.pop(context);
-                      },
-                    ),
-                    TextButton(
-                      child: const Text(_dialogOK),
-                      onPressed: () async {
-                        // DB削除
-                        await StockRepository().deleteMany(
-                          selected.select((s, _) => s.id).toList(),
-                        );
-                        // VM再読込
-                        await vm.load();
-                        vm.isSelectMode = false;
-                        if (context.mounted) {
-                          Navigator.pop(context);
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              );
-            }
-            // selected = 0
-            else {
-              vm.isSelectMode = false;
-            }
-          },
-        ),
-        false => IconButton(
-          icon: const Icon(Icons.delete),
-          tooltip: _tooltip,
-          color: offColor,
-          onPressed: () => vm.isSelectMode = true,
-        ),
-      },
+    return ValueListenableBuilder(
+      valueListenable: isSelectMode,
+      builder: (c, flag, _) => flag ? _onModeButton(c) : _offModeButton(c),
     );
+  }
+
+  /* Widget */
+  IconButton _onModeButton(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.delete_forever),
+      tooltip: '削除',
+      color: Colors.yellow,
+      onPressed: () => onModeButtonPressed(context),
+    );
+  }
+
+  IconButton _offModeButton(BuildContext context) => IconButton(
+    icon: const Icon(Icons.delete),
+    tooltip: '削除',
+    color: ColorScheme.of(context).tertiaryContainer,
+    onPressed: () => isSelectMode.flip(),
+  );
+
+  /* Event */
+  Future onModeButtonPressed(BuildContext context) async {
+    final selected = (await vm.source).where((w) => w.selected);
+    // selected > 0
+    if (selected.isNotEmpty && context.mounted) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('削除しますか？'),
+          actions: [
+            /* Cancel */
+            TextButton(
+              child: const Text('キャンセル'),
+              onPressed: () {
+                isSelectMode.flip();
+                Navigator.pop(context);
+              },
+            ),
+            /* Execute */
+            TextButton(
+              child: const Text('削除'),
+              onPressed: () async {
+                // DB削除
+                await StockRepository().deleteMany(
+                  selected.select((s, _) => s.id).toList(),
+                );
+                // VM再読込
+                await vm.load();
+                isSelectMode.flip();
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
+              },
+            ),
+          ],
+        ),
+      );
+    }
+    // selected = 0
+    else {
+      isSelectMode.flip();
+    }
   }
 }

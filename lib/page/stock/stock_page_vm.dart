@@ -11,6 +11,10 @@ class StockPageViewModel extends ChangeNotifier {
   Future<List<StockPostitViewModel>> get source async =>
       _source ?? await load();
   List<StockPostitViewModel>? _source;
+  set source(List<StockPostitViewModel> value) {
+    source = value;
+    notifyListeners();
+  }
 
   /// 企業（対照）
   Future<Map<int, String>> get brandDict async =>
@@ -36,17 +40,6 @@ class StockPageViewModel extends ChangeNotifier {
         return _colorDict!;
       });
   Map<int, Color?>? _colorDict;
-
-  ///（削除）選択モード
-  bool get isSelectMode => _isSelectMode;
-  bool _isSelectMode = false;
-  set isSelectMode(bool value) {
-    if (isSelectMode != value) {
-      _isSelectMode = value;
-      _source?.forEach((postit) => postit.isSelectMode = value);
-      notifyListeners();
-    }
-  }
 
   Future<List<StockPostitViewModel>> load() async {
     const emptyBrand = '-';

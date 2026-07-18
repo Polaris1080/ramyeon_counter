@@ -55,16 +55,17 @@ class StockPostit extends StatelessWidget {
           ),
           ListenableBuilder(
             listenable: vm,
-            builder: (context, child) =>
-                Visibility.maintain(visible: vm.isSelectMode, child: child!),
-            /* Check */
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Checkbox(
-                value: vm.selected,
-                onChanged: (value) {
-                  vm.selected = !vm.selected;
-                },
+            builder: (context, child) => Visibility(
+              visible: vm.isSelectMode,
+              /* Check */
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Checkbox(
+                  value: vm.selected,
+                  onChanged: (value) {
+                    vm.selected = !vm.selected;
+                  },
+                ),
               ),
             ),
           ),

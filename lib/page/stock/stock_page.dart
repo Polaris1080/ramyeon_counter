@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:ramyeon_counter/model/stock.dart';
 import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
 import 'package:ramyeon_counter/model/repository/stock_repository.dart';
+import 'package:ramyeon_counter/utility/extension_methods/em_bool_notifier.dart';
 // Other
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
 // Widget
@@ -21,11 +22,18 @@ part 'actions/select_mode_action.dart';
 
 class StockPage extends StatelessWidget {
   StockPage({super.key, required int? brandId, this.packageColor})
-    : vm = .new(brandId);
+    : vm = .new(brandId) {
+    isSelectMode.addListener(
+      () async => (await vm.source).forEach(
+        (postit) => postit.isSelectMode = isSelectMode.value,
+      ),
+    );
+  }
 
   /* Value */
   final StockPageViewModel vm;
   final Color? packageColor;
+  final ValueNotifier<bool> isSelectMode = .new(false);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +42,11 @@ class StockPage extends StatelessWidget {
     Theme(
       data: Theme.of(context).override(packageColor),
       child: Scaffold(
-        appBar: DefaultAppBar(context, '在庫', actions: [SelectModeAction(vm)]),
+        appBar: DefaultAppBar(
+          context,
+          '在庫',
+          actions: [SelectModeAction(vm, isSelectMode)],
+        ),
         /* CorkBoard */
         body: ImageBackground.cork(
           child: ListenableBuilder(
