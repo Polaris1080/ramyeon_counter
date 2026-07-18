@@ -5,11 +5,17 @@ class StockPostit extends StatelessWidget {
   static const size = Size.square(150), _padding = 5.0;
   static final _dateFormat = DateFormat('yyyy年MM月dd日');
 
-  const StockPostit(this.isSelectMode, {super.key, required this.vm});
+  const StockPostit(
+    this.isSelectMode,
+    this.isSelected, {
+    super.key,
+    required this.vm,
+  });
 
   /* Value */
   final StockPostitViewModel vm;
   final ValueNotifier<bool> isSelectMode;
+  final ValueNotifier<bool> isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +65,14 @@ class StockPostit extends StatelessWidget {
             builder: (_, flag, c) => Visibility(visible: flag, child: c!),
             child: Align(
               alignment: Alignment.topRight,
-              child: ListenableBuilder(
-                listenable: vm,
+              child: ValueListenableBuilder(
+                valueListenable: isSelected,
                 /* Check */
-                builder: (context, child) {
+                builder: (context, f, child) {
                   return Checkbox(
-                    value: vm.selected,
+                    value: f,
                     onChanged: (value) {
-                      vm.selected = !vm.selected;
+                      isSelected.value = !f;
                     },
                   );
                 },

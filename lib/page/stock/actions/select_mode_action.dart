@@ -34,9 +34,32 @@ class SelectModeAction extends StatelessWidget {
 
   /* Event */
   Future onModeButtonPressed(BuildContext context) async {
-    final selected = (await vm.source).where((w) => w.selected);
-    // selected > 0
-    if (selected.isNotEmpty && context.mounted) {
+    Future onExecuteButtonPressed() async {
+      // DB削除
+      await StockRepository().deleteMany(
+        // id取得
+        (await vm.source)
+            .select((s, _) => s.id)
+            // 結合
+            .zip(
+              vm.isSelected.select((s, _) => s.value),
+              (id, isSelected) => MapEntry<int, bool>(id, isSelected),
+            )
+            // 選択
+            .where((w) => w.value)
+            // idだけ
+            .select((s, _) => s.key)
+            .toList(),
+      );
+      // VM再読込
+      await vm.load();
+      isSelectMode.flip();
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+    }
+
+    if (vm.isSelected.any((a) => a.value)) {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -44,34 +67,21 @@ class SelectModeAction extends StatelessWidget {
           actions: [
             /* Cancel */
             TextButton(
-              child: const Text('キャンセル'),
               onPressed: () {
                 isSelectMode.flip();
                 Navigator.pop(context);
               },
+              child: const Text('キャンセル'),
             ),
             /* Execute */
             TextButton(
+              onPressed: onExecuteButtonPressed,
               child: const Text('削除'),
-              onPressed: () async {
-                // DB削除
-                await StockRepository().deleteMany(
-                  selected.select((s, _) => s.id).toList(),
-                );
-                // VM再読込
-                await vm.load();
-                isSelectMode.flip();
-                if (context.mounted) {
-                  Navigator.pop(context);
-                }
-              },
             ),
           ],
         ),
       );
-    }
-    // selected = 0
-    else {
+    } else {
       isSelectMode.flip();
     }
   }

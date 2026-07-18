@@ -22,7 +22,11 @@ part 'actions/select_mode_action.dart';
 
 class StockPage extends StatelessWidget {
   StockPage({super.key, required int? brandId, this.packageColor})
-    : vm = .new(brandId);
+    : vm = .new(brandId) {
+    isSelectMode.addListener(
+      () => vm.isSelected.forEach((s) => s.value = false),
+    );
+  }
 
   /* Value */
   final StockPageViewModel vm;
@@ -51,12 +55,17 @@ class StockPage extends StatelessWidget {
               builder: (context, snapshot) {
                 switch (snapshot.data) {
                   case List<StockPostitViewModel> postitVM:
-                    vm.isSelected = .filled(postitVM.length, .new(false));
+                    vm.isSelected = postitVM
+                        .select((s, _) => ValueNotifier<bool>(false))
+                        .toList();
                     return SpacingGridView(
                       itemSize: StockPostit.size,
                       itemCount: postitVM.length,
-                      itemBuilder: (context, i) =>
-                          StockPostit(isSelectMode, vm: postitVM[i]),
+                      itemBuilder: (context, i) => StockPostit(
+                        isSelectMode,
+                        vm.isSelected[i],
+                        vm: postitVM[i],
+                      ),
                     );
                   default:
                     return DelayedLoadingProgressIndicator.normal(context);

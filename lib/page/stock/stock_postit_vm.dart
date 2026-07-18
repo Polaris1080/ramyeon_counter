@@ -13,14 +13,4 @@ class StockPostitViewModel extends Stock with ChangeNotifier {
 
   /// 見出し
   final String title;
-
-  /// 選択状態
-  bool get selected => _selected;
-  bool _selected = false;
-  set selected(bool value) {
-    if (_selected != value) {
-      _selected = value;
-      notifyListeners();
-    }
-  }
 }
