@@ -113,7 +113,7 @@ class StockPostit extends StatelessWidget {
     final painter = TextPainter(
       text: TextSpan(text: "$heading：$content"),
       textDirection: Directionality.of(context),
-    )..layout(minWidth: 0, maxWidth: size.width - _postitContentPadding);
+    )..layout(minWidth: 0, maxWidth: size.width - _postitContentPadding * 2);
 
     return painter.computeLineMetrics().length > 1
         ? Column(crossAxisAlignment: .stretch, children: texts)
