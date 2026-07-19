@@ -1,0 +1,133 @@
+// Extention
+import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
+// Package
+import 'package:darq/darq.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+// ViewModel
+import '../view_model/history_page_vm_base.dart';
+import '../view_model/history_price_page_vm.dart';
+import '../view_model/history_rating_page_vm.dart';
+// Widget
+import 'package:ramyeon_counter/widget/rating/selecter/rating_range_selecter.dart';
+// Partial
+part 'price_search_sheet.dart';
+part 'rating_search_sheet.dart';
+
+abstract class HistorySearchSheetBase extends StatelessWidget {
+  /* Setting */
+  static const _buttonSpacing = 10.0, _rowSpacing = 10.0;
+
+  const HistorySearchSheetBase(this.vm, this.packageColor, {super.key});
+
+  /* Argument */
+  final HistoryPageViewModelBase vm;
+  final Color? packageColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).override(packageColor), // Color change
+      child: Column(
+        spacing: _rowSpacing,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          /* 1st Row */
+          Column(
+            children: [
+              headline(context, text: '期間'),
+              ListenableBuilder(
+                listenable: vm,
+                builder: (context, _) {
+                  final df = DateFormat('y/MM/dd');
+                  return Text(
+                    '${df.format(vm.dateRange.start)} ~ ${df.format(vm.dateRange.end)}',
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontFamily: 'ZenMaruGothic',
+                    ),
+                    maxLines: 1,
+                    overflow: .ellipsis,
+                  );
+                },
+              ),
+            ],
+          ),
+          /* 2nd Row */
+          secondRow(context),
+          /* 3rd Row */
+          Wrap(
+            spacing: _buttonSpacing, // Horizontal Spacing
+            runSpacing: _rowSpacing, // Vertical Spacing
+            alignment: .center,
+            children: thirdRow(context).select((s, _) {
+              final (:text, :onPressed) = s;
+              final cs = ColorScheme.of(context);
+              /* Button */
+              return OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: cs.primaryFixed,
+                  fixedSize: Size(90, 30),
+                  padding: .all(0),
+                ),
+                onPressed: onPressed,
+                child: Text(
+                  text,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: cs.onPrimaryFixed,
+                    fontFamily: 'ZenKakuGothicNew',
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 見出し
+  Text headline(BuildContext context, {required String text}) {
+    final cs = ColorScheme.of(context);
+    return .new(
+      text,
+      style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+        color: cs.onPrimaryFixed,
+        decoration: TextDecoration.underline,
+        decorationColor: cs.onPrimaryFixedVariant,
+        fontFamily: 'ZenKakuGothicNew',
+      ),
+    );
+  }
+
+  /// @override
+  Widget secondRow(BuildContext context);
+
+  List<({String text, VoidCallback onPressed})> thirdRow(
+    BuildContext context,
+  ) => [
+    (
+      text: 'リセット',
+      onPressed: () {
+        vm.reset();
+        Navigator.pop(context);
+      },
+    ),
+    (
+      text: '検索',
+      onPressed: () {
+        vm.search();
+        Navigator.pop(context);
+      },
+    ),
+    (
+      text: '期間設定',
+      onPressed: () async => vm.dateRange = await showDateRangePicker(
+        context: context,
+        initialDateRange: vm.dateRange,
+        firstDate: vm.dateRangeDefault.start,
+        lastDate: vm.dateRangeDefault.end,
+      ),
+    ),
+  ];
+}

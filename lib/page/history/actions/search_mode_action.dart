@@ -22,7 +22,17 @@ class SearchModeAction extends StatelessWidget {
             // SearchSheetSize
             constraints: .new(maxWidth: 540, maxHeight: 270),
             child: Center(
-              child: HistorySearchSheetBase.getInstance(vm, packageColor),
+              child: switch (vm) {
+                HistoryPricePageViewModel vm => PriceSearchSheet(
+                  vm,
+                  packageColor,
+                ),
+                HistoryRatingPageViewModel vm => RatingSearchSheet(
+                  vm,
+                  packageColor,
+                ),
+                HistoryPageViewModelBase _ => throw UnimplementedError(),
+              },
             ),
           ),
         ),
