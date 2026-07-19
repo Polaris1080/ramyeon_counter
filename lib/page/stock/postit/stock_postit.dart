@@ -2,80 +2,63 @@ part of '../stock_page.dart';
 
 class StockPostit extends StatelessWidget {
   /* Setting */
-  static const size = Size.square(150), _padding = 5.0;
-  static final _dateFormat = DateFormat('yyyy年MM月dd日');
+  static const size = Size.square(150), _postitContentPadding = 5.0;
 
-  const StockPostit(
-    this.isSelectMode,
-    this.isSelected, {
+  StockPostit({
     super.key,
-    required this.vm,
-  });
+    required this.isSelectMode,
+    required this.isSelected,
+    required StockPostitData data,
+  }) : _postitColor = data.color,
+       _titleText = data.brand,
+       _termTexts = ['購入日', '賞味期限', '価格'].zip([
+         DateFormat('yyyy年MM月dd日').format(data.expirationDate),
+         DateFormat('yyyy年MM月dd日').format(data.purchaseDate),
+         '${data.price}円',
+       ], (a, b) => (heading: a, content: b)).toList();
 
-  /* Value */
-  final StockPostitData vm;
+  /* Argument */
   final ValueNotifier<bool> isSelectMode;
   final ValueNotifier<bool> isSelected;
 
+  /* Value */
+  final Color? _postitColor;
+  final String _titleText;
+  final List<({String heading, String content})> _termTexts;
+
   @override
   Widget build(BuildContext context) {
-    return
-    /* Postit */
-    Container(
-      width: size.width,
-      height: size.height,
-      decoration: BoxDecoration(
-        boxShadow: [
-          .new(
-            color: Colors.grey,
-            spreadRadius: 0,
-            blurRadius: 3,
-            offset: Offset(1, 1),
-          ),
-        ],
-        color: switch (vm.color) {
-          Color c => ColorScheme.fromSeed(seedColor: c),
-          _ => ColorScheme.of(context),
-        }.primaryFixed,
-      ),
+    return postit(
+      context,
+      color: _postitColor,
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.all(_padding),
-            /* Content */
+            padding: const EdgeInsets.all(_postitContentPadding),
             child: Column(
               children: [
+                /* title */
                 Text(
-                  vm.brand,
+                  _titleText,
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     fontFamily: "ZenKakuGothicNew",
                   ),
                 ),
                 Spacer(),
-                ...[
-                  ('購入日', _dateFormat.format(vm.expirationDate)),
-                  ('賞味期限', _dateFormat.format(vm.purchaseDate)),
-                  ('価格', '${vm.price}円'),
-                ].select((item, _) => term(context, item)),
+                ..._termTexts.select((s, _) => term(context, s)),
               ],
             ),
           ),
           ValueListenableBuilder(
             valueListenable: isSelectMode,
-            builder: (_, flag, c) => Visibility(visible: flag, child: c!),
+            builder: (_, f, child) => Visibility(visible: f, child: child!),
             child: Align(
               alignment: Alignment.topRight,
               child: ValueListenableBuilder(
                 valueListenable: isSelected,
-                /* Check */
-                builder: (context, f, child) {
-                  return Checkbox(
-                    value: f,
-                    onChanged: (value) {
-                      isSelected.value = !f;
-                    },
-                  );
-                },
+                builder: (context, f, _) =>
+                    /* check */
+                    Checkbox(value: f, onChanged: (_) => isSelected.flip()),
               ),
             ),
           ),
@@ -84,30 +67,55 @@ class StockPostit extends StatelessWidget {
     );
   }
 
-  Widget term(BuildContext context, (String, String) item) {
-    final heading = item.$1, content = item.$2;
-    final tt = Theme.of(context).textTheme,
-        painter = TextPainter(
-          text: TextSpan(text: "$heading：$content"),
-          textDirection: Directionality.of(context),
-        )..layout(minWidth: 0, maxWidth: size.width - _padding),
-        line = painter.computeLineMetrics().length,
-        texts = [
-          Text(
-            '$heading：',
-            textAlign: .start,
-            style: tt.labelLarge!.copyWith(color: Colors.black),
-          ),
-          Text(
-            content,
-            textAlign: .end,
-            style: tt.bodyMedium!.copyWith(
-              color: Colors.black,
-              fontFamily: "ZenKakuGothicNew",
-            ),
-          ),
-        ];
-    return line > 1
+  /* Widget */
+  Container postit(BuildContext context, {Color? color, Widget? child}) {
+    final BoxShadow shadow = .new(
+      color: Colors.grey,
+      spreadRadius: 0,
+      blurRadius: 3,
+      offset: Offset(1, 1),
+    );
+
+    return Container(
+      width: size.width,
+      height: size.height,
+      decoration: BoxDecoration(
+        boxShadow: [shadow],
+        color: switch (color) {
+          Color color => ColorScheme.fromSeed(seedColor: color),
+          _ => ColorScheme.of(context),
+        }.primaryFixed,
+      ),
+      child: child,
+    );
+  }
+
+  /// 中身
+  Widget term(BuildContext context, ({String heading, String content}) item) {
+    final (:heading, :content) = item;
+    final List<Text> texts = [
+      Text(
+        '$heading：',
+        textAlign: .start,
+        style: Theme.of(
+          context,
+        ).textTheme.labelLarge!.copyWith(color: Colors.black),
+      ),
+      Text(
+        content,
+        textAlign: .end,
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+          color: Colors.black,
+          fontFamily: "ZenKakuGothicNew",
+        ),
+      ),
+    ];
+    final painter = TextPainter(
+      text: TextSpan(text: "$heading：$content"),
+      textDirection: Directionality.of(context),
+    )..layout(minWidth: 0, maxWidth: size.width - _postitContentPadding);
+
+    return painter.computeLineMetrics().length > 1
         ? Column(crossAxisAlignment: .stretch, children: texts)
         : Row(mainAxisAlignment: .spaceBetween, children: texts);
   }

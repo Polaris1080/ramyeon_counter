@@ -4,22 +4,20 @@ part of 'package:ramyeon_counter/page/stock/stock_page.dart';
 class StockPageViewModel extends ChangeNotifier {
   StockPageViewModel(this.brandId);
 
-  /* Value */
+  /* Argument */
   final int? brandId;
 
   /// 情報
-  Future<List<StockPostitData>> get source async => _source ?? await load();
+  List<StockPostitData>? get source => _source;
   List<StockPostitData>? _source;
-  set source(List<StockPostitData> value) {
-    source = value;
+  Future loadSource() async {
+    final data = (await StockPostitContext().read(brandId));
+    _source = data.toList();
+    _isSelected = data.select((_, _) => ValueNotifier<bool>(false)).toList();
     notifyListeners();
   }
 
-  List<ValueNotifier<bool>> isSelected = [];
-
-  Future<List<StockPostitData>> load() async {
-    _source = (await StockPostitContext().read(brandId: brandId)).toList();
-    notifyListeners();
-    return _source!;
-  }
+  /// 選択（状態）
+  List<ValueNotifier<bool>> get isSelected => _isSelected;
+  late List<ValueNotifier<bool>> _isSelected;
 }

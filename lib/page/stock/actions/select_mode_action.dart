@@ -11,35 +11,42 @@ class SelectModeAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: isSelectMode,
-      builder: (c, flag, _) => flag ? _onModeButton(c) : _offModeButton(c),
+      builder: (context, flag, _) => switch (flag) {
+        // onModeButton
+        true => IconButton(
+          icon: const Icon(Icons.delete_forever),
+          tooltip: '削除',
+          color: Colors.yellow,
+          onPressed: () {
+            switch (vm.isSelected.count((isSelected) => isSelected.value)) {
+              case 0:
+                isSelectMode.flip();
+                break;
+              default:
+                showDialog(context: context, builder: (c) => _dialog(c));
+                break;
+            }
+          },
+        ),
+        // offModeButton
+        false => IconButton(
+          icon: const Icon(Icons.delete),
+          tooltip: '削除',
+          color: ColorScheme.of(context).tertiaryContainer,
+          onPressed: () => isSelectMode.flip(),
+        ),
+      },
     );
   }
 
   /* Widget */
-  IconButton _onModeButton(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.delete_forever),
-      tooltip: '削除',
-      color: Colors.yellow,
-      onPressed: () => _onModeButtonPressed(context),
-    );
-  }
-
-  IconButton _offModeButton(BuildContext context) => IconButton(
-    icon: const Icon(Icons.delete),
-    tooltip: '削除',
-    color: ColorScheme.of(context).tertiaryContainer,
-    onPressed: () => isSelectMode.flip(),
-  );
-
-  /* Event */
-  Future _onModeButtonPressed(BuildContext context) async {
+  AlertDialog _dialog(BuildContext context) {
     /// 「削除」ボタンが押されたとき
     Future onExecuteButtonPressed() async {
       // DB削除
       await StockRepository().deleteMany(
         // id取得
-        (await vm.source)
+        vm.source!
             .select((s, _) => s.id)
             // 結合
             .zip(
@@ -53,38 +60,27 @@ class SelectModeAction extends StatelessWidget {
             .toList(),
       );
       // VM再読込
-      await vm.load();
+      await vm.loadSource();
       isSelectMode.flip();
       if (context.mounted) {
         Navigator.pop(context);
       }
     }
 
-    /// 「モード」がOn->Offになったとき
-    if (vm.isSelected.any((a) => a.value)) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('削除しますか？'),
-          actions: [
-            /* Cancel */
-            TextButton(
-              onPressed: () {
-                isSelectMode.flip();
-                Navigator.pop(context);
-              },
-              child: const Text('キャンセル'),
-            ),
-            /* Execute */
-            TextButton(
-              onPressed: onExecuteButtonPressed,
-              child: const Text('削除'),
-            ),
-          ],
+    return AlertDialog(
+      title: const Text('削除しますか？'),
+      actions: [
+        /* Cancel */
+        TextButton(
+          onPressed: () {
+            isSelectMode.flip();
+            Navigator.pop(context);
+          },
+          child: const Text('キャンセル'),
         ),
-      );
-    } else {
-      isSelectMode.flip();
-    }
+        /* Execute */
+        TextButton(onPressed: onExecuteButtonPressed, child: const Text('削除')),
+      ],
+    );
   }
 }

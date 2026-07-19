@@ -1,7 +1,7 @@
 part of '../stock_page.dart';
 
 class StockPostitContext extends RamyeonContextBase {
-  Future<List<StockPostitData>> read({int? brandId}) async =>
+  Future<List<StockPostitData>> read(int? brandId) async =>
       (await (await db).rawQuery('''
         SELECT s.*,
               r.${RamyeonTableRow.brand.name},

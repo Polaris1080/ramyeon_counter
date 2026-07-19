@@ -2,6 +2,7 @@
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 import 'package:ramyeon_counter/model/base/context_base.dart';
 import 'package:ramyeon_counter/model/ramyeon.dart';
 // Model
@@ -54,32 +55,31 @@ class StockPage extends StatelessWidget {
         body: ImageBackground.cork(
           child: ListenableBuilder(
             listenable: vm,
-            // vm.source.load
-            builder: (context, _) => FutureBuilder(
-              future: vm.source,
-              builder: (context, snapshot) {
-                switch (snapshot.data) {
-                  case List<StockPostitData> postitVM:
-                    vm.isSelected = postitVM
-                        .select((s, _) => ValueNotifier<bool>(false))
-                        .toList();
-                    return SpacingGridView(
-                      itemSize: StockPostit.size,
-                      itemCount: postitVM.length,
-                      itemBuilder: (context, i) => StockPostit(
-                        isSelectMode,
-                        vm.isSelected[i],
-                        vm: postitVM[i],
-                      ),
-                    );
-                  default:
-                    return DelayedLoadingProgressIndicator.normal(context);
-                }
-              },
-            ),
+            builder: (context, _) => switch (vm.source) {
+              List<StockPostitData> data => postitGridView(data),
+              _ => FutureBuilder(
+                future: vm.loadSource(),
+                builder: (context, snapshot) =>
+                    switch (snapshot.connectionState) {
+                      .done => postitGridView(snapshot.requireData),
+                      _ => DelayedLoadingProgressIndicator.normal(context),
+                    },
+              ),
+            },
           ),
         ),
       ),
     );
   }
+
+  /* Widget */
+  SpacingGridView postitGridView(List<StockPostitData> data) => SpacingGridView(
+    itemSize: StockPostit.size,
+    itemCount: data.length,
+    itemBuilder: (context, i) => StockPostit(
+      data: data[i],
+      isSelectMode: isSelectMode,
+      isSelected: vm.isSelected[i],
+    ),
+  );
 }
