@@ -7,7 +7,7 @@ abstract class HistoryPageViewModelBase extends ChangeNotifier {
   Future loadSource();
 
   /* Visible */
-  bool get searchButtonVisible => isSourceNotNull && !isSourceEmpty;
+  bool get isSearchModeEnable => isSourceNotNull && !isSourceEmpty;
 
   /* SearchSheet(Date) */
   DateTimeRange<DateTime> get dateRange => _dateRange;

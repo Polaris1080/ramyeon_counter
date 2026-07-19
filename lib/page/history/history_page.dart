@@ -17,6 +17,8 @@ import 'package:ramyeon_counter/widget/image_background.dart';
 import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
 // Other
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
+// Partial
+part 'actions/search_mode_action.dart';
 
 class HistoryPricePage extends HistoryPageBase {
   HistoryPricePage({super.key, super.brandId, super.packageColor})
@@ -45,7 +47,6 @@ abstract class HistoryPageBase extends StatelessWidget {
   final String heading;
 
   static const _cardPadding = 5.0;
-  static const _searchSheetSize = BoxConstraints(maxHeight: 270, maxWidth: 540);
 
   @override
   Widget build(BuildContext context) {
@@ -58,36 +59,7 @@ abstract class HistoryPageBase extends StatelessWidget {
         appBar: DefaultAppBar(
           context,
           '$heading履歴',
-          actions: [
-            ListenableBuilder(
-              listenable: vm,
-              builder: (_, c) =>
-                  Visibility(visible: vm.searchButtonVisible, child: c!),
-              child: IconButton(
-                icon: const Icon(Icons.search_rounded),
-                tooltip: '検索',
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    // 背景色（検索画面）
-                    backgroundColor: switch (packageColor) {
-                      Color c => ColorScheme.fromSeed(seedColor: c),
-                      null => ColorScheme.of(context),
-                    }.surfaceContainerHighest,
-                    builder: (BuildContext context) => Container(
-                      constraints: _searchSheetSize,
-                      child: Center(
-                        child: HistorySearchSheetBase.getInstance(
-                          vm,
-                          packageColor,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
+          actions: [SearchModeAction(vm, packageColor)],
         ),
         body: ImageBackground.cork(
           child: FutureBuilder(
