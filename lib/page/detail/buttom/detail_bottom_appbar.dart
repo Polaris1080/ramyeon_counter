@@ -1,3 +1,4 @@
+import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ramyeon_counter/model/ramyeon.dart';
@@ -24,8 +25,7 @@ class DetailBottomAppbar extends StatelessWidget {
       data: Theme.of(context).colorOverride(Colors.blue),
       child: BottomAppBar(
         height: 100,
-        padding: .all(10),
-        //color: Colors.blue,
+        padding: .all(0),
         child: IconTheme(
           data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
           child: SizedBox(
@@ -34,7 +34,7 @@ class DetailBottomAppbar extends StatelessWidget {
               mainAxisAlignment: .spaceBetween,
               children: [
                 /* Selector */
-                SideNavigation(currentPageIndex),
+                SideNavigation(currentPageIndex, navigationLabel: ['履歴', '操作']),
 
                 ValueListenableBuilder(
                   valueListenable: currentPageIndex,

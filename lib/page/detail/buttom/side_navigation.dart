@@ -1,38 +1,75 @@
 part of 'detail_bottom_appbar.dart';
 
 class SideNavigation extends StatelessWidget {
-  const SideNavigation(this.currentPageIndex, {super.key});
+  const SideNavigation(
+    this.currentPageIndex, {
+    super.key,
+    required this.navigationLabel,
+  });
 
+  /* Arguments */
   /// From [DetailBottomAppbar] currentPageIndex
   final ValueNotifier<int> currentPageIndex;
 
+  final List<String> navigationLabel;
+
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: currentPageIndex,
-      builder: (context, selected, _) {
-        return SizedBox(
-          child: Column(
-            mainAxisAlignment: .spaceBetween,
-
-            children: [
-              ChoiceChip(
-                shape: LinearBorder(),
-                label: Text('履歴'),
-                selected: selected == 0,
-                onSelected: (_) => currentPageIndex.value = 0,
-                showCheckmark: false,
-              ),
-              ChoiceChip(
-                label: Text('評価'),
-                selected: selected == 1,
-                onSelected: (_) => currentPageIndex.value = 1,
-                showCheckmark: false,
-              ),
-            ],
+    final cs = ColorScheme.of(context);
+    /* Color setting */
+    final backgroundColor = Colors.grey[400],
+        borderColor = cs.onPrimaryContainer;
+    /* Container Border Setting */
+    final outerBorderSetting = BorderSide(color: borderColor, width: 2.0),
+        outerBorder = BoxDecoration(
+          color: backgroundColor,
+          border: BoxBorder.fromLTRB(
+            top: outerBorderSetting,
+            right: outerBorderSetting,
           ),
         );
-      },
+    /* NavigationDestination Setting */
+    final chipTheme = ChipThemeData(
+      // Border
+      shape: LinearBorder.bottom(
+        side: BorderSide(color: borderColor),
+        size: 1.0,
+      ),
+      // Color
+      backgroundColor: cs.surface,
+      selectedColor: cs.secondaryFixedDim,
+      // Padding
+      padding: const .all(5.0),
+      labelPadding: .zero,
+      // Other
+      labelStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+        color: cs.onSecondaryFixed,
+        fontFamily: "ZenMaruGothic",
+      ),
+      showCheckmark: false,
+    );
+
+    return Theme(
+      data: Theme.of(context).copyWith(chipTheme: chipTheme),
+      child: Container(
+        decoration: outerBorder,
+        child: Column(
+          mainAxisAlignment: .start,
+          /* NavigationDestination */
+          children: navigationLabel
+              .select(
+                (text, i) => ValueListenableBuilder(
+                  valueListenable: currentPageIndex,
+                  builder: (context, index, _) => ChoiceChip(
+                    label: Text(text),
+                    selected: index == i,
+                    onSelected: (_) => currentPageIndex.value = i,
+                  ),
+                ),
+              )
+              .toList(),
+        ),
+      ),
     );
   }
 }

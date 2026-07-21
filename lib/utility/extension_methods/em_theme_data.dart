@@ -13,6 +13,7 @@ extension EmTheme on ThemeData {
             backgroundColor: cs.primary,
             iconTheme: IconThemeData(color: cs.tertiaryContainer),
           ),
+          bottomAppBarTheme: .new(color: cs.primaryContainer),
           colorScheme: cs,
         );
       default:
