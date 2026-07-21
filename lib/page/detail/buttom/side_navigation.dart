@@ -16,10 +16,9 @@ class SideNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = ColorScheme.of(context);
-    /* Color setting */
-    final backgroundColor = Colors.grey[400],
-        borderColor = cs.onPrimaryContainer;
-    /* Container Border Setting */
+    // Color
+    final backgroundColor = Colors.grey[400], borderColor = Colors.blueGrey;
+    // Container:Border
     final outerBorderSetting = BorderSide(color: borderColor, width: 2.0),
         outerBorder = BoxDecoration(
           color: backgroundColor,
@@ -28,7 +27,7 @@ class SideNavigation extends StatelessWidget {
             right: outerBorderSetting,
           ),
         );
-    /* NavigationDestination Setting */
+    // NavigationDestination
     final chipTheme = ChipThemeData(
       // Border
       shape: LinearBorder.bottom(
