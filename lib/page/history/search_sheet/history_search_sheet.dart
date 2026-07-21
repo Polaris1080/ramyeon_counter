@@ -27,7 +27,7 @@ abstract class HistorySearchSheetBase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Theme.of(context).override(packageColor), // Color change
+      data: Theme.of(context).colorOverride(packageColor), // Color change
       child: Column(
         spacing: _rowSpacing,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

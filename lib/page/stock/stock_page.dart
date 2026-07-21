@@ -43,7 +43,7 @@ class StockPage extends StatelessWidget {
     return
     /* Color change */
     Theme(
-      data: Theme.of(context).override(packageColor),
+      data: Theme.of(context).colorOverride(packageColor),
       child: Scaffold(
         appBar: DefaultAppBar(
           context,

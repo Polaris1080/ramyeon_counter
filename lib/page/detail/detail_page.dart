@@ -4,7 +4,7 @@ import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // Widget
-import 'package:ramyeon_counter/page/detail/detail_bottom_appbar.dart';
+import 'package:ramyeon_counter/page/detail/buttom/detail_bottom_appbar.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 import 'package:ramyeon_counter/widget/detail_regist_page/data/ramyeon_data_viewer.dart';
 import 'package:ramyeon_counter/widget/detail_regist_page/tag/tag_viewer.dart';
@@ -30,47 +30,43 @@ class DetailPage extends StatelessWidget {
       ),
       body: ImageBackground.paper(
         child: Column(
+          crossAxisAlignment: .stretch,
           children: [
             /* 1st Row(Image/Data) */
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Wrap(
-                    children: [
-                      /* 1st Columu(Image) */
-                      LayoutBuilder(
-                        builder:
-                            (BuildContext context, BoxConstraints constraints) {
-                              return Container(
-                                constraints: BoxConstraints(
-                                  minWidth: 96,
-                                  minHeight: 96,
-                                  maxWidth: 256,
-                                  maxHeight: 256,
-                                ),
-                                height:
-                                    MediaQuery.of(context).size.width * 0.25,
-                                child: RamyeonImageViewer(
-                                  packageColor: packageColor,
-                                  ramyeonId: ramyeonId,
-                                ),
-                              );
-                            },
-                      ),
-                      /* 2nd Columu(Data) */
-                      Container(
-                        constraints: BoxConstraints(
-                          //minWidth: 180,
-                          maxWidth: 240,
-                        ),
-                        //height: 200,
-                        child: RamyeonDataViewer(ramyeonId: ramyeonId),
-                      ),
-                    ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Wrap(
+                children: [
+                  /* 1st Columu(Image) */
+                  LayoutBuilder(
+                    builder:
+                        (BuildContext context, BoxConstraints constraints) {
+                          return Container(
+                            constraints: BoxConstraints(
+                              minWidth: 96,
+                              minHeight: 96,
+                              maxWidth: 256,
+                              maxHeight: 256,
+                            ),
+                            height: MediaQuery.of(context).size.width * 0.25,
+                            child: RamyeonImageViewer(
+                              packageColor: packageColor,
+                              ramyeonId: ramyeonId,
+                            ),
+                          );
+                        },
                   ),
-                ),
-              ],
+                  /* 2nd Columu(Data) */
+                  Container(
+                    constraints: BoxConstraints(
+                      //minWidth: 180,
+                      maxWidth: 240,
+                    ),
+                    //height: 200,
+                    child: RamyeonDataViewer(ramyeonId: ramyeonId),
+                  ),
+                ],
+              ),
             ),
             /* 2nd Row(Tag) */
             RamyeonTagViewer(ramyeonId: ramyeonId),
