@@ -3,6 +3,7 @@ part of '../statistics_page.dart';
 class _StockBarChart extends StatelessWidget {
   _StockBarChart();
 
+  // TODO:あとで
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

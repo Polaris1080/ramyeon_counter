@@ -7,6 +7,7 @@ import 'package:ramyeon_counter/model/rating.dart';
 import 'package:ramyeon_counter/model/context/statistics_data_context.dart';
 import 'package:ramyeon_counter/model/context/tag_data_context.dart';
 
+// TODO:cache【余裕があれば】
 class StatisticsPageViewModel extends ChangeNotifier {
   /// [Rating] 評価：ランキング
   Future<Map<String, double>> get rankingRatingData async =>

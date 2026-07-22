@@ -36,8 +36,10 @@ class StatisticsPage extends StatelessWidget {
 
   StatisticsPage({super.key});
 
+  /* Value */
   final StatisticsPageViewModel vm = .new();
 
+  /// To [StatisticsNavigation]
   final ValueNotifier<int> selected = .new(0);
 
   @override
@@ -47,7 +49,7 @@ class StatisticsPage extends StatelessWidget {
       body: ImageBackground.paper(
         child: ValueListenableBuilder(
           valueListenable: selected,
-          builder: (context, selectedIndex, _) => switch (selectedIndex) {
+          builder: (_, selectedIndex, _) => switch (selectedIndex) {
             /* 1:EatPieChart */
             1 => FutureBuilder(
               future: RamyeonListDataContext().readByBrand(''),
@@ -78,7 +80,6 @@ class StatisticsPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: StatisticsNavigation(selected),
-      backgroundColor: ColorScheme.of(context).surface,
     );
   }
 }

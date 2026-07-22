@@ -59,6 +59,7 @@ class AllTagViewArea extends StatelessWidget {
                 children: [
                   ...data.select((s, i) {
                     final rcs = splitRainbow(i);
+                    // TODO:TagChip
                     return Chip(
                       side: BorderSide(color: rcs.primary, width: 1.5),
                       padding: EdgeInsets.all(0),

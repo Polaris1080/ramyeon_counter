@@ -41,12 +41,12 @@ class RankingTable extends StatelessWidget {
       width: width,
       child: Column(
         children: [
-          /* Title */
+          /* title */
           Text(
             title,
             style: tt.headlineSmall!.copyWith(fontFamily: "ZenMaruGothicNew"),
           ),
-          /* Table */
+          /* table */
           Table(
             columnWidths: <int, TableColumnWidth>{
               0: MinColumnWidth(
@@ -58,7 +58,7 @@ class RankingTable extends StatelessWidget {
             },
             defaultVerticalAlignment: .middle,
             children: [
-              /* Header */
+              /* header */
               TableRow(
                 children: [
                   ...heading.select(

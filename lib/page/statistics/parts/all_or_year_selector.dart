@@ -1,5 +1,6 @@
 part of '../statistics_page.dart';
 
+// TODO:存在する年だけ選択できるように【要望】
 class AllOrYearSelector extends StatelessWidget {
   /* Setting */
   static const _borderRadis = 20.0,
