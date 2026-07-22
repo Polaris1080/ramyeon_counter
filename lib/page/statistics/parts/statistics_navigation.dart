@@ -6,59 +6,52 @@ class StatisticsNavigation extends StatelessWidget {
 
   const StatisticsNavigation(this.selected, {super.key});
 
+  /* Argument */
+  /// From [StatisticsPage]
   final ValueNotifier<int> selected;
 
   @override
   Widget build(BuildContext context) {
     /* Color Setting */
-    final backgroundColor = ColorScheme.of(context).tertiaryFixedDim;
-    final textColor = ColorScheme.of(context).onTertiaryFixed;
-    final selectedIconColor = ColorScheme.of(context).onTertiaryFixedVariant;
-    final selectedBackgroundColor = ColorScheme.of(context).tertiaryFixed;
+    final cs = ColorScheme.of(context),
+        backgroundColor = cs.tertiaryFixedDim,
+        textColor = cs.onTertiaryFixed,
+        selectedIconColor = cs.onTertiaryFixedVariant,
+        selectedBackgroundColor = cs.tertiaryFixed;
 
     return ValueListenableBuilder(
       valueListenable: selected,
-      builder: (context, selectedIndex, _) => NavigationBarTheme(
+      builder: (_, selectedIndex, _) => NavigationBarTheme(
         data: NavigationBarThemeData(
-          iconTheme: WidgetStateProperty.resolveWith(
-            (ws) => switch (ws) {
-              Set<WidgetState>() when ws.contains(WidgetState.selected) =>
-                IconThemeData(color: selectedIconColor),
-              _ => IconThemeData(color: textColor),
-            },
-          ),
-          labelTextStyle: .all(TextStyle(color: textColor)),
+          iconTheme: WidgetStateProperty<IconThemeData?>.fromMap({
+            WidgetState.selected: IconThemeData(color: selectedIconColor),
+            WidgetState.any: IconThemeData(color: textColor),
+          }),
+          labelTextStyle: WidgetStatePropertyAll(TextStyle(color: textColor)),
         ),
         child: NavigationBar(
           animationDuration: _duration,
           backgroundColor: backgroundColor,
           indicatorColor: selectedBackgroundColor,
           indicatorShape: CircleBorder(),
-          destinations: const [
-            /* 0:RankingTagSubPage */
-            NavigationDestination(
-              icon: Icon(Icons.tag),
-              label: 'タグ',
-              tooltip: 'タグ',
-            ),
-            /* 1:EatPieChart */
-            NavigationDestination(
-              icon: Icon(Icons.local_dining),
-              label: '個数',
-              tooltip: '食べた個数',
-            ),
-            /* 2:StockBarChart */
-            NavigationDestination(
-              icon: Icon(Icons.currency_yen),
-              label: '金額',
-              tooltip: '購入金額',
-            ),
-            /* 3:RankingRatingSubPage */
-            NavigationDestination(
-              icon: Icon(Icons.favorite),
-              label: '評価',
-              tooltip: '評価',
-            ),
+          destinations: [
+            ...<({IconData icon, String label, String? tooltip})>[
+              /* 0:RankingTagSubPage */
+              (icon: Icons.tag, label: 'タグ', tooltip: null),
+              /* 1:EatPieChart */
+              (icon: Icons.local_dining, label: '個数', tooltip: '食べた個数'),
+              /* 2:StockBarChart */
+              (icon: Icons.currency_yen, label: '金額', tooltip: '購入金額'),
+              /* 3:RankingRatingSubPage */
+              (icon: Icons.favorite, label: '評価', tooltip: null),
+            ].select((s, _) {
+              final (:icon, :label, :tooltip) = s;
+              return NavigationDestination(
+                icon: Icon(icon),
+                label: label,
+                tooltip: tooltip,
+              );
+            }),
           ],
           selectedIndex: selectedIndex,
           onDestinationSelected: (index) => selected.value = index,
