@@ -9,77 +9,83 @@ class SelectModeAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Map<bool, ({Color color, IconData icon, VoidCallback onPressed})>
+    definition = {
+      true: (
+        color: Colors.yellow,
+        icon: Icons.delete_forever,
+        onPressed: () {
+          if (vm.isSelected.any((isSelected) => isSelected.value)) {
+            showDialog(
+              context: context,
+              builder: (context) => alertDialog(context),
+            );
+          }
+          // 0(None)
+          else {
+            isSelectMode.flip();
+          }
+        },
+      ),
+      false: (
+        color: ColorScheme.of(context).tertiaryContainer,
+        icon: Icons.delete,
+        onPressed: () => isSelectMode.flip(),
+      ),
+    };
+
     return ValueListenableBuilder(
       valueListenable: isSelectMode,
-      builder: (context, flag, _) => switch (flag) {
-        // onModeButton
-        true => IconButton(
-          icon: const Icon(Icons.delete_forever),
+      builder: (_, flag, _) {
+        final (:icon, :color, :onPressed) = definition[flag]!;
+        return IconButton(
+          icon: Icon(icon),
           tooltip: '削除',
-          color: Colors.yellow,
-          onPressed: () {
-            switch (vm.isSelected.count((isSelected) => isSelected.value)) {
-              case 0:
-                isSelectMode.flip();
-                break;
-              default:
-                showDialog(context: context, builder: (c) => _dialog(c));
-                break;
-            }
-          },
-        ),
-        // offModeButton
-        false => IconButton(
-          icon: const Icon(Icons.delete),
-          tooltip: '削除',
-          color: ColorScheme.of(context).tertiaryContainer,
-          onPressed: () => isSelectMode.flip(),
-        ),
+          color: color,
+          onPressed: onPressed,
+        );
       },
     );
   }
 
-  /* Widget */
-  AlertDialog _dialog(BuildContext context) {
-    /// 「削除」ボタンが押されたとき
-    Future onExecuteButtonPressed() async {
-      // DB削除
-      await StockRepository().deleteMany(
-        // id取得
-        vm.source!
-            .select((s, _) => s.id)
-            // 結合
-            .zip(
-              vm.isSelected.select((s, _) => s.value),
-              (id, isSelected) => MapEntry<int, bool>(id, isSelected),
-            )
-            // 選択
-            .where((w) => w.value)
-            // idだけ
-            .select((s, _) => s.key)
-            .toList(),
-      );
-      // VM再読込
-      await vm.loadSource();
-      isSelectMode.flip();
-      if (context.mounted) {
+  AlertDialog alertDialog(BuildContext context) {
+    final Map<String, VoidCallback> definition = {
+      'キャンセル': () {
+        isSelectMode.flip();
         Navigator.pop(context);
-      }
-    }
+      },
+      '削除': () async {
+        // DB削除
+        await StockRepository().deleteMany(
+          // id取得
+          vm.source!
+              .select((s, _) => s.id)
+              // 結合
+              .zip(
+                vm.isSelected.select((s, _) => s.value),
+                (id, isSelected) => MapEntry<int, bool>(id, isSelected),
+              )
+              // 選択
+              .where((w) => w.value)
+              // idだけ
+              .select((s, _) => s.key)
+              .toList(),
+        );
+        // VM再読込
+        await vm.loadSource();
+        isSelectMode.flip();
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
+      },
+    };
 
     return AlertDialog(
       title: const Text('削除しますか？'),
       actions: [
-        /* Cancel */
-        TextButton(
-          onPressed: () {
-            isSelectMode.flip();
-            Navigator.pop(context);
-          },
-          child: const Text('キャンセル'),
+        ...definition.entries.select(
+          (s, _) => TextButton(onPressed: s.value, child: Text(s.key)),
         ),
-        /* Execute */
-        TextButton(onPressed: onExecuteButtonPressed, child: const Text('削除')),
       ],
     );
   }

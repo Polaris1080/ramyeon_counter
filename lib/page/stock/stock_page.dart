@@ -3,12 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 // Model
-import 'package:ramyeon_counter/ramyeon_database.dart';
-import 'package:ramyeon_counter/model/ramyeon.dart';
-import 'package:ramyeon_counter/model/stock.dart';
-import 'package:ramyeon_counter/model/base/model_base.dart';
-import 'package:ramyeon_counter/model/base/context_base.dart';
 import 'package:ramyeon_counter/model/repository/stock_repository.dart';
+import 'postit/stock_postit_data.dart';
 // Other
 import 'package:ramyeon_counter/utility/extension_methods/em_bool_notifier.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
@@ -21,8 +17,6 @@ import 'package:ramyeon_counter/widget/spacing_grid_view/spacing_grid_view.dart'
 part 'stock_page_vm.dart';
 part 'actions/select_mode_action.dart';
 part 'postit/stock_postit.dart';
-part 'postit/stock_postit_context.dart';
-part 'postit/stock_postit_data.dart';
 
 class StockPage extends StatelessWidget {
   StockPage({super.key, required int? brandId, this.packageColor})
@@ -54,7 +48,7 @@ class StockPage extends StatelessWidget {
         body: ImageBackground.cork(
           child: ListenableBuilder(
             listenable: vm,
-            builder: (context, _) => switch (vm.source) {
+            builder: (_, _) => switch (vm.source) {
               List<StockPostitData> data => postitGridView(data),
               _ => FutureBuilder(
                 future: vm.loadSource(),

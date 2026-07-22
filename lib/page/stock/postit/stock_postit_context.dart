@@ -1,4 +1,4 @@
-part of '../stock_page.dart';
+part of 'stock_postit_data.dart';
 
 class StockPostitContext extends RamyeonContextBase {
   Future<List<StockPostitData>> read(int? brandId) async =>
@@ -24,7 +24,7 @@ class StockPostitContext extends RamyeonContextBase {
               ),
               price: s[StockTableRow.price.name] as int,
               color: switch (s[RamyeonTableRow.packageColor.name]) {
-                int c => Color(c),
+                int color => Color(color),
                 _ => null,
               },
             ),

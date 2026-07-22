@@ -1,4 +1,14 @@
-part of '../stock_page.dart';
+// Model
+import 'package:ramyeon_counter/ramyeon_database.dart';
+import 'package:ramyeon_counter/model/ramyeon.dart';
+import 'package:ramyeon_counter/model/stock.dart';
+import 'package:ramyeon_counter/model/base/context_base.dart';
+import 'package:ramyeon_counter/model/base/model_base.dart';
+// Package
+import 'package:darq/darq.dart';
+import 'package:flutter/material.dart';
+// Partial
+part 'stock_postit_context.dart';
 
 class StockPostitData extends VirtualModelBase {
   /// [Stock].id
