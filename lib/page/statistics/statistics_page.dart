@@ -14,16 +14,15 @@ import 'package:nil/nil.dart';
 // ViewModel
 import 'package:ramyeon_counter/page/statistics/statistics_page_vm.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_bool_notifier.dart';
-import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
 // Widget
 import 'parts/ranking_table.dart';
 import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 import 'package:ramyeon_counter/widget/image_background.dart';
 // Partical
+part 'statistics_navigation.dart';
 part 'parts/all_or_year_selector.dart';
 part 'parts/all_tag_view_area.dart';
-part 'parts/statistics_navigation.dart';
 part 'sub_page/eat_pie_chart.dart';
 part 'sub_page/stock_bar_chart.dart';
 part 'sub_page/ranking_rating_sub_page.dart';
@@ -49,6 +48,7 @@ class StatisticsPage extends StatelessWidget {
         child: ValueListenableBuilder(
           valueListenable: selected,
           builder: (context, selectedIndex, _) => switch (selectedIndex) {
+            /* 1:EatPieChart */
             1 => FutureBuilder(
               future: RamyeonListDataContext().readByBrand(''),
               builder: (context, snapshot) => switch (snapshot.data) {
@@ -56,7 +56,9 @@ class StatisticsPage extends StatelessWidget {
                 _ => DelayedLoadingProgressIndicator.normal(context),
               },
             ),
+            /* 2:StockBarChart */
             2 => Padding(padding: EdgeInsets.all(8.0), child: _StockBarChart()),
+            /* 3:RankingRatingSubPage */
             3 => FutureBuilder(
               future: vm.rankingRatingData,
               builder: (context, snapshot) => switch (snapshot.data) {
@@ -64,6 +66,7 @@ class StatisticsPage extends StatelessWidget {
                 _ => DelayedLoadingProgressIndicator.normal(context),
               },
             ),
+            /* 0:RankingTagSubPage */
             _ => FutureBuilder(
               future: vm.rankingTagData,
               builder: (context, snapshot) => switch (snapshot.data) {

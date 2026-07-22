@@ -1,4 +1,4 @@
-part of '../statistics_page.dart';
+part of 'statistics_page.dart';
 
 class StatisticsNavigation extends StatelessWidget {
   /* Setting */
