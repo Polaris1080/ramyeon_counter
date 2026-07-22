@@ -15,7 +15,7 @@ import 'package:ramyeon_counter/widget/detail_regist_page/barcode/register/barco
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 import 'package:ramyeon_counter/widget/detail_regist_page/data/ramyeon_data_register.dart';
 import 'package:ramyeon_counter/widget/detail_regist_page/tag/register/tag_register.dart';
-import 'package:ramyeon_counter/widget/ramyeon_image/ramyeon_image_register.dart';
+import 'package:ramyeon_counter/widget/ramyeon_image/register/ramyeon_image_register.dart';
 
 class RegistPage extends StatelessWidget {
   RegistPage({super.key, this.brandId, this.packageColor})
@@ -83,10 +83,9 @@ class RegistPage extends StatelessWidget {
                                   height:
                                       MediaQuery.of(context).size.width * 0.3,
                                   child: RamyeonImageRegister(
-                                    null,
-                                    brandId,
                                     context,
-                                    imagePath: imagePath,
+                                    brandId,
+                                    imgPath: imagePath,
                                   ),
                                 );
                               },

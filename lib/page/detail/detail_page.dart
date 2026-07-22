@@ -50,9 +50,9 @@ class DetailPage extends StatelessWidget {
                             ),
                             height: MediaQuery.of(context).size.width * 0.25,
                             child: RamyeonImageViewer(
-                              context: context,
+                              context,
+                              ramyeonId,
                               packageColor: packageColor,
-                              ramyeonId: ramyeonId,
                             ),
                           );
                         },

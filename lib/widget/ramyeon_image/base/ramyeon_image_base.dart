@@ -1,20 +1,30 @@
+// Package
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 abstract class RamyeonImageBase extends StatelessWidget {
-  static const _circularClipRadius = 10.0, _emptyBorderRadius = 10.0;
+  /* Setting */
+  static const heroTag = 'imageHero',
+      _circularBackgroundColor = Colors.blue,
+      _circularClipRadius = 10.0,
+      _circularIconColor = Colors.white,
+      _hoverOpacity = 0.8;
 
+  // TODO【後で見直す】
   RamyeonImageBase(
-    this.packageColor,
-    int? ramyeonId,
-    BuildContext context, {
+    BuildContext context,
+    int? ramyeonId, {
     super.key,
-    required this.imagePath,
+    ValueNotifier<String?>? imgPath,
+    Color? packageColor,
   }) : _emptyBorderColor = switch (packageColor) {
          _? => ColorScheme.fromSeed(seedColor: packageColor),
          _ => ColorScheme.of(context),
-       }.tertiaryContainer {
+       }.tertiaryContainer,
+       imagePath = switch (imgPath) {
+         _? => imgPath,
+         _ => .new(null),
+       } {
     if (ramyeonId != null) {
       if (File('C:/Users/Polar/Documents/${ramyeonId}_full.JPG').existsSync()) {
         imagePath.value = 'C:/Users/Polar/Documents/${ramyeonId}_full.JPG';
@@ -22,51 +32,89 @@ abstract class RamyeonImageBase extends StatelessWidget {
     }
   }
 
-
   /* Argument */
   final ValueNotifier<String?> imagePath;
-  final Color? packageColor;
 
   /* Value */
   final Color _emptyBorderColor;
   final ValueNotifier<bool> isHovering = .new(false);
+  final ValueNotifier<bool> isImageLoaded = .new(false);
 
+  /* Build */
   @override
   Widget build(BuildContext context) {
+    /* Widget */
+    Widget emptyBorder = Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: _emptyBorderColor, width: 2.0),
+        borderRadius: const .all(.circular(_circularClipRadius)),
+      ),
+    );
+
+    // アスペクト調整 & マウス検知
     return AspectRatio(
       aspectRatio: 1,
       child: MouseRegion(
         onEnter: (_) => isHovering.value = true,
         onExit: (_) => isHovering.value = false,
         opaque: false,
-        child: Stack(children: [imageArea, overlayArea]),
+        child: Stack(
+          children: [
+            // Path...
+            ValueListenableBuilder(
+              valueListenable: imagePath,
+              builder: (context, path, _) => switch (path) {
+                // ...may exist(Opacity)
+                _? => ValueListenableBuilder(
+                  valueListenable: isHovering,
+                  builder: (_, h, w) {
+                    isImageLoaded.value = true;
+                    return Opacity(opacity: h ? _hoverOpacity : 1.0, child: w!);
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(_circularClipRadius),
+                    child: Hero(
+                      tag: heroTag,
+                      // Loading(...success)
+                      child: Image.file(
+                        .new(path),
+                        fit: BoxFit.cover,
+                        // ...error
+                        errorBuilder: (context, error, stackTrace) {
+                          isImageLoaded.value = false;
+                          return emptyBorder;
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                _ => emptyBorder,
+              },
+            ),
+            overlayArea(context),
+          ],
+        ),
       ),
     );
   }
 
   /* Widget */
-  Widget get imageArea;
-  Widget get overlayArea;
-
-  Widget imageViewer({required String imagePath}) => ValueListenableBuilder(
-    valueListenable: isHovering,
-    builder: (context, value, child) {
-      return Opacity(opacity: value ? 0.8 : 1.0, child: child!);
-    },
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(_circularClipRadius),
-      child: Image.file(
-        .new(imagePath),
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => emptyBorder,
-      ),
-    ),
+  Widget circularIcon(IconData icon) => CircleAvatar(
+    radius: 20,
+    backgroundColor: _circularBackgroundColor,
+    child: Icon(icon, color: _circularIconColor),
   );
 
-  Widget get emptyBorder => Container(
-    decoration: BoxDecoration(
-      border: Border.all(color: _emptyBorderColor, width: 2.0),
-      borderRadius: const .all(.circular(_emptyBorderRadius)),
-    ),
-  );
+  Widget actionIcon(IconData icon, {VoidCallback? onPressed}) =>
+      IconButton.filled(
+        style: IconButton.styleFrom(
+          backgroundColor: _circularBackgroundColor,
+          foregroundColor: _circularIconColor,
+        ),
+        onPressed: onPressed,
+        icon: Icon(icon),
+      );
+
+  /* Overload */
+  Widget overlayArea(BuildContext context);
 }

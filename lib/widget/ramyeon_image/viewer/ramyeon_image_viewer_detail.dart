@@ -30,7 +30,7 @@ class RamyeonImageViewerDetail extends StatelessWidget {
         child: Padding(
           padding: const .all(_padding),
           child: Hero(
-            tag: RamyeonImageViewer.heroTag,
+            tag: RamyeonImageBase.heroTag,
             child: Container(
               constraints: _imageSize,
               child: GestureDetector(onTap: backCommand, child: image),

@@ -6,42 +6,50 @@ import 'package:flutter/material.dart';
 part 'ramyeon_image_viewer_detail.dart';
 
 class RamyeonImageViewer extends RamyeonImageBase {
-  /* Setting */
-  static const heroTag = 'imageHero';
-
-  RamyeonImageViewer({
+  // TODO【後で見直す】
+  RamyeonImageViewer(
+    super.context,
+    super.ramyeonId, {
     super.key,
-    required Color? packageColor,
-    required int ramyeonId,
-    required BuildContext context,
-  }) : super(
-         packageColor,
-         ramyeonId,
-         context,
-         imagePath: .new(null),
-       );
+    super.packageColor,
+  });
 
   @override
-  Widget get imageArea => ValueListenableBuilder(
-    valueListenable: imagePath,
-    builder: (context, path, _) => switch (path) {
-      _? => GestureDetector(
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                RamyeonImageViewerDetail(Image.file(.new(path))),
-          ),
-        ),
-        child: Hero(
-          tag: RamyeonImageViewer.heroTag,
-          child: imageViewer(imagePath: path),
+  Widget overlayArea(BuildContext context) {
+    void onZoomButtonPressed() => Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) =>
+            RamyeonImageViewerDetail(Image.file(.new(imagePath.value!))),
+      ),
+    );
+
+    return Center(
+      // Visibility(Hovering)
+      child: ValueListenableBuilder(
+        valueListenable: isHovering,
+        builder: (_, hovering, w) => Visibility(visible: hovering, child: w!),
+        // Path...
+        child: ValueListenableBuilder(
+          valueListenable: imagePath,
+          builder: (_, path, _) => switch (path) {
+            // ...may exist(Loading...)
+            _? => ValueListenableBuilder(
+              valueListenable: isImageLoaded,
+              builder: (_, loaded, _) => loaded
+                  // ...success
+                  ? actionIcon(
+                      Icons.zoom_in_outlined,
+                      onPressed: onZoomButtonPressed,
+                    )
+                  // ...error
+                  : Icon(Icons.broken_image_outlined),
+            ),
+            // ...not exist
+            null => circularIcon(Icons.image_not_supported_outlined),
+          },
         ),
       ),
-      _ => emptyBorder,
-    },
-  );
-
-  @override
-  Widget get overlayArea => SizedBox();
+    );
+  }
 }
