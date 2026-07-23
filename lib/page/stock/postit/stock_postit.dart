@@ -18,33 +18,24 @@ class StockPostit extends Postit {
            builder: (context) {
              /* Style */
              final tt = Theme.of(context).textTheme,
-                 titleStyle = tt.titleSmall!.copyWith(
-                   fontFamily: "ZenKakuGothicNew",
-                 ),
-                 headerStyle = tt.labelLarge!.copyWith(color: Colors.black),
-                 contextStyle = tt.bodyMedium!.copyWith(
-                   color: Colors.black,
-                   fontFamily: "ZenKakuGothicNew",
-                 );
-             final dt = DateFormat('yyyy年MM月dd日');
+                 dt = DateFormat('yyyy年MM月dd日');
 
              /* Widget */
              Widget layout(
                TextSpan textSpan, {
                required List<Widget> children,
-             }) {
-               final painter =
-                   TextPainter(
-                     text: textSpan,
-                     textDirection: Directionality.of(context),
-                   )..layout(
-                     minWidth: 0,
-                     maxWidth: size.width - _postitContentPadding * 2,
-                   );
-               return painter.computeLineMetrics().length > 1
-                   ? Column(crossAxisAlignment: .stretch, children: children)
-                   : Row(mainAxisAlignment: .spaceBetween, children: children);
-             }
+             }) => switch ((TextPainter(
+                   text: textSpan,
+                   textDirection: Directionality.of(context),
+                 )..layout(
+                   minWidth: 0,
+                   maxWidth: size.width - _postitContentPadding * 2,
+                 ))
+                 .computeLineMetrics()
+                 .length) {
+               > 1 => Column(crossAxisAlignment: .stretch, children: children),
+               _ => Row(mainAxisAlignment: .spaceBetween, children: children),
+             };
 
              return Stack(
                children: [
@@ -52,7 +43,13 @@ class StockPostit extends Postit {
                    padding: const EdgeInsets.all(_postitContentPadding),
                    child: Column(
                      children: [
-                       Text(data.brand, style: titleStyle),
+                       /* title */
+                       Text(
+                         data.brand,
+                         style: tt.titleSmall!.copyWith(
+                           fontFamily: "ZenKakuGothicNew",
+                         ),
+                       ),
                        Spacer(),
                        /* term */
                        ..._header.select((s, _) => '$s：').zip(
@@ -67,12 +64,17 @@ class StockPostit extends Postit {
                              Text(
                                heading,
                                textAlign: .start,
-                               style: headerStyle,
+                               style: tt.labelLarge!.copyWith(
+                                 color: Colors.black,
+                               ),
                              ),
                              Text(
                                content,
                                textAlign: .end,
-                               style: contextStyle,
+                               style: tt.bodyMedium!.copyWith(
+                                 color: Colors.black,
+                                 fontFamily: "ZenKakuGothicNew",
+                               ),
                              ),
                            ],
                          ),
@@ -83,13 +85,13 @@ class StockPostit extends Postit {
                  /* CheckBox */
                  ValueListenableBuilder(
                    valueListenable: isSelectMode,
-                   builder: (_, flag, w) =>
+                   builder: (context, flag, w) =>
                        Visibility(visible: flag, child: w!),
                    child: Align(
                      alignment: Alignment.topRight,
                      child: ValueListenableBuilder(
                        valueListenable: isSelected,
-                       builder: (_, flag, _) => Checkbox(
+                       builder: (context, flag, _) => Checkbox(
                          // Color
                          checkColor: Colors.green[700],
                          fillColor: WidgetStateColor.resolveWith(

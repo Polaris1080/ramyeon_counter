@@ -50,35 +50,30 @@ class SelectModeAction extends StatelessWidget {
 
     return ValueListenableBuilder(
       valueListenable: isSelectMode,
-      builder: (_, flag, _) {
-        final (:icon, :color, :onPressed) = flag
-            ? (
-                color: Colors.yellow,
-                icon: Icons.delete_forever,
-                onPressed: () {
-                  if (vm.isSelected.any((isSelected) => isSelected.value)) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => alertDialog(context),
-                    );
-                  }
-                  // 0(None)
-                  else {
-                    isSelectMode.flip();
-                  }
-                },
-              )
-            : (
-                color: ColorScheme.of(context).tertiaryContainer,
-                icon: Icons.delete,
-                onPressed: () => isSelectMode.flip(),
-              );
-        return IconButton(
-          icon: Icon(icon),
+      builder: (context, flag, _) => switch (flag) {
+        true => IconButton(
+          icon: const Icon(Icons.delete_forever),
           tooltip: '削除',
-          color: color,
-          onPressed: onPressed,
-        );
+          color: Colors.yellow,
+          onPressed: () {
+            if (vm.isSelected.any((isSelected) => isSelected.value)) {
+              showDialog(
+                context: context,
+                builder: (context) => alertDialog(context),
+              );
+            }
+            // 0(None)
+            else {
+              isSelectMode.flip();
+            }
+          },
+        ),
+        false => IconButton(
+          icon: const Icon(Icons.delete),
+          tooltip: '削除',
+          color: ColorScheme.of(context).tertiaryContainer,
+          onPressed: () => isSelectMode.flip(),
+        ),
       },
     );
   }
