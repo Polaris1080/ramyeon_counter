@@ -21,7 +21,7 @@ part 'postit/stock_postit.dart';
 class StockPage extends StatelessWidget {
   StockPage({super.key, required int? brandId, this.packageColor})
     : vm = .new(brandId) {
-    isSelectMode.addListener(isSelectModeChanged);
+    isSelectMode.addListener(_isSelectModeChanged);
   }
 
   /* Argument */
@@ -29,14 +29,15 @@ class StockPage extends StatelessWidget {
 
   /* Value */
   final StockPageViewModel vm;
+
+  /// To [SelectModeAction]
   final ValueNotifier<bool> isSelectMode = .new(false);
-  void isSelectModeChanged() => vm.isSelected.forEach((f) => f.value = false);
+  void _isSelectModeChanged() => vm.isSelected.forEach((f) => f.value = false);
 
   @override
   Widget build(BuildContext context) {
-    return
-    /* Color change */
-    Theme(
+    return Theme(
+      /* Color change */
       data: Theme.of(context).colorOverride(packageColor),
       child: Scaffold(
         appBar: DefaultAppBar(

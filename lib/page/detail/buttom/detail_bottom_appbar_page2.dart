@@ -4,7 +4,9 @@ class PageTwo extends StatelessWidget {
   /* Setting */
   static const _spacing = 10.0;
 
-  const PageTwo({super.key});
+  const PageTwo({super.key, required this.ramyeonId});
+
+  final int ramyeonId;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class PageTwo extends StatelessWidget {
               showModalBottomSheet<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return EatSheet();
+                  return EatSheet(id: RamyeonId(ramyeonId));
                 },
               );
             },

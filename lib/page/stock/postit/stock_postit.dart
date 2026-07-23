@@ -36,12 +36,12 @@ class StockPostit extends StatelessWidget {
           _ => ColorScheme.of(context),
         }.primaryFixed,
       ),
-      child: Stack(children: [content(context), checkBox]),
+      child: Stack(children: [_content(context), _checkBox]),
     );
   }
 
   /* Widget */
-  Widget content(BuildContext context) {
+  Widget _content(BuildContext context) {
     const header = ['購入日', '賞味期限', '価格'];
     final tt = Theme.of(context).textTheme, df = DateFormat('yyyy年MM月dd日');
     List<Text> term(String heading, String content) {
@@ -107,7 +107,7 @@ class StockPostit extends StatelessWidget {
     );
   }
 
-  Widget get checkBox => ValueListenableBuilder(
+  Widget get _checkBox => ValueListenableBuilder(
     valueListenable: isSelectMode,
     builder: (_, flag, w) => Visibility(visible: flag, child: w!),
     child: Align(

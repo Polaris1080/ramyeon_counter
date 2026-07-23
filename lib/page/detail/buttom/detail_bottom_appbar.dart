@@ -7,9 +7,10 @@ import 'package:go_router/go_router.dart';
 // Model
 import 'package:ramyeon_counter/model/repository/rating_repository.dart';
 import 'package:ramyeon_counter/model/repository/stock_repository.dart';
+import 'package:ramyeon_counter/utility/extention_type/ramyeon_id.dart';
 // (Widget)
 import 'package:ramyeon_counter/widget/add_dialog.dart';
-import 'package:ramyeon_counter/widget/eat_sheet.dart';
+import 'package:ramyeon_counter/page/detail/dialog/eat_sheet.dart';
 // Partial
 part 'side_navigation.dart';
 part 'detail_bottom_appbar_page1.dart';
@@ -59,7 +60,7 @@ class DetailBottomAppbar extends StatelessWidget {
                       ramyeonId: ramyeonId,
                       packageColor: packageColor,
                     ),
-                    _ => PageTwo(),
+                    _ => PageTwo(ramyeonId: ramyeonId),
                   },
                 ),
               ),

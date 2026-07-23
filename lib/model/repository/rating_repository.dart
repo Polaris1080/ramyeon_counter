@@ -1,4 +1,7 @@
 // Base
+import 'package:ramyeon_counter/model/stock.dart';
+import 'package:ramyeon_counter/utility/extention_type/ramyeon_id.dart';
+
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
 // Model
@@ -31,6 +34,28 @@ class RatingRepository extends RamyeonRepositoryBase {
   Future<int> delete(int id) async =>
       await deleteBase(where: '${RatingTableRow.id.name} = ?', whereArgs: [id]);
 
+  Future consume(RamyeonId id, int rating) async {
+    await (await db).transaction((txn) async {
+      // await txn.insert(
+      //   'rating',
+      //   Rating(
+      //     id: -1,
+      //     brandId: id.value,
+      //     rating: rating,
+      //     date: DateTime.now(),
+      //   ).toMap(isDB: true),
+      // );
+      final t1 = (await txn.query(
+        'stock',
+        where: 'brandId = ? and ate = 0',
+        whereArgs: [id],
+        orderBy: 'id',
+        limit: 1,
+      )).select((s, _) => Stock.fromMap(s)).toList().first;
+      await txn.update('stock', t1.toMap(isDB: true));
+    });
+  }
+
   Future<int> countByBrandId(int brandId) async => (await (await db).rawQuery(
     '''
     SELECT COUNT(*) as count FROM ${table.name}
@@ -39,11 +64,9 @@ class RatingRepository extends RamyeonRepositoryBase {
     [brandId],
   )).select((s, _) => s['count'] as int).first;
 
-    Future<int> getLastYear() async => (await (await db).rawQuery(
-    '''
+  Future<int> getLastYear() async => (await (await db).rawQuery('''
     SELECT strftime('%Y', date) as lastyear FROM rating ORDER BY date LIMIT 1;
-    ''',
-  )).select((s, _) => s['lastyear'] as int).first;
+    ''')).select((s, _) => s['lastyear'] as int).first;
 
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {

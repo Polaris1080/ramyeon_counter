@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ramyeon_counter/model/rating.dart';
+import 'package:ramyeon_counter/model/repository/rating_repository.dart';
+import 'package:ramyeon_counter/utility/extention_type/ramyeon_id.dart';
 import 'package:ramyeon_counter/widget/rating/selecter/rating_selecter.dart';
 
 class EatSheet extends StatelessWidget {
-  EatSheet({super.key});
+  EatSheet({super.key, required this.id});
 
   final ratingNotifier = ValueNotifier(1);
+  final RamyeonId id;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,11 @@ class EatSheet extends StatelessWidget {
             RatingSelecter(ratingNotifier),
             ElevatedButton(
               child: const Text('Close BottomSheet'),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () {
+                RatingRepository().consume(id, ratingNotifier.value);
+
+                Navigator.pop(context);
+              },
             ),
           ],
         ),
