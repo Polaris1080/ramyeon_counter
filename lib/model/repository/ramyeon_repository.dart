@@ -1,6 +1,8 @@
 // Base
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
+// Extention
+import 'package:ramyeon_counter/utility/extention_type/ramyeon_id.dart';
 // Model
 import '../company.dart';
 import '../ramyeon.dart';
@@ -29,14 +31,18 @@ class RamyeonRepository extends RamyeonRepositoryBase {
     [id],
   )).decode()).first;
 
-  Future<List<String>?> readTag(int id) async => ((await (await db).rawQuery(
-    '''
-    SELECT tag FROM ${table.name} INNER JOIN company
-      ON ${table.name}.${RamyeonTableRow.companyId.name} = ${_subTable.name}.${CompanyTableRow.id.name}
-      WHERE ${table.name}.${RamyeonTableRow.id.name} = ?
-    ''',
-    [id],
-  )).select((s, _) => (s['tag'] as String).split(','))).firstOrNull;
+  Future<List<String>?> readTag(RamyeonId id) async =>
+      ((await (await db).query(
+            table.name,
+            columns: ['tag'],
+            where: '${RamyeonTableRow.id.name} = ?',
+            whereArgs: [id],
+          )).select(
+            (s, _) => [
+              ...(s['tag'] as String).split(',').where((w) => w.isNotEmpty),
+            ],
+          ))
+          .firstOrNull;
 
   Future<int> update(Ramyeon value) async => await updateBase(
     value,
