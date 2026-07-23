@@ -71,20 +71,17 @@ abstract class RamyeonImageBase extends StatelessWidget {
                     isImageLoaded.value = true;
                     return Opacity(opacity: h ? _hoverOpacity : 1.0, child: w!);
                   },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(_circularClipRadius),
-                    child: Hero(
-                      tag: heroTag,
-                      // Loading(...success)
-                      child: Image.file(
-                        .new(path),
-                        fit: BoxFit.cover,
-                        // ...error
-                        errorBuilder: (context, error, stackTrace) {
-                          isImageLoaded.value = false;
-                          return emptyBorder;
-                        },
-                      ),
+                  child: Hero(
+                    tag: heroTag,
+                    // Loading(...success)
+                    child: Image.file(
+                      .new(path),
+                      fit: BoxFit.cover,
+                      // ...error
+                      errorBuilder: (context, error, stackTrace) {
+                        isImageLoaded.value = false;
+                        return emptyBorder;
+                      },
                     ),
                   ),
                 ),
