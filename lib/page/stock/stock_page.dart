@@ -4,6 +4,7 @@ import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 // Model
 import 'package:ramyeon_counter/model/repository/stock_repository.dart';
+import 'package:ramyeon_counter/widget/postit.dart';
 import 'postit/stock_postit_data.dart';
 // Other
 import 'package:ramyeon_counter/utility/extension_methods/em_bool_notifier.dart';
