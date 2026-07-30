@@ -1,8 +1,8 @@
-// Extention-method
-import './extention/em_barcode_data.dart';
-// Extention-type
-import './extention/count.dart';
-import './extention/jam.dart';
+// Extension-method
+import 'extension/em_barcode_data.dart';
+// Extension-type
+import 'extension/count.dart';
+import 'extension/jam.dart';
 // Package
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +10,13 @@ import 'package:flutter/material.dart';
 import './parts/barcode_chip.dart';
 
 class BarcodeViewer extends StatelessWidget {
+  /* Setting */
   static const _spacing = Size(10.0, 10.0);
 
   const BarcodeViewer({super.key, required this.source});
 
+  /* Value */
+  @protected
   final Map<Count, Jam> source;
 
   @override
@@ -27,6 +30,7 @@ class BarcodeViewer extends StatelessWidget {
     );
   }
 
+  /* Widget */
   @protected
   BarcodeChip barcodeChip(
     BuildContext context,

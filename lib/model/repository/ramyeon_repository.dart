@@ -2,7 +2,7 @@
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
 // Extention
-import 'package:ramyeon_counter/utility/extention_type/ramyeon_id.dart';
+import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 // Model
 import '../company.dart';
 import '../ramyeon.dart';

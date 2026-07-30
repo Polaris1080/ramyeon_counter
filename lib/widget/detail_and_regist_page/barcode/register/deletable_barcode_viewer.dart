@@ -7,8 +7,11 @@ class DeletableBarcodeViewer extends BarcodeViewer {
     required BarcodeRegisterViewModel viewmodel,
   }) : vm = viewmodel;
 
+  /* Value */
+  @protected
   final BarcodeRegisterViewModel vm;
 
+  /* Widget */
   @protected
   @override
   BarcodeChip barcodeChip(
@@ -24,7 +27,7 @@ class DeletableBarcodeViewer extends BarcodeViewer {
             Navigator.pop(context);
           },
           '削除': () {
-            vm.remove(barcodeData.jam);
+            vm.removeButtonClicked(barcodeData.key);
             Navigator.pop(context);
           },
         };

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // Widget
 import 'package:ramyeon_counter/page/detail/buttom/detail_bottom_appbar.dart';
-import 'package:ramyeon_counter/utility/extention_type/ramyeon_id.dart';
+import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/data/ramyeon_data_viewer.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/viewer/tag_viewer.dart';

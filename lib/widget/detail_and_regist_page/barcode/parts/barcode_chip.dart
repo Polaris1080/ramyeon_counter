@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 class BarcodeChip extends ActionChip {
+  /* Setting */
   static const _defaultWidth = 135.0;
 
   BarcodeChip(

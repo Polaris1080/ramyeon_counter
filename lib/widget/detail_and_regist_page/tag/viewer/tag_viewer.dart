@@ -1,5 +1,5 @@
 // Extention
-import 'package:ramyeon_counter/utility/extention_type/ramyeon_id.dart';
+import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 // Model
 import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
 // Package

@@ -1,55 +1,36 @@
 part of '../barcode_register.dart';
 
 class BarcodeEntry extends StatelessWidget {
+  /* Setting */
+  static final regexp = RegExp(r'^\d{8}$|^\d{13}$');
   static const _entryWidth = 170.0, _sectionWidth = 300.0, _spacing = 15.0;
 
   const BarcodeEntry(this.vm, {super.key});
 
+  /* Value */
+  @protected
   final BarcodeRegisterViewModel vm;
 
   @override
   Widget build(BuildContext context) {
-    return switch (MediaQuery.of(context).size.width) {
-      /* displayWidth >= sectionWidth => 1段 */
-      double displayWidth when displayWidth >= _sectionWidth => Row(
-        mainAxisAlignment: .center,
-        spacing: _spacing,
-        children: [
-          _scan(),
-          _entry(),
-          IconButton(onPressed: vm.append, icon: Icon(Icons.add)),
-        ],
-      ),
-      /* displayWidth <  sectionWidth => 2段 */
-      _ => Column(
-        children: [
-          _entry(),
-          Row(
-            mainAxisSize: .min,
-            spacing: _spacing,
-            children: [_scan(), _add()],
-          ),
-        ],
-      ),
-    };
-  }
+    /* Widget */
+    Widget addButton() => ListenableBuilder(
+      listenable: vm,
+      builder: (context, _) =>
+          IconButton(icon: Icon(Icons.add), onPressed: vm.addButtonClicked()),
+    );
 
-  IconButton _add() => IconButton(onPressed: vm.append, icon: Icon(Icons.add));
+    Widget scanButton() => IconButton(
+      icon: Icon(Icons.barcode_reader),
+      onPressed: switch (Platform.operatingSystem) {
+        _ => null,
+        // モバイル版を開発するとき実装（現状デスクトップ版のみ）
+        // 想定：バーコードを読み込む
+        //String os when os == "android" || os == "ios" => () {},
+      },
+    );
 
-  IconButton _scan() => IconButton(
-    onPressed: switch (Platform.operatingSystem) {
-      _ => null,
-      // モバイル版を開発するとき実装（現状デスクトップ版のみ）
-      // 想定：バーコードを読み込む
-      //String os when os == "android" || os == "ios" => () {},
-    },
-    icon: Icon(Icons.barcode_reader),
-  );
-
-  SizedBox _entry() {
-    final regexp = RegExp(r'^\d{8}$|^\d{13}$');
-
-    return SizedBox(
+    Widget textField() => SizedBox(
       width: _entryWidth,
       child: TextFormField(
         maxLength: 13,
@@ -63,13 +44,38 @@ class BarcodeEntry extends StatelessWidget {
         // only number
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        validator: (value) {
-          if (value != null && value.isNotEmpty && !regexp.hasMatch(value)) {
-            return '桁数が違います';
-          }
-          return null;
+        validator: (value) => switch (value) {
+          String value when !regexp.hasMatch(value) => '桁数が違います',
+          _ => null,
         },
       ),
     );
+
+    /* Rayout */
+    // 段数
+    const maxStep = 2, minStep = 1;
+    final int steps =
+        (maxStep - (MediaQuery.of(context).size.width ~/ _sectionWidth)).minmax(
+          minStep,
+          maxStep,
+        );
+
+    return switch (steps) {
+      2 => Column(
+        children: [
+          textField(),
+          Row(
+            mainAxisSize: .min,
+            spacing: _spacing,
+            children: [scanButton(), addButton()],
+          ),
+        ],
+      ),
+      _ => Row(
+        mainAxisAlignment: .center,
+        spacing: _spacing,
+        children: [scanButton(), textField(), addButton()],
+      ),
+    };
   }
 }

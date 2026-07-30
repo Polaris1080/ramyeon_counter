@@ -1,11 +1,16 @@
+// Extension-type
+import 'extension/count.dart';
+import 'extension/jam.dart';
 // Package
 import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/extention/count.dart';
-import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/extention/jam.dart';
+// Other
+import 'barcode_register.dart';
 
 class BarcodeRegisterViewModel extends ChangeNotifier {
   BarcodeRegisterViewModel() {
-    selectCount(); // 初期化
+    // 初期化
+    selectCount();
+    notifyListeners();
   }
 
   Map<Count, Jam> get source => _source;
@@ -14,48 +19,54 @@ class BarcodeRegisterViewModel extends ChangeNotifier {
     Count(5): Jam(8801073143319),
   };
 
-  /// code
-  int? get barcode => _barcode;
-  int? _barcode;
+  Jam? get barcode => _barcode;
+  Jam? _barcode;
 
-  /* Selecter */
-  int get countSelected => _countSelected;
-  int _countSelected = 1;
+  Count get countSelected => _countSelected;
+  Count _countSelected = Count(1);
 
   /// 空いている箇所を見つける
   void selectCount() {
     int c = 1;
-    for (var count in _source.keys.toList()..sort()) {
+    for (Count count in _source.keys.toList()..sort()) {
       if (c == count.value) {
         c = count.value + 1;
       }
     }
-    _countSelected = c;
+    _countSelected = Count(c);
   }
 
   /* Command */
-  void append() {
-    if (barcode != null && !source.containsKey(countSelected)) {
-      _source.addAll({Count(countSelected) : Jam(barcode!)});
-      selectCount(); // 変動
-      notifyListeners();
-    }
-  }
+  /// [DeletableBarcodeViewer]
+  VoidCallback? addButtonClicked() =>
+      barcode == null ||
+          source.containsKey(countSelected) ||
+          source.containsValue(barcode!)
+      ? null
+      : () {
+          _source[countSelected] = barcode!;
+          selectCount();
+          notifyListeners();
+        };
 
-  void remove(int key) {
+  /// [DeletableBarcodeViewer]
+  void removeButtonClicked(Count key) {
     _source.remove(key);
-    selectCount(); // 変動
+    selectCount();
     notifyListeners();
   }
 
+  /// [QuantitySelector] segmentedButton changed.
   void countChanged(Set<int> newSelection) {
-    _countSelected = newSelection.first;
+    _countSelected = Count(newSelection.first);
     notifyListeners();
   }
 
+  /// [BarcodeEntry] textFormField changed.
   void textformChanged(String value) {
-    final regexp = RegExp(r'^\d{8}$|^\d{13}$');
-    _barcode = regexp.hasMatch(value) ? int.parse(value) : null;
+    _barcode = BarcodeEntry.regexp.hasMatch(value)
+        ? Jam(int.parse(value))
+        : null;
     notifyListeners();
   }
 }
