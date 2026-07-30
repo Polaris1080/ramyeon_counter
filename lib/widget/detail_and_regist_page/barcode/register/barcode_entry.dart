@@ -1,4 +1,4 @@
-part of 'barcode_register.dart';
+part of '../barcode_register.dart';
 
 class BarcodeEntry extends StatelessWidget {
   static const _entryWidth = 170.0, _sectionWidth = 300.0, _spacing = 15.0;

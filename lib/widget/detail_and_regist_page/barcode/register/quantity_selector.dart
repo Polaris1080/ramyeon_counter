@@ -1,4 +1,4 @@
-part of 'barcode_register.dart';
+part of '../barcode_register.dart';
 
 class QuantitySelector extends StatelessWidget {
   static const _countStart = 1,

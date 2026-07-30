@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/parts/barcode_chip.dart';
 // ViewModel
-import 'barcode_register_vm.dart';
+import 'register/barcode_register_vm.dart';
 // Partical
-part 'barcode_entry.dart';
-part 'deletable_barcode_viewer.dart';
-part 'deletable_chip.dart';
-part 'quantity_selector.dart';
+part 'register/barcode_entry.dart';
+part 'register/deletable_barcode_viewer.dart';
+part 'register/quantity_selector.dart';
 
 class BarcodeRegister extends StatelessWidget {
   static const _verticalSpacing = 10.0;
