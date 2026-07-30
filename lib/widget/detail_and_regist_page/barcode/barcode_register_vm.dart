@@ -1,13 +1,18 @@
 // Package
 import 'package:flutter/material.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/extention_type/count.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/extention_type/jam.dart';
 
 class BarcodeRegisterViewModel extends ChangeNotifier {
   BarcodeRegisterViewModel() {
     selectCount(); // 初期化
   }
 
-  Map<int, int> get source => _source;
-  final Map<int, int> _source = {1: 8801073114920, 5: 8801073143319};
+  Map<Count, Jam> get source => _source;
+  final Map<Count, Jam> _source = {
+    Count(1): Jam(8801073114920),
+    Count(5): Jam(8801073143319),
+  };
 
   /// code
   int? get barcode => _barcode;
@@ -21,8 +26,8 @@ class BarcodeRegisterViewModel extends ChangeNotifier {
   void selectCount() {
     int c = 1;
     for (var count in _source.keys.toList()..sort()) {
-      if (c == count) {
-        c = count + 1;
+      if (c == count.value) {
+        c = count.value + 1;
       }
     }
     _countSelected = c;
@@ -31,7 +36,7 @@ class BarcodeRegisterViewModel extends ChangeNotifier {
   /* Command */
   void append() {
     if (barcode != null && !source.containsKey(countSelected)) {
-      _source.addAll({countSelected: barcode!});
+      _source.addAll({Count(countSelected) : Jam(barcode!)});
       selectCount(); // 変動
       notifyListeners();
     }

@@ -18,35 +18,34 @@ class DeletableBarcodeViewer extends StatelessWidget {
       builder: (context, _) => Wrap(
         spacing: _horizontalSpacing,
         runSpacing: _verticalSpacing,
-        children: vm.source.entries
-            .select(
-              (barcode, _) => BarcodeChip(
-                '${barcode.key}個：${barcode.value}',
-                onPressed: () => showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text(_alertTitle),
-                    content: Text('${barcode.key}個：${barcode.value}'),
-                    actions: [
-                      TextButton(
-                        child: const Text(_alertCancel),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      TextButton(
-                        child: const Text(_alertOK),
-                        onPressed: () {
-                          vm.remove(barcode.key);
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
+        children: vm.source.entries.select((barcode, _) {
+          //final BarcodeData bd = .new(barcode);
+          return BarcodeChip(
+            '${barcode.key}個：${barcode.value}',
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text(_alertTitle),
+                content: Text('${barcode.key}個：${barcode.value}'),
+                actions: [
+                  TextButton(
+                    child: const Text(_alertCancel),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                ),
+                  TextButton(
+                    child: const Text(_alertOK),
+                    onPressed: () {
+                      vm.remove(barcode.key.value);
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
               ),
-            )
-            .toList(),
+            ),
+          );
+        }).toList(),
       ),
     );
   }

@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/extention_type/jam.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/parts/barcode_chip.dart';
 // ViewModel
-import 'register/barcode_register_vm.dart';
+import 'barcode_register_vm.dart';
 // Partical
 part 'register/barcode_entry.dart';
 part 'register/deletable_barcode_viewer.dart';
