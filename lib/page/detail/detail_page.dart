@@ -7,10 +7,10 @@ import 'package:go_router/go_router.dart';
 import 'package:ramyeon_counter/page/detail/buttom/detail_bottom_appbar.dart';
 import 'package:ramyeon_counter/utility/extention_type/ramyeon_id.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
-import 'package:ramyeon_counter/widget/detail_regist_page/data/ramyeon_data_viewer.dart';
-import 'package:ramyeon_counter/widget/detail_regist_page/tag/viewer/tag_viewer.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/data/ramyeon_data_viewer.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/viewer/tag_viewer.dart';
 import 'package:ramyeon_counter/widget/image_background.dart';
-import 'package:ramyeon_counter/widget/ramyeon_image/viewer/ramyeon_image_viewer.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/ramyeon_image/viewer/ramyeon_image_viewer.dart';
 // Partical
 part 'actions/detail_to_edit_action.dart';
 

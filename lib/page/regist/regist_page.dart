@@ -11,11 +11,11 @@ import 'package:flutter/material.dart';
 // ViewModel
 import 'package:ramyeon_counter/page/regist/view_model/regist_page_vm.dart';
 // Widget
-import 'package:ramyeon_counter/widget/detail_regist_page/barcode/register/barcode_register.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/register/barcode_register.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
-import 'package:ramyeon_counter/widget/detail_regist_page/data/ramyeon_data_register.dart';
-import 'package:ramyeon_counter/widget/detail_regist_page/tag/register/tag_register.dart';
-import 'package:ramyeon_counter/widget/ramyeon_image/register/ramyeon_image_register.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/data/ramyeon_data_register.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/register/tag_register.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/ramyeon_image/register/ramyeon_image_register.dart';
 
 class RegistPage extends StatelessWidget {
   RegistPage({super.key, this.brandId, this.packageColor})

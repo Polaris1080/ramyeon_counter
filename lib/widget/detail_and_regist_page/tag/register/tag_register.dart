@@ -2,7 +2,7 @@
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 // ViewModel
-import 'package:ramyeon_counter/widget/detail_regist_page/tag/register/tag_register_vm.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/register/tag_register_vm.dart';
 // Partical
 part 'deletable_tag_viewer.dart';
 part 'tag_entry.dart';
