@@ -3,10 +3,14 @@ import 'dart:io';
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/extention/jam.dart';
-import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/parts/barcode_chip.dart';
 // ViewModel
 import 'barcode_register_vm.dart';
+// DeletableBarcodeViewer
+import './barcode_viewer.dart';
+import './extention/em_barcode_data.dart';
+import './extention/count.dart';
+import './extention/jam.dart';
+import './parts/barcode_chip.dart';
 // Partical
 part 'register/barcode_entry.dart';
 part 'register/deletable_barcode_viewer.dart';
@@ -26,7 +30,11 @@ class BarcodeRegister extends StatelessWidget {
       children: [
         BarcodeEntry(vm),
         QuantitySelector(vm),
-        DeletableBarcodeViewer(vm),
+        ListenableBuilder(
+          listenable: vm,
+          builder: (context, _) =>
+              DeletableBarcodeViewer(source: vm.source, viewmodel: vm),
+        ),
       ],
     );
   }
