@@ -1,7 +1,7 @@
 // Package
 import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/extention_type/count.dart';
-import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/extention_type/jam.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/extention/count.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/extention/jam.dart';
 
 class BarcodeRegisterViewModel extends ChangeNotifier {
   BarcodeRegisterViewModel() {
