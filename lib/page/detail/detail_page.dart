@@ -75,7 +75,7 @@ class DetailPage extends StatelessWidget {
             FutureBuilder(
               future: RamyeonRepository().readTag(RamyeonId(ramyeonId)),
               builder: (context, snapshot) => switch (snapshot.data) {
-                List<String> tags => TagsViewer(source: tags),
+                Set<String> tags => TagsViewer(source: tags.toSet()),
                 _ => const SizedBox(),
               },
             ),

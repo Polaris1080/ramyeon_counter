@@ -31,16 +31,16 @@ class RamyeonRepository extends RamyeonRepositoryBase {
     [id],
   )).decode()).first;
 
-  Future<List<String>?> readTag(RamyeonId id) async =>
+  Future<Set<String>?> readTag(RamyeonId id) async =>
       ((await (await db).query(
             table.name,
             columns: ['tag'],
             where: '${RamyeonTableRow.id.name} = ?',
             whereArgs: [id],
           )).select(
-            (s, _) => [
+            (s, _) => {
               ...(s['tag'] as String).split(',').where((w) => w.isNotEmpty),
-            ],
+            },
           ))
           .firstOrNull;
 

@@ -12,7 +12,7 @@ class TagsViewer extends StatelessWidget {
 
   /* Argument */
   @protected
-  final List<String> source;
+  final Set<String> source;
 
   @override
   Widget build(BuildContext context) {
