@@ -1,4 +1,4 @@
-part of 'tag_register.dart';
+part of '../tag_register.dart';
 
 class DeletableTagViewer extends StatelessWidget {
   static const _horizontalSpacing = 10.0,

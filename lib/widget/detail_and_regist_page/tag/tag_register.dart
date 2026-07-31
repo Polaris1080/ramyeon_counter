@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 // ViewModel
 import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/register/tag_register_vm.dart';
 // Partical
-part 'deletable_tag_viewer.dart';
-part 'tag_entry.dart';
+part 'register/deletable_tag_viewer.dart';
+part 'register/tag_entry.dart';
 
 class RamyeonTagRegister extends StatelessWidget {
   static const _verticalSpacing = 10.0;

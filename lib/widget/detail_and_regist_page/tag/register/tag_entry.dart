@@ -1,4 +1,4 @@
-part of 'tag_register.dart';
+part of '../tag_register.dart';
 
 class TagEntry extends StatelessWidget {
   TagEntry(this.vm, {super.key}) : tf = '';
