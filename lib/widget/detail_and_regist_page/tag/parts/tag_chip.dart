@@ -1,17 +1,11 @@
-// Model
-
+// Package
 import 'package:flutter/material.dart';
 
-class TagChip extends StatelessWidget {
-  const TagChip({
-    super.key,
-    required this.tag,
-  });
-
-  final String tag;
-
-  @override
-  Widget build(BuildContext context) {
-    return Chip(label: Text(tag));
-  }
+class TagChip extends ActionChip {
+  TagChip(String data, {super.key, Function()? onPressed})
+    : super(
+        label: Text(data),
+        padding: EdgeInsets.all(0),
+        onPressed: onPressed ?? () {},
+      );
 }

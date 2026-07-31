@@ -1,5 +1,5 @@
 // Base
-import 'package:ramyeon_counter/widget/base/chip_based_viewer.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/base/chip_based_viewer.dart';
 // Package
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
@@ -24,5 +24,5 @@ class TagsViewer extends ChipBasedViewer {
 
   /* Widget */
   @protected
-  TagChip tagChip(BuildContext context, String tag) => TagChip(tag: tag);
+  TagChip tagChip(BuildContext context, String tag) => TagChip(tag);
 }

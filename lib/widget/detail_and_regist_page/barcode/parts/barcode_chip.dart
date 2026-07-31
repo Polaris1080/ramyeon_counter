@@ -1,21 +1,28 @@
 // Package
 import 'package:flutter/material.dart';
 
-class BarcodeChip extends ActionChip {
+class BarcodeChip extends StatelessWidget {
   /* Setting */
-  static const _defaultWidth = 135.0;
+  @protected
+  static const defaultWidth = 140.0;
+  EdgeInsets get padding => const .all(0);
+  EdgeInsets get labelPadding => const .all(0);
 
-  BarcodeChip(
-    String data, {
-    super.key,
-    double chipWidth = _defaultWidth,
-    Function()? onPressed,
-  }) : super(
-         label: SizedBox(
-           width: chipWidth,
-           child: Text(data, textAlign: .center),
-         ),
-         padding: EdgeInsets.all(0),
-         onPressed: onPressed ?? () {},
-       );
+  const BarcodeChip(this.data, {super.key, this.chipWidth = defaultWidth});
+
+  /* Argument */
+  final String data;
+  final double chipWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+      label: SizedBox(
+        width: chipWidth,
+        child: Text(data, textAlign: .end),
+      ),
+      padding: padding,
+      labelPadding: labelPadding,
+    );
+  }
 }

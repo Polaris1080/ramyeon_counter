@@ -1,5 +1,5 @@
 // Base
-import 'package:ramyeon_counter/widget/base/chip_based_viewer.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/base/chip_based_viewer.dart';
 // Extension-method
 import 'extension/em_barcode_data.dart';
 // Extension-type
@@ -31,8 +31,6 @@ class BarcodeViewer extends ChipBasedViewer {
 
   /* Widget */
   @protected
-  BarcodeChip barcodeChip(
-    BuildContext context,
-    MapEntry<Count, Jam> barcodeData,
-  ) => BarcodeChip(barcodeData.displayData);
+  Widget barcodeChip(BuildContext context, MapEntry<Count, Jam> barcodeData) =>
+      BarcodeChip(barcodeData.displayData);
 }

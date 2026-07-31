@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/parts/deletable_barcode_chip.dart';
 // ViewModel
 import 'barcode_register_vm.dart';
 // DeletableBarcodeViewer
