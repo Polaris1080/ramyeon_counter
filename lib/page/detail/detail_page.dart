@@ -3,12 +3,13 @@ import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
 // Package
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
 // Widget
 import 'package:ramyeon_counter/page/detail/buttom/detail_bottom_appbar.dart';
 import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/data/ramyeon_data_viewer.dart';
-import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/tag_viewer.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/tags_viewer.dart';
 import 'package:ramyeon_counter/widget/image_background.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/ramyeon_image/viewer/ramyeon_image_viewer.dart';
 // Partical
@@ -71,7 +72,13 @@ class DetailPage extends StatelessWidget {
               ),
             ),
             /* 2nd Row(Tag) */
-            RamyeonTagViewer(id: RamyeonId(ramyeonId)),
+            FutureBuilder(
+              future: RamyeonRepository().readTag(RamyeonId(ramyeonId)),
+              builder: (context, snapshot) => switch (snapshot.data) {
+                List<String> tags => TagsViewer(source: tags),
+                _ => const SizedBox(),
+              },
+            ),
             Spacer(),
           ],
         ),

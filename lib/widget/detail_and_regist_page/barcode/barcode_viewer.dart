@@ -15,7 +15,7 @@ class BarcodeViewer extends StatelessWidget {
 
   const BarcodeViewer({super.key, required this.source});
 
-  /* Value */
+  /* Argument */
   @protected
   final Map<Count, Jam> source;
 
