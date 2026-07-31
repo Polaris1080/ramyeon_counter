@@ -1,3 +1,5 @@
+// Base
+import 'package:ramyeon_counter/widget/base/chip_based_viewer.dart';
 // Extension-method
 import 'extension/em_barcode_data.dart';
 // Extension-type
@@ -9,10 +11,7 @@ import 'package:flutter/material.dart';
 // Parts
 import './parts/barcode_chip.dart';
 
-class BarcodeViewer extends StatelessWidget {
-  /* Setting */
-  static const _spacing = Size(10.0, 10.0);
-
+class BarcodeViewer extends ChipBasedViewer {
   const BarcodeViewer({super.key, required this.source});
 
   /* Argument */
@@ -22,8 +21,8 @@ class BarcodeViewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: _spacing.width,
-      runSpacing: _spacing.height,
+      spacing: super.spacing.width,
+      runSpacing: super.spacing.height,
       children: source.entries
           .select((barcodeData, _) => barcodeChip(context, barcodeData))
           .toList(),
