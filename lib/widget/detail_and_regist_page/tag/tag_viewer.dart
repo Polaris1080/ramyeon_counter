@@ -6,7 +6,7 @@ import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 // Widget
-import 'package:ramyeon_counter/widget/tag_chip.dart';
+import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/parts/tag_chip.dart';
 
 class RamyeonTagViewer extends StatelessWidget {
   const RamyeonTagViewer({super.key, required this.id});
