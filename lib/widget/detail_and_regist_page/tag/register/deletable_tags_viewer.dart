@@ -1,13 +1,13 @@
 part of '../tag_register.dart';
 
-class DeletableTagViewer extends StatelessWidget {
+class DeletableTagsViewer extends StatelessWidget {
   static const _horizontalSpacing = 10.0,
       _verticalSpacing = 10.0,
       _alertTitle = "削除しますか？",
       _alertCancel = "Cancel",
       _alertOK = "OK";
 
-  const DeletableTagViewer(this.vm, {super.key});
+  const DeletableTagsViewer(this.vm, {super.key});
 
   final TagRegisterViewModel vm;
 

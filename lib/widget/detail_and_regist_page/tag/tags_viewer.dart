@@ -24,5 +24,5 @@ class TagsViewer extends ChipBasedViewer {
 
   /* Widget */
   @protected
-  TagChip tagChip(BuildContext context, String tag) => TagChip(tag);
+  Widget tagChip(BuildContext context, String source) => TagChip(source);
 }

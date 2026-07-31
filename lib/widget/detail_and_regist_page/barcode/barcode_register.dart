@@ -5,15 +5,14 @@ import 'dart:io';
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/parts/deletable_barcode_chip.dart';
 // ViewModel
 import 'barcode_register_vm.dart';
 // DeletableBarcodeViewer
-import './barcode_viewer.dart';
+import 'barcode_viewer.dart';
+import 'parts/deletable_barcode_chip.dart';
 import 'extension/em_barcode_data.dart';
 import 'extension/count.dart';
 import 'extension/jam.dart';
-import './parts/barcode_chip.dart';
 // Partical
 part 'register/barcode_entry.dart';
 part 'register/deletable_barcode_viewer.dart';

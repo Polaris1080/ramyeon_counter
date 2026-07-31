@@ -14,9 +14,9 @@ class DeletableBarcodeViewer extends BarcodeViewer {
   /* Widget */
   @protected
   @override
-  Widget barcodeChip(BuildContext context, MapEntry<Count, Jam> barcodeData) =>
+  Widget barcodeChip(BuildContext context, MapEntry<Count, Jam> source) =>
       DeletableBarcodeChip(
-        barcodeData.displayData,
+        source.displayData,
         onDeleted: () => showDialog(
           context: context,
           builder: (context) {
@@ -25,14 +25,14 @@ class DeletableBarcodeViewer extends BarcodeViewer {
                 Navigator.pop(context);
               },
               '削除': () {
-                vm.removeButtonClicked(barcodeData.key);
+                vm.removeButtonClicked(source.key);
                 Navigator.pop(context);
               },
             };
 
             return AlertDialog(
               title: const Text("削除しますか？"),
-              content: Text(barcodeData.displayData),
+              content: Text(source.displayData),
               actions: definication.entries
                   .select(
                     (s, _) =>

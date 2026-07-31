@@ -31,6 +31,6 @@ class BarcodeViewer extends ChipBasedViewer {
 
   /* Widget */
   @protected
-  Widget barcodeChip(BuildContext context, MapEntry<Count, Jam> barcodeData) =>
-      BarcodeChip(barcodeData.displayData);
+  Widget barcodeChip(BuildContext context, MapEntry<Count, Jam> source) =>
+      BarcodeChip(source.displayData);
 }
