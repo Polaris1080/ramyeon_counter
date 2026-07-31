@@ -1,56 +1,49 @@
 part of '../tag_register.dart';
 
-class DeletableTagsViewer extends StatelessWidget {
-  static const _horizontalSpacing = 10.0,
-      _verticalSpacing = 10.0,
-      _alertTitle = "削除しますか？",
-      _alertCancel = "Cancel",
-      _alertOK = "OK";
+class DeletableTagsViewer extends TagsViewer {
+  const DeletableTagsViewer({
+    super.key,
+    required super.source,
+    required TagRegisterViewModel viewmodel,
+  }) : vm = viewmodel;
 
-  const DeletableTagsViewer(this.vm, {super.key});
-
+  /* Value */
+  @protected
   final TagRegisterViewModel vm;
 
+  /* Widget */
+  @protected
   @override
-  Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: vm,
-      builder: (context, child) => Wrap(
-        spacing: _horizontalSpacing,
-        runSpacing: _verticalSpacing,
-        children: vm.tag
-            .select(
-              (text, at) => FloatingActionButton.extended(
-                heroTag: null,
-                icon: Icon(Icons.close),
-                label: Text(text),
-                /* 削除ダイアログ */
-                onPressed: () => showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text(_alertTitle),
-                    content: Text(text),
-                    actions: [
-                      TextButton(
-                        child: const Text(_alertCancel),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      TextButton(
-                        child: const Text(_alertOK),
-                        onPressed: () {
-                          vm.remove(at);
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
-            .toList(),
-      ),
-    );
-  }
+  Widget tagChip(BuildContext context, String source) =>
+      FloatingActionButton.extended(
+        heroTag: null,
+        icon: Icon(Icons.close),
+        label: Text(source),
+        /* Delete dialog */
+        onPressed: () => showDialog(
+          context: context,
+          builder: (context) {
+            final definication = {
+              'キャンセル': () {
+                Navigator.pop(context);
+              },
+              '削除': () {
+                vm.remove(1);
+                Navigator.pop(context);
+              },
+            };
+
+            return AlertDialog(
+              title: const Text("削除しますか？"),
+              content: Text(source),
+              actions: definication.entries
+                  .select(
+                    (s, _) =>
+                        TextButton(onPressed: s.value, child: Text(s.key)),
+                  )
+                  .toList(),
+            );
+          },
+        ),
+      );
 }

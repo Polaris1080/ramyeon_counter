@@ -17,6 +17,7 @@ class DeletableBarcodeViewer extends BarcodeViewer {
   Widget barcodeChip(BuildContext context, MapEntry<Count, Jam> source) =>
       DeletableBarcodeChip(
         source.displayData,
+        /* Delete dialog */
         onDeleted: () => showDialog(
           context: context,
           builder: (context) {
