@@ -2,7 +2,6 @@ part of '../barcode_register.dart';
 
 class BarcodeEntry extends StatelessWidget {
   /* Setting */
-  static final regexp = RegExp(r'^\d{8}$|^\d{13}$');
   static const _entryWidth = 170.0, _sectionWidth = 300.0, _spacing = 15.0;
 
   const BarcodeEntry(this.vm, {super.key});
@@ -24,7 +23,7 @@ class BarcodeEntry extends StatelessWidget {
       icon: Icon(Icons.barcode_reader),
       onPressed: switch (Platform.operatingSystem) {
         _ => null,
-        // モバイル版を開発するとき実装（現状デスクトップ版のみ）
+        // TODO:モバイル版を開発するとき実装（現状デスクトップ版のみ）
         // 想定：バーコードを読み込む
         //String os when os == "android" || os == "ios" => () {},
       },
@@ -40,25 +39,16 @@ class BarcodeEntry extends StatelessWidget {
           labelText: 'バーコード',
           helperText: '数字８／１３桁',
         ),
-        onChanged: vm.textformChanged,
-        // only number
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.number, // only number
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        validator: (value) => switch (value) {
-          String value when !regexp.hasMatch(value) => '桁数が違います',
-          _ => null,
-        },
+        validator: vm.textformValidated,
+        onChanged: vm.textformChanged,
       ),
     );
 
     /* Rayout */
-    // 段数
-    const maxStep = 2, minStep = 1;
-    final int steps =
-        (maxStep - (MediaQuery.of(context).size.width ~/ _sectionWidth)).minmax(
-          minStep,
-          maxStep,
-        );
+    final int steps = (2 - (MediaQuery.of(context).size.width ~/ _sectionWidth))
+        .minmax(1, 2); // (minStep, maxStep)
 
     return switch (steps) {
       2 => Column(

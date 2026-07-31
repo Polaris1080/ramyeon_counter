@@ -3,21 +3,15 @@ import 'extension/count.dart';
 import 'extension/jam.dart';
 // Package
 import 'package:flutter/material.dart';
-// Other
-import 'barcode_register.dart';
 
 class BarcodeRegisterViewModel extends ChangeNotifier {
+  /* Setting */
+  static final regexp = RegExp(r'^\d{8}$|^\d{13}$');
+
   BarcodeRegisterViewModel() {
-    // 初期化
-    selectCount();
+    _sourceChanged(); // 初期化
     notifyListeners();
   }
-
-  Map<Count, Jam> get source => _source;
-  final Map<Count, Jam> _source = {
-    Count(1): Jam(8801073114920),
-    Count(5): Jam(8801073143319),
-  };
 
   Jam? get barcode => _barcode;
   Jam? _barcode;
@@ -25,48 +19,64 @@ class BarcodeRegisterViewModel extends ChangeNotifier {
   Count get countSelected => _countSelected;
   Count _countSelected = Count(1);
 
-  /// 空いている箇所を見つける
-  void selectCount() {
-    int c = 1;
-    for (Count count in _source.keys.toList()..sort()) {
-      if (c == count.value) {
-        c = count.value + 1;
-      }
-    }
-    _countSelected = Count(c);
+  /* source */
+  Map<Count, Jam> get source => _source;
+  final Map<Count, Jam> _source = {
+    Count(1): Jam(8801073114920),
+    Count(5): Jam(8801073143319),
+  };
+
+  /// 追加
+  void _addSource() {
+    _source[countSelected] = barcode!;
+    _sourceChanged();
   }
 
-  /* Command */
-  /// [DeletableBarcodeViewer]
+  /// 削除
+  void _removeSource(Count key) {
+    _source.remove(key);
+    _sourceChanged();
+  }
+
+  /// 変更された
+  void _sourceChanged() {
+    void selectCount() {
+      int c = 1;
+      for (Count count in _source.keys.toList()..sort()) {
+        if (c == count) {
+          c = count + 1;
+        }
+      }
+      _countSelected = Count(c);
+    }
+
+    selectCount(); // 空いている箇所を見つける
+    notifyListeners();
+  }
+
+  /* Command(DeletableBarcodeViewer) */
   VoidCallback? addButtonClicked() =>
       barcode == null ||
           source.containsKey(countSelected) ||
           source.containsValue(barcode!)
       ? null
-      : () {
-          _source[countSelected] = barcode!;
-          selectCount();
-          notifyListeners();
-        };
+      : _addSource;
+  void removeButtonClicked(Count key) => _removeSource(key);
 
-  /// [DeletableBarcodeViewer]
-  void removeButtonClicked(Count key) {
-    _source.remove(key);
-    selectCount();
+  /* Command(BarcodeEntry) */
+  void textformChanged(String value) {
+    _barcode = regexp.hasMatch(value) ? Jam(int.parse(value)) : null;
     notifyListeners();
   }
 
-  /// [QuantitySelector] segmentedButton changed.
+  String? textformValidated(String? value) => switch (value) {
+    String value when !regexp.hasMatch(value) => '桁数が違います',
+    _ => null,
+  };
+
+  /* Command(QuantitySelector) */
   void countChanged(Set<int> newSelection) {
     _countSelected = Count(newSelection.first);
-    notifyListeners();
-  }
-
-  /// [BarcodeEntry] textFormField changed.
-  void textformChanged(String value) {
-    _barcode = BarcodeEntry.regexp.hasMatch(value)
-        ? Jam(int.parse(value))
-        : null;
     notifyListeners();
   }
 }

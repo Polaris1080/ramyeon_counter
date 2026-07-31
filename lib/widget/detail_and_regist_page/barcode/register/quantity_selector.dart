@@ -18,11 +18,8 @@ class QuantitySelector extends StatelessWidget {
         onSelectionChanged: vm.countChanged,
         selected: {vm.countSelected.value},
         showSelectedIcon: false,
-        segments: _count.rangeIterable().select((i, _) {
-          return switch ((
-            vm.countSelected == i,
-            vm.source.containsKey(Count(i)),
-          )) {
+        segments: _count.toRangeIterable().select((i, _) {
+          return switch ((vm.countSelected == i, vm.source.containsKey(i))) {
             // 選択されており、その個数で登録されている
             (true, true) => ButtonSegment<int>(
               value: i,
@@ -61,7 +58,7 @@ class QuantitySelector extends StatelessWidget {
 extension on int {
   /* Method */
   String get fullWidthDigits => toString().fullWidthDigits;
-  RangeIterable rangeIterable({int start = 1}) {
+  RangeIterable toRangeIterable({int start = 1}) {
     assert(this >= 1);
     return .new(start, start + this);
   }
@@ -72,7 +69,7 @@ extension on String {
   static const _fullLengthCode = 65248;
   /* Method */
   String get fullWidthDigits => length
-      .rangeIterable()
+      .toRangeIterable()
       .select((_, i) => String.fromCharCode(codeUnitAt(i) + _fullLengthCode))
       .join();
 }
