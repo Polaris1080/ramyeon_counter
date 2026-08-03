@@ -30,10 +30,9 @@ class LoadingProgressIndicator extends StatelessWidget {
       ),
       child: FutureBuilder(
         future: Future.delayed(duration ?? const Duration()),
-        builder: (_, snapshot) => switch (snapshot.connectionState) {
-          ConnectionState.done => const LinearProgressIndicator(),
-          _ => const SizedBox(),
-        },
+        builder: (_, snapshot) => snapshot.connectionState == .done
+            ? const LinearProgressIndicator()
+            : const SizedBox(),
       ),
     );
   }

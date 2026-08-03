@@ -21,11 +21,7 @@ class HomeDrawer extends Drawer {
           DrawerHeader(
             decoration: BoxDecoration(color: colorScheme.tertiaryContainer),
             margin: EdgeInsets.all(0),
-            child: LayeredText(
-              'Ramyeon Counter',
-              color: .primary,
-              fontSize: 40,
-            ),
+            child: LayeredText.primary('Ramyeon Counter', fontSize: 40),
           ),
           for (({IconData icon, String title, String location}) item in [
             (icon: Icons.add, title: '登録', location: '/regist'),

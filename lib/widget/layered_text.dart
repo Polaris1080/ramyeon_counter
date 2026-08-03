@@ -1,3 +1,4 @@
+import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 
 class LayeredText extends StatelessWidget {
@@ -10,16 +11,34 @@ class LayeredText extends StatelessWidget {
     this.overflow,
   }) : assert(overflow != .ellipsis); // ellipsisだと表示が乱れる
 
+  const LayeredText.primary(
+    this.data, {
+    super.key,
+    this.fontSize,
+    this.maxLines,
+    this.overflow,
+  }) : color = .primary;
+
+  const LayeredText.tertiary(
+    this.data, {
+    super.key,
+    this.fontSize,
+    this.maxLines,
+    this.overflow,
+  }) : color = .tertiary;
+
+  /* Argument */
   final String data;
-  final LayeredTextColor color;
   final double? fontSize;
-  final int? maxLines;
   final TextOverflow? overflow;
+  final int? maxLines;
+
+  /// Color selection
+  final LayeredTextColor color;
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-
+    final cs = Theme.of(context).colorScheme;
     return DefaultTextStyle.merge(
       style: TextStyle(
         fontFamily: 'ZenMaruGothic',
@@ -28,32 +47,24 @@ class LayeredText extends StatelessWidget {
       ),
       child: Stack(
         clipBehavior: .hardEdge,
-        children: [
-          /* Stroked text as border. */
-          Text(
-            data,
-            style: TextStyle(
-              color: switch (color) {
-                LayeredTextColor.primary => colorScheme.primaryContainer,
-                LayeredTextColor.tertiary => colorScheme.tertiaryContainer,
-              },
-              fontWeight: .w900,
-            ),
-            maxLines: maxLines,
+        children: <TextStyle>[
+          // Stroked text as border.
+          .new(
+            color: switch (color) {
+              LayeredTextColor.primary => cs.primaryContainer,
+              LayeredTextColor.tertiary => cs.tertiaryContainer,
+            },
+            fontWeight: .w900,
           ),
-          /* Solid text as fill. */
-          Text(
-            data,
-            style: TextStyle(
-              color: switch (color) {
-                LayeredTextColor.primary => colorScheme.primaryFixedDim,
-                LayeredTextColor.tertiary => colorScheme.tertiaryFixedDim,
-              },
-              fontWeight: .w300,
-            ),
-            maxLines: maxLines,
+          // Solid text as fill.
+          .new(
+            color: switch (color) {
+              LayeredTextColor.primary => cs.primaryFixedDim,
+              LayeredTextColor.tertiary => cs.tertiaryFixedDim,
+            },
+            fontWeight: .w300,
           ),
-        ],
+        ].select((s, _) => Text(data, style: s, maxLines: maxLines)).toList(),
       ),
     );
   }
