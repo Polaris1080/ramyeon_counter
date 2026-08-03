@@ -1,35 +1,26 @@
 /* Package */
 import 'package:flutter/material.dart';
+// Partical
+part 'loading_progress_indicator_vm.dart';
 
 class LoadingProgressIndicator extends StatelessWidget {
-  const LoadingProgressIndicator({
+  LoadingProgressIndicator(
+    BuildContext context, {
     super.key,
-    this.overrideColor,
-    this.duration,
-  });
+    Color? overrideColor,
+    Duration? duration,
+  }) : vm = .new(context, overrideColor, duration);
 
-  /* Argument */
-  /// [LinearProgressIndicator] color.
-  @protected
-  final Color? overrideColor;
-
-  /// [Future.delayed] time.
-  @protected
-  final Duration? duration;
+  final LoadingProgressIndicatorViewModel vm;
 
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: Theme.of(context).copyWith(
-        progressIndicatorTheme: .new(
-          color: switch (overrideColor) {
-            Color color => ColorScheme.fromSeed(seedColor: color),
-            _ => ColorScheme.of(context),
-          }.tertiary,
-        ),
-      ),
+      data: Theme.of(
+        context,
+      ).copyWith(progressIndicatorTheme: .new(color: vm.color)),
       child: FutureBuilder(
-        future: Future.delayed(duration ?? const Duration()),
+        future: vm.delay,
         builder: (_, snapshot) => snapshot.connectionState == .done
             ? const LinearProgressIndicator()
             : const SizedBox(),

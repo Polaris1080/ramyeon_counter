@@ -56,6 +56,7 @@ class StatisticsPage extends StatelessWidget {
               builder: (context, snapshot) => switch (snapshot.data) {
                 List<RamyeonListData> data => EatPieChart(data),
                 _ => LoadingProgressIndicator(
+                  context,
                   duration: .new(milliseconds: 100),
                 ),
               },
@@ -68,6 +69,7 @@ class StatisticsPage extends StatelessWidget {
               builder: (context, snapshot) => switch (snapshot.data) {
                 Map<String, double> data => RankingRatingSubPage(data),
                 _ => LoadingProgressIndicator(
+                  context,
                   duration: .new(milliseconds: 100),
                 ),
               },
@@ -78,6 +80,7 @@ class StatisticsPage extends StatelessWidget {
               builder: (context, snapshot) => switch (snapshot.data) {
                 List<TagData> data => RankingTagSubPage(vm, data),
                 _ => LoadingProgressIndicator(
+                  context,
                   duration: .new(milliseconds: 100),
                 ),
               },

@@ -41,6 +41,7 @@ class RankingRatingSubPage extends StatelessWidget {
                   builder: (context, snapshot) => switch (snapshot.data) {
                     Map<String, double> data => rankingTable(data, year: year),
                     _ => LoadingProgressIndicator(
+                      context,
                       duration: .new(milliseconds: 100),
                     ),
                   },
