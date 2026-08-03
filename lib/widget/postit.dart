@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 
 class Postit extends StatelessWidget {
   /* Setting */
-  static const Size _defaultSize = Size(150.0, 150.0);
+  @protected
+  static const Size defaultSize = Size(150.0, 150.0);
 
-  const Postit({super.key, this.color, this.child, this.size = _defaultSize});
+  const Postit({
+    super.key,
+    this.color,
+    this.child,
+    this.postitSize = defaultSize,
+  });
 
   /* Argument */
   @protected
@@ -15,7 +21,7 @@ class Postit extends StatelessWidget {
   final Color? color;
 
   @protected
-  final Size size;
+  final Size postitSize;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +34,8 @@ class Postit extends StatelessWidget {
     );
 
     return Container(
-      width: size.width,
-      height: size.height,
+      width: postitSize.width,
+      height: postitSize.height,
       decoration: BoxDecoration(
         boxShadow: [shadow],
         color: switch (color) {

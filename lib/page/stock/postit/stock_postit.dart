@@ -2,7 +2,7 @@ part of '../stock_page.dart';
 
 class StockPostit extends Postit {
   /* Setting */
-  static const size = Size.square(150),
+  static const size = Postit.defaultSize,
       _header = ['購入日', '賞味期限', '価格'],
       _postitContentPadding = 5.0;
 
