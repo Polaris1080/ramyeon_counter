@@ -9,11 +9,11 @@ class LoadingProgressIndicator extends StatelessWidget {
   });
 
   /* Argument */
-  /// [LinearProgressIndicator] color
+  /// [LinearProgressIndicator] color.
   @protected
   final Color? overrideColor;
 
-  /// [Future.delayed] time
+  /// [Future.delayed] time.
   @protected
   final Duration? duration;
 
@@ -23,7 +23,7 @@ class LoadingProgressIndicator extends StatelessWidget {
       data: Theme.of(context).copyWith(
         progressIndicatorTheme: .new(
           color: switch (overrideColor) {
-            Color col => ColorScheme.fromSeed(seedColor: col),
+            Color color => ColorScheme.fromSeed(seedColor: color),
             _ => ColorScheme.of(context),
           }.tertiary,
         ),
