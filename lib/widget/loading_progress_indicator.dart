@@ -8,6 +8,7 @@ class LoadingProgressIndicator extends StatelessWidget {
     this.duration,
   });
 
+  /* Argument */
   /// [LinearProgressIndicator] color
   @protected
   final Color? overrideColor;
