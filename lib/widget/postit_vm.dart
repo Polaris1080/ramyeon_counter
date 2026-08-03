@@ -1,18 +1,19 @@
 part of 'postit.dart';
 
 class PostitViewModel extends ChangeNotifier {
-  PostitViewModel(BuildContext context, Color? color, Size size)
-    : _defaultColor = ColorScheme.of(context).primaryFixed,
+  PostitViewModel(
+    BuildContext context,
+    Color? color, // 色
+    Size size, // 大きさ
+  ) : _defaultColor = ColorScheme.of(context).primaryFixed,
       _overrideColor = color != null
           ? ColorScheme.fromSeed(seedColor: color).primaryFixed
           : null,
       _size = size;
 
   /* Color */
-
+  /// 色
   Color get color => _overrideColor ?? _defaultColor;
-  final Color _defaultColor;
-  Color? _overrideColor;
   set overrideColor(Color? value) {
     if (_overrideColor == value) {
       _overrideColor = value;
@@ -21,7 +22,13 @@ class PostitViewModel extends ChangeNotifier {
   }
 
   /* Size */
+  /// 横
   double get width => _size.width;
+
+  /// 縦
   double get height => _size.height;
+
+  final Color _defaultColor;
+  Color? _overrideColor;
   final Size _size;
 }

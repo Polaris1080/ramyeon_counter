@@ -13,8 +13,6 @@ class LoadingProgressIndicatorViewModel extends ChangeNotifier {
 
   /* Color */
   Color get color => _overrideColor ?? _defaultColor;
-  final Color _defaultColor;
-  Color? _overrideColor;
   set overrideColor(Color? value) {
     if (_overrideColor == value) {
       _overrideColor = value;
@@ -25,4 +23,7 @@ class LoadingProgressIndicatorViewModel extends ChangeNotifier {
   /* Delay */
   Future get delay => Future.delayed(_duration);
   final Duration _duration;
+
+  final Color _defaultColor;
+  Color? _overrideColor;
 }
