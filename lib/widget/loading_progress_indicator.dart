@@ -1,55 +1,39 @@
 /* Package */
 import 'package:flutter/material.dart';
 
-class LoadingProgressIndicator extends LinearProgressIndicator {
-  LoadingProgressIndicator.override(Color overrideColor, {super.key})
-    : super(color: ColorScheme.fromSeed(seedColor: overrideColor).tertiary);
-
-  LoadingProgressIndicator.normal(BuildContext context, {super.key})
-    : super(color: ColorScheme.of(context).tertiary);
-}
-
-class DelayedLoadingProgressIndicator extends StatelessWidget {
-  /* MilliSecond（ミリ秒）*/
-  const DelayedLoadingProgressIndicator.override(
-    Color overrideColor, {
+class LoadingProgressIndicator extends StatelessWidget {
+  const LoadingProgressIndicator({
     super.key,
-    int milliseconds = 100,
-  }) : color = overrideColor,
-       time = milliseconds;
-  DelayedLoadingProgressIndicator.normal(
-    BuildContext context, {
-    super.key,
-    int milliseconds = 100,
-  }) : color = ColorScheme.of(context).tertiary,
-       time = milliseconds;
-
-  /* Second（秒）*/
-  const DelayedLoadingProgressIndicator.overrideSecond(
-    Color overrideColor, {
-    super.key,
-    int seconds = 1,
-  }) : color = overrideColor,
-       time = seconds * 1000;
-  DelayedLoadingProgressIndicator.normalSecond(
-    BuildContext context, {
-    super.key,
-    int seconds = 1,
-  }) : color = ColorScheme.of(context).tertiary,
-       time = seconds * 1000;
+    this.overrideColor,
+    this.duration,
+  });
 
   /// [LinearProgressIndicator] color
-  final Color color;
+  @protected
+  final Color? overrideColor;
 
-  /// Delay Time(milliseconds)
-  final int time;
+  /// [Future.delayed] time
+  @protected
+  final Duration? duration;
 
   @override
-  Widget build(BuildContext context) => FutureBuilder(
-    future: Future.delayed(Duration(milliseconds: time)),
-    builder: (_, snapshot) => switch (snapshot.connectionState) {
-      ConnectionState.done => LinearProgressIndicator(color: color),
-      _ => SizedBox(),
-    },
-  );
+  Widget build(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        progressIndicatorTheme: .new(
+          color: switch (overrideColor) {
+            Color col => ColorScheme.fromSeed(seedColor: col),
+            _ => ColorScheme.of(context),
+          }.tertiary,
+        ),
+      ),
+      child: FutureBuilder(
+        future: Future.delayed(duration ?? const Duration()),
+        builder: (_, snapshot) => switch (snapshot.connectionState) {
+          ConnectionState.done => const LinearProgressIndicator(),
+          _ => const SizedBox(),
+        },
+      ),
+    );
+  }
 }

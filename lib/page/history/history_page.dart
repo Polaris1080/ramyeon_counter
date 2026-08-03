@@ -82,10 +82,7 @@ abstract class HistoryPageBase extends StatelessWidget {
                   ),
                 ),
               },
-              _ => switch (packageColor) {
-                Color c => LoadingProgressIndicator.override(c),
-                null => LoadingProgressIndicator.normal(context),
-              },
+              _ => LoadingProgressIndicator(overrideColor: packageColor),
             },
           ),
         ),

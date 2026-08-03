@@ -40,7 +40,9 @@ class RankingRatingSubPage extends StatelessWidget {
                   ),
                   builder: (context, snapshot) => switch (snapshot.data) {
                     Map<String, double> data => rankingTable(data, year: year),
-                    _ => DelayedLoadingProgressIndicator.normal(context),
+                    _ => LoadingProgressIndicator(
+                      duration: .new(milliseconds: 100),
+                    ),
                   },
                 ),
                 // year not selected

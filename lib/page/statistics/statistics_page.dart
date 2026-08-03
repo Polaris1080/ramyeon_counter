@@ -55,7 +55,9 @@ class StatisticsPage extends StatelessWidget {
               future: RamyeonListDataContext().readByBrand(''),
               builder: (context, snapshot) => switch (snapshot.data) {
                 List<RamyeonListData> data => EatPieChart(data),
-                _ => DelayedLoadingProgressIndicator.normal(context),
+                _ => LoadingProgressIndicator(
+                  duration: .new(milliseconds: 100),
+                ),
               },
             ),
             /* 2:StockBarChart */
@@ -65,7 +67,9 @@ class StatisticsPage extends StatelessWidget {
               future: vm.rankingRatingData,
               builder: (context, snapshot) => switch (snapshot.data) {
                 Map<String, double> data => RankingRatingSubPage(data),
-                _ => DelayedLoadingProgressIndicator.normal(context),
+                _ => LoadingProgressIndicator(
+                  duration: .new(milliseconds: 100),
+                ),
               },
             ),
             /* 0:RankingTagSubPage */
@@ -73,7 +77,9 @@ class StatisticsPage extends StatelessWidget {
               future: vm.rankingTagData,
               builder: (context, snapshot) => switch (snapshot.data) {
                 List<TagData> data => RankingTagSubPage(vm, data),
-                _ => DelayedLoadingProgressIndicator.normal(context),
+                _ => LoadingProgressIndicator(
+                  duration: .new(milliseconds: 100),
+                ),
               },
             ),
           },

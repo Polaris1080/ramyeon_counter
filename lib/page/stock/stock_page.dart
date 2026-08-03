@@ -57,7 +57,9 @@ class StockPage extends StatelessWidget {
                 builder: (context, snapshot) =>
                     switch (snapshot.connectionState) {
                       .done => postitGridView(snapshot.requireData),
-                      _ => DelayedLoadingProgressIndicator.normal(context),
+                      _ => LoadingProgressIndicator(
+                        duration: .new(milliseconds: 100),
+                      ),
                     },
               ),
             },
