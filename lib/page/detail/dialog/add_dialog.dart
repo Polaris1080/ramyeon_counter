@@ -1,3 +1,4 @@
+import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 
 class AddDialog extends StatelessWidget {
@@ -13,6 +14,15 @@ class AddDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final actionDefinication = {
+      'キャンセル': () {
+        Navigator.of(context).pop();
+      },
+      '追加': () {
+        Navigator.of(context).pop();
+      },
+    };
+
     return AlertDialog(
       title: const Text('追加'),
       content: //ObscuredTextFieldSample(),
@@ -41,26 +51,19 @@ class AddDialog extends StatelessWidget {
           Row(children: [Text('価格(￥)'), Spacer(), ObscuredTextFieldSample()]),
         ],
       ),
-      actions: [
-        TextButton(
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
-          ),
-          child: const Text('キャンセル'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        TextButton(
-          style: TextButton.styleFrom(
-            textStyle: Theme.of(context).textTheme.labelLarge,
-          ),
-          child: const Text('追加'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
+      actions: actionDefinication.entries
+          .select(
+            (s, _) => TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: Text(s.key),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          )
+          .toList(),
     );
   }
 }

@@ -9,7 +9,7 @@ import 'package:ramyeon_counter/model/repository/rating_repository.dart';
 import 'package:ramyeon_counter/model/repository/stock_repository.dart';
 import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 // (Widget)
-import 'package:ramyeon_counter/widget/add_dialog.dart';
+import 'package:ramyeon_counter/page/detail/dialog/add_dialog.dart';
 import 'package:ramyeon_counter/page/detail/dialog/eat_sheet.dart';
 // Partial
 part 'side_navigation.dart';

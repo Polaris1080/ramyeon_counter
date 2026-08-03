@@ -1,6 +1,9 @@
 part of '../tag_register.dart';
 
 class TagEntry extends StatelessWidget {
+  /* Setting */
+  static const _entryWidth = 170.0, _sectionWidth = 300.0, _spacing = 15.0;
+
   TagEntry(this.vm, {super.key}) : tf = '';
 
   final TagRegisterViewModel vm;
@@ -9,15 +12,17 @@ class TagEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final regexp = RegExp(r'^[\u3040-\u30ff]{3,5}$');
+    /* Widget */
+    Widget addButton() => IconButton(
+      onPressed: () {
+        vm.append(2, tf);
+      },
+      icon: Icon(Icons.add),
+    );
 
     return Row(
       children: [
-        IconButton(
-          onPressed: () {
-            vm.append(2, tf);
-          },
-          icon: Icon(Icons.add),
-        ),
+        addButton(),
         Expanded(
           child: TextFormField(
             maxLength: 5,
