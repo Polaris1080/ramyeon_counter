@@ -26,7 +26,9 @@ class HomeAppBar extends CustomAppBarBase {
                 ),
                 overflow: .visible,
               ),
-              false => LayeredText.tertiary(
+              false => LayeredText(
+                context,
+                color: .tertiary,
                 switch (windowWidth) {
                   > 320 => 'Ramyeon Counter',
                   > 270 => 'Ramyeon',

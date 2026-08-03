@@ -1,71 +1,30 @@
+// Package
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
+// Partial
+part 'layered_text_vm.dart';
 
 class LayeredText extends StatelessWidget {
-  const LayeredText(
-    this.data, {
+  LayeredText(
+    BuildContext context,
+    String data, {
     super.key,
-    required this.color,
-    this.fontSize,
-    this.maxLines,
-    this.overflow,
-  }) : assert(overflow != .ellipsis); // ellipsisだと表示が乱れる
+    required LayeredTextColor color,
+    int? maxLines,
+    double? fontSize,
+    TextOverflow? overflow,
+  }) : assert(overflow != .ellipsis), // ellipsisだと表示が乱れる
+       vm = .new(context, data, color, maxLines, fontSize, overflow);
 
-  const LayeredText.primary(
-    this.data, {
-    super.key,
-    this.fontSize,
-    this.maxLines,
-    this.overflow,
-  }) : color = .primary;
-
-  const LayeredText.tertiary(
-    this.data, {
-    super.key,
-    this.fontSize,
-    this.maxLines,
-    this.overflow,
-  }) : color = .tertiary;
-
-  /* Argument */
-  final String data;
-  final double? fontSize;
-  final TextOverflow? overflow;
-  final int? maxLines;
-
-  /// Color selection
-  final LayeredTextColor color;
+  final LayeredTextViewModel vm;
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    return DefaultTextStyle.merge(
-      style: TextStyle(
-        fontFamily: 'ZenMaruGothic',
-        fontSize: fontSize,
-        overflow: overflow,
-      ),
-      child: Stack(
-        clipBehavior: .hardEdge,
-        children: <TextStyle>[
-          // Stroked text as border.
-          .new(
-            color: switch (color) {
-              LayeredTextColor.primary => cs.primaryContainer,
-              LayeredTextColor.tertiary => cs.tertiaryContainer,
-            },
-            fontWeight: .w900,
-          ),
-          // Solid text as fill.
-          .new(
-            color: switch (color) {
-              LayeredTextColor.primary => cs.primaryFixedDim,
-              LayeredTextColor.tertiary => cs.tertiaryFixedDim,
-            },
-            fontWeight: .w300,
-          ),
-        ].select((s, _) => Text(data, style: s, maxLines: maxLines)).toList(),
-      ),
+    return Stack(
+      clipBehavior: .hardEdge,
+      children: [vm.borderStyle, vm.baseStyle]
+          .select((s, _) => Text(vm.text, style: s, maxLines: vm.maxLines))
+          .toList(),
     );
   }
 }
