@@ -11,10 +11,10 @@ class Postit extends StatelessWidget {
   Postit(
     BuildContext context, {
     super.key,
-    Color? color,
+    Color? overrideColor,
     Size size = defaultSize,
     this.child,
-  }) : vm = .new(context, color, size);
+  }) : vm = .new(context, overrideColor, size);
 
   final PostitViewModel vm;
 

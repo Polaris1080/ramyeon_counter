@@ -1,31 +1,33 @@
+// Package
 import 'package:flutter/material.dart';
+// Partical
+part 'image_background_vm.dart';
 
 class ImageBackground extends StatelessWidget {
   /// Background(image)
-  const ImageBackground({super.key, required this.path, this.child});
+  ImageBackground({super.key, required String path, this.child})
+    : vm = .new(path);
 
   /// BackGround(cork)
-  const ImageBackground.cork({super.key, this.child})
-    : path = 'assets/images/cork.png';
+  ImageBackground.cork({super.key, this.child})
+    : vm = .new('assets/images/cork.png');
 
   /// BackGround(paper)
-  const ImageBackground.paper({super.key, this.child})
-    : path = 'assets/images/paper.png';
+  ImageBackground.paper({super.key, this.child})
+    : vm = .new('assets/images/paper.png');
+
+  final ImageBackgroundViewModel vm;
 
   /* Argument */
   @protected
   final Widget? child;
-
-  /// [AssetImage] image path.
-  @protected
-  final String path;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(path),
+          image: AssetImage(vm.path),
           repeat: ImageRepeat.repeat,
         ),
       ),

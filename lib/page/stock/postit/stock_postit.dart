@@ -13,7 +13,7 @@ class StockPostit extends Postit {
     required ValueNotifier<bool> isSelected,
     required StockPostitData data,
   }) : super(
-         color: data.color,
+         overrideColor: data.color,
          /* Build */
          child: Builder(
            builder: (context) {
