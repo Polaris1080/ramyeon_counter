@@ -74,6 +74,7 @@ class StockPage extends StatelessWidget {
     itemSize: StockPostit.size,
     itemCount: data.length,
     itemBuilder: (context, i) => StockPostit(
+      context,
       data: data[i],
       isSelectMode: isSelectMode,
       isSelected: vm.isSelected[i],

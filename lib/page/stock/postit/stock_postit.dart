@@ -6,7 +6,8 @@ class StockPostit extends Postit {
       _header = ['購入日', '賞味期限', '価格'],
       _postitContentPadding = 5.0;
 
-  StockPostit({
+  StockPostit(
+    super.context, {
     super.key,
     required ValueNotifier<bool> isSelectMode,
     required ValueNotifier<bool> isSelected,
