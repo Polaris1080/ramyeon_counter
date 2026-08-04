@@ -12,7 +12,7 @@ class LoadingProgressIndicatorViewModel extends ChangeNotifier {
        _duration = duration ?? const Duration();
 
   /* Color */
-  /// バーの色
+  /// バーの色【OneWay】
   Color get color => _overrideColor ?? _defaultColor;
   set overrideColor(Color? value) {
     if (_overrideColor == value) {
@@ -22,7 +22,7 @@ class LoadingProgressIndicatorViewModel extends ChangeNotifier {
   }
 
   /* Delay */
-  /// 遅延時間
+  /// 遅延時間【OneTime】
   Future get delay => Future.delayed(_duration);
   final Duration _duration;
 

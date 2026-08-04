@@ -29,18 +29,18 @@ class LayeredTextViewModel extends ChangeNotifier {
        );
 
   /* Text */
-  /// 文字
+  /// 文字【OneTime】
   String get title => _title;
 
-  /// 列（制限）
+  /// 列（制限）【OneTime】
   int? get maxLines => _maxLines;
 
   /* Style */
-  /// Stroked text as border.
+  /// Stroked text as border.【OneTime】
   TextStyle get borderStyle =>
       _textStyleBase.copyWith(color: _borderColor, fontWeight: .w900);
 
-  /// Solid text as fill.
+  /// Solid text as fill.【OneTime】
   TextStyle get baseStyle =>
       _textStyleBase.copyWith(color: _baseColor, fontWeight: .w300);
 

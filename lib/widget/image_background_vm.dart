@@ -9,7 +9,7 @@ class ImageBackgroundViewModel extends ChangeNotifier {
   /// BackGround(paper)
   ImageBackgroundViewModel.paper() : _path = 'assets/images/paper.png';
 
-  /// 保存場所(Asset)
+  /// 保存場所(Asset)【OneTime】
   String get path => _path;
 
   final String _path;
