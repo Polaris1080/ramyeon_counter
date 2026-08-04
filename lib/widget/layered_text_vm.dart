@@ -2,35 +2,35 @@ part of 'layered_text.dart';
 
 class LayeredTextViewModel extends ChangeNotifier {
   LayeredTextViewModel(
-    BuildContext context,
-    String data, // 文字
-    LayeredTextColor color, // 色（指定）
+    BuildContext context, {
+    required String title, // 文字
+    required LayeredTextColor color, // 色（指定）
     int? maxLines, // 列（制限）
     double? fontSize, // 大きさ
     TextOverflow? overflow, // はみ出した時どうするか
-  ) : assert(overflow != .ellipsis), // ellipsisだと表示が乱れる
-      _data = data,
-      _maxLines = maxLines,
-      _baseColor = switch (color) {
-        .primary => ColorScheme.of(context).primaryFixedDim,
-        .tertiary => ColorScheme.of(context).tertiaryFixedDim,
-      },
-      _borderColor = switch (color) {
-        .primary => ColorScheme.of(context).primaryContainer,
-        .tertiary => ColorScheme.of(context).tertiaryContainer,
-      },
-      _textStyleBase = TextStyle(
-        fontFamily: 'ZenMaruGothic',
-        fontSize: fontSize,
-        overflow: switch (overflow) {
-          .ellipsis => .clip, // 自動変換
-          _ => overflow,
-        },
-      );
+  }) : assert(overflow != .ellipsis), // ellipsisだと表示が乱れる
+       _title = title,
+       _maxLines = maxLines,
+       _baseColor = switch (color) {
+         .primary => ColorScheme.of(context).primaryFixedDim,
+         .tertiary => ColorScheme.of(context).tertiaryFixedDim,
+       },
+       _borderColor = switch (color) {
+         .primary => ColorScheme.of(context).primaryContainer,
+         .tertiary => ColorScheme.of(context).tertiaryContainer,
+       },
+       _textStyleBase = TextStyle(
+         fontFamily: 'ZenMaruGothic',
+         fontSize: fontSize,
+         overflow: switch (overflow) {
+           .ellipsis => .clip, // 自動変換
+           _ => overflow,
+         },
+       );
 
   /* Text */
   /// 文字
-  String get text => _data;
+  String get title => _title;
 
   /// 列（制限）
   int? get maxLines => _maxLines;
@@ -47,6 +47,6 @@ class LayeredTextViewModel extends ChangeNotifier {
   final Color _baseColor;
   final Color _borderColor;
   final int? _maxLines;
-  final String _data;
+  final String _title;
   final TextStyle _textStyleBase;
 }

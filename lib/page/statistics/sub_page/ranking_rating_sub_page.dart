@@ -42,7 +42,7 @@ class RankingRatingSubPage extends StatelessWidget {
                     Map<String, double> data => rankingTable(data, year: year),
                     _ => LoadingProgressIndicator(
                       context,
-                      duration: .new(milliseconds: 100),
+                      vm: .new(context, duration: .new(milliseconds: 100)),
                     ),
                   },
                 ),

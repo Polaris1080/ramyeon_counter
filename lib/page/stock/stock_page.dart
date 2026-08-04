@@ -47,7 +47,8 @@ class StockPage extends StatelessWidget {
           actions: [SelectModeAction(vm, isSelectMode)],
         ),
         /* CorkBoard */
-        body: ImageBackground.cork(
+        body: ImageBackground(
+          vm: .cork(),
           child: ListenableBuilder(
             listenable: vm,
             builder: (_, _) => switch (vm.source) {
@@ -59,7 +60,7 @@ class StockPage extends StatelessWidget {
                       .done => postitGridView(snapshot.requireData),
                       _ => LoadingProgressIndicator(
                         context,
-                        duration: .new(milliseconds: 100),
+                        vm: .new(context, duration: .new(milliseconds: 100)),
                       ),
                     },
               ),

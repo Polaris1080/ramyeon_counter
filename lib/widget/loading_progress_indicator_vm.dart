@@ -2,16 +2,17 @@ part of 'loading_progress_indicator.dart';
 
 class LoadingProgressIndicatorViewModel extends ChangeNotifier {
   LoadingProgressIndicatorViewModel(
-    BuildContext context,
-    Color? color,
-    Duration? duration,
-  ) : _defaultColor = ColorScheme.of(context).tertiary,
-      _overrideColor = color != null
-          ? ColorScheme.fromSeed(seedColor: color).tertiary
-          : null,
-      _duration = duration ?? const Duration();
+    BuildContext context, {
+    Color? overrideColor, // 色
+    Duration? duration, // 遅延
+  }) : _defaultColor = ColorScheme.of(context).tertiary,
+       _overrideColor = overrideColor != null
+           ? ColorScheme.fromSeed(seedColor: overrideColor).tertiary
+           : null,
+       _duration = duration ?? const Duration();
 
   /* Color */
+  /// バーの色
   Color get color => _overrideColor ?? _defaultColor;
   set overrideColor(Color? value) {
     if (_overrideColor == value) {
@@ -21,6 +22,7 @@ class LoadingProgressIndicatorViewModel extends ChangeNotifier {
   }
 
   /* Delay */
+  /// 遅延時間
   Future get delay => Future.delayed(_duration);
   final Duration _duration;
 

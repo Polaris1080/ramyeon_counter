@@ -4,17 +4,7 @@ import 'package:flutter/material.dart';
 part 'image_background_vm.dart';
 
 class ImageBackground extends StatelessWidget {
-  /// Background(image)
-  ImageBackground({super.key, required String path, this.child})
-    : vm = .new(path);
-
-  /// BackGround(cork)
-  ImageBackground.cork({super.key, this.child})
-    : vm = .new('assets/images/cork.png');
-
-  /// BackGround(paper)
-  ImageBackground.paper({super.key, this.child})
-    : vm = .new('assets/images/paper.png');
+  const ImageBackground({super.key, required this.vm, this.child});
 
   final ImageBackgroundViewModel vm;
 

@@ -30,7 +30,8 @@ class DetailPage extends StatelessWidget {
         actions: [DetailToEditAction(ramyeonId, packageColor)],
         overrideColor: packageColor,
       ),
-      body: ImageBackground.paper(
+      body: ImageBackground(
+        vm: .paper(),
         child: Column(
           crossAxisAlignment: .stretch,
           children: [

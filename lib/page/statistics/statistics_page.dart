@@ -46,7 +46,8 @@ class StatisticsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(context, '統計'),
-      body: ImageBackground.paper(
+      body: ImageBackground(
+        vm: .paper(),
         child: ValueListenableBuilder(
           valueListenable: selected,
           builder: (_, selectedIndex, _) => switch (selectedIndex) {
@@ -57,7 +58,7 @@ class StatisticsPage extends StatelessWidget {
                 List<RamyeonListData> data => EatPieChart(data),
                 _ => LoadingProgressIndicator(
                   context,
-                  duration: .new(milliseconds: 100),
+                  vm: .new(context, duration: .new(milliseconds: 100)),
                 ),
               },
             ),
@@ -70,7 +71,7 @@ class StatisticsPage extends StatelessWidget {
                 Map<String, double> data => RankingRatingSubPage(data),
                 _ => LoadingProgressIndicator(
                   context,
-                  duration: .new(milliseconds: 100),
+                  vm: .new(context, duration: .new(milliseconds: 100)),
                 ),
               },
             ),
@@ -81,7 +82,7 @@ class StatisticsPage extends StatelessWidget {
                 List<TagData> data => RankingTagSubPage(vm, data),
                 _ => LoadingProgressIndicator(
                   context,
-                  duration: .new(milliseconds: 100),
+                  vm: .new(context, duration: .new(milliseconds: 100)),
                 ),
               },
             ),

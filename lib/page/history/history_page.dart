@@ -61,7 +61,8 @@ abstract class HistoryPageBase extends StatelessWidget {
           '$heading履歴',
           actions: [SearchModeAction(vm, packageColor)],
         ),
-        body: ImageBackground.cork(
+        body: ImageBackground(
+          vm: .cork(),
           child: FutureBuilder(
             future: vm.loadSource(),
             builder: (context, snapshot) => switch (snapshot.connectionState) {
@@ -84,7 +85,11 @@ abstract class HistoryPageBase extends StatelessWidget {
               },
               _ => LoadingProgressIndicator(
                 context,
-                overrideColor: packageColor,
+                vm: .new(
+                  context,
+                  overrideColor: packageColor,
+                  duration: .new(milliseconds: 100),
+                ),
               ),
             },
           ),

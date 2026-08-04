@@ -22,10 +22,12 @@ class HomeDrawer extends Drawer {
             decoration: BoxDecoration(color: colorScheme.tertiaryContainer),
             margin: EdgeInsets.all(0),
             child: LayeredText(
-              context,
-              'Ramyeon Counter',
-              color: .primary,
-              fontSize: 40,
+              vm: .new(
+                context,
+                title: 'Ramyeon Counter',
+                color: .primary,
+                fontSize: 40,
+              ),
             ),
           ),
           for (({IconData icon, String title, String location}) item in [

@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 part 'loading_progress_indicator_vm.dart';
 
 class LoadingProgressIndicator extends StatelessWidget {
-  LoadingProgressIndicator(
+  const LoadingProgressIndicator(
     BuildContext context, {
     super.key,
-    Color? overrideColor,
-    Duration? duration,
-  }) : vm = .new(context, overrideColor, duration);
+    required this.vm,
+  });
 
   final LoadingProgressIndicatorViewModel vm;
 

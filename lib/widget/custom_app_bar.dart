@@ -27,16 +27,18 @@ class HomeAppBar extends CustomAppBarBase {
                 overflow: .visible,
               ),
               false => LayeredText(
-                context,
-                color: .tertiary,
-                switch (windowWidth) {
-                  > 320 => 'Ramyeon Counter',
-                  > 270 => 'Ramyeon',
-                  _ => '',
-                },
-                // [300:16, 315:17, 330:18...]
-                fontSize: ((windowWidth ~/ 15) - 4).minmax(16, 36).toDouble(),
-                overflow: .visible,
+                vm: .new(
+                  context,
+                  title: switch (windowWidth) {
+                    > 320 => 'Ramyeon Counter',
+                    > 270 => 'Ramyeon',
+                    _ => '',
+                  },
+                  color: .tertiary,
+                  // [300:16, 315:17, 330:18...]
+                  fontSize: ((windowWidth ~/ 15) - 4).minmax(16, 36).toDouble(),
+                  overflow: .visible,
+                ),
               ),
             };
           },

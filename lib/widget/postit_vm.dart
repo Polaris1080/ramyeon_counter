@@ -2,14 +2,14 @@ part of 'postit.dart';
 
 class PostitViewModel extends ChangeNotifier {
   PostitViewModel(
-    BuildContext context,
+    BuildContext context, {
+    required Size size, // 大きさ
     Color? color, // 色
-    Size size, // 大きさ
-  ) : _defaultColor = ColorScheme.of(context).primaryFixed,
-      _overrideColor = color != null
-          ? ColorScheme.fromSeed(seedColor: color).primaryFixed
-          : null,
-      _size = size;
+  }) : _defaultColor = ColorScheme.of(context).primaryFixed,
+       _overrideColor = color != null
+           ? ColorScheme.fromSeed(seedColor: color).primaryFixed
+           : null,
+       _size = size;
 
   /* Color */
   /// 色

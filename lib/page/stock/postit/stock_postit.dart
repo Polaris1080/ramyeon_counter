@@ -7,13 +7,13 @@ class StockPostit extends Postit {
       _postitContentPadding = 5.0;
 
   StockPostit(
-    super.context, {
+    BuildContext context, {
     super.key,
     required ValueNotifier<bool> isSelectMode,
     required ValueNotifier<bool> isSelected,
     required StockPostitData data,
   }) : super(
-         overrideColor: data.color,
+         vm: .new(context, color: data.color, size: size),
          /* Build */
          child: Builder(
            builder: (context) {

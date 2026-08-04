@@ -8,13 +8,7 @@ class Postit extends StatelessWidget {
   @protected
   static const Size defaultSize = Size(150.0, 150.0);
 
-  Postit(
-    BuildContext context, {
-    super.key,
-    Color? overrideColor,
-    Size size = defaultSize,
-    this.child,
-  }) : vm = .new(context, overrideColor, size);
+  const Postit({super.key, required this.vm, this.child});
 
   final PostitViewModel vm;
 
