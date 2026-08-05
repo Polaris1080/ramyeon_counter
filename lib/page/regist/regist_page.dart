@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/page/regist/view_model/regist_page_vm.dart';
 // Widget
 import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/barcode_register.dart';
-import 'package:ramyeon_counter/widget/custom_app_bar.dart';
+import 'package:ramyeon_counter/widget/custom_appbar/default_app_bar.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/data/ramyeon_data_register.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/tag_register.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/ramyeon_image/register/ramyeon_image_register.dart';
