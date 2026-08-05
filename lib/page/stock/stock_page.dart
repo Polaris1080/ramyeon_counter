@@ -13,7 +13,7 @@ import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
 import 'package:ramyeon_counter/widget/custom_app_bar.dart';
 import 'package:ramyeon_counter/widget/image_background.dart';
 import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
-import 'package:ramyeon_counter/widget/spacing_grid_view/spacing_grid_view.dart';
+import 'package:ramyeon_counter/widget/spacing_grid_view.dart';
 // Partial
 part 'stock_page_vm.dart';
 part 'actions/select_mode_action.dart';
@@ -52,12 +52,12 @@ class StockPage extends StatelessWidget {
           child: ListenableBuilder(
             listenable: vm,
             builder: (_, _) => switch (vm.source) {
-              List<StockPostitData> data => postitGridView(data),
+              List<StockPostitData> data => postitGridView(context, data),
               _ => FutureBuilder(
                 future: vm.loadSource(),
                 builder: (context, snapshot) =>
                     switch (snapshot.connectionState) {
-                      .done => postitGridView(snapshot.requireData),
+                      .done => postitGridView(context, snapshot.requireData),
                       _ => LoadingProgressIndicator(
                         context,
                         vm: .new(context, duration: .new(milliseconds: 100)),
@@ -72,9 +72,15 @@ class StockPage extends StatelessWidget {
   }
 
   /* Widget */
-  SpacingGridView postitGridView(List<StockPostitData> data) => SpacingGridView(
-    itemSize: StockPostit.size,
-    itemCount: data.length,
+  SpacingGridView postitGridView(
+    BuildContext context,
+    List<StockPostitData> data,
+  ) => SpacingGridView(
+    vm: .new(
+      itemCount: data.length,
+      itemSize: StockPostit.size,
+      windowWidth: MediaQuery.of(context).size.width,
+    ),
     itemBuilder: (context, i) => StockPostit(
       context,
       data: data[i],

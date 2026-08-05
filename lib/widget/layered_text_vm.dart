@@ -3,12 +3,12 @@ part of 'layered_text.dart';
 class LayeredTextViewModel extends ChangeNotifier {
   LayeredTextViewModel(
     BuildContext context, {
-    required String title, // 文字
+    required String title,
     required LayeredTextColor color, // 色（指定）
-    int? maxLines, // 列（制限）
-    double? fontSize, // 大きさ
-    TextOverflow? overflow, // はみ出した時どうするか
-  }) : assert(overflow != .ellipsis), // ellipsisだと表示が乱れる
+    int? maxLines,
+    double? fontSize, // 文字サイズ
+    TextOverflow? overflow, // はみ出した時どうするか（ellipsisだと表示が乱れる）
+  }) : assert(overflow != .ellipsis),
        _title = title,
        _maxLines = maxLines,
        _baseColor = switch (color) {

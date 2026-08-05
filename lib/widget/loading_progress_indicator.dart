@@ -15,9 +15,11 @@ class LoadingProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
+      /* Color setting */
       data: Theme.of(
         context,
       ).copyWith(progressIndicatorTheme: .new(color: vm.color)),
+      /* Body */
       child: FutureBuilder(
         future: vm.delay,
         builder: (_, snapshot) => snapshot.connectionState == .done

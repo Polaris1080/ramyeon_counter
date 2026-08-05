@@ -18,18 +18,20 @@ class Postit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /* Widget */
+    BoxShadow shadow = .new(
+      color: Colors.grey,
+      spreadRadius: 0,
+      blurRadius: 3,
+      offset: Offset(1, 1),
+    );
+
+    /* Body */
     return Container(
       width: vm.width,
       height: vm.height,
-      decoration: BoxDecoration(boxShadow: [_shadow], color: vm.color),
+      decoration: BoxDecoration(boxShadow: [shadow], color: vm.color),
       child: child,
     );
   }
-
-  BoxShadow get _shadow => .new(
-    color: Colors.grey,
-    spreadRadius: 0,
-    blurRadius: 3,
-    offset: Offset(1, 1),
-  );
 }

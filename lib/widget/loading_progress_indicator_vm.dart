@@ -3,8 +3,8 @@ part of 'loading_progress_indicator.dart';
 class LoadingProgressIndicatorViewModel extends ChangeNotifier {
   LoadingProgressIndicatorViewModel(
     BuildContext context, {
-    Color? overrideColor, // 色
-    Duration? duration, // 遅延
+    Color? overrideColor,
+    Duration? duration,
   }) : _defaultColor = ColorScheme.of(context).tertiary,
        _overrideColor = overrideColor != null
            ? ColorScheme.fromSeed(seedColor: overrideColor).tertiary
