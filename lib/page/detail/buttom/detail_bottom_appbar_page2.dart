@@ -23,7 +23,7 @@ class PageTwo extends StatelessWidget {
               showDialog<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return AddDialog(productName: '神チャンソプ');
+                  return AddDialog();
                 },
               );
             },
