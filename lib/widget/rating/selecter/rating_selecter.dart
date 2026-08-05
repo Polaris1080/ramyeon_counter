@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class RatingSelecter extends RatingSelecterBase {
   RatingSelecter(this.ratingNotifier, {super.key})
-    : assert(1 <= ratingNotifier.value && ratingNotifier.value <= 10);
+    : assert(0 <= ratingNotifier.value && ratingNotifier.value <= 10);
 
   final ValueNotifier<int> ratingNotifier;
 
@@ -16,9 +16,7 @@ class RatingSelecter extends RatingSelecterBase {
           Row(
             children: [
               for (int rate
-                  in RatingSelecterBase.range
-                      .skip(_perRow * row)
-                      .take(_perRow))
+                  in RatingSelecterBase.range.skip(_perRow * row).take(_perRow))
                 ValueListenableBuilder<int>(
                   valueListenable: ratingNotifier,
                   builder: (_, rating, _) {
