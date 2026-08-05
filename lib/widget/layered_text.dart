@@ -11,14 +11,12 @@ class LayeredText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /* Widget */
-    Text text(TextStyle style) =>
-        Text(vm.title, style: style, maxLines: vm.maxLines);
-    /* Body */
     return Stack(
       clipBehavior: .hardEdge,
       children: [
-        ...[vm.borderStyle, vm.baseStyle].select((style, _) => text(style)),
+        ...[vm.borderStyle, vm.baseStyle].select(
+          (style, _) => Text(vm.title, style: style, maxLines: vm.maxLines),
+        ),
       ],
     );
   }

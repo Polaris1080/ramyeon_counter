@@ -10,9 +10,10 @@ import 'package:ramyeon_counter/widget/rating/selecter/rating_selecter.dart';
 
 class EatSheet extends StatelessWidget {
   /* Setting */
-  static const _padding = EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-      _spacing = 10.0,
-      _maxWidth = 360.0;
+  static const _buttonSize = Size(180, 45),
+      _maxWidth = 360.0,
+      _padding = EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+      _spacing = 10.0;
 
   EatSheet({super.key, required this.id});
 
@@ -38,32 +39,27 @@ class EatSheet extends StatelessWidget {
             /* Selecter */
             RatingSelecter(vm),
             /* Button */
-            Theme(
-              data: Theme.of(context).copyWith(
-                elevatedButtonTheme: .new(
-                  style: ElevatedButton.styleFrom(minimumSize: .new(180, 45)),
-                ),
-              ),
-              child: ValueListenableBuilder(
-                valueListenable: vm,
-                builder: (context, rating, _) {
-                  final isSelected = 1 <= rating && rating <= 10;
-                  final difinition = {
-                    '評価をお願いします': null,
-                    '閉じる': () {
-                      RatingRepository().consume(id, rating);
-                      Navigator.pop(context);
-                    },
-                  };
-                  return ElevatedButton(
-                    onPressed: difinition.values.toList()[isSelected.toInt],
-                    child: Text(
-                      difinition.keys.toList()[isSelected.toInt],
-                      style: Theme.of(context).textTheme.labelLarge,
-                    ),
-                  );
-                },
-              ),
+            ValueListenableBuilder(
+              valueListenable: vm,
+              builder: (context, rating, _) {
+                // 選択されているか
+                final isSelected = 1 <= rating && rating <= 10;
+                final difinition = {
+                  '評価をお願いします': null,
+                  '閉じる': () {
+                    RatingRepository().consume(id, rating);
+                    Navigator.pop(context);
+                  },
+                }.entries.elementAt(isSelected.toInt);
+                return ElevatedButton(
+                  onPressed: difinition.value,
+                  style: ElevatedButton.styleFrom(minimumSize: _buttonSize),
+                  child: Text(
+                    difinition.key,
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
+                );
+              },
             ),
           ],
         ),

@@ -14,6 +14,7 @@ class RatingSelecter extends RatingSelecterBase {
       children: [
         for (int row in RangeIterable(0, items ~/ _perRow))
           Row(
+            mainAxisSize: .min,
             children: [
               for (int rate
                   in RatingSelecterBase.range.skip(_perRow * row).take(_perRow))
