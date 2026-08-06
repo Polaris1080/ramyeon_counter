@@ -8,6 +8,14 @@ import 'ramyeon.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 
 class Barcode extends ModelBase {
+  Barcode({
+    required this.id,
+    required this.brandId,
+    required this.count,
+    required this.jam,
+  });
+
+  /* Table */
   @PrimaryKey()
   final int id;
 
@@ -15,19 +23,12 @@ class Barcode extends ModelBase {
   final int brandId;
 
   /// 個数
-  /// >= 1
+  @Constraint('>= 1')
   final int count;
 
   /// バーコード
-  /// 8桁・13桁
+  @Constraint('8/13桁')
   final int jam;
-
-  Barcode({
-    required this.id,
-    required this.brandId,
-    required this.count,
-    required this.jam,
-  });
 
   /* From:To */
   factory Barcode.fromMap(Map<String, Object?> map) => Barcode(
@@ -41,19 +42,15 @@ class Barcode extends ModelBase {
   Map<String, Object?> toMap({bool isDB = false}) {
     validate();
     return {
-      // INTEGER(int) PrimaryKey
       BarcodeTableRow.id.name: id >= 0 ? id : null,
-      // INTEGER(int) >=0
       BarcodeTableRow.brandid.name: brandId,
-      // INTEGER(int) >=1
       BarcodeTableRow.count.name: count,
-      // INTEGER(int) digit=8|13
       BarcodeTableRow.jam.name: jam,
     };
   }
 
-  void validate() {
-    
+  @override
+  String? validate() {
     if (brandId < 0) {
       throw RangeError.value(
         brandId,
@@ -75,6 +72,7 @@ class Barcode extends ModelBase {
         '${BarcodeTableRow.jam.name} digit is 8 or 13.',
       );
     }
+    return null;
   }
 
   static List<String> get tableDefinition => [
@@ -85,4 +83,16 @@ class Barcode extends ModelBase {
   ];
 }
 
-enum BarcodeTableRow { id, brandid, count, jam }
+enum BarcodeTableRow {
+  /// INTEGER(int) PrimaryKey
+  id,
+
+  /// INTEGER(int) OtherPrimary
+  brandid,
+
+  /// INTEGER(int) >=1
+  count,
+
+  /// INTEGER(int) digit=8|13
+  jam,
+}

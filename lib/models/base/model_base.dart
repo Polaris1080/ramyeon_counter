@@ -10,6 +10,8 @@ abstract class ModelBase extends VirtualModelBase {
 
   Map<String, Object?> toMap({bool isDB = false});
 
+  String? validate();
+
   @override
   String toString() =>
       '$runtimeType{${toMap().entries.select((s, _) => '${s.key}: ${s.value}').join(', ')}}';

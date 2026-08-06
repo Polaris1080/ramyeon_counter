@@ -1,31 +1,31 @@
 // Base
+import '../base/annnotation.dart';
 import '../base/model_base.dart';
 import '../base/em_table_definition.dart';
 // Model
 import 'ramyeon.dart';
 
 class Rating extends ModelBase {
-  /// [Rating] id
-  /// PrimaryKey (>= 0)
-  final int id;
-
-  /// [Ramyeon] id
-  /// >= 0 (PrimaryKey)
-  final int brandId;
-
-  /// 評価
-  /// 1 ~ 10
-  final int rating;
-
-  /// 評価日
-  final DateTime date;
-
   Rating({
     required this.id,
     required this.brandId,
     required this.rating,
     required this.date,
   });
+
+  /* Table */
+  @PrimaryKey()
+  final int id;
+
+  @OtherPrimary(Ramyeon)
+  final int brandId;
+
+  /// 評価
+  @Constraint('1 ~ 10')
+  final int rating;
+
+  /// 評価日
+  final DateTime date;
 
   /* From:To */
   factory Rating.fromMap(Map<String, Object?> map) => Rating(
@@ -37,6 +37,17 @@ class Rating extends ModelBase {
 
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
+    validate();
+    return {
+      RatingTableRow.id.name: id >= 0 ? id : null,
+      RatingTableRow.brandId.name: brandId,
+      RatingTableRow.rating.name: rating,
+      RatingTableRow.date.name: isDB ? date.toString() : date,
+    };
+  }
+
+  @override
+  String? validate() {
     if (brandId < 0) {
       throw RangeError.value(
         brandId,
@@ -51,16 +62,7 @@ class Rating extends ModelBase {
         '1 <= ${RatingTableRow.rating.name} <= 10',
       );
     }
-    return {
-      // INTEGER(int)PrimaryKey
-      RatingTableRow.id.name: id >= 0 ? id : null,
-      // INTEGER(int)
-      RatingTableRow.brandId.name: brandId,
-      // INTEGER(int)
-      RatingTableRow.rating.name: rating,
-      // TEXT | DateTime
-      RatingTableRow.date.name: isDB ? date.toString() : date,
-    };
+    return null;
   }
 
   static List<String> get tableDefinition => [
@@ -71,4 +73,16 @@ class Rating extends ModelBase {
   ];
 }
 
-enum RatingTableRow { id, brandId, rating, date }
+enum RatingTableRow {
+  /// INTEGER(int) PrimaryKey
+  id,
+
+  /// INTEGER(int)
+  brandId,
+
+  /// INTEGER(int)
+  rating,
+
+  /// TEXT | DateTime
+  date,
+}

@@ -1,18 +1,20 @@
 // Base
+import '../base/annnotation.dart';
 import '../base/model_base.dart';
 import '../base/em_table_definition.dart';
 // Model
 import 'ramyeon.dart';
 
 class Company extends ModelBase {
-  /// [Company].id & [Ramyeon].companyId
-  /// PrimaryKey (>= 0)
+  Company({required this.id, required this.company});
+
+  /* Table */
+  @PrimaryKey()
+  @Relation(Ramyeon, RamyeonTableRow.companyId)
   final int id;
 
   /// 会社
   final String company;
-
-  Company({required this.id, required this.company});
 
   /* From:To */
   factory Company.fromMap(Map<String, Object?> map) => Company(
@@ -21,12 +23,16 @@ class Company extends ModelBase {
   );
 
   @override
-  Map<String, Object?> toMap({bool isDB = false}) => {
-    // INTEGER(int)PrimaryKey
-    CompanyTableRow.id.name: id >= 0 ? id : null,
-    // TEXT(String)
-    CompanyTableRow.company.name: company,
-  };
+  Map<String, Object?> toMap({bool isDB = false}) {
+    validate();
+    return {
+      CompanyTableRow.id.name: id >= 0 ? id : null,
+      CompanyTableRow.company.name: company,
+    };
+  }
+
+  @override
+  String? validate() => null;
 
   static List<String> get tableDefinition => [
     CompanyTableRow.id.name.integer.primary,
@@ -34,4 +40,10 @@ class Company extends ModelBase {
   ];
 }
 
-enum CompanyTableRow { id, company }
+enum CompanyTableRow {
+  /// INTEGER(int) PrimaryKey
+  id,
+
+  /// TEXT(String)
+  company,
+}

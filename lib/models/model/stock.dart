@@ -1,4 +1,5 @@
 // Base
+import '../base/annnotation.dart';
 import '../base/model_base.dart';
 import '../base/em_table_definition.dart';
 // Model
@@ -6,12 +7,20 @@ import 'ramyeon.dart';
 
 /// 在庫（情報）
 class Stock extends ModelBase {
-  /// [Stock].id
-  /// PrimaryKey (>= 0)
+  Stock({
+    required this.id,
+    required this.brandId,
+    required this.purchaseDate,
+    required this.expirationDate,
+    required this.price,
+    this.ate = false, //備蓄してすぐに食べるわけがない
+  });
+
+  /* Table */
+  @PrimaryKey()
   final int id;
 
-  /// [Ramyeon].id
-  /// >= 0 (PrimaryKey)
+  @OtherPrimary(Ramyeon)
   final int brandId;
 
   /// 購入日
@@ -21,29 +30,11 @@ class Stock extends ModelBase {
   final DateTime expirationDate;
 
   /// 購入価格
-  /// >= 0
+  @Constraint('>= 0')
   final int price;
 
   /// 食べた？
   final bool ate;
-
-  Stock({
-    required this.id,
-    required this.brandId,
-    required this.purchaseDate,
-    required this.expirationDate,
-    required this.price,
-    this.ate = false, //備蓄してすぐに食べるわけがない
-  });
-  Stock.self(Stock stock)
-    : this(
-        id: stock.id,
-        brandId: stock.brandId,
-        purchaseDate: stock.purchaseDate,
-        expirationDate: stock.expirationDate,
-        price: stock.price,
-        ate: stock.ate,
-      );
 
   /* From:To */
   factory Stock.fromMap(Map<String, Object?> map) => Stock(
@@ -61,6 +52,23 @@ class Stock extends ModelBase {
 
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
+    validate();
+    return {
+      StockTableRow.id.name: id >= 0 ? id : null,
+      StockTableRow.brandId.name: brandId,
+      StockTableRow.purchaseDate.name: isDB
+          ? purchaseDate.toString()
+          : purchaseDate,
+      StockTableRow.expirationDate.name: isDB
+          ? expirationDate.toString()
+          : expirationDate,
+      StockTableRow.price.name: price,
+      StockTableRow.ate.name: isDB ? (ate ? 1 : 0) : ate,
+    };
+  }
+
+  @override
+  String? validate() {
     if (brandId < 0) {
       throw RangeError.value(
         brandId,
@@ -75,24 +83,7 @@ class Stock extends ModelBase {
         '${StockTableRow.price.name} >= 0',
       );
     }
-    return {
-      // INTEGER(int)PrimaryKey
-      StockTableRow.id.name: id >= 0 ? id : null,
-      // INTEGER(int)
-      StockTableRow.brandId.name: brandId,
-      // TEXT | DateTime
-      StockTableRow.purchaseDate.name: isDB
-          ? purchaseDate.toString()
-          : purchaseDate,
-      // TEXT | DateTime
-      StockTableRow.expirationDate.name: isDB
-          ? expirationDate.toString()
-          : expirationDate,
-      // INTEGER(int)
-      StockTableRow.price.name: price,
-      // INTEGER | bool
-      StockTableRow.ate.name: isDB ? (ate ? 1 : 0) : ate,
-    };
+    return null;
   }
 
   static List<String> get tableDefinition => [
@@ -105,4 +96,22 @@ class Stock extends ModelBase {
   ];
 }
 
-enum StockTableRow { id, brandId, purchaseDate, expirationDate, price, ate }
+enum StockTableRow {
+  /// INTEGER(int) PrimaryKey
+  id,
+
+  /// INTEGER(int)
+  brandId,
+
+  /// TEXT | DateTime
+  purchaseDate,
+
+  /// TEXT | DateTime
+  expirationDate,
+
+  /// INTEGER(int)
+  price,
+
+  /// INTEGER | bool
+  ate,
+}

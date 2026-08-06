@@ -1,30 +1,11 @@
 // Base
+import '../base/annnotation.dart';
 import '../base/model_base.dart';
 import '../base/em_table_definition.dart';
 // Model
 import 'company.dart';
 
 class Ramyeon extends ModelBase {
-  /// [Ramyeon].id
-  /// PrimaryKey (>= 0)
-  final int id;
-
-  /// [Company].id
-  /// >= 0 (PrimaryKey)
-  final int companyId;
-
-  /// 商品
-  final String brand;
-
-  /// [Company].company *会社*
-  final String company;
-
-  /// タグ
-  final List<String> tag;
-
-  /// 色（パッケージ）
-  final int? packageColor;
-
   Ramyeon({
     required this.id,
     required this.companyId,
@@ -42,6 +23,25 @@ class Ramyeon extends ModelBase {
     this.packageColor,
   }) : companyId = -1;
 
+  /* Table */
+  @PrimaryKey()
+  final int id;
+
+  @OtherPrimary(Company)
+  final int companyId;
+
+  /// 商品
+  final String brand;
+
+  @Relation(Company, CompanyTableRow.company)
+  final String company;
+
+  /// タグ
+  final List<String> tag;
+
+  /// 色（パッケージ）
+  final int? packageColor;
+
   /* From:To */
   factory Ramyeon.fromMap(Map<String, Object?> map) => Ramyeon(
     id: map[RamyeonTableRow.id.name] as int,
@@ -54,6 +54,18 @@ class Ramyeon extends ModelBase {
 
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
+    validate();
+    return <String, Object?>{
+      RamyeonTableRow.id.name: id >= 0 ? id : null,
+      RamyeonTableRow.companyId.name: companyId,
+      RamyeonTableRow.brand.name: brand,
+      RamyeonTableRow.tag.name: isDB ? tag.join(',') : tag,
+      RamyeonTableRow.packageColor.name: packageColor,
+    };
+  }
+
+  @override
+  String? validate() {
     if (companyId < 0) {
       throw RangeError.value(
         companyId,
@@ -61,18 +73,7 @@ class Ramyeon extends ModelBase {
         '${RamyeonTableRow.brand.name} >= 0',
       );
     }
-    return <String, Object?>{
-      // INTEGER(int)PrimaryKey
-      RamyeonTableRow.id.name: id >= 0 ? id : null,
-      // INTEGER(int)
-      RamyeonTableRow.companyId.name: companyId,
-      // TEXT(String)
-      RamyeonTableRow.brand.name: brand,
-      // TEXT | List<String>
-      RamyeonTableRow.tag.name: isDB ? tag.join(',') : tag,
-      // INTEGER(int?)
-      RamyeonTableRow.packageColor.name: packageColor,
-    };
+    return null;
   }
 
   static List<String> get tableDefinition => [
@@ -84,4 +85,22 @@ class Ramyeon extends ModelBase {
   ];
 }
 
-enum RamyeonTableRow { id, companyId, brand, company, tag, packageColor }
+enum RamyeonTableRow {
+  /// INTEGER(int) PrimaryKey
+  id,
+
+  /// INTEGER(int)
+  companyId,
+
+  /// TEXT(String)
+  brand,
+
+  ///
+  company,
+
+  /// TEXT | `List<String>`
+  tag,
+
+  /// INTEGER(int?)
+  packageColor,
+}
