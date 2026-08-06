@@ -16,7 +16,7 @@ class BarcodeRepository extends RamyeonRepositoryBase {
   Future<List<Barcode>> readByBrandId(int brandId) async =>
       (await (await db).query(
         table.name,
-        where: '${BarcodeTableRow.brandid.name} = ?',
+        where: '${BarcodeTableRow.brandId.name} = ?',
         whereArgs: [brandId],
       )).decode();
 

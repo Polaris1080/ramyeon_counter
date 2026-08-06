@@ -4,6 +4,8 @@ import '../base/model_base.dart';
 import '../base/em_table_definition.dart';
 // Model
 import 'ramyeon.dart';
+// Package
+import 'package:darq/darq.dart';
 
 /// 在庫（情報）
 class Stock extends ModelBase {
@@ -53,18 +55,17 @@ class Stock extends ModelBase {
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     validate();
-    return {
-      StockTableRow.id.name: id >= 0 ? id : null,
-      StockTableRow.brandId.name: brandId,
-      StockTableRow.purchaseDate.name: isDB
-          ? purchaseDate.toString()
-          : purchaseDate,
-      StockTableRow.expirationDate.name: isDB
-          ? expirationDate.toString()
-          : expirationDate,
-      StockTableRow.price.name: price,
-      StockTableRow.ate.name: isDB ? (ate ? 1 : 0) : ate,
-    };
+    return StockTableRow.values
+        .select((s, _) => s.name)
+        .zip(<Object?>[
+          id >= 0 ? id : null,
+          brandId,
+          isDB ? purchaseDate.toString() : purchaseDate,
+          isDB ? expirationDate.toString() : expirationDate,
+          price,
+          isDB ? (ate ? 1 : 0) : ate,
+        ], (key, value) => MapEntry(key, value))
+        .toMap((m) => m);
   }
 
   @override

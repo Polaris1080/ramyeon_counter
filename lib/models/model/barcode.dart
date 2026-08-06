@@ -4,6 +4,8 @@ import '../base/model_base.dart';
 import '../base/em_table_definition.dart';
 // Model
 import 'ramyeon.dart';
+// Package
+import 'package:darq/darq.dart';
 // Extension
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 
@@ -33,7 +35,7 @@ class Barcode extends ModelBase {
   /* From:To */
   factory Barcode.fromMap(Map<String, Object?> map) => Barcode(
     id: map[BarcodeTableRow.id.name] as int,
-    brandId: map[BarcodeTableRow.brandid.name] as int,
+    brandId: map[BarcodeTableRow.brandId.name] as int,
     count: map[BarcodeTableRow.count.name] as int,
     jam: map[BarcodeTableRow.jam.name] as int,
   );
@@ -41,12 +43,15 @@ class Barcode extends ModelBase {
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     validate();
-    return {
-      BarcodeTableRow.id.name: id >= 0 ? id : null,
-      BarcodeTableRow.brandid.name: brandId,
-      BarcodeTableRow.count.name: count,
-      BarcodeTableRow.jam.name: jam,
-    };
+    return BarcodeTableRow.values
+        .select((s, _) => s.name)
+        .zip(<Object?>[
+          id >= 0 ? id : null,
+          brandId,
+          count,
+          jam,
+        ], (key, value) => MapEntry(key, value))
+        .toMap((m) => m);
   }
 
   @override
@@ -54,8 +59,8 @@ class Barcode extends ModelBase {
     if (brandId < 0) {
       throw RangeError.value(
         brandId,
-        BarcodeTableRow.brandid.name,
-        '${BarcodeTableRow.brandid.name} >= 0',
+        BarcodeTableRow.brandId.name,
+        '${BarcodeTableRow.brandId.name} >= 0',
       );
     }
     if (count < 1) {
@@ -77,7 +82,7 @@ class Barcode extends ModelBase {
 
   static List<String> get tableDefinition => [
     BarcodeTableRow.id.name.integer.primary,
-    BarcodeTableRow.brandid.name.integer.notnull,
+    BarcodeTableRow.brandId.name.integer.notnull,
     BarcodeTableRow.count.name.integer.notnull,
     BarcodeTableRow.jam.name.integer.notnull,
   ];
@@ -88,7 +93,7 @@ enum BarcodeTableRow {
   id,
 
   /// INTEGER(int) OtherPrimary
-  brandid,
+  brandId,
 
   /// INTEGER(int) >=1
   count,

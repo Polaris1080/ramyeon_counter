@@ -4,6 +4,8 @@ import '../base/model_base.dart';
 import '../base/em_table_definition.dart';
 // Model
 import 'company.dart';
+// Package
+import 'package:darq/darq.dart';
 
 class Ramyeon extends ModelBase {
   Ramyeon({
@@ -14,14 +16,6 @@ class Ramyeon extends ModelBase {
     required this.tag,
     this.packageColor,
   });
-
-  Ramyeon.toInsert({
-    required this.id,
-    required this.brand,
-    required this.company,
-    required this.tag,
-    this.packageColor,
-  }) : companyId = -1;
 
   /* Table */
   @PrimaryKey()
@@ -55,13 +49,17 @@ class Ramyeon extends ModelBase {
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     validate();
-    return <String, Object?>{
-      RamyeonTableRow.id.name: id >= 0 ? id : null,
-      RamyeonTableRow.companyId.name: companyId,
-      RamyeonTableRow.brand.name: brand,
-      RamyeonTableRow.tag.name: isDB ? tag.join(',') : tag,
-      RamyeonTableRow.packageColor.name: packageColor,
-    };
+    return RamyeonTableRow.values
+        .select((s, _) => s.name)
+        .zip(<Object?>[
+          id >= 0 ? id : null,
+          companyId,
+          brand,
+          null,
+          isDB ? tag.join(',') : tag,
+          packageColor,
+        ], (key, value) => MapEntry(key, value))
+        .toMap((m) => m);
   }
 
   @override

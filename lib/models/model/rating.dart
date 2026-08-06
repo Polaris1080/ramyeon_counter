@@ -4,6 +4,8 @@ import '../base/model_base.dart';
 import '../base/em_table_definition.dart';
 // Model
 import 'ramyeon.dart';
+// Package
+import 'package:darq/darq.dart';
 
 class Rating extends ModelBase {
   Rating({
@@ -38,12 +40,15 @@ class Rating extends ModelBase {
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     validate();
-    return {
-      RatingTableRow.id.name: id >= 0 ? id : null,
-      RatingTableRow.brandId.name: brandId,
-      RatingTableRow.rating.name: rating,
-      RatingTableRow.date.name: isDB ? date.toString() : date,
-    };
+    return RatingTableRow.values
+        .select((s, _) => s.name)
+        .zip(<Object?>[
+          id >= 0 ? id : null,
+          brandId,
+          rating,
+          isDB ? date.toString() : date,
+        ], (key, value) => MapEntry(key, value))
+        .toMap((m) => m);
   }
 
   @override

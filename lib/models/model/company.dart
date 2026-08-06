@@ -4,6 +4,8 @@ import '../base/model_base.dart';
 import '../base/em_table_definition.dart';
 // Model
 import 'ramyeon.dart';
+// Package
+import 'package:darq/darq.dart';
 
 class Company extends ModelBase {
   Company({required this.id, required this.company});
@@ -25,10 +27,13 @@ class Company extends ModelBase {
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     validate();
-    return {
-      CompanyTableRow.id.name: id >= 0 ? id : null,
-      CompanyTableRow.company.name: company,
-    };
+    return CompanyTableRow.values
+        .select((s, _) => s.name)
+        .zip(<Object?>[
+          id >= 0 ? id : null,
+          company,
+        ], (key, value) => MapEntry(key, value))
+        .toMap((m) => m);
   }
 
   @override
