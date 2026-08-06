@@ -1,7 +1,7 @@
 // Base
 import '../base/annnotation.dart';
 import '../base/model_base.dart';
-import '../base/em_table_definition.dart';
+import '../base/table_difinition.dart';
 // Model
 import 'ramyeon.dart';
 // Package
@@ -18,16 +18,28 @@ class Rating extends ModelBase {
   /* Table */
   @PrimaryKey()
   final int id;
+  Object? get _idValue => id >= 0 ? id : null;
+  static ColumuConstraint get _idColumuDefinition =>
+      PrimaryConstraint(IntColumn());
 
   @OtherPrimary(Ramyeon)
   final int brandId;
+  Object? get _brandIdValue => brandId;
+  static ColumuConstraint get _brandIdColumuDefinition =>
+      NotNullConstraint(IntColumn());
 
   /// 評価
   @Constraint('1 ~ 10')
   final int rating;
+  Object? get _ratingValue => rating;
+  static ColumuConstraint get _ratingColumuDefinition =>
+      NotNullConstraint(IntColumn());
 
   /// 評価日
   final DateTime date;
+  Object? _dateValue(bool isDB) => isDB ? date.toString() : date;
+  static ColumuConstraint get _dateColumuDefinition =>
+      NotNullConstraint(TextColumn());
 
   /* From:To */
   factory Rating.fromMap(Map<String, Object?> map) => Rating(
@@ -43,10 +55,10 @@ class Rating extends ModelBase {
     return RatingTableRow.values
         .select((s, _) => s.name)
         .zip(<Object?>[
-          id >= 0 ? id : null,
-          brandId,
-          rating,
-          isDB ? date.toString() : date,
+          _idValue,
+          _brandIdValue,
+          _ratingValue,
+          _dateValue(isDB),
         ], (key, value) => MapEntry(key, value))
         .toMap((m) => m);
   }
@@ -70,12 +82,16 @@ class Rating extends ModelBase {
     return null;
   }
 
-  static List<String> get tableDefinition => [
-    RatingTableRow.id.name.integer.primary,
-    RatingTableRow.brandId.name.integer.notnull,
-    RatingTableRow.rating.name.integer.notnull,
-    RatingTableRow.date.name.text.notnull,
-  ];
+  static Map<String, ColumuConstraint> get tableDefinition => RatingTableRow
+      .values
+      .select((s, _) => s.name)
+      .zip([
+        _idColumuDefinition,
+        _brandIdColumuDefinition,
+        _ratingColumuDefinition,
+        _dateColumuDefinition,
+      ], (k, v) => MapEntry(k, v))
+      .toMap((m) => m);
 }
 
 enum RatingTableRow {

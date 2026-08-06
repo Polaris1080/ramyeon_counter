@@ -1,7 +1,7 @@
 // Base
 import '../base/annnotation.dart';
 import '../base/model_base.dart';
-import '../base/em_table_definition.dart';
+import '../base/table_difinition.dart';
 // Model
 import 'company.dart';
 // Package
@@ -20,21 +20,37 @@ class Ramyeon extends ModelBase {
   /* Table */
   @PrimaryKey()
   final int id;
+  Object? get _idValue => id >= 0 ? id : null;
+  static ColumuConstraint get _idColumuDefinition =>
+      PrimaryConstraint(IntColumn());
 
   @OtherPrimary(Company)
   final int companyId;
+  Object? get _companyIdValue => companyId;
+  static ColumuConstraint get _companyIdColumuDefinition =>
+      NotNullConstraint(IntColumn());
 
   /// 商品
   final String brand;
+  Object? get _brandValue => brand;
+  static ColumuConstraint get _brandColumuDefinition =>
+      NotNullConstraint(TextColumn());
 
   @Relation(Company, CompanyTableRow.company)
   final String company;
+  Object? get _companyValue => null;
 
   /// タグ
   final List<String> tag;
+  Object? _tagValue(bool isDB) => isDB ? tag.join(',') : tag;
+  static ColumuConstraint get _tagColumuDefinition =>
+      NotNullConstraint(TextColumn());
 
   /// 色（パッケージ）
   final int? packageColor;
+  Object? get _packageColorValue => packageColor;
+  static ColumuConstraint get _packageColorColumuDefinition =>
+      NullConstraint(IntColumn());
 
   /* From:To */
   factory Ramyeon.fromMap(Map<String, Object?> map) => Ramyeon(
@@ -52,12 +68,12 @@ class Ramyeon extends ModelBase {
     return RamyeonTableRow.values
         .select((s, _) => s.name)
         .zip(<Object?>[
-          id >= 0 ? id : null,
-          companyId,
-          brand,
-          null,
-          isDB ? tag.join(',') : tag,
-          packageColor,
+          _idValue,
+          _companyIdValue,
+          _brandValue,
+          _companyValue,
+          _tagValue(isDB),
+          _packageColorValue,
         ], (key, value) => MapEntry(key, value))
         .toMap((m) => m);
   }
@@ -74,13 +90,23 @@ class Ramyeon extends ModelBase {
     return null;
   }
 
-  static List<String> get tableDefinition => [
-    RamyeonTableRow.id.name.integer.primary,
-    RamyeonTableRow.companyId.name.integer.notnull,
-    RamyeonTableRow.brand.name.text.notnull,
-    RamyeonTableRow.tag.name.text.notnull,
-    RamyeonTableRow.packageColor.name.integer,
-  ];
+  static Map<String, ColumuConstraint> get tableDefinition =>
+      [
+            RamyeonTableRow.id,
+            RamyeonTableRow.companyId,
+            RamyeonTableRow.brand,
+            RamyeonTableRow.tag,
+            RamyeonTableRow.packageColor,
+          ]
+          .select((s, _) => s.name)
+          .zip([
+            _idColumuDefinition,
+            _companyIdColumuDefinition,
+            _brandColumuDefinition,
+            _tagColumuDefinition,
+            _packageColorColumuDefinition,
+          ], (k, v) => MapEntry(k, v))
+          .toMap((m) => m);
 }
 
 enum RamyeonTableRow {

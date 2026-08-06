@@ -4,11 +4,11 @@ abstract class TableColumn {
 }
 
 abstract class ColumuConstraint implements TableColumn {
-  final TableColumn coffee;
-  ColumuConstraint(this.coffee);
+  final TableColumn _columu;
+  ColumuConstraint(this._columu);
 
   @override
-  String toString() => coffee.toString();
+  String toString() => _columu.toString();
 }
 
 /* Columu */
@@ -34,28 +34,28 @@ class BlobColumn implements TableColumn {
 
 /* Constraint */
 class PrimaryConstraint extends ColumuConstraint {
-  PrimaryConstraint(super.coffee);
+  PrimaryConstraint(super.columu);
 
   @override
   String toString() => "${super.toString()} PRIMARY KEY";
 }
 
 class UniqueConstraint extends ColumuConstraint {
-  UniqueConstraint(super.coffee);
+  UniqueConstraint(super.columu);
 
   @override
   String toString() => "${super.toString()} UNIQUE";
 }
 
 class NotNullConstraint extends ColumuConstraint {
-  NotNullConstraint(super.coffee);
+  NotNullConstraint(super.columu);
 
   @override
   String toString() => "${super.toString()} NOT NULL";
 }
 
 class NullConstraint extends ColumuConstraint {
-  NullConstraint(super.coffee);
+  NullConstraint(super.columu);
 
   @override
   String toString() => "${super.toString()} ";

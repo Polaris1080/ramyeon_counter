@@ -1,7 +1,7 @@
 // Base
 import '../base/annnotation.dart';
 import '../base/model_base.dart';
-import '../base/em_table_definition.dart';
+import '../base/table_difinition.dart';
 // Model
 import 'ramyeon.dart';
 // Package
@@ -21,22 +21,42 @@ class Stock extends ModelBase {
   /* Table */
   @PrimaryKey()
   final int id;
+  Object? get _idValue => id >= 0 ? id : null;
+  static ColumuConstraint get _idColumuDefinition =>
+      PrimaryConstraint(IntColumn());
 
   @OtherPrimary(Ramyeon)
   final int brandId;
+  Object? get _brandIdValue => brandId;
+  static ColumuConstraint get _brandIdColumuDefinition =>
+      NotNullConstraint(IntColumn());
 
   /// 購入日
   final DateTime purchaseDate;
+  Object? _purchaseDateValue(bool isDB) =>
+      isDB ? purchaseDate.toString() : purchaseDate;
+  static ColumuConstraint get _purchaseDateColumuDefinition =>
+      NotNullConstraint(TextColumn());
 
   /// 賞味期限
   final DateTime expirationDate;
+  Object? _expirationDateValue(bool isDB) =>
+      isDB ? expirationDate.toString() : expirationDate;
+  static ColumuConstraint get _expirationDateColumuDefinition =>
+      NotNullConstraint(TextColumn());
 
   /// 購入価格
   @Constraint('>= 0')
   final int price;
+  Object? get _priceValue => price;
+  static ColumuConstraint get _priceColumuDefinition =>
+      NotNullConstraint(IntColumn());
 
   /// 食べた？
   final bool ate;
+  Object? _ateValue(bool isDB) => isDB ? (ate ? 1 : 0) : ate;
+  static ColumuConstraint get _ateColumuDefinition =>
+      NotNullConstraint(IntColumn());
 
   /* From:To */
   factory Stock.fromMap(Map<String, Object?> map) => Stock(
@@ -58,12 +78,12 @@ class Stock extends ModelBase {
     return StockTableRow.values
         .select((s, _) => s.name)
         .zip(<Object?>[
-          id >= 0 ? id : null,
-          brandId,
-          isDB ? purchaseDate.toString() : purchaseDate,
-          isDB ? expirationDate.toString() : expirationDate,
-          price,
-          isDB ? (ate ? 1 : 0) : ate,
+          _idValue,
+          _brandIdValue,
+          _purchaseDateValue(isDB),
+          _expirationDateValue(isDB),
+          _priceValue,
+          _ateValue(isDB),
         ], (key, value) => MapEntry(key, value))
         .toMap((m) => m);
   }
@@ -87,14 +107,18 @@ class Stock extends ModelBase {
     return null;
   }
 
-  static List<String> get tableDefinition => [
-    StockTableRow.id.name.integer.primary,
-    StockTableRow.brandId.name.integer.notnull,
-    StockTableRow.purchaseDate.name.text.notnull,
-    StockTableRow.expirationDate.name.text.notnull,
-    StockTableRow.price.name.integer.notnull,
-    StockTableRow.ate.name.integer.notnull,
-  ];
+  static Map<String, ColumuConstraint> get tableDefinition => StockTableRow
+      .values
+      .select((s, _) => s.name)
+      .zip([
+        _idColumuDefinition,
+        _brandIdColumuDefinition,
+        _purchaseDateColumuDefinition,
+        _expirationDateColumuDefinition,
+        _priceColumuDefinition,
+        _ateColumuDefinition,
+      ], (k, v) => MapEntry(k, v))
+      .toMap((m) => m);
 }
 
 enum StockTableRow {

@@ -1,7 +1,7 @@
 // Base
 import '../base/annnotation.dart';
 import '../base/model_base.dart';
-import '../base/em_table_definition.dart';
+import '../base/table_difinition.dart';
 // Model
 import 'ramyeon.dart';
 // Package
@@ -20,17 +20,29 @@ class Barcode extends ModelBase {
   /* Table */
   @PrimaryKey()
   final int id;
+  Object? get _idValue => id >= 0 ? id : null;
+  static ColumuConstraint get _idColumuDefinition =>
+      PrimaryConstraint(IntColumn());
 
   @OtherPrimary(Ramyeon)
   final int brandId;
+  Object? get _brandIdValue => brandId;
+  static ColumuConstraint get _brandIdColumuDefinition =>
+      NotNullConstraint(IntColumn());
 
   /// 個数
   @Constraint('>= 1')
   final int count;
+  Object? get _countValue => count;
+  static ColumuConstraint get _countColumuDefinition =>
+      NotNullConstraint(IntColumn());
 
   /// バーコード
   @Constraint('8/13桁')
   final int jam;
+  Object? get _jamValue => jam;
+  static ColumuConstraint get _jamColumuDefinition =>
+      NotNullConstraint(IntColumn());
 
   /* From:To */
   factory Barcode.fromMap(Map<String, Object?> map) => Barcode(
@@ -46,10 +58,10 @@ class Barcode extends ModelBase {
     return BarcodeTableRow.values
         .select((s, _) => s.name)
         .zip(<Object?>[
-          id >= 0 ? id : null,
-          brandId,
-          count,
-          jam,
+          _idValue,
+          _brandIdValue,
+          _countValue,
+          _jamValue,
         ], (key, value) => MapEntry(key, value))
         .toMap((m) => m);
   }
@@ -80,12 +92,16 @@ class Barcode extends ModelBase {
     return null;
   }
 
-  static List<String> get tableDefinition => [
-    BarcodeTableRow.id.name.integer.primary,
-    BarcodeTableRow.brandId.name.integer.notnull,
-    BarcodeTableRow.count.name.integer.notnull,
-    BarcodeTableRow.jam.name.integer.notnull,
-  ];
+  static Map<String, ColumuConstraint> get tableDefinition => BarcodeTableRow
+      .values
+      .select((s, _) => s.name)
+      .zip([
+        _idColumuDefinition,
+        _brandIdColumuDefinition,
+        _countColumuDefinition,
+        _jamColumuDefinition,
+      ], (k, v) => MapEntry(k, v))
+      .toMap((m) => m);
 }
 
 enum BarcodeTableRow {

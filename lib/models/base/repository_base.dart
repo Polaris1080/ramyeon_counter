@@ -1,5 +1,7 @@
 // Package
+import 'package:darq/darq.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ramyeon_counter/models/base/table_difinition.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // Other
 import 'model_base.dart';
@@ -26,8 +28,11 @@ abstract class RepositoryBase {
     String table,
   ) async => await db.query(table);
 
-  static String sqlCreateTable(String table, List<String> tableDefinition) =>
-      'CREATE TABLE $table(${tableDefinition.join(', ')})';
+  static String sqlCreateTable(
+    String table,
+    Map<String, ColumuConstraint> tableDefinition,
+  ) =>
+      'CREATE TABLE $table(${tableDefinition.entries.select((s, _) => '${s.key}${s.value}').join(', ')})';
 }
 
 abstract class RamyeonRepositoryBase extends RepositoryBase {
@@ -71,6 +76,6 @@ abstract class RamyeonRepositoryBase extends RepositoryBase {
 
   static String sqlCreateTable(
     RamyeonDatabaseTable table,
-    List<String> tableDefinition,
+    Map<String, ColumuConstraint> tableDefinition,
   ) => RepositoryBase.sqlCreateTable(table.name, tableDefinition);
 }
