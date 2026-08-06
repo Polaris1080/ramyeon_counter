@@ -70,5 +70,5 @@ class TestCompanyRepository extends CompanyRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Company> decode() => select((s, _) => Company.fromMap(s)).toList();
+  List<Company> decode() => [...select((s, _) => Company.fromMap(s))];
 }

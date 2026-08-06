@@ -108,5 +108,5 @@ class TestStockRepository extends StockRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Stock> decode() => select((s, _) => Stock.fromMap(s)).toList();
+  List<Stock> decode() => [...select((s, _) => Stock.fromMap(s))];
 }

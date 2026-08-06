@@ -102,5 +102,5 @@ class TestRatingRepository extends RatingRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Rating> decode() => select((s, _) => Rating.fromMap(s)).toList();
+  List<Rating> decode() => [...select((s, _) => Rating.fromMap(s))];
 }

@@ -66,5 +66,5 @@ class TestBarcodeRepository extends BarcodeRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Barcode> decode() => select((s, _) => Barcode.fromMap(s)).toList();
+  List<Barcode> decode() => [...select((s, _) => Barcode.fromMap(s))];
 }

@@ -137,5 +137,5 @@ class TestRamyeonRepository extends RamyeonRepository {
 }
 
 extension on List<Map<String, Object?>> {
-  List<Ramyeon> decode() => select((s, _) => Ramyeon.fromMap(s)).toList();
+  List<Ramyeon> decode() => [...select((s, _) => Ramyeon.fromMap(s))];
 }
