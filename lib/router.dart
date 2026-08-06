@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // Model
-import 'package:ramyeon_counter/models/ramyeon.dart';
+import 'package:ramyeon_counter/models/model/ramyeon.dart';
 import 'package:ramyeon_counter/models/ramyeon_list_data.dart';
 // Page
 import 'package:ramyeon_counter/page/detail/detail_page.dart';

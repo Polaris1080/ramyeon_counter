@@ -1,6 +1,6 @@
 // Base
-import 'base/model_base.dart';
-import 'base/em_table_definition.dart';
+import '../base/model_base.dart';
+import '../base/em_table_definition.dart';
 // Model
 import 'ramyeon.dart';
 // Extension

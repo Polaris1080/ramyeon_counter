@@ -6,7 +6,7 @@ import 'package:ramyeon_counter/utility/extension_methods/em_datetime.dart';
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 // Model
-import 'package:ramyeon_counter/models/stock.dart';
+import 'package:ramyeon_counter/models/model/stock.dart';
 import 'package:ramyeon_counter/models/repository/stock_repository.dart';
 // ViewModel
 import 'price_range_selecter_vm.dart';

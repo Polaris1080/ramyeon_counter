@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ramyeon_counter/models/company.dart';
+import 'package:ramyeon_counter/models/model/company.dart';
 
 const company = 'foo_bar';
 

@@ -1,11 +1,11 @@
 // Base
-import 'package:ramyeon_counter/models/stock.dart';
+import 'package:ramyeon_counter/models/model/stock.dart';
 import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 
 import '../base/repository_base.dart';
 import '../../ramyeon_database.dart';
 // Model
-import '../rating.dart';
+import '../model/rating.dart';
 // Package
 import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';

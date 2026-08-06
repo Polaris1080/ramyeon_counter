@@ -1,7 +1,7 @@
 // Extention
 
 import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/models/company.dart';
+import 'package:ramyeon_counter/models/model/company.dart';
 import 'package:ramyeon_counter/models/repository/company_repository.dart';
 import 'package:ramyeon_counter/models/repository/ramyeon_repository.dart';
 import 'package:ramyeon_counter/page/regist/view_model/regist_page_vm.dart';
