@@ -1,10 +1,10 @@
 // Package
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/model/context/ramyeon_list_data_context.dart';
-import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
+import 'package:ramyeon_counter/models/context/ramyeon_list_data_context.dart';
+import 'package:ramyeon_counter/models/ramyeon_list_data.dart';
 // Model
-import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
+import 'package:ramyeon_counter/models/repository/ramyeon_repository.dart';
 import 'package:ramyeon_counter/page/home/parts/tile_a.dart';
 import 'package:ramyeon_counter/page/home/parts/tile_b.dart';
 // Widget

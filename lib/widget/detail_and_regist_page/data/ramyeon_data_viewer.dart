@@ -1,5 +1,5 @@
 // Model
-import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
+import 'package:ramyeon_counter/models/ramyeon_list_data.dart';
 // Package
 import 'package:flutter/material.dart';
 // Widget

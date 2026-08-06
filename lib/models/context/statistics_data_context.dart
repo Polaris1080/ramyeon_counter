@@ -3,7 +3,7 @@ import 'package:darq/darq.dart';
 import 'package:ramyeon_counter/ramyeon_database.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // Model
-import 'package:ramyeon_counter/model/base/context_base.dart';
+import 'package:ramyeon_counter/models/base/context_base.dart';
 
 class StatisticsDataContext extends RamyeonContextBase {
   Future<Map<int, double>> readStockChartData({int? year}) async {

@@ -1,6 +1,6 @@
 // Package
 import 'package:darq/darq.dart';
-import 'package:ramyeon_counter/model/repository/stock_repository.dart';
+import 'package:ramyeon_counter/models/repository/stock_repository.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // Model
 import '../ramyeon_list_data.dart';

@@ -1,5 +1,5 @@
 // Base
-import 'package:ramyeon_counter/model/stock.dart';
+import 'package:ramyeon_counter/models/stock.dart';
 import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 
 import '../base/repository_base.dart';

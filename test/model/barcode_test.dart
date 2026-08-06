@@ -1,6 +1,6 @@
 import 'package:darq/darq.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ramyeon_counter/model/barcode.dart';
+import 'package:ramyeon_counter/models/barcode.dart';
 
 const id = 0, brandId = 1, count = 2;
 const jam8 = 1234_5678, jam13 = 1234_5678_9012_3;

@@ -3,7 +3,7 @@ import 'history_card_base.dart';
 // Package
 import 'package:flutter/material.dart';
 // Model
-import 'package:ramyeon_counter/model/rating.dart';
+import 'package:ramyeon_counter/models/rating.dart';
 // Widget
 import 'package:ramyeon_counter/widget/rating/rating_viewer.dart';
 

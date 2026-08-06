@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 // Model
-import 'package:ramyeon_counter/model/ramyeon.dart';
-import 'package:ramyeon_counter/model/repository/ramyeon_repository.dart';
+import 'package:ramyeon_counter/models/ramyeon.dart';
+import 'package:ramyeon_counter/models/repository/ramyeon_repository.dart';
 
 abstract class HistoryCardBase extends Card {
   @protected

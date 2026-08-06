@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ramyeon_counter/model/ramyeon_list_data.dart';
+import 'package:ramyeon_counter/models/ramyeon_list_data.dart';
 
 class TileA extends StatelessWidget {
   const TileA({super.key, required this.data});
