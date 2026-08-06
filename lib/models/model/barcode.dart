@@ -1,4 +1,5 @@
 // Base
+import '../base/annnotation.dart';
 import '../base/model_base.dart';
 import '../base/em_table_definition.dart';
 // Model
@@ -7,12 +8,10 @@ import 'ramyeon.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 
 class Barcode extends ModelBase {
-  /// [Barcode].id
-  /// PrimaryKey (>= 0)
+  @PrimaryKey()
   final int id;
 
-  /// [Ramyeon].id
-  /// >= 0 (PrimaryKey)
+  @OtherPrimary(Ramyeon)
   final int brandId;
 
   /// 個数
@@ -40,6 +39,21 @@ class Barcode extends ModelBase {
 
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
+    validate();
+    return {
+      // INTEGER(int) PrimaryKey
+      BarcodeTableRow.id.name: id >= 0 ? id : null,
+      // INTEGER(int) >=0
+      BarcodeTableRow.brandid.name: brandId,
+      // INTEGER(int) >=1
+      BarcodeTableRow.count.name: count,
+      // INTEGER(int) digit=8|13
+      BarcodeTableRow.jam.name: jam,
+    };
+  }
+
+  void validate() {
+    
     if (brandId < 0) {
       throw RangeError.value(
         brandId,
@@ -61,16 +75,6 @@ class Barcode extends ModelBase {
         '${BarcodeTableRow.jam.name} digit is 8 or 13.',
       );
     }
-    return {
-      // INTEGER(int) PrimaryKey
-      BarcodeTableRow.id.name: id >= 0 ? id : null,
-      // INTEGER(int) >=0
-      BarcodeTableRow.brandid.name: brandId,
-      // INTEGER(int) >=1
-      BarcodeTableRow.count.name: count,
-      // INTEGER(int) digit=8|13
-      BarcodeTableRow.jam.name: jam,
-    };
   }
 
   static List<String> get tableDefinition => [
