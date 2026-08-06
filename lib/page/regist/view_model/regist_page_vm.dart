@@ -1,6 +1,6 @@
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/models/repository/ramyeon_repository.dart';
+import 'package:ramyeon_counter/models/model/repository/ramyeon_repository.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/barcode_register_vm.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/register/tag_register_vm.dart';
 

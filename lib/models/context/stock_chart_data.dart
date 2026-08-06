@@ -1,5 +1,5 @@
 // Base
-import 'base/model_base.dart';
+import '../base/model_base.dart';
 
 class StockChartData extends VirtualModelBase {
   /// 商品

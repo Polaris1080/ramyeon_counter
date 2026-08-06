@@ -5,8 +5,8 @@ import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // Model
-import 'package:ramyeon_counter/models/repository/rating_repository.dart';
-import 'package:ramyeon_counter/models/repository/stock_repository.dart';
+import 'package:ramyeon_counter/models/model/repository/rating_repository.dart';
+import 'package:ramyeon_counter/models/model/repository/stock_repository.dart';
 import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 // (Widget)
 import 'package:ramyeon_counter/page/detail/dialog/add_dialog.dart';

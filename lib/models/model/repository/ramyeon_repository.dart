@@ -1,11 +1,11 @@
 // Base
-import '../base/repository_base.dart';
-import '../../ramyeon_database.dart';
+import '../../base/repository_base.dart';
+import '../../../ramyeon_database.dart';
 // Extention
 import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 // Model
-import '../model/company.dart';
-import '../model/ramyeon.dart';
+import '../company.dart';
+import '../ramyeon.dart';
 // Package
 import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';

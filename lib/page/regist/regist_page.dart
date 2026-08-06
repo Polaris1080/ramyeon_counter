@@ -3,8 +3,8 @@ import 'package:ramyeon_counter/page/regist/actions/regist_ramyeon_action.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
 // Model
 import 'package:ramyeon_counter/models/model/company.dart';
-import 'package:ramyeon_counter/models/repository/company_repository.dart';
-import 'package:ramyeon_counter/models/repository/ramyeon_repository.dart';
+import 'package:ramyeon_counter/models/model/repository/company_repository.dart';
+import 'package:ramyeon_counter/models/model/repository/ramyeon_repository.dart';
 // Package
 import 'dart:math';
 import 'package:flutter/material.dart';

@@ -1,8 +1,8 @@
 // Base
-import '../base/repository_base.dart';
-import '../../ramyeon_database.dart';
+import '../../base/repository_base.dart';
+import '../../../ramyeon_database.dart';
 // Model
-import '../model/company.dart';
+import '../company.dart';
 // Package
 import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';

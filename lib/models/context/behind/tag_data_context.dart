@@ -3,8 +3,8 @@ import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // Model
 import '../tag_data.dart';
-import '../base/context_base.dart';
-import '../../ramyeon_database.dart';
+import '../../base/context_base.dart';
+import '../../../ramyeon_database.dart';
 
 class TagDataContext extends RamyeonContextBase {
   RamyeonDatabaseTable get table => .ramyeon;
