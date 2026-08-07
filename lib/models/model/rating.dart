@@ -19,27 +19,19 @@ class Rating extends ModelBase {
   @PrimaryKey()
   final int id;
   Object? get _idValue => id >= 0 ? id : null;
-  static ColumuConstraint get _idColumuDefinition =>
-      PrimaryConstraint(IntColumn());
 
   @OtherPrimary(Ramyeon)
   final int brandId;
   Object? get _brandIdValue => brandId;
-  static ColumuConstraint get _brandIdColumuDefinition =>
-      NotNullConstraint(IntColumn());
 
   /// 評価
   @Constraint('1 ~ 10')
   final int rating;
   Object? get _ratingValue => rating;
-  static ColumuConstraint get _ratingColumuDefinition =>
-      NotNullConstraint(IntColumn());
 
   /// 評価日
   final DateTime date;
   Object? _dateValue(bool isDB) => isDB ? date.toString() : date;
-  static ColumuConstraint get _dateColumuDefinition =>
-      NotNullConstraint(TextColumn());
 
   /* From:To */
   factory Rating.fromMap(Map<String, Object?> map) => Rating(
@@ -82,16 +74,12 @@ class Rating extends ModelBase {
     return null;
   }
 
-  static Map<String, ColumuConstraint> get tableDefinition => RatingTableRow
-      .values
-      .select((s, _) => s.name)
-      .zip([
-        _idColumuDefinition,
-        _brandIdColumuDefinition,
-        _ratingColumuDefinition,
-        _dateColumuDefinition,
-      ], (k, v) => MapEntry(k, v))
-      .toMap((m) => m);
+  static List<ColumuConstraint> get tableDefinition => [
+    RatingTableRow.id.int.primary,
+    RatingTableRow.brandId.int.notnull,
+    RatingTableRow.rating.int.notnull,
+    RatingTableRow.date.text.notnull,
+  ];
 }
 
 enum RatingTableRow {

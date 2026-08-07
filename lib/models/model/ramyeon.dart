@@ -21,20 +21,14 @@ class Ramyeon extends ModelBase {
   @PrimaryKey()
   final int id;
   Object? get _idValue => id >= 0 ? id : null;
-  static ColumuConstraint get _idColumuDefinition =>
-      PrimaryConstraint(IntColumn());
 
   @OtherPrimary(Company)
   final int companyId;
   Object? get _companyIdValue => companyId;
-  static ColumuConstraint get _companyIdColumuDefinition =>
-      NotNullConstraint(IntColumn());
 
   /// 商品
   final String brand;
   Object? get _brandValue => brand;
-  static ColumuConstraint get _brandColumuDefinition =>
-      NotNullConstraint(TextColumn());
 
   @Relation(Company, CompanyTableRow.company)
   final String company;
@@ -43,14 +37,10 @@ class Ramyeon extends ModelBase {
   /// タグ
   final List<String> tag;
   Object? _tagValue(bool isDB) => isDB ? tag.join(',') : tag;
-  static ColumuConstraint get _tagColumuDefinition =>
-      NotNullConstraint(TextColumn());
 
   /// 色（パッケージ）
   final int? packageColor;
   Object? get _packageColorValue => packageColor;
-  static ColumuConstraint get _packageColorColumuDefinition =>
-      NullConstraint(IntColumn());
 
   /* From:To */
   factory Ramyeon.fromMap(Map<String, Object?> map) => Ramyeon(
@@ -90,23 +80,13 @@ class Ramyeon extends ModelBase {
     return null;
   }
 
-  static Map<String, ColumuConstraint> get tableDefinition =>
-      [
-            RamyeonTableRow.id,
-            RamyeonTableRow.companyId,
-            RamyeonTableRow.brand,
-            RamyeonTableRow.tag,
-            RamyeonTableRow.packageColor,
-          ]
-          .select((s, _) => s.name)
-          .zip([
-            _idColumuDefinition,
-            _companyIdColumuDefinition,
-            _brandColumuDefinition,
-            _tagColumuDefinition,
-            _packageColorColumuDefinition,
-          ], (k, v) => MapEntry(k, v))
-          .toMap((m) => m);
+  static List<ColumuConstraint> get tableDefinition => [
+    RamyeonTableRow.id.int.primary,
+    RamyeonTableRow.companyId.int.notnull,
+    RamyeonTableRow.brand.text.notnull,
+    RamyeonTableRow.tag.text.notnull,
+    RamyeonTableRow.packageColor.int.nullable,
+  ];
 }
 
 enum RamyeonTableRow {

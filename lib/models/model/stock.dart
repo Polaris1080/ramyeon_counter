@@ -22,41 +22,29 @@ class Stock extends ModelBase {
   @PrimaryKey()
   final int id;
   Object? get _idValue => id >= 0 ? id : null;
-  static ColumuConstraint get _idColumuDefinition =>
-      PrimaryConstraint(IntColumn());
 
   @OtherPrimary(Ramyeon)
   final int brandId;
   Object? get _brandIdValue => brandId;
-  static ColumuConstraint get _brandIdColumuDefinition =>
-      NotNullConstraint(IntColumn());
 
   /// 購入日
   final DateTime purchaseDate;
   Object? _purchaseDateValue(bool isDB) =>
       isDB ? purchaseDate.toString() : purchaseDate;
-  static ColumuConstraint get _purchaseDateColumuDefinition =>
-      NotNullConstraint(TextColumn());
 
   /// 賞味期限
   final DateTime expirationDate;
   Object? _expirationDateValue(bool isDB) =>
       isDB ? expirationDate.toString() : expirationDate;
-  static ColumuConstraint get _expirationDateColumuDefinition =>
-      NotNullConstraint(TextColumn());
 
   /// 購入価格
   @Constraint('>= 0')
   final int price;
   Object? get _priceValue => price;
-  static ColumuConstraint get _priceColumuDefinition =>
-      NotNullConstraint(IntColumn());
 
   /// 食べた？
   final bool ate;
   Object? _ateValue(bool isDB) => isDB ? (ate ? 1 : 0) : ate;
-  static ColumuConstraint get _ateColumuDefinition =>
-      NotNullConstraint(IntColumn());
 
   /* From:To */
   factory Stock.fromMap(Map<String, Object?> map) => Stock(
@@ -107,18 +95,14 @@ class Stock extends ModelBase {
     return null;
   }
 
-  static Map<String, ColumuConstraint> get tableDefinition => StockTableRow
-      .values
-      .select((s, _) => s.name)
-      .zip([
-        _idColumuDefinition,
-        _brandIdColumuDefinition,
-        _purchaseDateColumuDefinition,
-        _expirationDateColumuDefinition,
-        _priceColumuDefinition,
-        _ateColumuDefinition,
-      ], (k, v) => MapEntry(k, v))
-      .toMap((m) => m);
+  static List<ColumuConstraint> get tableDefinition => [
+    StockTableRow.id.int.primary,
+    StockTableRow.brandId.int.notnull,
+    StockTableRow.purchaseDate.text.notnull,
+    StockTableRow.expirationDate.text.notnull,
+    StockTableRow.price.int.notnull,
+    StockTableRow.ate.int.notnull,
+  ];
 }
 
 enum StockTableRow {

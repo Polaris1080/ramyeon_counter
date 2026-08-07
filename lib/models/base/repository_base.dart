@@ -30,9 +30,9 @@ abstract class RepositoryBase {
 
   static String sqlCreateTable(
     String table,
-    Map<String, ColumuConstraint> tableDefinition,
+    List<ColumuConstraint> tableDefinition,
   ) =>
-      'CREATE TABLE $table(${tableDefinition.entries.select((s, _) => '${s.key}${s.value}').join(', ')})';
+      'CREATE TABLE $table(${tableDefinition.select((s, _) => s.toString()).join(', ')})';
 }
 
 abstract class RamyeonRepositoryBase extends RepositoryBase {
@@ -76,6 +76,6 @@ abstract class RamyeonRepositoryBase extends RepositoryBase {
 
   static String sqlCreateTable(
     RamyeonDatabaseTable table,
-    Map<String, ColumuConstraint> tableDefinition,
+    List<ColumuConstraint> tableDefinition,
   ) => RepositoryBase.sqlCreateTable(table.name, tableDefinition);
 }

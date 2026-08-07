@@ -15,14 +15,10 @@ class Company extends ModelBase {
   @Relation(Ramyeon, RamyeonTableRow.companyId)
   final int id;
   Object? get _idValue => id >= 0 ? id : null;
-  static ColumuConstraint get _idColumuDefinition =>
-      PrimaryConstraint(IntColumn());
 
   /// 会社
   final String company;
   Object? get _companyValue => company;
-  static ColumuConstraint get _companyColumuDefinition =>
-      NotNullConstraint(TextColumn());
 
   /* From:To */
   factory Company.fromMap(Map<String, Object?> map) => Company(
@@ -45,14 +41,10 @@ class Company extends ModelBase {
   @override
   String? validate() => null;
 
-  static Map<String, ColumuConstraint> get tableDefinition => CompanyTableRow
-      .values
-      .select((s, _) => s.name)
-      .zip([
-        _idColumuDefinition,
-        _companyColumuDefinition,
-      ], (k, v) => MapEntry(k, v))
-      .toMap((m) => m);
+  static List<ColumuConstraint> get tableDefinition => [
+    CompanyTableRow.id.int.primary,
+    CompanyTableRow.company.int.notnull,
+  ];
 }
 
 enum CompanyTableRow {

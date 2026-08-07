@@ -1,62 +1,14 @@
-abstract class TableColumn {
-  @override
-  String toString();
+extension type TColumn(String value) {}
+extension type ColumuConstraint(String value) {}
+
+extension t on Enum {
+  TColumn get int => TColumn('$name INTEGER');
+  TColumn get text => TColumn('$name TEXT');
 }
 
-abstract class ColumuConstraint implements TableColumn {
-  final TableColumn _columu;
-  ColumuConstraint(this._columu);
-
-  @override
-  String toString() => _columu.toString();
-}
-
-/* Columu */
-class IntColumn implements TableColumn {
-  @override
-  String toString() => " INTEGER";
-}
-
-class NumColumn implements TableColumn {
-  @override
-  String toString() => " REAL";
-}
-
-class TextColumn implements TableColumn {
-  @override
-  String toString() => " TEXT";
-}
-
-class BlobColumn implements TableColumn {
-  @override
-  String toString() => " BLOB";
-}
-
-/* Constraint */
-class PrimaryConstraint extends ColumuConstraint {
-  PrimaryConstraint(super.columu);
-
-  @override
-  String toString() => "${super.toString()} PRIMARY KEY";
-}
-
-class UniqueConstraint extends ColumuConstraint {
-  UniqueConstraint(super.columu);
-
-  @override
-  String toString() => "${super.toString()} UNIQUE";
-}
-
-class NotNullConstraint extends ColumuConstraint {
-  NotNullConstraint(super.columu);
-
-  @override
-  String toString() => "${super.toString()} NOT NULL";
-}
-
-class NullConstraint extends ColumuConstraint {
-  NullConstraint(super.columu);
-
-  @override
-  String toString() => "${super.toString()} ";
+extension t1 on TColumn {
+  ColumuConstraint get primary => ColumuConstraint('$value PRIMARY KEY');
+  ColumuConstraint get unique => ColumuConstraint('$value UNIQUE');
+  ColumuConstraint get notnull => ColumuConstraint('$value NOT NULL');
+  ColumuConstraint get nullable => ColumuConstraint('$value ');
 }
