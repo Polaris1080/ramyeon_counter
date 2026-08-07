@@ -5,6 +5,17 @@ import '../model/company.dart';
 import '../model/ramyeon.dart';
 
 class RamyeonListData extends VirtualModelBase {
+  RamyeonListData({
+    required this.id,
+    required this.companyId,
+    required this.brand,
+    required this.company,
+    required this.tag,
+    this.packageColor,
+    required this.rating,
+    required this.count,
+  });
+
   /// [Ramyeon].id
   final int id;
 
@@ -28,15 +39,4 @@ class RamyeonListData extends VirtualModelBase {
 
   /// 個数
   final int count;
-
-  RamyeonListData({
-    required this.id,
-    required this.companyId,
-    required this.brand,
-    required this.company,
-    required this.tag,
-    this.packageColor,
-    required this.rating,
-    required this.count,
-  });
 }
