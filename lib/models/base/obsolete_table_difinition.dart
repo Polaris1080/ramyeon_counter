@@ -1,5 +1,6 @@
 /* 結局、拡張メソッドの方が効率よかったのでボツ */
 
+/*
 abstract class TableColumn {
   @override
   String toString();
@@ -62,3 +63,4 @@ class NullConstraint extends ColumuConstraint {
   @override
   String toString() => "${super.toString()} ";
 }
+*/

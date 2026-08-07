@@ -22,14 +22,10 @@ class Barcode extends ModelBase {
   @PrimaryKey()
   final int id;
   Object? get _idValue => id >= 0 ? id : null;
-  // static ColumuConstraint get _idColumuDefinition =>
-  //     PrimaryConstraint(IntColumn());
 
   @OtherPrimary(Ramyeon)
   final int brandId;
   Object? get _brandIdValue => brandId;
-  // static ColumuConstraint get _brandIdColumuDefinition =>
-  //     NotNullConstraint(IntColumn());
   void _brandIdValidator() {
     if (brandId < 0) {
       throw RangeError.value(
@@ -44,8 +40,6 @@ class Barcode extends ModelBase {
   @Constraint('>= 1')
   final int count;
   Object? get _countValue => count;
-  // static ColumuConstraint get _countColumuDefinition =>
-  //     NotNullConstraint(IntColumn());
   void _countValidator() {
     if (count < 1) {
       throw RangeError.value(
@@ -60,8 +54,6 @@ class Barcode extends ModelBase {
   @Constraint('8/13桁')
   final int jam;
   Object? get _jamValue => jam;
-  // static ColumuConstraint get _jamColumuDefinition =>
-  //     NotNullConstraint(IntColumn());
   void _jamValidator() {
     if (!(jam.digit == 8 || jam.digit == 13)) {
       throw RangeError.value(
@@ -83,9 +75,6 @@ class Barcode extends ModelBase {
   @override
   Map<String, Object?> toMap({bool isDB = false}) {
     validate();
-    // var t = BarcodeTableRow.brandId.integer.primary;
-    // print(t);
-    tableDefinition.forEach(((key) => print(key.toString())));
     return BarcodeTableRow.values
         .select((s, _) => s.name)
         .zip(<Object?>[
@@ -105,23 +94,11 @@ class Barcode extends ModelBase {
     return null;
   }
 
-  // static Map<String, ColumuConstraint> get tableDefinition {
-  //   return BarcodeTableRow.values
-  //       .select((s, _) => s.name)
-  //       .zip([
-  //         _idColumuDefinition,
-  //         _brandIdColumuDefinition,
-  //         _countColumuDefinition,
-  //         _jamColumuDefinition,
-  //       ], (k, v) => MapEntry(k, v))
-  //       .toMap((m) => m);
-  // }
-
   static List<ColumuConstraint> get tableDefinition => [
-    BarcodeTableRow.id.int.primary,
-    BarcodeTableRow.brandId.int.notnull,
-    BarcodeTableRow.count.int.notnull,
-    BarcodeTableRow.jam.int.notnull,
+    BarcodeTableRow.id.integer.primary,
+    BarcodeTableRow.brandId.integer.notnull,
+    BarcodeTableRow.count.integer.notnull,
+    BarcodeTableRow.jam.integer.notnull,
   ];
 }
 
@@ -138,5 +115,3 @@ enum BarcodeTableRow {
   /// INTEGER(int) digit=8|13
   jam,
 }
-
-class TestClass {}

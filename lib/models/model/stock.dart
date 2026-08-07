@@ -96,12 +96,12 @@ class Stock extends ModelBase {
   }
 
   static List<ColumuConstraint> get tableDefinition => [
-    StockTableRow.id.int.primary,
-    StockTableRow.brandId.int.notnull,
+    StockTableRow.id.integer.primary,
+    StockTableRow.brandId.integer.notnull,
     StockTableRow.purchaseDate.text.notnull,
     StockTableRow.expirationDate.text.notnull,
-    StockTableRow.price.int.notnull,
-    StockTableRow.ate.int.notnull,
+    StockTableRow.price.integer.notnull,
+    StockTableRow.ate.integer.notnull,
   ];
 }
 

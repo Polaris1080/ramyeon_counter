@@ -81,11 +81,11 @@ class Ramyeon extends ModelBase {
   }
 
   static List<ColumuConstraint> get tableDefinition => [
-    RamyeonTableRow.id.int.primary,
-    RamyeonTableRow.companyId.int.notnull,
+    RamyeonTableRow.id.integer.primary,
+    RamyeonTableRow.companyId.integer.notnull,
     RamyeonTableRow.brand.text.notnull,
     RamyeonTableRow.tag.text.notnull,
-    RamyeonTableRow.packageColor.int.nullable,
+    RamyeonTableRow.packageColor.integer.nullable,
   ];
 }
 

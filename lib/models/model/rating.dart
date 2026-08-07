@@ -75,9 +75,9 @@ class Rating extends ModelBase {
   }
 
   static List<ColumuConstraint> get tableDefinition => [
-    RatingTableRow.id.int.primary,
-    RatingTableRow.brandId.int.notnull,
-    RatingTableRow.rating.int.notnull,
+    RatingTableRow.id.integer.primary,
+    RatingTableRow.brandId.integer.notnull,
+    RatingTableRow.rating.integer.notnull,
     RatingTableRow.date.text.notnull,
   ];
 }

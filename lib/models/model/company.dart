@@ -42,8 +42,8 @@ class Company extends ModelBase {
   String? validate() => null;
 
   static List<ColumuConstraint> get tableDefinition => [
-    CompanyTableRow.id.int.primary,
-    CompanyTableRow.company.int.notnull,
+    CompanyTableRow.id.integer.primary,
+    CompanyTableRow.company.integer.notnull,
   ];
 }
 
