@@ -17,6 +17,7 @@ class Barcode extends ModelBase {
     required this.jam,
   });
 
+  // TODO:Chain Of Responsibility パターン
   /* Table */
   @PrimaryKey()
   final int id;
@@ -29,6 +30,15 @@ class Barcode extends ModelBase {
   Object? get _brandIdValue => brandId;
   static ColumuConstraint get _brandIdColumuDefinition =>
       NotNullConstraint(IntColumn());
+  void _brandIdValidator() {
+    if (brandId < 0) {
+      throw RangeError.value(
+        brandId,
+        BarcodeTableRow.brandId.name,
+        '${BarcodeTableRow.brandId.name} >= 0',
+      );
+    }
+  }
 
   /// 個数
   @Constraint('>= 1')
@@ -36,6 +46,15 @@ class Barcode extends ModelBase {
   Object? get _countValue => count;
   static ColumuConstraint get _countColumuDefinition =>
       NotNullConstraint(IntColumn());
+  void _countValidator() {
+    if (count < 1) {
+      throw RangeError.value(
+        count,
+        BarcodeTableRow.count.name,
+        '${BarcodeTableRow.count.name} >= 1',
+      );
+    }
+  }
 
   /// バーコード
   @Constraint('8/13桁')
@@ -43,6 +62,13 @@ class Barcode extends ModelBase {
   Object? get _jamValue => jam;
   static ColumuConstraint get _jamColumuDefinition =>
       NotNullConstraint(IntColumn());
+  void _jamValidator() {
+    throw RangeError.value(
+      jam,
+      BarcodeTableRow.jam.name,
+      '${BarcodeTableRow.jam.name} digit is 8 or 13.',
+    );
+  }
 
   /* From:To */
   factory Barcode.fromMap(Map<String, Object?> map) => Barcode(
@@ -68,27 +94,9 @@ class Barcode extends ModelBase {
 
   @override
   String? validate() {
-    if (brandId < 0) {
-      throw RangeError.value(
-        brandId,
-        BarcodeTableRow.brandId.name,
-        '${BarcodeTableRow.brandId.name} >= 0',
-      );
-    }
-    if (count < 1) {
-      throw RangeError.value(
-        count,
-        BarcodeTableRow.count.name,
-        '${BarcodeTableRow.count.name} >= 1',
-      );
-    }
-    if (!(jam.digit == 8 || jam.digit == 13)) {
-      throw RangeError.value(
-        jam,
-        BarcodeTableRow.jam.name,
-        '${BarcodeTableRow.jam.name} digit is 8 or 13.',
-      );
-    }
+    _brandIdValidator();
+    _countValidator();
+    _jamValidator();
     return null;
   }
 
