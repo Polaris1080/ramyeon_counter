@@ -1,6 +1,7 @@
 // Base
 import '../base/annnotation.dart';
 import '../base/column_difinition.dart';
+import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 import '../base/table_difinition.dart';
 // Model
@@ -86,16 +87,12 @@ class Stock extends ModelBase {
 
   /* From:To */
   factory Stock.fromMap(Map<String, Object?> map) => Stock(
-    id: map[StockTableRow.id.name] as int,
-    brandId: map[StockTableRow.brandId.name] as int,
-    purchaseDate: DateTime.parse(
-      map[StockTableRow.purchaseDate.name] as String,
-    ),
-    expirationDate: DateTime.parse(
-      map[StockTableRow.expirationDate.name] as String,
-    ),
-    price: map[StockTableRow.price.name] as int,
-    ate: map[StockTableRow.ate.name] as int > 0,
+    id: StockTableRow.id.cast<int>(map),
+    brandId: StockTableRow.brandId.cast<int>(map),
+    purchaseDate: StockTableRow.purchaseDate.castDateTime(map),
+    expirationDate: StockTableRow.expirationDate.castDateTime(map),
+    price: StockTableRow.price.cast<int>(map),
+    ate: StockTableRow.ate.castBool(map),
   );
 
   @override

@@ -1,12 +1,13 @@
 // Base
 import '../base/annnotation.dart';
 import '../base/column_difinition.dart';
+import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 import '../base/table_difinition.dart';
-// Model
-import 'ramyeon.dart';
 // Extension
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
+// Model
+import 'ramyeon.dart';
 
 class Barcode extends ModelBase {
   Barcode({
@@ -54,7 +55,6 @@ class Barcode extends ModelBase {
        );
 
   /* Table */
-
   @PrimaryKey()
   final ColumnDifinition<int> _id;
   int get id => _id.value;
@@ -75,10 +75,10 @@ class Barcode extends ModelBase {
 
   /* From:To */
   factory Barcode.fromMap(Map<String, Object?> map) => Barcode(
-    id: map[BarcodeTableRow.id.name] as int,
-    brandId: map[BarcodeTableRow.brandId.name] as int,
-    count: map[BarcodeTableRow.count.name] as int,
-    jam: map[BarcodeTableRow.jam.name] as int,
+    id: BarcodeTableRow.id.cast<int>(map),
+    brandId: BarcodeTableRow.brandId.cast<int>(map),
+    count: BarcodeTableRow.count.cast<int>(map),
+    jam: BarcodeTableRow.jam.cast<int>(map),
   );
 
   @override

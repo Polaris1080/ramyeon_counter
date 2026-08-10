@@ -1,6 +1,7 @@
 // Base
 import '../base/annnotation.dart';
 import '../base/column_difinition.dart';
+import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 import '../base/table_difinition.dart';
 // Model
@@ -31,8 +32,8 @@ class Company extends ModelBase {
 
   /* From:To */
   factory Company.fromMap(Map<String, Object?> map) => Company(
-    id: map[CompanyTableRow.id.name] as int,
-    company: map[CompanyTableRow.company.name] as String,
+    id: CompanyTableRow.id.cast<int>(map),
+    company: CompanyTableRow.company.cast<String>(map),
   );
 
   @override

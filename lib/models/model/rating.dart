@@ -1,6 +1,7 @@
 // Base
 import '../base/annnotation.dart';
 import '../base/column_difinition.dart';
+import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 import '../base/table_difinition.dart';
 // Model
@@ -65,10 +66,10 @@ class Rating extends ModelBase {
 
   /* From:To */
   factory Rating.fromMap(Map<String, Object?> map) => Rating(
-    id: map[RatingTableRow.id.name] as int,
-    brandId: map[RatingTableRow.brandId.name] as int,
-    rating: map[RatingTableRow.rating.name] as int,
-    date: DateTime.parse(map[RatingTableRow.date.name] as String),
+    id: RatingTableRow.id.cast<int>(map),
+    brandId: RatingTableRow.brandId.cast<int>(map),
+    rating: RatingTableRow.rating.cast<int>(map),
+    date: RatingTableRow.date.castDateTime(map),
   );
 
   @override

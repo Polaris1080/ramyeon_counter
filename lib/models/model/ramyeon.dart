@@ -1,6 +1,7 @@
 // Base
 import '../base/annnotation.dart';
 import '../base/column_difinition.dart';
+import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 import '../base/table_difinition.dart';
 // Model
@@ -78,12 +79,12 @@ class Ramyeon extends ModelBase {
 
   /* From:To */
   factory Ramyeon.fromMap(Map<String, Object?> map) => Ramyeon(
-    id: map[RamyeonTableRow.id.name] as int,
-    companyId: map[RamyeonTableRow.companyId.name] as int,
-    brand: map[RamyeonTableRow.brand.name] as String,
-    company: map[RamyeonTableRow.company.name] as String,
-    tag: (map[RamyeonTableRow.tag.name] as String).split(','),
-    packageColor: map[RamyeonTableRow.packageColor.name] as int?,
+    id: RamyeonTableRow.id.cast<int>(map),
+    companyId: RamyeonTableRow.companyId.cast<int>(map),
+    brand: RamyeonTableRow.brand.cast<String>(map),
+    company: RamyeonTableRow.company.cast<String>(map),
+    tag: RamyeonTableRow.tag.castList<String>(map),
+    packageColor: RamyeonTableRow.packageColor.cast<int?>(map),
   );
 
   @override
