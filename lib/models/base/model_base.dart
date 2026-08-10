@@ -1,3 +1,5 @@
+// Base
+import 'table_difinition.dart';
 // Package
 import 'package:darq/darq.dart';
 
@@ -6,7 +8,7 @@ abstract class VirtualModelBase {}
 
 /// Model exist table
 abstract class ModelBase extends VirtualModelBase {
-  static List<String> get tableDefinition => [];
+  static List<ColumuConstraint> get tableDefinition => [];
 
   Map<String, Object?> toMap({bool isDB = false});
 
