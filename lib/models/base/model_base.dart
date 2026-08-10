@@ -1,4 +1,5 @@
 // Base
+import 'column_difinition.dart';
 import 'table_difinition.dart';
 // Package
 import 'package:darq/darq.dart';
@@ -10,9 +11,12 @@ abstract class VirtualModelBase {}
 abstract class ModelBase extends VirtualModelBase {
   static List<ColumuConstraint> get tableDefinition => [];
 
-  Map<String, Object?> toMap({bool isDB = false});
+  List<ColumnDifinition<Object?>> get columus;
 
-  String? validate();
+  Map<String, Object?> toMap({bool isDB = false}) {
+    columus.forEach((e) => e.validate());
+    return columus.toMap((t) => t.toEntry(isDB));
+  }
 
   @override
   String toString() =>

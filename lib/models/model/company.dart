@@ -1,24 +1,33 @@
 // Base
 import '../base/annnotation.dart';
+import '../base/column_difinition.dart';
 import '../base/model_base.dart';
 import '../base/table_difinition.dart';
 // Model
 import 'ramyeon.dart';
-// Package
-import 'package:darq/darq.dart';
 
 class Company extends ModelBase {
-  Company({required this.id, required this.company});
+  Company({required int id, required String company})
+    : _id = .new(
+        value: id,
+        column: CompanyTableRow.id,
+        to: (bool isDB) => id >= 0 ? id : null,
+      ),
+      _company = .new(
+        value: company,
+        column: CompanyTableRow.company,
+        to: (bool isDB) => company,
+      );
 
   /* Table */
   @PrimaryKey()
   @Relation(Ramyeon, RamyeonTableRow.companyId)
-  final int id;
-  Object? get _idValue => id >= 0 ? id : null;
+  ColumnDifinition<int> _id;
+  int get id => _id.value;
 
   /// 会社
-  final String company;
-  Object? get _companyValue => company;
+  ColumnDifinition<String> _company;
+  String get company => _company.value;
 
   /* From:To */
   factory Company.fromMap(Map<String, Object?> map) => Company(
@@ -27,19 +36,7 @@ class Company extends ModelBase {
   );
 
   @override
-  Map<String, Object?> toMap({bool isDB = false}) {
-    validate();
-    return CompanyTableRow.values
-        .select((s, _) => s.name)
-        .zip(<Object?>[
-          _idValue,
-          _companyValue,
-        ], (key, value) => MapEntry(key, value))
-        .toMap((m) => m);
-  }
-
-  @override
-  String? validate() => null;
+  List<ColumnDifinition<Object>> get columus => [_id, _company];
 
   static List<ColumuConstraint> get tableDefinition => [
     CompanyTableRow.id.integer.primary,

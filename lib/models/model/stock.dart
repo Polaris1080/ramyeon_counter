@@ -1,50 +1,88 @@
 // Base
 import '../base/annnotation.dart';
+import '../base/column_difinition.dart';
 import '../base/model_base.dart';
 import '../base/table_difinition.dart';
 // Model
 import 'ramyeon.dart';
-// Package
-import 'package:darq/darq.dart';
 
 /// 在庫（情報）
 class Stock extends ModelBase {
   Stock({
-    required this.id,
-    required this.brandId,
-    required this.purchaseDate,
-    required this.expirationDate,
-    required this.price,
-    this.ate = false, //備蓄してすぐに食べるわけがない
-  });
+    required int id,
+    required int brandId,
+    required DateTime purchaseDate,
+    required DateTime expirationDate,
+    required int price,
+    bool ate = false, //備蓄してすぐに食べるわけがない
+  }) : _id = .new(
+         value: id,
+         column: StockTableRow.id,
+         to: (bool isDB) => id >= 0 ? id : null,
+       ),
+       _brandId = .new(
+         value: brandId,
+         column: StockTableRow.brandId,
+         to: (bool isDB) => brandId,
+         validator: () => brandId < 0,
+         error: RangeError.value(
+           brandId,
+           StockTableRow.brandId.name,
+           '${StockTableRow.brandId.name} >= 0',
+         ),
+       ),
+       _purchaseDate = .new(
+         value: purchaseDate,
+         column: StockTableRow.purchaseDate,
+         to: (bool isDB) => isDB ? purchaseDate.toString() : purchaseDate,
+       ),
+       _expirationDate = .new(
+         value: expirationDate,
+         column: StockTableRow.expirationDate,
+         to: (bool isDB) => isDB ? expirationDate.toString() : expirationDate,
+       ),
+       _price = .new(
+         value: price,
+         column: StockTableRow.price,
+         to: (bool isDB) => price,
+         validator: () => price < 0,
+         error: RangeError.value(
+           price,
+           StockTableRow.price.name,
+           '${StockTableRow.price.name} >= 0',
+         ),
+       ),
+       _ate = .new(
+         value: ate,
+         column: StockTableRow.ate,
+         to: (bool isDB) => isDB ? (ate ? 1 : 0) : ate,
+       );
 
   /* Table */
   @PrimaryKey()
-  final int id;
-  Object? get _idValue => id >= 0 ? id : null;
+  final ColumnDifinition<int> _id;
+  int get id => _id.value;
 
   @OtherPrimary(Ramyeon)
-  final int brandId;
-  Object? get _brandIdValue => brandId;
+  final ColumnDifinition<int> _brandId;
+  int get brandId => _brandId.value;
 
   /// 購入日
-  final DateTime purchaseDate;
-  Object? _purchaseDateValue(bool isDB) =>
-      isDB ? purchaseDate.toString() : purchaseDate;
+  final ColumnDifinition<DateTime> _purchaseDate;
+  DateTime get purchaseDate => _purchaseDate.value;
 
   /// 賞味期限
-  final DateTime expirationDate;
-  Object? _expirationDateValue(bool isDB) =>
-      isDB ? expirationDate.toString() : expirationDate;
+  final ColumnDifinition<DateTime> _expirationDate;
+  DateTime get expirationDate => _expirationDate.value;
 
   /// 購入価格
   @Constraint('>= 0')
-  final int price;
-  Object? get _priceValue => price;
+  final ColumnDifinition<int> _price;
+  int get price => _price.value;
 
   /// 食べた？
-  final bool ate;
-  Object? _ateValue(bool isDB) => isDB ? (ate ? 1 : 0) : ate;
+  final ColumnDifinition<bool> _ate;
+  bool get ate => _ate.value;
 
   /* From:To */
   factory Stock.fromMap(Map<String, Object?> map) => Stock(
@@ -61,39 +99,14 @@ class Stock extends ModelBase {
   );
 
   @override
-  Map<String, Object?> toMap({bool isDB = false}) {
-    validate();
-    return StockTableRow.values
-        .select((s, _) => s.name)
-        .zip(<Object?>[
-          _idValue,
-          _brandIdValue,
-          _purchaseDateValue(isDB),
-          _expirationDateValue(isDB),
-          _priceValue,
-          _ateValue(isDB),
-        ], (key, value) => MapEntry(key, value))
-        .toMap((m) => m);
-  }
-
-  @override
-  String? validate() {
-    if (brandId < 0) {
-      throw RangeError.value(
-        brandId,
-        StockTableRow.brandId.name,
-        '${StockTableRow.brandId.name} >= 0',
-      );
-    }
-    if (price < 0) {
-      throw RangeError.value(
-        price,
-        StockTableRow.price.name,
-        '${StockTableRow.price.name} >= 0',
-      );
-    }
-    return null;
-  }
+  List<ColumnDifinition<Object>> get columus => [
+    _id,
+    _brandId,
+    _purchaseDate,
+    _expirationDate,
+    _price,
+    _ate,
+  ];
 
   static List<ColumuConstraint> get tableDefinition => [
     StockTableRow.id.integer.primary,

@@ -1,46 +1,80 @@
 // Base
 import '../base/annnotation.dart';
+import '../base/column_difinition.dart';
 import '../base/model_base.dart';
 import '../base/table_difinition.dart';
 // Model
 import 'company.dart';
-// Package
-import 'package:darq/darq.dart';
 
 class Ramyeon extends ModelBase {
   Ramyeon({
-    required this.id,
-    required this.companyId,
-    required this.brand,
-    required this.company,
-    required this.tag,
-    this.packageColor,
-  });
+    required int id,
+    required int companyId,
+    required String brand,
+    required String company,
+    required List<String> tag,
+    int? packageColor,
+  }) : _id = .new(
+         value: id,
+         column: RamyeonTableRow.id,
+         to: (bool isDB) => id >= 0 ? id : null,
+       ),
+       _companyId = .new(
+         value: companyId,
+         column: RamyeonTableRow.companyId,
+         to: (bool isDB) => companyId,
+         validator: () => companyId < 0,
+         error: RangeError.value(
+           companyId,
+           RamyeonTableRow.companyId.name,
+           '${RamyeonTableRow.companyId.name} >= 0',
+         ),
+       ),
+       _brand = .new(
+         value: brand,
+         column: RamyeonTableRow.brand,
+         to: (isDB) => brand,
+       ),
+       _company = .new(
+         value: company,
+         column: RamyeonTableRow.company,
+         to: (isDB) => null,
+       ),
+       _tag = .new(
+         value: tag,
+         column: RamyeonTableRow.tag,
+         to: (isDB) => isDB ? tag.join(',') : tag,
+       ),
+       _packageColor = .new(
+         value: packageColor,
+         column: RamyeonTableRow.packageColor,
+         to: (isDB) => packageColor,
+       );
 
   /* Table */
   @PrimaryKey()
-  final int id;
-  Object? get _idValue => id >= 0 ? id : null;
+  final ColumnDifinition<int> _id;
+  int get id => _id.value;
 
   @OtherPrimary(Company)
-  final int companyId;
-  Object? get _companyIdValue => companyId;
+  final ColumnDifinition<int> _companyId;
+  int get companyId => _companyId.value;
 
   /// 商品
-  final String brand;
-  Object? get _brandValue => brand;
+  final ColumnDifinition<String> _brand;
+  String get brand => _brand.value;
 
   @Relation(Company, CompanyTableRow.company)
-  final String company;
-  Object? get _companyValue => null;
+  final ColumnDifinition<String> _company;
+  String get company => _company.value;
 
   /// タグ
-  final List<String> tag;
-  Object? _tagValue(bool isDB) => isDB ? tag.join(',') : tag;
+  final ColumnDifinition<List<String>> _tag;
+  List<String> get tag => _tag.value;
 
   /// 色（パッケージ）
-  final int? packageColor;
-  Object? get _packageColorValue => packageColor;
+  final ColumnDifinition<int?> _packageColor;
+  int? get packageColor => _packageColor.value;
 
   /* From:To */
   factory Ramyeon.fromMap(Map<String, Object?> map) => Ramyeon(
@@ -53,32 +87,14 @@ class Ramyeon extends ModelBase {
   );
 
   @override
-  Map<String, Object?> toMap({bool isDB = false}) {
-    validate();
-    return RamyeonTableRow.values
-        .select((s, _) => s.name)
-        .zip(<Object?>[
-          _idValue,
-          _companyIdValue,
-          _brandValue,
-          _companyValue,
-          _tagValue(isDB),
-          _packageColorValue,
-        ], (key, value) => MapEntry(key, value))
-        .toMap((m) => m);
-  }
-
-  @override
-  String? validate() {
-    if (companyId < 0) {
-      throw RangeError.value(
-        companyId,
-        RamyeonTableRow.brand.name,
-        '${RamyeonTableRow.brand.name} >= 0',
-      );
-    }
-    return null;
-  }
+  List<ColumnDifinition<Object?>> get columus => [
+    _id,
+    _companyId,
+    _brand,
+    _company,
+    _tag,
+    _packageColor,
+  ];
 
   static List<ColumuConstraint> get tableDefinition => [
     RamyeonTableRow.id.integer.primary,

@@ -1,37 +1,67 @@
 // Base
 import '../base/annnotation.dart';
+import '../base/column_difinition.dart';
 import '../base/model_base.dart';
 import '../base/table_difinition.dart';
 // Model
 import 'ramyeon.dart';
-// Package
-import 'package:darq/darq.dart';
 
 class Rating extends ModelBase {
   Rating({
-    required this.id,
-    required this.brandId,
-    required this.rating,
-    required this.date,
-  });
+    required int id,
+    required int brandId,
+    required int rating,
+    required DateTime date,
+  }) : _id = .new(
+         value: id,
+         column: RatingTableRow.id,
+         to: (bool isDB) => id >= 0 ? id : null,
+       ),
+       _brandId = .new(
+         value: brandId,
+         column: RatingTableRow.brandId,
+         to: (bool isDB) => brandId,
+         validator: () => brandId < 0,
+         error: RangeError.value(
+           brandId,
+           RatingTableRow.brandId.name,
+           '${RatingTableRow.brandId.name} >= 0',
+         ),
+       ),
+       _rating = .new(
+         value: rating,
+         column: RatingTableRow.rating,
+         to: (isDB) => rating,
+         validator: () => rating < 1 || 10 < rating,
+         error: RangeError.value(
+           rating,
+           RatingTableRow.rating.name,
+           '1 <= ${RatingTableRow.rating.name} <= 10',
+         ),
+       ),
+       _date = .new(
+         value: date,
+         column: RatingTableRow.date,
+         to: (bool isDB) => isDB ? date.toString() : date,
+       );
 
   /* Table */
   @PrimaryKey()
-  final int id;
-  Object? get _idValue => id >= 0 ? id : null;
+  final ColumnDifinition<int> _id;
+  int get id => _id.value;
 
   @OtherPrimary(Ramyeon)
-  final int brandId;
-  Object? get _brandIdValue => brandId;
+  final ColumnDifinition<int> _brandId;
+  int get brandId => _brandId.value;
 
   /// 評価
   @Constraint('1 ~ 10')
-  final int rating;
-  Object? get _ratingValue => rating;
+  final ColumnDifinition<int> _rating;
+  int get rating => _rating.value;
 
   /// 評価日
-  final DateTime date;
-  Object? _dateValue(bool isDB) => isDB ? date.toString() : date;
+  final ColumnDifinition<DateTime> _date;
+  DateTime get date => _date.value;
 
   /* From:To */
   factory Rating.fromMap(Map<String, Object?> map) => Rating(
@@ -42,37 +72,7 @@ class Rating extends ModelBase {
   );
 
   @override
-  Map<String, Object?> toMap({bool isDB = false}) {
-    validate();
-    return RatingTableRow.values
-        .select((s, _) => s.name)
-        .zip(<Object?>[
-          _idValue,
-          _brandIdValue,
-          _ratingValue,
-          _dateValue(isDB),
-        ], (key, value) => MapEntry(key, value))
-        .toMap((m) => m);
-  }
-
-  @override
-  String? validate() {
-    if (brandId < 0) {
-      throw RangeError.value(
-        brandId,
-        RatingTableRow.brandId.name,
-        '${RatingTableRow.brandId.name} >= 0',
-      );
-    }
-    if (rating < 1 || 10 < rating) {
-      throw RangeError.value(
-        rating,
-        RatingTableRow.rating.name,
-        '1 <= ${RatingTableRow.rating.name} <= 10',
-      );
-    }
-    return null;
-  }
+  List<ColumnDifinition<Object>> get columus => [_id, _brandId, _rating, _date];
 
   static List<ColumuConstraint> get tableDefinition => [
     RatingTableRow.id.integer.primary,

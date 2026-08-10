@@ -1,68 +1,77 @@
 // Base
 import '../base/annnotation.dart';
+import '../base/column_difinition.dart';
 import '../base/model_base.dart';
 import '../base/table_difinition.dart';
 // Model
 import 'ramyeon.dart';
-// Package
-import 'package:darq/darq.dart';
 // Extension
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 
 class Barcode extends ModelBase {
   Barcode({
-    required this.id,
-    required this.brandId,
-    required this.count,
-    required this.jam,
-  });
+    required int id,
+    required int brandId,
+    required int count,
+    required int jam,
+  }) : _id = .new(
+         value: id,
+         column: BarcodeTableRow.id,
+         to: (bool isDB) => id >= 0 ? id : null,
+       ),
+       _brandId = .new(
+         value: brandId,
+         column: BarcodeTableRow.brandId,
+         to: (bool isDB) => brandId,
+         validator: () => brandId < 0,
+         error: RangeError.value(
+           brandId,
+           BarcodeTableRow.brandId.name,
+           '${BarcodeTableRow.brandId.name} >= 0',
+         ),
+       ),
+       _count = .new(
+         value: count,
+         column: BarcodeTableRow.count,
+         to: (bool? isDB) => count,
+         validator: () => count < 1,
+         error: RangeError.value(
+           count,
+           BarcodeTableRow.count.name,
+           '${BarcodeTableRow.count.name} >= 1',
+         ),
+       ),
+       _jam = .new(
+         value: jam,
+         column: BarcodeTableRow.jam,
+         to: (bool? isDB) => jam,
+         validator: () => !(jam.digit == 8 || jam.digit == 13),
+         error: RangeError.value(
+           jam,
+           BarcodeTableRow.jam.name,
+           '${BarcodeTableRow.jam.name} digit is 8 or 13.',
+         ),
+       );
 
-  // TODO:Chain Of Responsibility パターン
   /* Table */
+
   @PrimaryKey()
-  final int id;
-  Object? get _idValue => id >= 0 ? id : null;
+  final ColumnDifinition<int> _id;
+  int get id => _id.value;
 
   @OtherPrimary(Ramyeon)
-  final int brandId;
-  Object? get _brandIdValue => brandId;
-  void _brandIdValidator() {
-    if (brandId < 0) {
-      throw RangeError.value(
-        brandId,
-        BarcodeTableRow.brandId.name,
-        '${BarcodeTableRow.brandId.name} >= 0',
-      );
-    }
-  }
+  final ColumnDifinition<int> _brandId;
+  int get brandId => _brandId.value;
 
   /// 個数
   @Constraint('>= 1')
-  final int count;
-  Object? get _countValue => count;
-  void _countValidator() {
-    if (count < 1) {
-      throw RangeError.value(
-        count,
-        BarcodeTableRow.count.name,
-        '${BarcodeTableRow.count.name} >= 1',
-      );
-    }
-  }
+  final ColumnDifinition<int> _count;
+  int get count => _count.value;
 
   /// バーコード
   @Constraint('8/13桁')
-  final int jam;
-  Object? get _jamValue => jam;
-  void _jamValidator() {
-    if (!(jam.digit == 8 || jam.digit == 13)) {
-      throw RangeError.value(
-        jam,
-        BarcodeTableRow.jam.name,
-        '${BarcodeTableRow.jam.name} digit is 8 or 13.',
-      );
-    }
-  }
+  final ColumnDifinition<int> _jam;
+  int get jam => _jam.value;
 
   /* From:To */
   factory Barcode.fromMap(Map<String, Object?> map) => Barcode(
@@ -73,26 +82,7 @@ class Barcode extends ModelBase {
   );
 
   @override
-  Map<String, Object?> toMap({bool isDB = false}) {
-    validate();
-    return BarcodeTableRow.values
-        .select((s, _) => s.name)
-        .zip(<Object?>[
-          _idValue,
-          _brandIdValue,
-          _countValue,
-          _jamValue,
-        ], (key, value) => MapEntry(key, value))
-        .toMap((m) => m);
-  }
-
-  @override
-  String? validate() {
-    _brandIdValidator();
-    _countValidator();
-    _jamValidator();
-    return null;
-  }
+  List<ColumnDifinition<Object>> get columus => [_id, _brandId, _count, _jam];
 
   static List<ColumuConstraint> get tableDefinition => [
     BarcodeTableRow.id.integer.primary,
