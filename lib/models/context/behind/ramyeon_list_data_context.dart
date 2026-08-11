@@ -1,6 +1,7 @@
 // Package
 import 'package:darq/darq.dart';
 import 'package:ramyeon_counter/models/model/repository/stock_repository.dart';
+import 'package:ramyeon_counter/models/table/ramyeon_database_tables.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // Model
 import '../ramyeon_list_data.dart';
@@ -10,7 +11,7 @@ import '../../model/repository/rating_repository.dart';
 import '../../../ramyeon_database.dart';
 
 class RamyeonListDataContext extends RamyeonContextBase {
-  RamyeonDatabaseTable get table => .ramyeon;
+  RamyeonDatabaseTables get table => .ramyeon;
 
   Future<List<RamyeonListData>> readByBrand(
     String brand, {
@@ -26,10 +27,7 @@ class RamyeonListDataContext extends RamyeonContextBase {
     return a;
   }
 
-    Future<List<RamyeonListData>> read(
-    String brand, {
-    String? order,
-  }) async {
+  Future<List<RamyeonListData>> read(String brand, {String? order}) async {
     final database = await db;
     final a = (await database.query(
       table.name,

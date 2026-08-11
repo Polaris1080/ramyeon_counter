@@ -1,6 +1,7 @@
 // Package
 import 'package:darq/darq.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ramyeon_counter/models/table/ramyeon_database_tables.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // Other
 import '../table/table_column_difinition.dart';
@@ -38,7 +39,7 @@ abstract class RepositoryBase {
 abstract class RamyeonRepositoryBase extends RepositoryBase {
   Future<Database> get db => RamyeonDatabase().open();
 
-  abstract final RamyeonDatabaseTable table;
+  abstract final RamyeonDatabaseTables table;
 
   @protected
   Future<int> insertBase(
@@ -75,7 +76,7 @@ abstract class RamyeonRepositoryBase extends RepositoryBase {
       await (await db).delete(table.name, where: where, whereArgs: whereArgs);
 
   static String sqlCreateTable(
-    RamyeonDatabaseTable table,
+    RamyeonDatabaseTables table,
     List<ColumnConstraint> tableDefinition,
   ) => RepositoryBase.sqlCreateTable(table.name, tableDefinition);
 }

@@ -6,8 +6,8 @@ class StockPostitContext extends RamyeonContextBase {
         SELECT s.*,
                r.${RamyeonTableColumns.brand.name},
                r.${RamyeonTableColumns.packageColor.name}
-        FROM ${RamyeonDatabaseTable.stock.name}   as s
-        JOIN ${RamyeonDatabaseTable.ramyeon.name} as r 
+        FROM ${RamyeonDatabaseTables.stock.name}   as s
+        JOIN ${RamyeonDatabaseTables.ramyeon.name} as r 
         ON    s.${StockTableColumns.brandId.name} = r.${RamyeonTableColumns.id.name}
         where s.${StockTableColumns.ate.name} = 0
         ${brandId is int ? 'and s.${StockTableColumns.brandId.name} = $brandId' : ''};

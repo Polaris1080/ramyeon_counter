@@ -1,4 +1,6 @@
 // Base
+import 'package:ramyeon_counter/models/table/ramyeon_database_tables.dart';
+
 import '../../base/repository_base.dart';
 import '../../table/company_table_columns.dart';
 import '../../../ramyeon_database.dart';
@@ -10,7 +12,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class CompanyRepository extends RamyeonRepositoryBase {
   @override
-  RamyeonDatabaseTable get table => .company;
+  RamyeonDatabaseTables get table => .company;
 
   Future<int> insert(String company) async =>
       await super.insertBase(Company(id: -1, company: company));

@@ -1,4 +1,5 @@
 // Base
+import 'package:ramyeon_counter/models/table/ramyeon_database_tables.dart';
 import 'package:ramyeon_counter/models/table/stock_table_columns.dart';
 
 import '../../base/repository_base.dart';
@@ -11,7 +12,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class StockRepository extends RamyeonRepositoryBase {
   @override
-  RamyeonDatabaseTable get table => .stock;
+  RamyeonDatabaseTables get table => .stock;
 
   Future<int> insert(Stock value) async => insertBase(value);
 

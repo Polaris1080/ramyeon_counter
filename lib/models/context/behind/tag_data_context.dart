@@ -1,5 +1,6 @@
 // Package
 import 'package:darq/darq.dart';
+import 'package:ramyeon_counter/models/table/ramyeon_database_tables.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // Model
 import '../tag_data.dart';
@@ -7,7 +8,7 @@ import '../../base/context_base.dart';
 import '../../../ramyeon_database.dart';
 
 class TagDataContext extends RamyeonContextBase {
-  RamyeonDatabaseTable get table => .ramyeon;
+  RamyeonDatabaseTables get table => .ramyeon;
 
   /// 共通部
   Future<({Iterable<String> tags, Map<int, int> ranks})> _getTags() async {

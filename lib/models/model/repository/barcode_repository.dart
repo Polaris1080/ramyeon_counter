@@ -1,4 +1,6 @@
 // Base
+import 'package:ramyeon_counter/models/table/ramyeon_database_tables.dart';
+
 import '../../base/repository_base.dart';
 import '../../table/barcode_table_columns.dart';
 import '../../../ramyeon_database.dart';
@@ -10,7 +12,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class BarcodeRepository extends RamyeonRepositoryBase {
   @override
-  RamyeonDatabaseTable get table => .barcode;
+  RamyeonDatabaseTables get table => .barcode;
 
   Future<int> insert(Barcode value) async => insertBase(value);
 

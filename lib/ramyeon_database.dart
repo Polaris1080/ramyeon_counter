@@ -49,5 +49,3 @@ class TestRamyeonDatabase {
     );
   }
 }
-
-enum RamyeonDatabaseTable { barcode, company, ramyeon, rating, stock }
