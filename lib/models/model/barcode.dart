@@ -1,5 +1,5 @@
 // Base
-import 'model_annnotations.dart';
+import '../base/model_annnotations.dart';
 import '../base/column_difinition.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
