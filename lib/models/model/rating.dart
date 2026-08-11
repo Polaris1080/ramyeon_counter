@@ -4,7 +4,7 @@ import '../base/column_difinition.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 // Table
-import '../table/rating_table_columns.dart';
+import '../table/ramyeon/rating_table_columns.dart';
 // Model
 import 'ramyeon.dart';
 

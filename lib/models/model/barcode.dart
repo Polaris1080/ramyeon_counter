@@ -4,7 +4,7 @@ import '../base/column_difinition.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 // Table
-import '../table/barcode_table_columns.dart';
+import '../table/ramyeon/barcode_table_columns.dart';
 // Extension
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 // Model

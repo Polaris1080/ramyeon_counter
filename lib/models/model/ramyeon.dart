@@ -4,8 +4,8 @@ import '../base/column_difinition.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 // Table
-import '../table/company_table_columns.dart';
-import '../table/ramyeon_table_columns.dart';
+import '../table/ramyeon/company_table_columns.dart';
+import '../table/ramyeon/ramyeon_table_columns.dart';
 // Model
 import 'company.dart';
 

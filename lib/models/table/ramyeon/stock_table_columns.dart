@@ -1,4 +1,4 @@
-import 'table_column_difinition.dart';
+import '../table_column_difinition.dart';
 
 enum StockTableColumns {
   id,

@@ -1,8 +1,7 @@
 // Base
-import 'package:ramyeon_counter/models/table/ramyeon_database_tables.dart';
-import 'package:ramyeon_counter/models/table/stock_table_columns.dart';
-
 import '../../base/repository_base.dart';
+import '../../table/ramyeon_database_tables.dart';
+import '../../table/ramyeon/stock_table_columns.dart';
 import '../../../ramyeon_database.dart';
 // Model
 import '../stock.dart';

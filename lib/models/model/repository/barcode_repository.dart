@@ -1,8 +1,7 @@
 // Base
-import 'package:ramyeon_counter/models/table/ramyeon_database_tables.dart';
-
 import '../../base/repository_base.dart';
-import '../../table/barcode_table_columns.dart';
+import '../../table/ramyeon_database_tables.dart';
+import '../../table/ramyeon/barcode_table_columns.dart';
 import '../../../ramyeon_database.dart';
 // Model
 import '../barcode.dart';
