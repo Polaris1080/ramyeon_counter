@@ -1,5 +1,6 @@
 // Base
 import '../../base/repository_base.dart';
+import '../../table/barcode_table_columns.dart';
 import '../../../ramyeon_database.dart';
 // Model
 import '../barcode.dart';
@@ -16,7 +17,7 @@ class BarcodeRepository extends RamyeonRepositoryBase {
   Future<List<Barcode>> readByBrandId(int brandId) async =>
       (await (await db).query(
         table.name,
-        where: '${BarcodeTableRow.brandId.name} = ?',
+        where: '${BarcodeTableColumns.brandId.name} = ?',
         whereArgs: [brandId],
       )).decode();
 
@@ -24,19 +25,22 @@ class BarcodeRepository extends RamyeonRepositoryBase {
 
   Future<int> update(Barcode value) async => await updateBase(
     value,
-    where: '${BarcodeTableRow.id.name} = ?',
+    where: '${BarcodeTableColumns.id.name} = ?',
     whereArgs: [value.id],
   );
 
   Future<int> delete(int id) async => await deleteBase(
-    where: '${BarcodeTableRow.id.name} = ?',
+    where: '${BarcodeTableColumns.id.name} = ?',
     whereArgs: [id],
   );
 
   /// [RamyeonDatabase] onCreate
   void onCreate(Database db) async {
     db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Barcode.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(
+        table,
+        BarcodeTableColumns.tableDefinition,
+      ),
     );
     for (Barcode x in [
       // ちょうど手元にあった
@@ -60,7 +64,10 @@ class TestBarcodeRepository extends BarcodeRepository {
   @override
   Future onCreate(Database db) async {
     await db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Barcode.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(
+        table,
+        BarcodeTableColumns.tableDefinition,
+      ),
     );
   }
 }

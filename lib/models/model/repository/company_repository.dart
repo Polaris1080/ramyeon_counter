@@ -1,5 +1,6 @@
 // Base
 import '../../base/repository_base.dart';
+import '../../table/company_table_columns.dart';
 import '../../../ramyeon_database.dart';
 // Model
 import '../company.dart';
@@ -18,33 +19,36 @@ class CompanyRepository extends RamyeonRepositoryBase {
 
   Future<Company?> read(int id) async => (await (await db).query(
     table.name,
-    where: '${CompanyTableRow.id.name} = ?',
+    where: '${CompanyTableColumns.id.name} = ?',
     whereArgs: [id],
   )).decode().firstOrNull;
 
   Future<Company?> readByCompany(String company) async {
     return (await (await db).query(
       table.name,
-      where: '${CompanyTableRow.company.name} = ?',
+      where: '${CompanyTableColumns.company.name} = ?',
       whereArgs: [company],
     )).decode().firstOrNull;
   }
 
   Future<int> update(Company value) async => await updateBase(
     value,
-    where: '${CompanyTableRow.id.name} = ?',
+    where: '${CompanyTableColumns.id.name} = ?',
     whereArgs: [value.id],
   );
 
   Future<int> delete(int id) async => await deleteBase(
-    where: '${CompanyTableRow.id.name} = ?',
+    where: '${CompanyTableColumns.id.name} = ?',
     whereArgs: [id],
   );
 
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {
     await db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Company.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(
+        table,
+        CompanyTableColumns.tableDefinition,
+      ),
     );
     ['三養', '農心'].asMap().forEach((int i, String v) async {
       db.insert(
@@ -64,7 +68,10 @@ class TestCompanyRepository extends CompanyRepository {
   @override
   Future onCreate(Database db) async {
     await db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Company.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(
+        table,
+        CompanyTableColumns.tableDefinition,
+      ),
     );
   }
 }

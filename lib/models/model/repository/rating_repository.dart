@@ -1,11 +1,12 @@
 // Base
-import 'package:ramyeon_counter/models/model/stock.dart';
-import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
-
 import '../../base/repository_base.dart';
+import '../../table/rating_table_columns.dart';
 import '../../../ramyeon_database.dart';
+// Extention-Type
+import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 // Model
 import '../rating.dart';
+import '../stock.dart';
 // Package
 import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -19,7 +20,7 @@ class RatingRepository extends RamyeonRepositoryBase {
   Future<List<Rating>> readByBrandId(int brandId) async =>
       (await (await db).query(
         table.name,
-        where: '${RatingTableRow.brandId.name} = ?',
+        where: '${RatingTableColumns.brandId.name} = ?',
         whereArgs: [brandId],
       )).decode();
 
@@ -27,12 +28,14 @@ class RatingRepository extends RamyeonRepositoryBase {
 
   Future<int> update(Rating value) async => await updateBase(
     value,
-    where: '${RatingTableRow.id.name} = ?',
+    where: '${RatingTableColumns.id.name} = ?',
     whereArgs: [value.id],
   );
 
-  Future<int> delete(int id) async =>
-      await deleteBase(where: '${RatingTableRow.id.name} = ?', whereArgs: [id]);
+  Future<int> delete(int id) async => await deleteBase(
+    where: '${RatingTableColumns.id.name} = ?',
+    whereArgs: [id],
+  );
 
   Future consume(RamyeonId id, int rating) async {
     await (await db).transaction((txn) async {
@@ -59,7 +62,7 @@ class RatingRepository extends RamyeonRepositoryBase {
   Future<int> countByBrandId(int brandId) async => (await (await db).rawQuery(
     '''
     SELECT COUNT(*) as count FROM ${table.name}
-      WHERE ${RatingTableRow.brandId.name} = ?
+      WHERE ${RatingTableColumns.brandId.name} = ?
     ''',
     [brandId],
   )).select((s, _) => s['count'] as int).first;
@@ -71,7 +74,10 @@ class RatingRepository extends RamyeonRepositoryBase {
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {
     db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Rating.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(
+        table,
+        RatingTableColumns.tableDefinition,
+      ),
     );
     for (Rating x in [
       .new(id: 0, brandId: 0, rating: 6, date: DateTime(2026, 4, 11)),
@@ -96,7 +102,10 @@ class TestRatingRepository extends RatingRepository {
   @override
   Future onCreate(Database db) async {
     await db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Rating.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(
+        table,
+        RatingTableColumns.tableDefinition,
+      ),
     );
   }
 }

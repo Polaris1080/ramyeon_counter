@@ -1,4 +1,6 @@
 // Base
+import 'package:ramyeon_counter/models/table/stock_table_columns.dart';
+
 import '../../base/repository_base.dart';
 import '../../../ramyeon_database.dart';
 // Model
@@ -16,7 +18,7 @@ class StockRepository extends RamyeonRepositoryBase {
   Future<List<Stock>> readByBrandId(int brandId) async =>
       (await (await db).query(
         table.name,
-        where: '${StockTableRow.brandId.name} = ?',
+        where: '${StockTableColumns.brandId.name} = ?',
         whereArgs: [brandId],
       )).decode();
 
@@ -24,12 +26,14 @@ class StockRepository extends RamyeonRepositoryBase {
 
   Future<int> update(Stock value) async => await updateBase(
     value,
-    where: '${StockTableRow.id.name} = ?',
+    where: '${StockTableColumns.id.name} = ?',
     whereArgs: [value.id],
   );
 
-  Future<int> delete(int id) async =>
-      await deleteBase(where: '${StockTableRow.id.name} = ?', whereArgs: [id]);
+  Future<int> delete(int id) async => await deleteBase(
+    where: '${StockTableColumns.id.name} = ?',
+    whereArgs: [id],
+  );
 
   Future<List<int>> deleteMany(List<int> ids) async =>
       await Future.wait(ids.select((s, _) => delete(s)));
@@ -37,7 +41,7 @@ class StockRepository extends RamyeonRepositoryBase {
   Future<int> countByBrandId(int brandId) async => (await (await db).rawQuery(
     '''
     SELECT COUNT(*) as count FROM ${table.name}
-      WHERE ${StockTableRow.brandId.name} = ?
+      WHERE ${StockTableColumns.brandId.name} = ?
     ''',
     [brandId],
   )).select((s, _) => s['count'] as int).first;
@@ -45,7 +49,10 @@ class StockRepository extends RamyeonRepositoryBase {
   /// [RamyeonDatabase] onCreate
   void onCreate(Database db) async {
     db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Stock.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(
+        table,
+        StockTableColumns.tableDefinition,
+      ),
     );
     for (Stock x in [
       .new(
@@ -102,7 +109,10 @@ class TestStockRepository extends StockRepository {
   @override
   Future onCreate(Database db) async {
     await db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Stock.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(
+        table,
+        StockTableColumns.tableDefinition,
+      ),
     );
   }
 }

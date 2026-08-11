@@ -4,26 +4,26 @@ class StockPostitContext extends RamyeonContextBase {
   Future<List<StockPostitData>> read(int? brandId) async =>
       (await (await db).rawQuery('''
         SELECT s.*,
-               r.${RamyeonTableRow.brand.name},
-               r.${RamyeonTableRow.packageColor.name}
+               r.${RamyeonTableColumns.brand.name},
+               r.${RamyeonTableColumns.packageColor.name}
         FROM ${RamyeonDatabaseTable.stock.name}   as s
         JOIN ${RamyeonDatabaseTable.ramyeon.name} as r 
-        ON    s.${StockTableRow.brandId.name} = r.${RamyeonTableRow.id.name}
-        where s.${StockTableRow.ate.name} = 0
-        ${brandId is int ? 'and s.${StockTableRow.brandId.name} = $brandId' : ''};
+        ON    s.${StockTableColumns.brandId.name} = r.${RamyeonTableColumns.id.name}
+        where s.${StockTableColumns.ate.name} = 0
+        ${brandId is int ? 'and s.${StockTableColumns.brandId.name} = $brandId' : ''};
       '''))
           .select(
             (s, _) => StockPostitData(
-              id: s[StockTableRow.id.name] as int,
-              brand: s[RamyeonTableRow.brand.name] as String,
+              id: s[StockTableColumns.id.name] as int,
+              brand: s[RamyeonTableColumns.brand.name] as String,
               purchaseDate: DateTime.parse(
-                s[StockTableRow.purchaseDate.name] as String,
+                s[StockTableColumns.purchaseDate.name] as String,
               ),
               expirationDate: DateTime.parse(
-                s[StockTableRow.expirationDate.name] as String,
+                s[StockTableColumns.expirationDate.name] as String,
               ),
-              price: s[StockTableRow.price.name] as int,
-              color: switch (s[RamyeonTableRow.packageColor.name]) {
+              price: s[StockTableColumns.price.name] as int,
+              color: switch (s[RamyeonTableColumns.packageColor.name]) {
                 int color => Color(color),
                 _ => null,
               },

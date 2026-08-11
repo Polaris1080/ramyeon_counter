@@ -9,7 +9,7 @@ abstract class VirtualModelBase {}
 abstract class ModelBase extends VirtualModelBase {
   List<ColumnDifinition<Object?>> get columus;
 
-  static List<ColumuConstraint> get tableDefinition => [];
+  static List<ColumnConstraint> get tableDefinition => [];
 
   Map<String, Object?> toMap({bool isDB = false}) {
     columus.forEach((e) => e.validate());

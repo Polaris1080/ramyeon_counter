@@ -3,7 +3,8 @@ import '../base/annnotation.dart';
 import '../base/column_difinition.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
-import '../base/table_difinition.dart';
+// Table
+import '../table/rating_table_columns.dart';
 // Model
 import 'ramyeon.dart';
 
@@ -15,34 +16,34 @@ class Rating extends ModelBase {
     required DateTime date,
   }) : _id = .new(
          value: id,
-         column: RatingTableRow.id,
+         column: RatingTableColumns.id,
          to: (bool isDB) => id >= 0 ? id : null,
        ),
        _brandId = .new(
          value: brandId,
-         column: RatingTableRow.brandId,
+         column: RatingTableColumns.brandId,
          to: (bool isDB) => brandId,
          validator: () => brandId < 0,
          error: RangeError.value(
            brandId,
-           RatingTableRow.brandId.name,
-           '${RatingTableRow.brandId.name} >= 0',
+           RatingTableColumns.brandId.name,
+           '${RatingTableColumns.brandId.name} >= 0',
          ),
        ),
        _rating = .new(
          value: rating,
-         column: RatingTableRow.rating,
+         column: RatingTableColumns.rating,
          to: (isDB) => rating,
          validator: () => rating < 1 || 10 < rating,
          error: RangeError.value(
            rating,
-           RatingTableRow.rating.name,
-           '1 <= ${RatingTableRow.rating.name} <= 10',
+           RatingTableColumns.rating.name,
+           '1 <= ${RatingTableColumns.rating.name} <= 10',
          ),
        ),
        _date = .new(
          value: date,
-         column: RatingTableRow.date,
+         column: RatingTableColumns.date,
          to: (bool isDB) => isDB ? date.toString() : date,
        );
 
@@ -66,33 +67,12 @@ class Rating extends ModelBase {
 
   /* From:To */
   factory Rating.fromMap(Map<String, Object?> map) => Rating(
-    id: RatingTableRow.id.cast<int>(map),
-    brandId: RatingTableRow.brandId.cast<int>(map),
-    rating: RatingTableRow.rating.cast<int>(map),
-    date: RatingTableRow.date.castDateTime(map),
+    id: RatingTableColumns.id.cast<int>(map),
+    brandId: RatingTableColumns.brandId.cast<int>(map),
+    rating: RatingTableColumns.rating.cast<int>(map),
+    date: RatingTableColumns.date.castDateTime(map),
   );
 
   @override
   List<ColumnDifinition<Object>> get columus => [_id, _brandId, _rating, _date];
-
-  static List<ColumuConstraint> get tableDefinition => [
-    RatingTableRow.id.integer.primary,
-    RatingTableRow.brandId.integer.notnull,
-    RatingTableRow.rating.integer.notnull,
-    RatingTableRow.date.text.notnull,
-  ];
-}
-
-enum RatingTableRow {
-  /// INTEGER(int) PrimaryKey
-  id,
-
-  /// INTEGER(int)
-  brandId,
-
-  /// INTEGER(int)
-  rating,
-
-  /// TEXT | DateTime
-  date,
 }

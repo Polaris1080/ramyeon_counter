@@ -1,10 +1,11 @@
 // Base
 import '../../base/repository_base.dart';
+import '../../table/company_table_columns.dart';
+import '../../table/ramyeon_table_columns.dart';
 import '../../../ramyeon_database.dart';
 // Extention
 import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 // Model
-import '../company.dart';
 import '../ramyeon.dart';
 // Package
 import 'package:darq/darq.dart';
@@ -19,14 +20,14 @@ class RamyeonRepository extends RamyeonRepositoryBase {
 
   Future<List<Ramyeon>> readAll() async => (await (await db).rawQuery('''
     SELECT * FROM ${table.name} INNER JOIN ${_subTable.name}
-      ON ${table.name}.${RamyeonTableRow.companyId.name} = ${_subTable.name}.${CompanyTableRow.id.name}
+      ON ${table.name}.${RamyeonTableColumns.companyId.name} = ${_subTable.name}.${CompanyTableColumns.id.name}
   ''')).decode();
 
   Future<Ramyeon> read(int id) async => ((await (await db).rawQuery(
     '''
     SELECT * FROM ${table.name} INNER JOIN ${_subTable.name}
-      ON ${table.name}.${RamyeonTableRow.companyId.name} = ${_subTable.name}.${CompanyTableRow.id.name}
-      WHERE ${table.name}.${RamyeonTableRow.id.name} = ?
+      ON ${table.name}.${RamyeonTableColumns.companyId.name} = ${_subTable.name}.${CompanyTableColumns.id.name}
+      WHERE ${table.name}.${RamyeonTableColumns.id.name} = ?
     ''',
     [id],
   )).decode()).first;
@@ -35,7 +36,7 @@ class RamyeonRepository extends RamyeonRepositoryBase {
       ((await (await db).query(
             table.name,
             columns: ['tag'],
-            where: '${RamyeonTableRow.id.name} = ?',
+            where: '${RamyeonTableColumns.id.name} = ?',
             whereArgs: [id],
           )).select(
             (s, _) => {
@@ -46,19 +47,19 @@ class RamyeonRepository extends RamyeonRepositoryBase {
 
   Future<int> update(Ramyeon value) async => await updateBase(
     value,
-    where: '${RamyeonTableRow.id.name} = ?',
+    where: '${RamyeonTableColumns.id.name} = ?',
     whereArgs: [value.id],
   );
 
   Future<int> delete(int id) async => await deleteBase(
-    where: '${RamyeonTableRow.id.name} = ?',
+    where: '${RamyeonTableColumns.id.name} = ?',
     whereArgs: [id],
   );
 
   Future<int> countByBrand(String brand) async => (await (await db).rawQuery(
     '''
     SELECT COUNT(*) as count FROM ${table.name}
-      WHERE ${RamyeonTableRow.brand.name} Like ?
+      WHERE ${RamyeonTableColumns.brand.name} Like ?
     ''',
     ['%$brand%'],
   )).select((s, _) => s['count'] as int).first;
@@ -66,7 +67,10 @@ class RamyeonRepository extends RamyeonRepositoryBase {
   /// [RamyeonDatabase] onCreate
   Future onCreate(Database db) async {
     db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Ramyeon.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(
+        table,
+        RamyeonTableColumns.tableDefinition,
+      ),
     );
     for (Ramyeon seed in [
       .new(
@@ -131,7 +135,10 @@ class TestRamyeonRepository extends RamyeonRepository {
   @override
   Future onCreate(Database db) async {
     await db.execute(
-      RamyeonRepositoryBase.sqlCreateTable(table, Ramyeon.tableDefinition),
+      RamyeonRepositoryBase.sqlCreateTable(
+        table,
+        RamyeonTableColumns.tableDefinition,
+      ),
     );
   }
 }

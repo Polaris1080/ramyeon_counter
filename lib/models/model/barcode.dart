@@ -3,7 +3,8 @@ import '../base/annnotation.dart';
 import '../base/column_difinition.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
-import '../base/table_difinition.dart';
+// Table
+import '../table/barcode_table_columns.dart';
 // Extension
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 // Model
@@ -17,40 +18,40 @@ class Barcode extends ModelBase {
     required int jam,
   }) : _id = .new(
          value: id,
-         column: BarcodeTableRow.id,
+         column: BarcodeTableColumns.id,
          to: (bool isDB) => id >= 0 ? id : null,
        ),
        _brandId = .new(
          value: brandId,
-         column: BarcodeTableRow.brandId,
+         column: BarcodeTableColumns.brandId,
          to: (bool isDB) => brandId,
          validator: () => brandId < 0,
          error: RangeError.value(
            brandId,
-           BarcodeTableRow.brandId.name,
-           '${BarcodeTableRow.brandId.name} >= 0',
+           BarcodeTableColumns.brandId.name,
+           '${BarcodeTableColumns.brandId.name} >= 0',
          ),
        ),
        _count = .new(
          value: count,
-         column: BarcodeTableRow.count,
+         column: BarcodeTableColumns.count,
          to: (bool? isDB) => count,
          validator: () => count < 1,
          error: RangeError.value(
            count,
-           BarcodeTableRow.count.name,
-           '${BarcodeTableRow.count.name} >= 1',
+           BarcodeTableColumns.count.name,
+           '${BarcodeTableColumns.count.name} >= 1',
          ),
        ),
        _jam = .new(
          value: jam,
-         column: BarcodeTableRow.jam,
+         column: BarcodeTableColumns.jam,
          to: (bool? isDB) => jam,
          validator: () => !(jam.digit == 8 || jam.digit == 13),
          error: RangeError.value(
            jam,
-           BarcodeTableRow.jam.name,
-           '${BarcodeTableRow.jam.name} digit is 8 or 13.',
+           BarcodeTableColumns.jam.name,
+           '${BarcodeTableColumns.jam.name} digit is 8 or 13.',
          ),
        );
 
@@ -75,33 +76,12 @@ class Barcode extends ModelBase {
 
   /* From:To */
   factory Barcode.fromMap(Map<String, Object?> map) => Barcode(
-    id: BarcodeTableRow.id.cast<int>(map),
-    brandId: BarcodeTableRow.brandId.cast<int>(map),
-    count: BarcodeTableRow.count.cast<int>(map),
-    jam: BarcodeTableRow.jam.cast<int>(map),
+    id: BarcodeTableColumns.id.cast<int>(map),
+    brandId: BarcodeTableColumns.brandId.cast<int>(map),
+    count: BarcodeTableColumns.count.cast<int>(map),
+    jam: BarcodeTableColumns.jam.cast<int>(map),
   );
 
   @override
   List<ColumnDifinition<Object>> get columus => [_id, _brandId, _count, _jam];
-
-  static List<ColumuConstraint> get tableDefinition => [
-    BarcodeTableRow.id.integer.primary,
-    BarcodeTableRow.brandId.integer.notnull,
-    BarcodeTableRow.count.integer.notnull,
-    BarcodeTableRow.jam.integer.notnull,
-  ];
-}
-
-enum BarcodeTableRow {
-  /// INTEGER(int) PrimaryKey
-  id,
-
-  /// INTEGER(int) OtherPrimary
-  brandId,
-
-  /// INTEGER(int) >=1
-  count,
-
-  /// INTEGER(int) digit=8|13
-  jam,
 }

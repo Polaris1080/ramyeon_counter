@@ -3,7 +3,8 @@ import '../base/annnotation.dart';
 import '../base/column_difinition.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
-import '../base/table_difinition.dart';
+// Table
+import '../table/stock_table_columns.dart';
 // Model
 import 'ramyeon.dart';
 
@@ -18,44 +19,44 @@ class Stock extends ModelBase {
     bool ate = false, //備蓄してすぐに食べるわけがない
   }) : _id = .new(
          value: id,
-         column: StockTableRow.id,
+         column: StockTableColumns.id,
          to: (bool isDB) => id >= 0 ? id : null,
        ),
        _brandId = .new(
          value: brandId,
-         column: StockTableRow.brandId,
+         column: StockTableColumns.brandId,
          to: (bool isDB) => brandId,
          validator: () => brandId < 0,
          error: RangeError.value(
            brandId,
-           StockTableRow.brandId.name,
-           '${StockTableRow.brandId.name} >= 0',
+           StockTableColumns.brandId.name,
+           '${StockTableColumns.brandId.name} >= 0',
          ),
        ),
        _purchaseDate = .new(
          value: purchaseDate,
-         column: StockTableRow.purchaseDate,
+         column: StockTableColumns.purchaseDate,
          to: (bool isDB) => isDB ? purchaseDate.toString() : purchaseDate,
        ),
        _expirationDate = .new(
          value: expirationDate,
-         column: StockTableRow.expirationDate,
+         column: StockTableColumns.expirationDate,
          to: (bool isDB) => isDB ? expirationDate.toString() : expirationDate,
        ),
        _price = .new(
          value: price,
-         column: StockTableRow.price,
+         column: StockTableColumns.price,
          to: (bool isDB) => price,
          validator: () => price < 0,
          error: RangeError.value(
            price,
-           StockTableRow.price.name,
-           '${StockTableRow.price.name} >= 0',
+           StockTableColumns.price.name,
+           '${StockTableColumns.price.name} >= 0',
          ),
        ),
        _ate = .new(
          value: ate,
-         column: StockTableRow.ate,
+         column: StockTableColumns.ate,
          to: (bool isDB) => isDB ? (ate ? 1 : 0) : ate,
        );
 
@@ -87,12 +88,12 @@ class Stock extends ModelBase {
 
   /* From:To */
   factory Stock.fromMap(Map<String, Object?> map) => Stock(
-    id: StockTableRow.id.cast<int>(map),
-    brandId: StockTableRow.brandId.cast<int>(map),
-    purchaseDate: StockTableRow.purchaseDate.castDateTime(map),
-    expirationDate: StockTableRow.expirationDate.castDateTime(map),
-    price: StockTableRow.price.cast<int>(map),
-    ate: StockTableRow.ate.castBool(map),
+    id: StockTableColumns.id.cast<int>(map),
+    brandId: StockTableColumns.brandId.cast<int>(map),
+    purchaseDate: StockTableColumns.purchaseDate.castDateTime(map),
+    expirationDate: StockTableColumns.expirationDate.castDateTime(map),
+    price: StockTableColumns.price.cast<int>(map),
+    ate: StockTableColumns.ate.castBool(map),
   );
 
   @override
@@ -104,33 +105,4 @@ class Stock extends ModelBase {
     _price,
     _ate,
   ];
-
-  static List<ColumuConstraint> get tableDefinition => [
-    StockTableRow.id.integer.primary,
-    StockTableRow.brandId.integer.notnull,
-    StockTableRow.purchaseDate.text.notnull,
-    StockTableRow.expirationDate.text.notnull,
-    StockTableRow.price.integer.notnull,
-    StockTableRow.ate.integer.notnull,
-  ];
-}
-
-enum StockTableRow {
-  /// INTEGER(int) PrimaryKey
-  id,
-
-  /// INTEGER(int)
-  brandId,
-
-  /// TEXT | DateTime
-  purchaseDate,
-
-  /// TEXT | DateTime
-  expirationDate,
-
-  /// INTEGER(int)
-  price,
-
-  /// INTEGER | bool
-  ate,
 }
