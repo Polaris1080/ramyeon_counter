@@ -1,6 +1,6 @@
 // Base
 import 'column_difinition.dart';
-import 'table_difinition.dart';
+import '../table/table_column_difinition.dart';
 
 /// Model 'not' exist table
 abstract class VirtualModelBase {}
