@@ -11,16 +11,8 @@ import 'ramyeon.dart';
 
 class Company extends ModelBase {
   Company({required int id, required String company})
-    : _id = .new(
-        value: id,
-        column: CompanyTableColumns.id,
-        to: (bool isDB) => id >= 0 ? id : null,
-      ),
-      _company = .new(
-        value: company,
-        column: CompanyTableColumns.company,
-        to: (bool isDB) => company,
-      );
+    : _id = PrimaryColumnBehind(id, CompanyTableColumns.id),
+      _company = .noValidate(company, CompanyTableColumns.company);
 
   /* Table */
   @PrimaryKey()

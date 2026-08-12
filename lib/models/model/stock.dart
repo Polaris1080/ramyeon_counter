@@ -17,46 +17,28 @@ class Stock extends ModelBase {
     required DateTime expirationDate,
     required int price,
     bool ate = false, //備蓄してすぐに食べるわけがない
-  }) : _id = .new(
-         value: id,
-         column: StockTableColumns.id,
-         to: (bool isDB) => id >= 0 ? id : null,
-       ),
-       _brandId = .new(
-         value: brandId,
-         column: StockTableColumns.brandId,
-         to: (bool isDB) => brandId,
-         validator: () => brandId < 0,
-         error: RangeError.value(
-           brandId,
-           StockTableColumns.brandId.name,
-           '${StockTableColumns.brandId.name} >= 0',
-         ),
-       ),
-       _purchaseDate = .new(
-         value: purchaseDate,
-         column: StockTableColumns.purchaseDate,
+  }) : _id = PrimaryColumnBehind(id, StockTableColumns.id),
+       _brandId = OtherPrimaryColumnBehind(brandId, StockTableColumns.brandId),
+       _purchaseDate = .noValidate(
+         purchaseDate,
+         StockTableColumns.purchaseDate,
          to: (bool isDB) => isDB ? purchaseDate.toString() : purchaseDate,
        ),
-       _expirationDate = .new(
-         value: expirationDate,
-         column: StockTableColumns.expirationDate,
+       _expirationDate = .noValidate(
+         expirationDate,
+         StockTableColumns.expirationDate,
          to: (bool isDB) => isDB ? expirationDate.toString() : expirationDate,
        ),
-       _price = .new(
+       _price = .rangeValidate(
          value: price,
          column: StockTableColumns.price,
          to: (bool isDB) => price,
          validator: () => price < 0,
-         error: RangeError.value(
-           price,
-           StockTableColumns.price.name,
-           '${StockTableColumns.price.name} >= 0',
-         ),
+         supplement: '>= 0',
        ),
-       _ate = .new(
-         value: ate,
-         column: StockTableColumns.ate,
+       _ate = .noValidate(
+         ate,
+         StockTableColumns.ate,
          to: (bool isDB) => isDB ? (ate ? 1 : 0) : ate,
        );
 

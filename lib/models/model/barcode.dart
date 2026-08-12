@@ -16,43 +16,22 @@ class Barcode extends ModelBase {
     required int brandId,
     required int count,
     required int jam,
-  }) : _id = .new(
-         value: id,
-         column: BarcodeTableColumns.id,
-         to: (bool isDB) => id >= 0 ? id : null,
+  }) : _id = PrimaryColumnBehind(id, BarcodeTableColumns.id),
+       _brandId = OtherPrimaryColumnBehind(
+         brandId,
+         BarcodeTableColumns.brandId,
        ),
-       _brandId = .new(
-         value: brandId,
-         column: BarcodeTableColumns.brandId,
-         to: (bool isDB) => brandId,
-         validator: () => brandId < 0,
-         error: RangeError.value(
-           brandId,
-           BarcodeTableColumns.brandId.name,
-           '${BarcodeTableColumns.brandId.name} >= 0',
-         ),
-       ),
-       _count = .new(
+       _count = .rangeValidate(
          value: count,
          column: BarcodeTableColumns.count,
-         to: (bool? isDB) => count,
          validator: () => count < 1,
-         error: RangeError.value(
-           count,
-           BarcodeTableColumns.count.name,
-           '${BarcodeTableColumns.count.name} >= 1',
-         ),
+         supplement: '>= 1',
        ),
-       _jam = .new(
+       _jam = .rangeValidate(
          value: jam,
          column: BarcodeTableColumns.jam,
-         to: (bool? isDB) => jam,
          validator: () => !(jam.digit == 8 || jam.digit == 13),
-         error: RangeError.value(
-           jam,
-           BarcodeTableColumns.jam.name,
-           '${BarcodeTableColumns.jam.name} digit is 8 or 13.',
-         ),
+         supplement: 'digit is 8 or 13.',
        );
 
   /* Table */

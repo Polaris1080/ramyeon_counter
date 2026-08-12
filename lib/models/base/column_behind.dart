@@ -2,13 +2,37 @@ class ColumnBehind<T> {
   ColumnBehind({
     required T value,
     required Enum column,
-    required Object? Function(bool isDB) to,
+    Object? Function(bool isDB)? to,
     this.validator,
     Error? error,
   }) : _value = value,
        _column = column,
-       _to = to,
+       _to = to ?? ((bool? isDB) => value), // 指定なし→そのままの値を返す
        _error = error;
+
+  ColumnBehind.noValidate(
+    T value,
+    Enum column, {
+    Object? Function(bool isDB)? to,
+  }) : this(value: value, column: column, to: to);
+
+  ColumnBehind.rangeValidate({
+    required T value,
+    required Enum column,
+    Object? Function(bool isDB)? to,
+    required bool Function()? validator,
+    required String supplement,
+  }) : this(
+         value: value,
+         column: column,
+         to: to,
+         validator: validator,
+         error: RangeError.value(
+           value as num,
+           column.name,
+           '${column.name} $supplement',
+         ),
+       );
 
   ///
   T get value => _value;
@@ -34,4 +58,23 @@ class ColumnBehind<T> {
       throw _error ?? Error();
     }
   }
+}
+
+class PrimaryColumnBehind extends ColumnBehind<int> {
+  PrimaryColumnBehind(int value, Enum column)
+    : super(
+        value: value,
+        column: column,
+        to: (bool isDB) => value >= 0 ? value : null,
+      );
+}
+
+class OtherPrimaryColumnBehind extends ColumnBehind<int> {
+  OtherPrimaryColumnBehind(int value, Enum column)
+    : super.rangeValidate(
+        value: value,
+        column: column,
+        validator: () => value < 0,
+        supplement: '>= 0',
+      );
 }

@@ -14,36 +14,18 @@ class Rating extends ModelBase {
     required int brandId,
     required int rating,
     required DateTime date,
-  }) : _id = .new(
-         value: id,
-         column: RatingTableColumns.id,
-         to: (bool isDB) => id >= 0 ? id : null,
-       ),
-       _brandId = .new(
-         value: brandId,
-         column: RatingTableColumns.brandId,
-         to: (bool isDB) => brandId,
-         validator: () => brandId < 0,
-         error: RangeError.value(
-           brandId,
-           RatingTableColumns.brandId.name,
-           '${RatingTableColumns.brandId.name} >= 0',
-         ),
-       ),
-       _rating = .new(
+  }) : _id = PrimaryColumnBehind(id, RatingTableColumns.id),
+       _brandId = OtherPrimaryColumnBehind(brandId, RatingTableColumns.brandId),
+       _rating = .rangeValidate(
          value: rating,
          column: RatingTableColumns.rating,
          to: (isDB) => rating,
          validator: () => rating < 1 || 10 < rating,
-         error: RangeError.value(
-           rating,
-           RatingTableColumns.rating.name,
-           '1 <= ${RatingTableColumns.rating.name} <= 10',
-         ),
+         supplement: '<= 10',
        ),
-       _date = .new(
-         value: date,
-         column: RatingTableColumns.date,
+       _date = .noValidate(
+         date,
+         RatingTableColumns.date,
          to: (bool isDB) => isDB ? date.toString() : date,
        );
 

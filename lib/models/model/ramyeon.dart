@@ -17,41 +17,25 @@ class Ramyeon extends ModelBase {
     required String company,
     required List<String> tag,
     int? packageColor,
-  }) : _id = .new(
-         value: id,
-         column: RamyeonTableColumns.id,
-         to: (bool isDB) => id >= 0 ? id : null,
+  }) : _id = PrimaryColumnBehind(id, RamyeonTableColumns.id),
+       _companyId = OtherPrimaryColumnBehind(
+         companyId,
+         RamyeonTableColumns.companyId,
        ),
-       _companyId = .new(
-         value: companyId,
-         column: RamyeonTableColumns.companyId,
-         to: (bool isDB) => companyId,
-         validator: () => companyId < 0,
-         error: RangeError.value(
-           companyId,
-           RamyeonTableColumns.companyId.name,
-           '${RamyeonTableColumns.companyId.name} >= 0',
-         ),
-       ),
-       _brand = .new(
-         value: brand,
-         column: RamyeonTableColumns.brand,
-         to: (isDB) => brand,
-       ),
-       _company = .new(
-         value: company,
-         column: RamyeonTableColumns.company,
+       _brand = .noValidate(brand, RamyeonTableColumns.brand),
+       _company = .noValidate(
+         company,
+         RamyeonTableColumns.company,
          to: (isDB) => null,
        ),
-       _tag = .new(
-         value: tag,
-         column: RamyeonTableColumns.tag,
+       _tag = .noValidate(
+         tag,
+         RamyeonTableColumns.tag,
          to: (isDB) => isDB ? tag.join(',') : tag,
        ),
-       _packageColor = .new(
-         value: packageColor,
-         column: RamyeonTableColumns.packageColor,
-         to: (isDB) => packageColor,
+       _packageColor = .noValidate(
+         packageColor,
+         RamyeonTableColumns.packageColor,
        );
 
   /* Table */
