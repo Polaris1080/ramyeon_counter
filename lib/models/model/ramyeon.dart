@@ -1,6 +1,6 @@
 // Base
 import '../base/model_annnotations.dart';
-import '../base/column_difinition.dart';
+import '../base/column_behind.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 // Table
@@ -56,27 +56,27 @@ class Ramyeon extends ModelBase {
 
   /* Table */
   @PrimaryKey()
-  final ColumnDifinition<int> _id;
+  final ColumnBehind<int> _id;
   int get id => _id.value;
 
   @OtherPrimary(Company)
-  final ColumnDifinition<int> _companyId;
+  final ColumnBehind<int> _companyId;
   int get companyId => _companyId.value;
 
   /// 商品
-  final ColumnDifinition<String> _brand;
+  final ColumnBehind<String> _brand;
   String get brand => _brand.value;
 
   @Relation(Company, CompanyTableColumns.company)
-  final ColumnDifinition<String> _company;
+  final ColumnBehind<String> _company;
   String get company => _company.value;
 
   /// タグ
-  final ColumnDifinition<List<String>> _tag;
+  final ColumnBehind<List<String>> _tag;
   List<String> get tag => _tag.value;
 
   /// 色（パッケージ）
-  final ColumnDifinition<int?> _packageColor;
+  final ColumnBehind<int?> _packageColor;
   int? get packageColor => _packageColor.value;
 
   /* From:To */
@@ -90,7 +90,7 @@ class Ramyeon extends ModelBase {
   );
 
   @override
-  List<ColumnDifinition<Object?>> get columus => [
+  List<ColumnBehind<Object?>> get columus => [
     _id,
     _companyId,
     _brand,

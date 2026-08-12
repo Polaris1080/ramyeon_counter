@@ -1,5 +1,5 @@
-class ColumnDifinition<T> {
-  ColumnDifinition({
+class ColumnBehind<T> {
+  ColumnBehind({
     required T value,
     required Enum column,
     required Object? Function(bool isDB) to,

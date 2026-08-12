@@ -1,6 +1,6 @@
 // Base
 import '../base/model_annnotations.dart';
-import '../base/column_difinition.dart';
+import '../base/column_behind.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 // Table
@@ -49,20 +49,20 @@ class Rating extends ModelBase {
 
   /* Table */
   @PrimaryKey()
-  final ColumnDifinition<int> _id;
+  final ColumnBehind<int> _id;
   int get id => _id.value;
 
   @OtherPrimary(Ramyeon)
-  final ColumnDifinition<int> _brandId;
+  final ColumnBehind<int> _brandId;
   int get brandId => _brandId.value;
 
   /// 評価
   @Constraint('1 ~ 10')
-  final ColumnDifinition<int> _rating;
+  final ColumnBehind<int> _rating;
   int get rating => _rating.value;
 
   /// 評価日
-  final ColumnDifinition<DateTime> _date;
+  final ColumnBehind<DateTime> _date;
   DateTime get date => _date.value;
 
   /* From:To */
@@ -74,5 +74,5 @@ class Rating extends ModelBase {
   );
 
   @override
-  List<ColumnDifinition<Object>> get columus => [_id, _brandId, _rating, _date];
+  List<ColumnBehind<Object>> get columus => [_id, _brandId, _rating, _date];
 }

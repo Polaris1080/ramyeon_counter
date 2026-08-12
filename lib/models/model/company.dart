@@ -1,6 +1,6 @@
 // Base
 import '../base/model_annnotations.dart';
-import '../base/column_difinition.dart';
+import '../base/column_behind.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 // Table
@@ -25,11 +25,11 @@ class Company extends ModelBase {
   /* Table */
   @PrimaryKey()
   @Relation(Ramyeon, RamyeonTableColumns.companyId)
-  ColumnDifinition<int> _id;
+  ColumnBehind<int> _id;
   int get id => _id.value;
 
   /// 会社
-  ColumnDifinition<String> _company;
+  ColumnBehind<String> _company;
   String get company => _company.value;
 
   /* From:To */
@@ -39,5 +39,5 @@ class Company extends ModelBase {
   );
 
   @override
-  List<ColumnDifinition<Object>> get columus => [_id, _company];
+  List<ColumnBehind<Object>> get columus => [_id, _company];
 }

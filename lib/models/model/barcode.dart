@@ -1,6 +1,6 @@
 // Base
 import '../base/model_annnotations.dart';
-import '../base/column_difinition.dart';
+import '../base/column_behind.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 // Table
@@ -57,21 +57,21 @@ class Barcode extends ModelBase {
 
   /* Table */
   @PrimaryKey()
-  final ColumnDifinition<int> _id;
+  final ColumnBehind<int> _id;
   int get id => _id.value;
 
   @OtherPrimary(Ramyeon)
-  final ColumnDifinition<int> _brandId;
+  final ColumnBehind<int> _brandId;
   int get brandId => _brandId.value;
 
   /// 個数
   @Constraint('>= 1')
-  final ColumnDifinition<int> _count;
+  final ColumnBehind<int> _count;
   int get count => _count.value;
 
   /// バーコード
   @Constraint('8/13桁')
-  final ColumnDifinition<int> _jam;
+  final ColumnBehind<int> _jam;
   int get jam => _jam.value;
 
   /* From:To */
@@ -83,5 +83,5 @@ class Barcode extends ModelBase {
   );
 
   @override
-  List<ColumnDifinition<Object>> get columus => [_id, _brandId, _count, _jam];
+  List<ColumnBehind<Object>> get columus => [_id, _brandId, _count, _jam];
 }

@@ -1,4 +1,4 @@
-/* C#のGenericsは上手くいくのだが… */
+/* C#のGenericsは上手くいくのだが… */ // TODO:やっぱし気に入らない
 extension EmCastableQueryMap on Enum {
   /// normal
   T cast<T>(Map<String, Object?> map) {

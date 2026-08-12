@@ -1,6 +1,6 @@
 // Base
 import '../base/model_annnotations.dart';
-import '../base/column_difinition.dart';
+import '../base/column_behind.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 // Table
@@ -62,28 +62,28 @@ class Stock extends ModelBase {
 
   /* Table */
   @PrimaryKey()
-  final ColumnDifinition<int> _id;
+  final ColumnBehind<int> _id;
   int get id => _id.value;
 
   @OtherPrimary(Ramyeon)
-  final ColumnDifinition<int> _brandId;
+  final ColumnBehind<int> _brandId;
   int get brandId => _brandId.value;
 
   /// 購入日
-  final ColumnDifinition<DateTime> _purchaseDate;
+  final ColumnBehind<DateTime> _purchaseDate;
   DateTime get purchaseDate => _purchaseDate.value;
 
   /// 賞味期限
-  final ColumnDifinition<DateTime> _expirationDate;
+  final ColumnBehind<DateTime> _expirationDate;
   DateTime get expirationDate => _expirationDate.value;
 
   /// 購入価格
   @Constraint('>= 0')
-  final ColumnDifinition<int> _price;
+  final ColumnBehind<int> _price;
   int get price => _price.value;
 
   /// 食べた？
-  final ColumnDifinition<bool> _ate;
+  final ColumnBehind<bool> _ate;
   bool get ate => _ate.value;
 
   /* From:To */
@@ -97,7 +97,7 @@ class Stock extends ModelBase {
   );
 
   @override
-  List<ColumnDifinition<Object>> get columus => [
+  List<ColumnBehind<Object>> get columus => [
     _id,
     _brandId,
     _purchaseDate,

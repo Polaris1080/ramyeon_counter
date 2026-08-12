@@ -1,5 +1,5 @@
 // Base
-import 'column_difinition.dart';
+import 'column_behind.dart';
 import '../table/table_column_difinition.dart';
 
 /// Model 'not' exist table
@@ -7,7 +7,7 @@ abstract class VirtualModelBase {}
 
 /// Model exist table
 abstract class ModelBase extends VirtualModelBase {
-  List<ColumnDifinition<Object?>> get columus;
+  List<ColumnBehind<Object?>> get columus;
 
   static List<ColumnConstraint> get tableDefinition => [];
 
