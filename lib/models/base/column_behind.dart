@@ -10,12 +10,6 @@ class ColumnBehind<T> {
        _to = to ?? ((bool? isDB) => value), // 指定なし→そのままの値を返す
        _error = error;
 
-  ColumnBehind.noValidate(
-    T value,
-    Enum column, {
-    Object? Function(bool isDB)? to,
-  }) : this(value: value, column: column, to: to);
-
   ColumnBehind.rangeValidate({
     required T value,
     required Enum column,

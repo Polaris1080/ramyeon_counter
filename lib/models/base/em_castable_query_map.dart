@@ -21,7 +21,7 @@ extension EmCastableQueryMap on Enum {
 
   /* Function */
   void _assert(Type type) {
-    assert(type is bool);
-    assert(type is DateTime);
+    assert(type is! bool, 'Use .castBool');
+    assert(type is! DateTime, 'Use .castDateTime');
   }
 }

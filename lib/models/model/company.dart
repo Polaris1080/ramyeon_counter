@@ -11,7 +11,7 @@ import 'ramyeon.dart';
 class Company extends ModelBase {
   Company({required int id, required String company})
     : _id = .new(id, CompanyTableColumns.id),
-      _company = .noValidate(company, CompanyTableColumns.company);
+      _company = .new(company, CompanyTableColumns.company);
 
   /* Table */
   /// Primary
@@ -20,7 +20,7 @@ class Company extends ModelBase {
   int get id => _id.value;
 
   /// 会社
-  ColumnBehind<String> _company;
+  NoValidateColumnBehind<String> _company;
   String get company => _company.value;
 
   /* From:To */
