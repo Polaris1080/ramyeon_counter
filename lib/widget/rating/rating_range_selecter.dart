@@ -15,16 +15,10 @@ class RatingRangeSelecter extends RatingWidgetBase {
     final rate = index + 1;
     return ListenableBuilder(
       listenable: vm,
-      builder: (context, _) {
-        return IconButton(
-          icon: vm.min <= rate && rate <= vm.max
-              ? RatingWidgetBase.fullStar
-              : RatingWidgetBase.noneStar,
-          onPressed: () => vm.ratingChanged(rate),
-          constraints: const BoxConstraints(),
-          padding: RatingWidgetBase.iconPadding,
-        );
-      },
+      builder: (context, _) => starButton(
+        evaluation: () => vm.min <= rate && rate <= vm.max ? .full : .none,
+        onPressed: () => vm.ratingChanged(rate),
+      ),
     );
   }
 }

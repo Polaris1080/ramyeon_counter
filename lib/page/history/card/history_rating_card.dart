@@ -20,7 +20,7 @@ class HistoryRatingCard extends HistoryCardBase {
          headline: _headline,
          date: source.date,
          brandColor: brandColor,
-         mainRow: RatingViewer(source.rating),
+         mainRow: RatingViewer(vm: .new(source.rating)),
        );
 
   HistoryRatingCard.noBrand(
@@ -33,7 +33,7 @@ class HistoryRatingCard extends HistoryCardBase {
          headline: _headline,
          date: source.date,
          brandColor: brandColor,
-         mainRow: RatingViewer(source.rating),
+         mainRow: RatingViewer(vm: .new(source.rating)),
        );
 
   /// 見出し（日付）

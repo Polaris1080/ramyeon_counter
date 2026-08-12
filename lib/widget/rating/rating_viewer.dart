@@ -1,18 +1,16 @@
 // Package
+import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 // Base
 import 'rating_widget_base.dart';
-import 'rating_viewer_data.dart';
+// Partial
+part 'rating_viewer_vm.dart';
 
 class RatingViewer<T extends num> extends RatingWidgetBase {
-  RatingViewer(T rating, {super.key}) : data = RatingViewerData(rating);
+  const RatingViewer({super.key, required this.vm});
 
-  final RatingViewerData data;
+  final RatingViewerViewModel vm;
 
   @override
-  Widget starParts(int index) => switch (data.star[index]) {
-    .full => RatingWidgetBase.fullStar,
-    .half => RatingWidgetBase.halfStar,
-    .none => RatingWidgetBase.noneStar,
-  };
+  Widget starParts(int index) => star(type: vm.star[index]);
 }

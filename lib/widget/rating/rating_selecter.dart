@@ -5,7 +5,10 @@ import 'rating_widget_base.dart';
 
 class RatingSelecter extends RatingWidgetBase {
   RatingSelecter(this.ratingNotifier, {super.key})
-    : assert(0 <= ratingNotifier.value && ratingNotifier.value <= 10);
+    : assert(
+        0 <= ratingNotifier.value &&
+            ratingNotifier.value <= RatingWidgetBase.max,
+      );
 
   final ValueNotifier<int> ratingNotifier;
 
@@ -14,13 +17,9 @@ class RatingSelecter extends RatingWidgetBase {
     final rate = index + 1;
     return ValueListenableBuilder<int>(
       valueListenable: ratingNotifier,
-      builder: (_, rating, _) => IconButton(
-        icon: rate <= rating
-            ? RatingWidgetBase.fullStar
-            : RatingWidgetBase.noneStar,
+      builder: (_, rating, _) => starButton(
+        evaluation: () => rate <= rating ? .full : .none,
         onPressed: () => ratingNotifier.value = rate,
-        constraints: const BoxConstraints(),
-        padding: RatingWidgetBase.iconPadding,
       ),
     );
   }

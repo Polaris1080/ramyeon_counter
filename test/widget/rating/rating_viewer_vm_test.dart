@@ -1,6 +1,6 @@
 import 'package:darq/darq.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ramyeon_counter/widget/rating/rating_viewer_data.dart';
+import 'package:ramyeon_counter/widget/rating/rating_viewer.dart';
 import 'package:ramyeon_counter/widget/rating/rating_widget_base.dart';
 
 void main() {
@@ -8,23 +8,26 @@ void main() {
     group('normal', () {
       group('int', () {
         for (int ratingInt in RangeIterable(
-          RatingViewerData.min,
-          RatingViewerData.max,
+          RatingWidgetBase.min,
+          RatingWidgetBase.max,
         )) {
           test(
             '$ratingInt',
-            () => expect(RatingViewerData(ratingInt).rating, ratingInt),
+            () => expect(RatingViewerViewModel(ratingInt).rating, ratingInt),
           );
         }
       });
       group('double', () {
         for (double ratingDouble in RangeIterable(
-          RatingViewerData.min * 2,
-          RatingViewerData.max * 2 + 1,
+          RatingWidgetBase.min * 2,
+          RatingWidgetBase.max * 2 + 1,
         ).select((x, _) => (x / 2))) {
           test(
             '$ratingDouble',
-            () => expect(RatingViewerData(ratingDouble).rating, ratingDouble),
+            () => expect(
+              RatingViewerViewModel(ratingDouble).rating,
+              ratingDouble,
+            ),
           );
         }
       });
@@ -34,12 +37,14 @@ void main() {
         for (int ratingIntError in RangeIterable(1, 6)) {
           test('+-$ratingIntError', () {
             expect(
-              () => RatingViewerData(RatingViewerData.min - ratingIntError),
+              () =>
+                  RatingViewerViewModel(RatingWidgetBase.min - ratingIntError),
               throwsRangeError,
               reason: '-',
             );
             expect(
-              () => RatingViewerData(RatingViewerData.max + ratingIntError),
+              () =>
+                  RatingViewerViewModel(RatingWidgetBase.max + ratingIntError),
               throwsRangeError,
               reason: '+',
             );
@@ -53,12 +58,16 @@ void main() {
         ).select((x, _) => x / 2)) {
           test('+-$ratingDoubleError', () {
             expect(
-              () => RatingViewerData(RatingViewerData.min - ratingDoubleError),
+              () => RatingViewerViewModel(
+                RatingWidgetBase.min - ratingDoubleError,
+              ),
               throwsRangeError,
               reason: '-',
             );
             expect(
-              () => RatingViewerData(RatingViewerData.max + ratingDoubleError),
+              () => RatingViewerViewModel(
+                RatingWidgetBase.max + ratingDoubleError,
+              ),
               throwsRangeError,
               reason: '+',
             );
@@ -72,7 +81,7 @@ void main() {
     group('min', () {
       for (num min in [1, 1.0]) {
         test('$min', () {
-          var target = RatingViewerData(min);
+          var target = RatingViewerViewModel(min);
           expect(target.star[0], RatingStarType.full);
           expect(target.star[1], RatingStarType.none);
         });
@@ -81,7 +90,7 @@ void main() {
     group('max', () {
       for (num max in [10, 10.0]) {
         test('$max', () {
-          var target = RatingViewerData(max);
+          var target = RatingViewerViewModel(max);
           expect(target.star[8], RatingStarType.full);
           expect(target.star[9], RatingStarType.full);
         });
@@ -89,24 +98,24 @@ void main() {
     });
     group('half', () {
       test('5', () {
-        var target = RatingViewerData(5);
+        var target = RatingViewerViewModel(5);
         expect(target.star[4], RatingStarType.full);
         expect(target.star[5], RatingStarType.none);
       });
       test('5.4', () {
-        var target = RatingViewerData(5.4);
+        var target = RatingViewerViewModel(5.4);
         expect(target.star[4], RatingStarType.full);
         expect(target.star[5], RatingStarType.none);
         expect(target.star[6], RatingStarType.none);
       });
       test('5.5', () {
-        var target = RatingViewerData(5.5);
+        var target = RatingViewerViewModel(5.5);
         expect(target.star[4], RatingStarType.full);
         expect(target.star[5], RatingStarType.half);
         expect(target.star[6], RatingStarType.none);
       });
       test('5.6', () {
-        var target = RatingViewerData(5.6);
+        var target = RatingViewerViewModel(5.6);
         expect(target.star[4], RatingStarType.full);
         expect(target.star[5], RatingStarType.half);
         expect(target.star[6], RatingStarType.none);
