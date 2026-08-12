@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/models/model/rating.dart';
 import 'package:ramyeon_counter/models/model/repository/rating_repository.dart';
 //  Widget
-import 'package:ramyeon_counter/widget/rating/selecter/rating_range_selecter_vm.dart';
+import 'package:ramyeon_counter/widget/rating/rating_range_selecter_vm.dart';
 
 class HistoryRatingPageViewModel extends HistoryPageViewModelBase {
   HistoryRatingPageViewModel(int? brandId) : _brandId = brandId;

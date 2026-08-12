@@ -6,7 +6,7 @@ import 'package:ramyeon_counter/models/model/repository/rating_repository.dart';
 // Package
 import 'package:flutter/material.dart';
 // Widget
-import 'package:ramyeon_counter/widget/rating/selecter/rating_selecter.dart';
+import 'package:ramyeon_counter/widget/rating/rating_selecter.dart';
 
 class EatSheet extends StatelessWidget {
   /* Setting */

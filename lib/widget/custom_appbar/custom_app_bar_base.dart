@@ -1,7 +1,6 @@
 // Package
 import 'package:flutter/material.dart';
 
-// TODO:VM移行
 abstract class CustomAppBarBase extends AppBar {
   CustomAppBarBase(
     BuildContext context, {

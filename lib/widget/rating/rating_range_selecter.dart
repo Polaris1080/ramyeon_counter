@@ -1,0 +1,30 @@
+// Package
+import 'package:flutter/material.dart';
+// Base
+import 'rating_widget_base.dart';
+// Other
+import 'rating_range_selecter_vm.dart';
+
+class RatingRangeSelecter extends RatingWidgetBase {
+  const RatingRangeSelecter(this.vm, {super.key});
+
+  final RatingRangeSelecterViewModel vm;
+
+  @override
+  Widget starParts(int index) {
+    final rate = index + 1;
+    return ListenableBuilder(
+      listenable: vm,
+      builder: (context, _) {
+        return IconButton(
+          icon: vm.min <= rate && rate <= vm.max
+              ? RatingWidgetBase.fullStar
+              : RatingWidgetBase.noneStar,
+          onPressed: () => vm.ratingChanged(rate),
+          constraints: const BoxConstraints(),
+          padding: RatingWidgetBase.iconPadding,
+        );
+      },
+    );
+  }
+}

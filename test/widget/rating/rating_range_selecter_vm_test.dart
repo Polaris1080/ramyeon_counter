@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ramyeon_counter/widget/rating/selecter/rating_range_selecter_vm.dart';
+import 'package:ramyeon_counter/widget/rating/rating_range_selecter_vm.dart';
 
 void main() {
   RatingRangeSelecterViewModel target = .new();

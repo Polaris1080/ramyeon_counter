@@ -9,7 +9,7 @@ import '../view_model/history_page_vm_base.dart';
 import '../view_model/history_price_page_vm.dart';
 import '../view_model/history_rating_page_vm.dart';
 // Widget
-import 'package:ramyeon_counter/widget/rating/selecter/rating_range_selecter.dart';
+import 'package:ramyeon_counter/widget/rating/rating_range_selecter.dart';
 // Partial
 part 'price_search_sheet.dart';
 part 'rating_search_sheet.dart';
