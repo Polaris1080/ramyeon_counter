@@ -1,8 +1,8 @@
 extension TableRowToTableColumn on Enum {
-  TableColumn get blob => BlobColumn();
-  TableColumn get integer => IntColumn();
-  TableColumn get text => TextColumn();
-  TableColumn get real => NumColumn();
+  TableColumn get blob => BlobColumn(name);
+  TableColumn get integer => IntColumn(name);
+  TableColumn get text => TextColumn(name);
+  TableColumn get real => NumColumn(name);
 }
 
 extension TableColumnToColumuConstraint on TableColumn {
@@ -28,23 +28,31 @@ abstract class ColumnConstraint implements TableColumn {
 
 /* Columu */
 class IntColumn implements TableColumn {
+  IntColumn(this.columnName);
+  final String columnName;
   @override
-  String toString() => " INTEGER";
+  String toString() => "$columnName INTEGER";
 }
 
 class NumColumn implements TableColumn {
+  NumColumn(this.columnName);
+  final String columnName;
   @override
-  String toString() => " REAL";
+  String toString() => "$columnName REAL";
 }
 
 class TextColumn implements TableColumn {
+  TextColumn(this.columnName);
+  final String columnName;
   @override
-  String toString() => " TEXT";
+  String toString() => "$columnName TEXT";
 }
 
 class BlobColumn implements TableColumn {
+  BlobColumn(this.columnName);
+  final String columnName;
   @override
-  String toString() => " BLOB";
+  String toString() => "$columnName BLOB";
 }
 
 /* Constraint */
