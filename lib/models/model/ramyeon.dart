@@ -16,49 +16,45 @@ class Ramyeon extends ModelBase {
     required String company,
     required List<String> tag,
     int? packageColor,
-  }) : _id = PrimaryColumnBehind(id, RamyeonTableColumns.id),
-       _companyId = OtherPrimaryColumnBehind(
-         companyId,
-         RamyeonTableColumns.companyId,
-       ),
-       _brand = .noValidate(brand, RamyeonTableColumns.brand),
-       _company = .noValidate(
+  }) : _id = .new(id, RamyeonTableColumns.id),
+       _companyId = .new(companyId, RamyeonTableColumns.companyId),
+       _brand = .new(brand, RamyeonTableColumns.brand),
+       _company = .new(
          company,
          RamyeonTableColumns.company,
          to: (isDB) => null,
        ),
-       _tag = .noValidate(
+       _tag = .new(
          tag,
          RamyeonTableColumns.tag,
          to: (isDB) => isDB ? tag.join(',') : tag,
        ),
-       _packageColor = .noValidate(
-         packageColor,
-         RamyeonTableColumns.packageColor,
-       );
+       _packageColor = .new(packageColor, RamyeonTableColumns.packageColor);
 
   /* Table */
-  final ColumnBehind<int> _id;
+  /// Primary
+  final PrimaryColumnBehind _id;
   int get id => _id.value;
 
-  @OtherPrimary(Company)
-  final ColumnBehind<int> _companyId;
+  /// [Company]
+  final OtherPrimaryColumnBehind _companyId;
   int get companyId => _companyId.value;
 
   /// 商品
-  final ColumnBehind<String> _brand;
+  final NoValidateColumnBehind<String> _brand;
   String get brand => _brand.value;
 
+  ///
   @Relation(Company, CompanyTableColumns.company)
-  final ColumnBehind<String> _company;
+  final NoValidateColumnBehind<String> _company;
   String get company => _company.value;
 
   /// タグ
-  final ColumnBehind<List<String>> _tag;
+  final NoValidateColumnBehind<List<String>> _tag;
   List<String> get tag => _tag.value;
 
   /// 色（パッケージ）
-  final ColumnBehind<int?> _packageColor;
+  final NoValidateColumnBehind<int?> _packageColor;
   int? get packageColor => _packageColor.value;
 
   /* From:To */

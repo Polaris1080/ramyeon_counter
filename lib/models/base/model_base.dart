@@ -24,13 +24,6 @@ abstract class ModelBase extends VirtualModelBase {
 
 // Model Annotations
 @Target({TargetKind.field})
-class OtherPrimary {
-  final Type table;
-
-  const OtherPrimary(this.table);
-}
-
-@Target({TargetKind.field})
 class Relation {
   final Type table;
   final dynamic columu;

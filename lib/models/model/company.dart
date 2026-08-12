@@ -10,12 +10,13 @@ import 'ramyeon.dart';
 
 class Company extends ModelBase {
   Company({required int id, required String company})
-    : _id = PrimaryColumnBehind(id, CompanyTableColumns.id),
+    : _id = .new(id, CompanyTableColumns.id),
       _company = .noValidate(company, CompanyTableColumns.company);
 
   /* Table */
+  /// Primary
   @Relation(Ramyeon, RamyeonTableColumns.companyId)
-  ColumnBehind<int> _id;
+  PrimaryColumnBehind _id;
   int get id => _id.value;
 
   /// 会社

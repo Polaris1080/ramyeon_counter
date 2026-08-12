@@ -8,6 +8,7 @@ import '../table/table_column_difinition.dart';
 import 'model_base.dart';
 import '../../ramyeon_database.dart';
 
+// TODO:リファクタリング
 abstract class RepositoryBase {
   @protected
   static Future<int> insert(

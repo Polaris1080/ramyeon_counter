@@ -78,3 +78,8 @@ class OtherPrimaryColumnBehind extends ColumnBehind<int> {
         supplement: '>= 0',
       );
 }
+
+class NoValidateColumnBehind<T> extends ColumnBehind<T> {
+  NoValidateColumnBehind(T value, Enum column, {super.to})
+    : super(value: value, column: column);
+}

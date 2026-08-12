@@ -15,7 +15,7 @@ class Barcode extends ModelBase {
     required int brandId,
     required int count,
     required int jam,
-  }) : _id = PrimaryColumnBehind(id, BarcodeTableColumns.id),
+  }) : _id = .new(id, BarcodeTableColumns.id),
        _brandId = OtherPrimaryColumnBehind(
          brandId,
          BarcodeTableColumns.brandId,
@@ -34,10 +34,11 @@ class Barcode extends ModelBase {
        );
 
   /* Table */
-  final ColumnBehind<int> _id;
+  /// Primary
+  final PrimaryColumnBehind _id;
   int get id => _id.value;
 
-  @OtherPrimary(Ramyeon)
+  /// [Ramyeon]
   final ColumnBehind<int> _brandId;
   int get brandId => _brandId.value;
 

@@ -16,14 +16,14 @@ class Stock extends ModelBase {
     required DateTime expirationDate,
     required int price,
     bool ate = false, //備蓄してすぐに食べるわけがない
-  }) : _id = PrimaryColumnBehind(id, StockTableColumns.id),
-       _brandId = OtherPrimaryColumnBehind(brandId, StockTableColumns.brandId),
-       _purchaseDate = .noValidate(
+  }) : _id = .new(id, StockTableColumns.id),
+       _brandId = .new(brandId, StockTableColumns.brandId),
+       _purchaseDate = .new(
          purchaseDate,
          StockTableColumns.purchaseDate,
          to: (bool isDB) => isDB ? purchaseDate.toString() : purchaseDate,
        ),
-       _expirationDate = .noValidate(
+       _expirationDate = .new(
          expirationDate,
          StockTableColumns.expirationDate,
          to: (bool isDB) => isDB ? expirationDate.toString() : expirationDate,
@@ -31,30 +31,30 @@ class Stock extends ModelBase {
        _price = .rangeValidate(
          value: price,
          column: StockTableColumns.price,
-         to: (bool isDB) => price,
          validator: () => price < 0,
          supplement: '>= 0',
        ),
-       _ate = .noValidate(
+       _ate = .new(
          ate,
          StockTableColumns.ate,
          to: (bool isDB) => isDB ? (ate ? 1 : 0) : ate,
        );
 
   /* Table */
-  final ColumnBehind<int> _id;
+  /// Primary
+  final PrimaryColumnBehind _id;
   int get id => _id.value;
 
-  @OtherPrimary(Ramyeon)
-  final ColumnBehind<int> _brandId;
+  /// [Ramyeon]
+  final OtherPrimaryColumnBehind _brandId;
   int get brandId => _brandId.value;
 
   /// 購入日
-  final ColumnBehind<DateTime> _purchaseDate;
+  final NoValidateColumnBehind<DateTime> _purchaseDate;
   DateTime get purchaseDate => _purchaseDate.value;
 
   /// 賞味期限
-  final ColumnBehind<DateTime> _expirationDate;
+  final NoValidateColumnBehind<DateTime> _expirationDate;
   DateTime get expirationDate => _expirationDate.value;
 
   /// 購入価格
@@ -62,7 +62,7 @@ class Stock extends ModelBase {
   int get price => _price.value;
 
   /// 食べた？
-  final ColumnBehind<bool> _ate;
+  final NoValidateColumnBehind<bool> _ate;
   bool get ate => _ate.value;
 
   /* From:To */

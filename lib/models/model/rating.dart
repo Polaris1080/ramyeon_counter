@@ -13,8 +13,8 @@ class Rating extends ModelBase {
     required int brandId,
     required int rating,
     required DateTime date,
-  }) : _id = PrimaryColumnBehind(id, RatingTableColumns.id),
-       _brandId = OtherPrimaryColumnBehind(brandId, RatingTableColumns.brandId),
+  }) : _id = .new(id, RatingTableColumns.id),
+       _brandId = .new(brandId, RatingTableColumns.brandId),
        _rating = .rangeValidate(
          value: rating,
          column: RatingTableColumns.rating,
@@ -22,18 +22,19 @@ class Rating extends ModelBase {
          validator: () => rating < 1 || 10 < rating,
          supplement: '<= 10',
        ),
-       _date = .noValidate(
+       _date = .new(
          date,
          RatingTableColumns.date,
          to: (bool isDB) => isDB ? date.toString() : date,
        );
 
   /* Table */
-  final ColumnBehind<int> _id;
+  /// Primary
+  final PrimaryColumnBehind _id;
   int get id => _id.value;
 
-  @OtherPrimary(Ramyeon)
-  final ColumnBehind<int> _brandId;
+  /// [Ramyeon]
+  final OtherPrimaryColumnBehind _brandId;
   int get brandId => _brandId.value;
 
   /// 評価
@@ -41,7 +42,7 @@ class Rating extends ModelBase {
   int get rating => _rating.value;
 
   /// 評価日
-  final ColumnBehind<DateTime> _date;
+  final NoValidateColumnBehind<DateTime> _date;
   DateTime get date => _date.value;
 
   /* From:To */
