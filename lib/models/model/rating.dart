@@ -30,7 +30,6 @@ class Rating extends ModelBase {
        );
 
   /* Table */
-  @PrimaryKey()
   final ColumnBehind<int> _id;
   int get id => _id.value;
 
@@ -39,7 +38,6 @@ class Rating extends ModelBase {
   int get brandId => _brandId.value;
 
   /// 評価
-  @Constraint('1 ~ 10')
   final ColumnBehind<int> _rating;
   int get rating => _rating.value;
 

@@ -43,7 +43,6 @@ class Stock extends ModelBase {
        );
 
   /* Table */
-  @PrimaryKey()
   final ColumnBehind<int> _id;
   int get id => _id.value;
 
@@ -60,7 +59,6 @@ class Stock extends ModelBase {
   DateTime get expirationDate => _expirationDate.value;
 
   /// 購入価格
-  @Constraint('>= 0')
   final ColumnBehind<int> _price;
   int get price => _price.value;
 

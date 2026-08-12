@@ -35,7 +35,6 @@ class Barcode extends ModelBase {
        );
 
   /* Table */
-  @PrimaryKey()
   final ColumnBehind<int> _id;
   int get id => _id.value;
 
@@ -44,12 +43,10 @@ class Barcode extends ModelBase {
   int get brandId => _brandId.value;
 
   /// 個数
-  @Constraint('>= 1')
   final ColumnBehind<int> _count;
   int get count => _count.value;
 
   /// バーコード
-  @Constraint('8/13桁')
   final ColumnBehind<int> _jam;
   int get jam => _jam.value;
 

@@ -15,7 +15,6 @@ class Company extends ModelBase {
       _company = .noValidate(company, CompanyTableColumns.company);
 
   /* Table */
-  @PrimaryKey()
   @Relation(Ramyeon, RamyeonTableColumns.companyId)
   ColumnBehind<int> _id;
   int get id => _id.value;

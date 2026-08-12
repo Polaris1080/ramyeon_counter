@@ -39,7 +39,6 @@ class Ramyeon extends ModelBase {
        );
 
   /* Table */
-  @PrimaryKey()
   final ColumnBehind<int> _id;
   int get id => _id.value;
 
