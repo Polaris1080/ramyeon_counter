@@ -25,7 +25,7 @@ class RamyeonImageRegister extends RamyeonImageBase {
         // Capture
         child: actionIcon(
           Icons.add_photo_alternate_outlined,
-          onPressed: vm.captureIconPressed,
+          onPressed: vm.onCaptureButtonPressed,
         ),
       ),
     );

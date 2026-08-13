@@ -61,6 +61,9 @@ abstract class RamyeonImageBase extends StatelessWidget {
                       fit: BoxFit.cover,
                       // ...error
                       errorBuilder: (context, error, stackTrace) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          _vm.isImageLoaded = false;
+                        });
                         return emptyBorder;
                       },
                     ),

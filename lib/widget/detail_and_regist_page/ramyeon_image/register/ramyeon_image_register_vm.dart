@@ -14,7 +14,7 @@ class RamyeonImageRegisterViewModel extends RamyeonImageBaseViewModel {
   }
 
   /* Event */
-  Future captureIconPressed() async {
+  Future onCaptureButtonPressed() async {
     // Capture image.
     final XFile? image = await ImagePicker().pickImage(
       source: ImageSource.gallery,

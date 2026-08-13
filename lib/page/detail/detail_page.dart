@@ -1,5 +1,3 @@
-// Model
-import 'package:ramyeon_counter/models/context/ramyeon_list_data.dart';
 // Package
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
