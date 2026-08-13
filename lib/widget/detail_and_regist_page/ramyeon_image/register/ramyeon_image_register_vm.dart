@@ -1,16 +1,7 @@
 part of 'ramyeon_image_register.dart';
 
 class RamyeonImageRegisterViewModel extends RamyeonImageBaseViewModel {
-  RamyeonImageRegisterViewModel({required int? brandId})
-    : super(
-        imagePath:
-            brandId != null &&
-                File(
-                  'C:/Users/Polar/Documents/${brandId}_full.JPG',
-                ).existsSync()
-            ? 'C:/Users/Polar/Documents/${brandId}_full.JPG'
-            : null,
-      );
+  RamyeonImageRegisterViewModel({required super.brandId});
 
   /// Captured image path.
   String? get temporaryImagePath => _temporaryImagePath;
@@ -19,21 +10,7 @@ class RamyeonImageRegisterViewModel extends RamyeonImageBaseViewModel {
     if (_temporaryImagePath != value) {
       _temporaryImagePath = value;
       super.imagePath = value;
-      //notifyListeners();
     }
-  }
-
-  Future saveTemporaryImage(XFile image, String path) async {
-    // Captured image remains?
-    if (temporaryImagePath != null) {
-      final file = File(temporaryImagePath!);
-      if (await file.exists()) {
-        await file.delete();
-      }
-    }
-    // Save image.
-    image.saveTo(path);
-    temporaryImagePath = path;
   }
 
   /* Event */
@@ -55,5 +32,15 @@ class RamyeonImageRegisterViewModel extends RamyeonImageBaseViewModel {
         '${(await getTemporaryDirectory()).path}/${basename(image.path)}';
     image.saveTo(path);
     temporaryImagePath = path;
+  }
+
+  /* Function */
+  Future saveImage() async {
+    if (temporaryImagePath == null) return;
+    // Serialize image.
+    final file = File(temporaryImagePath!);
+    if (await file.exists()) {
+      await file.copy(thumbnailPath);
+    }
   }
 }

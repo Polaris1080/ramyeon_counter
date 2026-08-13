@@ -1,8 +1,8 @@
+// Base
+import 'ramyeon_image_base_vm.dart';
 // Package
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:ramyeon_counter/widget/detail_and_regist_page/ramyeon_image/base/ramyeon_image_base_vm.dart';
 
 abstract class RamyeonImageBase extends StatelessWidget {
   /* Setting */
@@ -13,41 +13,9 @@ abstract class RamyeonImageBase extends StatelessWidget {
       _hoverOpacity = 0.8;
 
   // TODO【後で見直す】
-  RamyeonImageBase(
-    BuildContext context,
-    int? ramyeonId, {
-    super.key,
-    required RamyeonImageBaseViewModel viewmodel,
-    ValueNotifier<String?>? imgPath,
-    Color? packageColor,
-  }) : _vm = viewmodel,
-       _emptyBorderColor = switch (packageColor) {
-         _? => ColorScheme.fromSeed(seedColor: packageColor),
-         _ => ColorScheme.of(context),
-       }.tertiaryContainer
-  //,
-  //  imagePath = switch (imgPath) {
-  //    _? => imgPath,
-  //    _ => .new(null),
-  //  }
-  {
-    if (ramyeonId != null) {
-      if (File('C:/Users/Polar/Documents/${ramyeonId}_full.JPG').existsSync()) {
-        //imagePath.value = 'C:/Users/Polar/Documents/${ramyeonId}_full.JPG';
-        _vm.imagePath = 'C:/Users/Polar/Documents/${ramyeonId}_full.JPG';
-        _vm.isImageLoaded = true;
-      }
-    }
-  }
+  const RamyeonImageBase(RamyeonImageBaseViewModel vm, {super.key}) : _vm = vm;
 
   final RamyeonImageBaseViewModel _vm;
-
-  /* Argument */
-  //final ValueNotifier<String?> imagePath;
-
-  /* Value */
-  final Color _emptyBorderColor;
-  final ValueNotifier<bool> isImageLoaded = .new(false);
 
   /* Build */
   @override
@@ -55,7 +23,10 @@ abstract class RamyeonImageBase extends StatelessWidget {
     /* Widget */
     Widget emptyBorder = Container(
       decoration: BoxDecoration(
-        border: Border.all(color: _emptyBorderColor, width: 2.0),
+        border: Border.all(
+          color: ColorScheme.of(context).tertiaryContainer,
+          width: 2.0,
+        ),
         borderRadius: const .all(.circular(_circularClipRadius)),
       ),
     );
@@ -77,7 +48,6 @@ abstract class RamyeonImageBase extends StatelessWidget {
                 _? => ListenableBuilder(
                   listenable: _vm,
                   builder: (_, w) {
-                    isImageLoaded.value = true;
                     return Opacity(
                       opacity: _vm.isHovering ? _hoverOpacity : 1.0,
                       child: w!,
@@ -91,7 +61,6 @@ abstract class RamyeonImageBase extends StatelessWidget {
                       fit: BoxFit.cover,
                       // ...error
                       errorBuilder: (context, error, stackTrace) {
-                        isImageLoaded.value = false;
                         return emptyBorder;
                       },
                     ),
@@ -108,12 +77,7 @@ abstract class RamyeonImageBase extends StatelessWidget {
   }
 
   /* Widget */
-  Widget circularIcon(IconData icon) => CircleAvatar(
-    radius: 20,
-    backgroundColor: _circularBackgroundColor,
-    child: Icon(icon, color: _circularIconColor),
-  );
-
+  @protected
   Widget actionIcon(IconData icon, {VoidCallback? onPressed}) =>
       IconButton.filled(
         style: IconButton.styleFrom(
@@ -123,6 +87,13 @@ abstract class RamyeonImageBase extends StatelessWidget {
         onPressed: onPressed,
         icon: Icon(icon),
       );
+
+  @protected
+  Widget circularIcon(IconData icon) => CircleAvatar(
+    radius: 20,
+    backgroundColor: _circularBackgroundColor,
+    child: Icon(icon, color: _circularIconColor),
+  );
 
   @protected
   @mustBeOverridden

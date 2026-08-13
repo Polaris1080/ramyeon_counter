@@ -30,8 +30,6 @@ class RegistPage extends StatelessWidget {
   //String company = '';
   //String brand = '';
 
-  final ValueNotifier<String?> imagePath = .new(null);
-
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -83,10 +81,7 @@ class RegistPage extends StatelessWidget {
                                   height:
                                       MediaQuery.of(context).size.width * 0.3,
                                   child: RamyeonImageRegister(
-                                    context,
-                                    brandId,
-                                    vm: .new(brandId: brandId),
-                                    imgPath: imagePath,
+                                    vm: .new(brandId: brandId!),
                                   ),
                                 );
                               },

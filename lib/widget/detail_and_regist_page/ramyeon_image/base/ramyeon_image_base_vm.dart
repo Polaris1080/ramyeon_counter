@@ -1,10 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class RamyeonImageBaseViewModel extends ChangeNotifier {
-  RamyeonImageBaseViewModel({String? imagePath})
-    : _imagePath = imagePath,
-      _isImageLoaded = imagePath != null;
+  RamyeonImageBaseViewModel({required this.brandId}) {
+    _imagePath = File(thumbnailPath).existsSync() ? thumbnailPath : null;
+    _isImageLoaded = _imagePath != null;
+  }
 
+  /* Argument */
+  final int brandId;
+
+  /* Value */
   String? get imagePath => _imagePath;
   String? _imagePath;
   set imagePath(String value) {
@@ -33,4 +40,8 @@ class RamyeonImageBaseViewModel extends ChangeNotifier {
     _isHovering = false;
     notifyListeners();
   }
+
+  /* Function */
+  // TODO:仮
+  String get thumbnailPath => 'C:/Users/Polar/Documents/${brandId}_full.JPG';
 }

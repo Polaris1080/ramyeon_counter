@@ -1,7 +1,12 @@
-import 'package:flutter/material.dart';
-
-import '../base/ramyeon_image_base_vm.dart';
+part of 'ramyeon_image_viewer.dart';
 
 class RamyeonImageViewerViewModel extends RamyeonImageBaseViewModel {
-  
+  RamyeonImageViewerViewModel({required super.brandId});
+
+  void onOverlayButtonPressed(BuildContext context) => Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => RamyeonImageViewerDetail(Image.file(.new(imagePath!))),
+    ),
+  );
 }
