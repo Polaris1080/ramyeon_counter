@@ -8,30 +8,16 @@ abstract class RamyeonImageBase extends StatelessWidget {
   /* Setting */
   static const heroTag = 'imageHero',
       _circularBackgroundColor = Colors.blue,
-      _circularClipRadius = 10.0,
       _circularIconColor = Colors.white,
-      _hoverOpacity = 0.8;
+      _circularClipRadius = 10.0;
 
-  // TODO【後で見直す】
   const RamyeonImageBase(RamyeonImageBaseViewModel vm, {super.key}) : _vm = vm;
 
   final RamyeonImageBaseViewModel _vm;
 
-  /* Build */
   @override
   Widget build(BuildContext context) {
-    /* Widget */
-    Widget emptyBorder = Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: ColorScheme.of(context).tertiaryContainer,
-          width: 2.0,
-        ),
-        borderRadius: const .all(.circular(_circularClipRadius)),
-      ),
-    );
-
-    // アスペクト調整 & マウス検知
+    // Tune aspect & Detect mouse.
     return AspectRatio(
       aspectRatio: 1,
       child: MouseRegion(
@@ -40,37 +26,32 @@ abstract class RamyeonImageBase extends StatelessWidget {
         opaque: false,
         child: Stack(
           children: [
-            // Path...
+            // Path
             ListenableBuilder(
               listenable: _vm,
-              builder: (context, _) => switch (_vm.imagePath) {
-                // ...may exist(Opacity)
-                _? => ListenableBuilder(
-                  listenable: _vm,
-                  builder: (_, w) {
-                    return Opacity(
-                      opacity: _vm.isHovering ? _hoverOpacity : 1.0,
-                      child: w!,
-                    );
-                  },
-                  child: Hero(
-                    tag: heroTag,
-                    // Loading(...success)
-                    child: Image.file(
-                      .new(_vm.imagePath!),
-                      fit: BoxFit.cover,
-                      // ...error
-                      errorBuilder: (context, error, stackTrace) {
-                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                          _vm.isImageLoaded = false;
-                        });
-                        return emptyBorder;
-                      },
-                    ),
+              builder: (context, c) =>
+                  _vm.isImagePathExist ? c! : _emptyBorder(context),
+              // Visibility(Hovering)
+              child: ListenableBuilder(
+                listenable: _vm,
+                builder: (_, d) =>
+                    Opacity(opacity: _vm.hoveringOpacity, child: d!),
+                child: Hero(
+                  tag: heroTag,
+                  // Loading(...success)
+                  child: Image.file(
+                    .new(_vm.imagePath!),
+                    fit: BoxFit.cover,
+                    // ...error
+                    errorBuilder: (context, error, stackTrace) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        _vm.isImageLoaded = false;
+                      });
+                      return _emptyBorder(context);
+                    },
                   ),
                 ),
-                _ => emptyBorder,
-              },
+              ),
             ),
             overlayArea(context),
           ],
@@ -80,6 +61,16 @@ abstract class RamyeonImageBase extends StatelessWidget {
   }
 
   /* Widget */
+  Widget _emptyBorder(BuildContext context) => Container(
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: ColorScheme.of(context).tertiaryContainer,
+        width: 2.0,
+      ),
+      borderRadius: const .all(.circular(_circularClipRadius)),
+    ),
+  );
+
   @protected
   Widget actionIcon(IconData icon, {VoidCallback? onPressed}) =>
       IconButton.filled(

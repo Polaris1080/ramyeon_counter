@@ -40,7 +40,7 @@ class RamyeonImageRegisterViewModel extends RamyeonImageBaseViewModel {
     // Serialize image.
     final file = File(temporaryImagePath!);
     if (await file.exists()) {
-      await file.copy(thumbnailPath);
+      await file.copy(await thumbnailPath);
     }
   }
 }

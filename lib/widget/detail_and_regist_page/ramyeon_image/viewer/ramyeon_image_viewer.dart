@@ -19,21 +19,17 @@ class RamyeonImageViewer extends RamyeonImageBase {
       child: ListenableBuilder(
         listenable: vm,
         builder: (_, c) => Visibility(visible: vm.isHovering, child: c!),
-        // Path...
+        // Path
         child: ListenableBuilder(
           listenable: vm,
-          builder: (_, c) => vm.imagePath != null
-              // ...may exist
-              ? c!
-              // ...not exist
+          builder: (_, d) => vm.isImagePathExist
+              ? d!
               : circularIcon(Icons.image_not_supported_outlined),
-          // Loading...
+          // Loading
           child: ListenableBuilder(
             listenable: vm,
-            builder: (_, c) => vm.isImageLoaded
-                // ...success
-                ? c!
-                // ...error
+            builder: (_, e) => vm.isImageLoaded
+                ? e!
                 : circularIcon(Icons.broken_image_outlined),
             child: actionIcon(
               Icons.zoom_in_outlined,
