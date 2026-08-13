@@ -1,4 +1,6 @@
 // Base
+import './ramyeon_image_viewer_vm.dart';
+
 import '../base/ramyeon_image_base.dart';
 // Package
 import 'package:flutter/material.dart';
@@ -11,36 +13,31 @@ class RamyeonImageViewer extends RamyeonImageBase {
     super.context,
     super.ramyeonId, {
     super.key,
+    required this.vm,
     super.packageColor,
-  });
+  }) : super(viewmodel: vm);
+
+  final RamyeonImageViewerViewModel vm;
 
   @override
   Widget overlayArea(BuildContext context) {
-    void onZoomButtonPressed() => Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) =>
-            RamyeonImageViewerDetail(Image.file(.new(imagePath.value!))),
-      ),
-    );
-
     return Center(
       // Visibility(Hovering)
-      child: ValueListenableBuilder(
-        valueListenable: isHovering,
-        builder: (_, hovering, w) => Visibility(visible: hovering, child: w!),
+      child: ListenableBuilder(
+        listenable: vm,
+        builder: (_, c) => Visibility(visible: vm.isHovering, child: c!),
         // Path...
-        child: ValueListenableBuilder(
-          valueListenable: imagePath,
-          builder: (_, path, _) => switch (path) {
+        child: ListenableBuilder(
+          listenable: vm,
+          builder: (_, _) => switch (vm.imagePath) {
             // ...may exist(Loading...)
-            _? => ValueListenableBuilder(
-              valueListenable: isImageLoaded,
-              builder: (_, loaded, _) => loaded
+            _? => ListenableBuilder(
+              listenable: vm,
+              builder: (_, _) => vm.isImageLoaded
                   // ...success
                   ? actionIcon(
                       Icons.zoom_in_outlined,
-                      onPressed: onZoomButtonPressed,
+                      onPressed: () => onOverlayButtonPressed(context),
                     )
                   // ...error
                   : Icon(Icons.broken_image_outlined),
@@ -52,4 +49,11 @@ class RamyeonImageViewer extends RamyeonImageBase {
       ),
     );
   }
+
+  void onOverlayButtonPressed(BuildContext context) => Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => RamyeonImageViewerDetail(Image.file(.new(vm.imagePath!))),
+    ),
+  );
 }

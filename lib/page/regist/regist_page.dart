@@ -85,6 +85,7 @@ class RegistPage extends StatelessWidget {
                                   child: RamyeonImageRegister(
                                     context,
                                     brandId,
+                                    vm: .new(brandId: brandId),
                                     imgPath: imagePath,
                                   ),
                                 );

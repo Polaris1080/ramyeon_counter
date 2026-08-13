@@ -54,6 +54,7 @@ class DetailPage extends StatelessWidget {
                             child: RamyeonImageViewer(
                               context,
                               ramyeonId,
+                              vm: .new(),
                               packageColor: packageColor,
                             ),
                           );

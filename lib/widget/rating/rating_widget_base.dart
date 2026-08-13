@@ -33,10 +33,6 @@ abstract class RatingWidgetBase extends StatelessWidget {
   Widget starParts(int index);
 
   /* Star */
-  Icon get fullStar => Icon(Icons.star, color: Colors.amber[700]);
-  Icon get halfStar => Icon(Icons.star_half, color: Colors.amber[900]);
-  Icon get noneStar => Icon(Icons.star_border, color: Colors.black);
-
   Icon star({required RatingStarType type}) => switch (type) {
     .full => Icon(Icons.star, color: Colors.amber[700]),
     .half => Icon(Icons.star_half, color: Colors.amber[900]),
