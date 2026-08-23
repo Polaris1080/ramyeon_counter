@@ -1,3 +1,5 @@
+import './table_columns_base.dart';
+
 // TableColumn
 part 'column_definition/table_column/blob_column.dart';
 part 'column_definition/table_column/int_column.dart';
@@ -15,22 +17,22 @@ abstract class TableColumn {
   String toString();
 }
 
-abstract class ColumnConstraint implements TableColumn {
-  final TableColumn _columu;
-  ColumnConstraint(this._columu);
-
-  @override
-  String toString() => _columu.toString();
-}
-
-extension TableRowToTableColumn on Enum {
+/// [TableColumnsBase] to [TableColumn]
+extension TableColumnsBaseToTableColumn on Enum {
   TableColumn get blob => BlobColumn(name);
   TableColumn get integer => IntColumn(name);
   TableColumn get text => TextColumn(name);
   TableColumn get real => NumColumn(name);
 }
 
-extension TableColumnToColumuConstraint on TableColumn {
+abstract class ColumnConstraint(final TableColumn _columu)
+    implements TableColumn {
+  @override
+  String toString() => _columu.toString();
+}
+
+/// [TableColumn] to [ColumnConstraint]
+extension TableColumnToColumnConstraint on TableColumn {
   ColumnConstraint get primary => PrimaryConstraint(this);
   ColumnConstraint get unique => UniqueConstraint(this);
   ColumnConstraint get notnull => NotNullConstraint(this);
