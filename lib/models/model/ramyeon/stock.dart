@@ -8,61 +8,31 @@ import '../../database/ramyeon/table/stock_table_columns.dart';
 import 'ramyeon.dart';
 
 /// 在庫（情報）
-class Stock extends ModelBase {
-  Stock({
-    required int id,
-    required int brandId,
-    required DateTime purchaseDate,
-    required DateTime expirationDate,
-    required int price,
-    bool ate = false, //備蓄してすぐに食べるわけがない
-  }) : _id = .new(id, StockTableColumns.id),
-       _brandId = .new(brandId, StockTableColumns.brandId),
-       _purchaseDate = .new(
-         purchaseDate,
-         StockTableColumns.purchaseDate,
-         to: (bool isDB) => isDB ? purchaseDate.toString() : purchaseDate,
-       ),
-       _expirationDate = .new(
-         expirationDate,
-         StockTableColumns.expirationDate,
-         to: (bool isDB) => isDB ? expirationDate.toString() : expirationDate,
-       ),
-       _price = .rangeValidate(
-         value: price,
-         column: StockTableColumns.price,
-         validator: () => price < 0,
-         supplement: '>= 0',
-       ),
-       _ate = .new(
-         ate,
-         StockTableColumns.ate,
-         to: (bool isDB) => isDB ? (ate ? 1 : 0) : ate,
-       );
-
+class Stock({
+  required int id,
+  required int brandId,
+  required DateTime purchaseDate,
+  required DateTime expirationDate,
+  required int price,
+  bool ate = false, //備蓄してすぐに食べるわけがない
+}) extends ModelBase {
   /* Table */
   /// Primary
-  final PrimaryColumnBehind _id;
   int get id => _id.value;
 
   /// [Ramyeon]
-  final OtherPrimaryColumnBehind _brandId;
   int get brandId => _brandId.value;
 
   /// 購入日
-  final NoValidateColumnBehind<DateTime> _purchaseDate;
   DateTime get purchaseDate => _purchaseDate.value;
 
   /// 賞味期限
-  final NoValidateColumnBehind<DateTime> _expirationDate;
   DateTime get expirationDate => _expirationDate.value;
 
   /// 購入価格
-  final ColumnBehind<int> _price;
   int get price => _price.value;
 
   /// 食べた？
-  final NoValidateColumnBehind<bool> _ate;
   bool get ate => _ate.value;
 
   /* From:To */
@@ -84,4 +54,32 @@ class Stock extends ModelBase {
     _price,
     _ate,
   ];
+
+  /* Behind */
+  final PrimaryColumnBehind _id = .new(id, StockTableColumns.id);
+  final OtherPrimaryColumnBehind _brandId = .new(
+    brandId,
+    StockTableColumns.brandId,
+  );
+  final NoValidateColumnBehind<DateTime> _purchaseDate = .new(
+    purchaseDate,
+    StockTableColumns.purchaseDate,
+    to: (bool isDB) => isDB ? purchaseDate.toString() : purchaseDate,
+  );
+  final NoValidateColumnBehind<DateTime> _expirationDate = .new(
+    expirationDate,
+    StockTableColumns.expirationDate,
+    to: (bool isDB) => isDB ? expirationDate.toString() : expirationDate,
+  );
+  final ColumnBehind<int> _price = .rangeValidate(
+    value: price,
+    column: StockTableColumns.price,
+    validator: () => price < 0,
+    supplement: '>= 0',
+  );
+  final NoValidateColumnBehind<bool> _ate = .new(
+    ate,
+    StockTableColumns.ate,
+    to: (bool isDB) => isDB ? (ate ? 1 : 0) : ate,
+  );
 }

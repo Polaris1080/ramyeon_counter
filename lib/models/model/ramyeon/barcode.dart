@@ -4,50 +4,30 @@ import '../../base/em_castable_query_map.dart';
 import '../../base/model_base.dart';
 // Table
 import '../../database/ramyeon/table/barcode_table_columns.dart';
+
 // Extension
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
+
 // Model
 import 'ramyeon.dart';
 
-class Barcode extends ModelBase {
-  Barcode({
-    required int id,
-    required int brandId,
-    required int count,
-    required int jam,
-  }) : _id = .new(id, BarcodeTableColumns.id),
-       _brandId = OtherPrimaryColumnBehind(
-         brandId,
-         BarcodeTableColumns.brandId,
-       ),
-       _count = .rangeValidate(
-         value: count,
-         column: BarcodeTableColumns.count,
-         validator: () => count < 1,
-         supplement: '>= 1',
-       ),
-       _jam = .rangeValidate(
-         value: jam,
-         column: BarcodeTableColumns.jam,
-         validator: () => !(jam.digit == 8 || jam.digit == 13),
-         supplement: 'digit is 8 or 13.',
-       );
-
+class Barcode({
+  required int id,
+  required int brandId,
+  required int count,
+  required int jam,
+}) extends ModelBase {
   /* Table */
   /// Primary
-  final PrimaryColumnBehind _id;
   int get id => _id.value;
 
   /// [Ramyeon]
-  final ColumnBehind<int> _brandId;
   int get brandId => _brandId.value;
 
   /// 個数
-  final ColumnBehind<int> _count;
   int get count => _count.value;
 
   /// バーコード
-  final ColumnBehind<int> _jam;
   int get jam => _jam.value;
 
   /* From:To */
@@ -60,4 +40,23 @@ class Barcode extends ModelBase {
 
   @override
   List<ColumnBehind<Object>> get columus => [_id, _brandId, _count, _jam];
+
+  /* Behind */
+  final PrimaryColumnBehind _id = .new(id, BarcodeTableColumns.id);
+  final ColumnBehind<int> _brandId = OtherPrimaryColumnBehind(
+    brandId,
+    BarcodeTableColumns.brandId,
+  );
+  final ColumnBehind<int> _count = .rangeValidate(
+    value: count,
+    column: BarcodeTableColumns.count,
+    validator: () => count < 1,
+    supplement: '>= 1',
+  );
+  final ColumnBehind<int> _jam = .rangeValidate(
+    value: jam,
+    column: BarcodeTableColumns.jam,
+    validator: () => !(jam.digit == 8 || jam.digit == 13),
+    supplement: 'digit is 8 or 13.',
+  );
 }

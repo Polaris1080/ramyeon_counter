@@ -8,19 +8,12 @@ import '../../database/ramyeon/table/ramyeon_table_columns.dart';
 // Model
 import 'ramyeon.dart';
 
-class Company extends ModelBase {
-  Company({required int id, required String company})
-    : _id = .new(id, CompanyTableColumns.id),
-      _company = .new(company, CompanyTableColumns.company);
-
+class Company({required int id, required String company}) extends ModelBase {
   /* Table */
   /// Primary
-  @Relation(Ramyeon, RamyeonTableColumns.companyId)
-  PrimaryColumnBehind _id;
   int get id => _id.value;
 
   /// 会社
-  NoValidateColumnBehind<String> _company;
   String get company => _company.value;
 
   /* From:To */
@@ -31,4 +24,12 @@ class Company extends ModelBase {
 
   @override
   List<ColumnBehind<Object>> get columus => [_id, _company];
+
+  /* Behind */
+  @Relation(Ramyeon, RamyeonTableColumns.companyId)
+  final PrimaryColumnBehind _id = .new(id, CompanyTableColumns.id);
+  final NoValidateColumnBehind<String> _company = .new(
+    company,
+    CompanyTableColumns.company,
+  );
 }

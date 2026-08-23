@@ -8,53 +8,31 @@ import '../../database/ramyeon/table/ramyeon_table_columns.dart';
 // Model
 import 'company.dart';
 
-class Ramyeon extends ModelBase {
-  Ramyeon({
-    required int id,
-    required int companyId,
-    required String brand,
-    required String company,
-    required List<String> tag,
-    int? packageColor,
-  }) : _id = .new(id, RamyeonTableColumns.id),
-       _companyId = .new(companyId, RamyeonTableColumns.companyId),
-       _brand = .new(brand, RamyeonTableColumns.brand),
-       _company = .new(
-         company,
-         RamyeonTableColumns.company,
-         to: (isDB) => null,
-       ),
-       _tag = .new(
-         tag,
-         RamyeonTableColumns.tag,
-         to: (isDB) => isDB ? tag.join(',') : tag,
-       ),
-       _packageColor = .new(packageColor, RamyeonTableColumns.packageColor);
-
+class Ramyeon({
+  required int id,
+  required int companyId,
+  required String brand,
+  required String company,
+  required List<String> tag,
+  int? packageColor,
+}) extends ModelBase {
   /* Table */
   /// Primary
-  final PrimaryColumnBehind _id;
   int get id => _id.value;
 
   /// [Company]
-  final OtherPrimaryColumnBehind _companyId;
   int get companyId => _companyId.value;
 
   /// 商品
-  final NoValidateColumnBehind<String> _brand;
   String get brand => _brand.value;
 
   ///
-  @Relation(Company, CompanyTableColumns.company)
-  final NoValidateColumnBehind<String> _company;
   String get company => _company.value;
 
   /// タグ
-  final NoValidateColumnBehind<List<String>> _tag;
   List<String> get tag => _tag.value;
 
   /// 色（パッケージ）
-  final NoValidateColumnBehind<int?> _packageColor;
   int? get packageColor => _packageColor.value;
 
   /* From:To */
@@ -76,4 +54,30 @@ class Ramyeon extends ModelBase {
     _tag,
     _packageColor,
   ];
+
+  /* Behind */
+  final PrimaryColumnBehind _id = .new(id, RamyeonTableColumns.id);
+  final OtherPrimaryColumnBehind _companyId = .new(
+    companyId,
+    RamyeonTableColumns.companyId,
+  );
+  final NoValidateColumnBehind<String> _brand = .new(
+    brand,
+    RamyeonTableColumns.brand,
+  );
+  @Relation(Company, CompanyTableColumns.company)
+  final NoValidateColumnBehind<String> _company = .new(
+    company,
+    RamyeonTableColumns.company,
+    to: (isDB) => null,
+  );
+  final NoValidateColumnBehind<List<String>> _tag = .new(
+    tag,
+    RamyeonTableColumns.tag,
+    to: (isDB) => isDB ? tag.join(',') : tag,
+  );
+  final NoValidateColumnBehind<int?> _packageColor = .new(
+    packageColor,
+    RamyeonTableColumns.packageColor,
+  );
 }
