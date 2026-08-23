@@ -1,7 +1,7 @@
 // Base
 import '../../base/repository_base.dart';
 import '../../database/ramyeon/ramyeon_database_tables.dart';
-import '../../table/ramyeon/rating_table_columns.dart';
+import '../../database/ramyeon/table/rating_table_columns.dart';
 import '../../../ramyeon_database.dart';
 // Extention-Type
 import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';

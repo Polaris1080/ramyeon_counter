@@ -3,7 +3,7 @@ import '../base/column_behind.dart';
 import '../base/em_castable_query_map.dart';
 import '../base/model_base.dart';
 // Table
-import '../table/ramyeon/stock_table_columns.dart';
+import '../database/ramyeon/table/stock_table_columns.dart';
 // Model
 import 'ramyeon.dart';
 

@@ -1,4 +1,4 @@
-import '../table_column_difinition.dart';
+import '../../table_columns_base.dart';
 
 enum BarcodeTableColumns {
   id,

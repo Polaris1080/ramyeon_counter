@@ -1,8 +1,8 @@
 // Base
 import '../../base/repository_base.dart';
 import '../../database/ramyeon/ramyeon_database_tables.dart';
-import '../../table/ramyeon/company_table_columns.dart';
-import '../../table/ramyeon/ramyeon_table_columns.dart';
+import '../../database/ramyeon/table/company_table_columns.dart';
+import '../../database/ramyeon/table/ramyeon_table_columns.dart';
 import '../../../ramyeon_database.dart';
 // Extention
 import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
