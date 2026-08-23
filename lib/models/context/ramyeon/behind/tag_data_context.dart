@@ -10,6 +10,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import '../tag_data.dart';
 import '../../../../ramyeon_database.dart';
 
+/// [TagData] code behind
 class TagDataContext extends RamyeonContextBase {
   RamyeonDatabaseTables get table => .ramyeon;
 

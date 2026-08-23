@@ -1,12 +1,10 @@
 // Base
 import '../../base/model_base.dart';
 
-class StockChartData extends VirtualModelBase {
-  StockChartData({required this.brand, required this.price});
-
+class StockChartData({
   /// 商品
-  final String brand;
+  required final String brand,
 
   /// 価格（合計）
-  final List<int> price;
-}
+  required final List<int> price,
+}) extends VirtualModelBase;

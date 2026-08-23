@@ -4,39 +4,28 @@ import '../../base/model_base.dart';
 import '../../model/ramyeon/company.dart';
 import '../../model/ramyeon/ramyeon.dart';
 
-class RamyeonListData extends VirtualModelBase {
-  RamyeonListData({
-    required this.id,
-    required this.companyId,
-    required this.brand,
-    required this.company,
-    required this.tag,
-    this.packageColor,
-    required this.rating,
-    required this.count,
-  });
-
+class RamyeonListData({
   /// [Ramyeon].id
-  final int id;
+  required final int id,
 
   /// [Company].id
-  final int companyId;
+  required final int companyId,
 
   /// 商品
-  final String brand;
+  required final String brand,
 
   /// [Company].company *会社*
-  final String company;
+  required final String company,
 
   /// タグ
-  final List<String> tag;
+  required final List<String> tag,
 
   /// 色（パッケージ）
-  final int? packageColor;
+  final int? packageColor,
 
   /// 評価（平均）
-  final double? rating;
+  required final double? rating,
 
   /// 個数
-  final int count;
-}
+  required final int count,
+}) extends VirtualModelBase;

@@ -1,15 +1,13 @@
 // Base
 import '../../base/model_base.dart';
 
-class TagData extends VirtualModelBase {
-  TagData({required this.tag, required this.rank, required this.count});
-
+class TagData({
   /// タグ
-  final String tag;
+  required final String tag,
 
   /// 順位
-  final int rank;
+  required final int rank,
 
   /// 個数
-  final int count;
-}
+  required final int count,
+}) extends VirtualModelBase;

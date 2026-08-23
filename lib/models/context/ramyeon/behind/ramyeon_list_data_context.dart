@@ -13,6 +13,7 @@ import '../../../model/ramyeon/repository/company_repository.dart';
 import '../../../model/ramyeon/repository/rating_repository.dart';
 import '../../../../ramyeon_database.dart';
 
+/// [RamyeonListData] code behind
 class RamyeonListDataContext extends RamyeonContextBase {
   RamyeonDatabaseTables get table => .ramyeon;
 
