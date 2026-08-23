@@ -1,11 +1,10 @@
-import './table_columns_base.dart';
-
+// Base
+import 'table_columns_base.dart';
 // TableColumn
 part 'column_definition/table_column/blob_column.dart';
 part 'column_definition/table_column/int_column.dart';
 part 'column_definition/table_column/num_column.dart';
 part 'column_definition/table_column/text_column.dart';
-
 // ColumnConstraint
 part 'column_definition/column_constraint/not_null_constraint.dart';
 part 'column_definition/column_constraint/nullable_constraint.dart';
