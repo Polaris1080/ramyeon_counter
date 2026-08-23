@@ -1,5 +1,5 @@
 // Model
-import 'package:ramyeon_counter/models/table/ramyeon_database_tables.dart';
+import 'package:ramyeon_counter/models/database/ramyeon/ramyeon_database_tables.dart';
 import 'package:ramyeon_counter/models/table/ramyeon/ramyeon_table_columns.dart';
 import 'package:ramyeon_counter/models/table/ramyeon/stock_table_columns.dart';
 import 'package:ramyeon_counter/ramyeon_database.dart';

@@ -1,10 +1,13 @@
+// Base
+import '../../base/context_base.dart';
+import '../../database/ramyeon/ramyeon_database_tables.dart';
+
 // Package
 import 'package:darq/darq.dart';
-import 'package:ramyeon_counter/models/table/ramyeon_database_tables.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
 // Model
 import '../tag_data.dart';
-import '../../base/context_base.dart';
 import '../../../ramyeon_database.dart';
 
 class TagDataContext extends RamyeonContextBase {
@@ -61,9 +64,9 @@ class TestTagDataContext extends TagDataContext {
 
 extension on Iterable<String> {
   /// 個数を求める
-  Iterable<({int count, String tag})> get getCount => groupBy(
-    (g) => g,
-  ).select((s, _) => (tag: s.key, count: s.elements.count()));
+  Iterable<({int count, String tag})> get getCount =>
+      groupBy((g) => g)
+          .select((s, _) => (tag: s.key, count: s.elements.count()));
 }
 
 extension on Iterable<({int count, String tag})> {

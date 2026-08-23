@@ -1,10 +1,11 @@
+// Base
+import '../../base/context_base.dart';
+import '../../database/ramyeon/ramyeon_database_tables.dart';
+
 // Package
 import 'package:darq/darq.dart';
-import 'package:ramyeon_counter/models/table/ramyeon_database_tables.dart';
 import 'package:ramyeon_counter/ramyeon_database.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-// Model
-import 'package:ramyeon_counter/models/base/context_base.dart';
 
 class StatisticsDataContext extends RamyeonContextBase {
   Future<Map<int, double>> readStockChartData({int? year}) async {
