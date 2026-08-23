@@ -1,5 +1,5 @@
 // Base
-import 'column_behind.dart';
+import '../model/base/column_behind.dart';
 import '../database/base/column_definition.dart';
 import 'package:meta/meta_meta.dart';
 

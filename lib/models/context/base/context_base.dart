@@ -1,7 +1,7 @@
 // Package
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 // Other
-import '../../ramyeon_database.dart';
+import '../../database/ramyeon/ramyeon_database.dart';
 
 abstract class ContextBase {}
 

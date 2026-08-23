@@ -1,5 +1,5 @@
 // Base
-import '../../../base/context_base.dart';
+import '../../base/context_base.dart';
 import '../../../database/ramyeon/ramyeon_database_tables.dart';
 
 // Package
@@ -8,7 +8,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 // Model
 import '../tag_data.dart';
-import '../../../../ramyeon_database.dart';
+import '../../../database/ramyeon/ramyeon_database.dart';
 
 /// [TagData] code behind
 class TagDataContext extends RamyeonContextBase {

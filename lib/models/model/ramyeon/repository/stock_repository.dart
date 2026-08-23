@@ -1,8 +1,8 @@
 // Base
-import '../../../base/repository_base.dart';
+import '../../base/repository_base.dart';
 import '../../../database/ramyeon/ramyeon_database_tables.dart';
 import '../../../database/ramyeon/table/stock_table_columns.dart';
-import '../../../../ramyeon_database.dart';
+import '../../../database/ramyeon/ramyeon_database.dart';
 // Model
 import '../stock.dart';
 // Package
