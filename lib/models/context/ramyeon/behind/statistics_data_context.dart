@@ -1,10 +1,10 @@
 // Base
 import '../../base/context_base.dart';
+import '../../../database/ramyeon/ramyeon_database.dart';
 import '../../../database/ramyeon/ramyeon_database_tables.dart';
 
 // Package
 import 'package:darq/darq.dart';
-import 'package:ramyeon_counter/models/database/ramyeon/ramyeon_database.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class StatisticsDataContext extends RamyeonContextBase {

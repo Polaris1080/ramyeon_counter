@@ -1,10 +1,12 @@
 // Base
-import '../model/base/column_behind.dart';
+import 'column_behind.dart';
 import '../database/base/column_definition.dart';
+
+// Package
 import 'package:meta/meta_meta.dart';
 
 /// Model 'not' exist table
-abstract class VirtualModelBase {}
+abstract class VirtualModelBase;
 
 /// Model exist table
 abstract class ModelBase extends VirtualModelBase {
@@ -24,9 +26,4 @@ abstract class ModelBase extends VirtualModelBase {
 
 // Model Annotations
 @Target({TargetKind.field})
-class Relation {
-  final Type table;
-  final dynamic columu;
-
-  const Relation(this.table, this.columu);
-}
+class const Relation(final Type table, final dynamic columu);

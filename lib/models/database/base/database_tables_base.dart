@@ -1,1 +1,1 @@
-abstract class DatabaseTablesBase {}
+abstract class DatabaseTablesBase;

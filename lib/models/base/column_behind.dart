@@ -1,14 +1,12 @@
 class ColumnBehind<T> {
   ColumnBehind({
     required T value,
-    required Enum column,
+    required this._column,
     Object? Function(bool isDB)? to,
     this.validator,
-    Error? error,
+    this._error,
   }) : _value = value,
-       _column = column,
-       _to = to ?? ((bool? isDB) => value), // 指定なし→そのままの値を返す
-       _error = error;
+       _to = to ?? ((bool? isDB) => value); // 指定なし→そのままの値を返す
 
   ColumnBehind.rangeValidate({
     required T value,
@@ -54,8 +52,8 @@ class ColumnBehind<T> {
   }
 }
 
-class PrimaryColumnBehind extends ColumnBehind<int> {
-  PrimaryColumnBehind(int value, Enum column)
+class PrimaryColumnBehind(int value, Enum column) extends ColumnBehind<int> {
+  this
     : super(
         value: value,
         column: column,
@@ -63,8 +61,9 @@ class PrimaryColumnBehind extends ColumnBehind<int> {
       );
 }
 
-class OtherPrimaryColumnBehind extends ColumnBehind<int> {
-  OtherPrimaryColumnBehind(int value, Enum column)
+class OtherPrimaryColumnBehind(int value, Enum column)
+    extends ColumnBehind<int> {
+  this
     : super.rangeValidate(
         value: value,
         column: column,
@@ -73,7 +72,7 @@ class OtherPrimaryColumnBehind extends ColumnBehind<int> {
       );
 }
 
-class NoValidateColumnBehind<T> extends ColumnBehind<T> {
-  NoValidateColumnBehind(T value, Enum column, {super.to})
-    : super(value: value, column: column);
+class NoValidateColumnBehind<T>(T value, Enum column, {super.to})
+    extends ColumnBehind<T> {
+  this : super(value: value, column: column);
 }

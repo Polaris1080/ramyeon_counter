@@ -1,7 +1,8 @@
 // Base
-import '../base/column_behind.dart';
+import '../../base/column_behind.dart';
 import '../base/em_castable_query_map.dart';
 import '../../base/model_base.dart';
+
 // Table
 import '../../database/ramyeon/table/barcode_table_columns.dart';
 

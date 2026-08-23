@@ -1,5 +1,6 @@
 // Base
 import '../base/database_tables_base.dart';
+
 // Table
 import './table/barcode_table_columns.dart';
 import './table/company_table_columns.dart';

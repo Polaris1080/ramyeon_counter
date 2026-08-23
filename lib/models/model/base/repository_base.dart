@@ -1,15 +1,13 @@
 // Base
-import '../../database/ramyeon/ramyeon_database_tables.dart';
+import '../../base/model_base.dart';
 import '../../database/base/column_definition.dart';
+import '../../database/ramyeon/ramyeon_database.dart';
+import '../../database/ramyeon/ramyeon_database_tables.dart';
 
 // Package
 import 'package:darq/darq.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-
-// Other
-import '../../base/model_base.dart';
-import '../../database/ramyeon/ramyeon_database.dart';
 
 // TODO:リファクタリング
 abstract class RepositoryBase {
