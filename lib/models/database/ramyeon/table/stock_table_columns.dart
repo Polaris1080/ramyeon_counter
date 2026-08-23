@@ -1,6 +1,8 @@
-import '../../table_columns_definition.dart';
+// Base
+import '../../base/column_definition.dart';
+import '../../base/table_columns_base.dart';
 
-enum StockTableColumns {
+enum StockTableColumns implements TableColumnsBase {
   id,
   brandId,
   purchaseDate,

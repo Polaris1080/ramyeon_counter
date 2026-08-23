@@ -1,3 +1,7 @@
+// Base
+import '../database/ramyeon/ramyeon_database_tables.dart';
+import '../database/base/column_definition.dart';
+
 // Package
 import 'package:darq/darq.dart';
 import 'package:flutter/foundation.dart';
@@ -5,8 +9,6 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 // Other
 import 'model_base.dart';
-import '../database/ramyeon/ramyeon_database_tables.dart';
-import '../database/table_columns_definition.dart';
 import '../../ramyeon_database.dart';
 
 // TODO:リファクタリング

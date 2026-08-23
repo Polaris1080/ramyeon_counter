@@ -1,6 +1,8 @@
-import '../../table_columns_definition.dart';
+// Base
+import '../../base/column_definition.dart';
+import '../../base/table_columns_base.dart';
 
-enum BarcodeTableColumns {
+enum BarcodeTableColumns implements TableColumnsBase {
   id,
   brandId,
   count,

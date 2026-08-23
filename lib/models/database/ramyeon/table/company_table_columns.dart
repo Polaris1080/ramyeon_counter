@@ -1,6 +1,8 @@
-import '../../table_columns_definition.dart';
+// Base
+import '../../base/column_definition.dart';
+import '../../base/table_columns_base.dart';
 
-enum CompanyTableColumns {
+enum CompanyTableColumns implements TableColumnsBase{
   id,
   company;
 
