@@ -1,7 +1,7 @@
 // Package
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ramyeon_counter/models/model/repository/ramyeon_repository.dart';
+import 'package:ramyeon_counter/models/model/ramyeon/repository/ramyeon_repository.dart';
 // Widget
 import 'package:ramyeon_counter/page/detail/buttom/detail_bottom_appbar.dart';
 import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';

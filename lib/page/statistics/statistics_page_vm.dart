@@ -2,10 +2,10 @@
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 // Model
-import 'package:ramyeon_counter/models/context/tag_data.dart';
-import 'package:ramyeon_counter/models/model/rating.dart';
-import 'package:ramyeon_counter/models/context/behind/statistics_data_context.dart';
-import 'package:ramyeon_counter/models/context/behind/tag_data_context.dart';
+import 'package:ramyeon_counter/models/context/ramyeon/tag_data.dart';
+import 'package:ramyeon_counter/models/model/ramyeon/rating.dart';
+import 'package:ramyeon_counter/models/context/ramyeon/behind/statistics_data_context.dart';
+import 'package:ramyeon_counter/models/context/ramyeon/behind/tag_data_context.dart';
 
 // TODO:cache【余裕があれば】
 class StatisticsPageViewModel extends ChangeNotifier {

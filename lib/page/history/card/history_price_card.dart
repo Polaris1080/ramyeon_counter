@@ -3,7 +3,7 @@ import 'history_card_base.dart';
 // Package
 import 'package:flutter/material.dart';
 // Model
-import 'package:ramyeon_counter/models/model/stock.dart';
+import 'package:ramyeon_counter/models/model/ramyeon/stock.dart';
 
 class HistoryPriceCard extends HistoryCardBase {
   HistoryPriceCard.showBrand(

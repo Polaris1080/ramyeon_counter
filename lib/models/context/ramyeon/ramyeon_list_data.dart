@@ -1,8 +1,8 @@
 // Base
-import '../base/model_base.dart';
+import '../../base/model_base.dart';
 // Model
-import '../model/company.dart';
-import '../model/ramyeon.dart';
+import '../../model/ramyeon/company.dart';
+import '../../model/ramyeon/ramyeon.dart';
 
 class RamyeonListData extends VirtualModelBase {
   RamyeonListData({

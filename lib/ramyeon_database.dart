@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'models/model/repository/company_repository.dart';
-import 'models/model/repository/ramyeon_repository.dart';
-import 'models/model/repository/rating_repository.dart';
-import 'models/model/repository/stock_repository.dart';
+import 'models/model/ramyeon/repository/company_repository.dart';
+import 'models/model/ramyeon/repository/ramyeon_repository.dart';
+import 'models/model/ramyeon/repository/rating_repository.dart';
+import 'models/model/ramyeon/repository/stock_repository.dart';
 
 class RamyeonDatabase {
   static const String dbName = 'ramyeon_database.db';

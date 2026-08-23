@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ramyeon_counter/models/model/stock.dart';
+import 'package:ramyeon_counter/models/model/ramyeon/stock.dart';
 
 const id = 0, brandId = 1, price = 99;
 

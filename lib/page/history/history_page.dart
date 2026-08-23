@@ -1,6 +1,6 @@
 // Model
-import 'package:ramyeon_counter/models/model/rating.dart';
-import 'package:ramyeon_counter/models/model/stock.dart';
+import 'package:ramyeon_counter/models/model/ramyeon/rating.dart';
+import 'package:ramyeon_counter/models/model/ramyeon/stock.dart';
 // Package
 import 'package:flutter/material.dart';
 // ViewModel

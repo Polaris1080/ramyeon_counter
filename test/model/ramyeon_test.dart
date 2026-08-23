@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ramyeon_counter/models/model/ramyeon.dart';
+import 'package:ramyeon_counter/models/model/ramyeon/ramyeon.dart';
 
 const id = 0, companyId = 1, brand = 'foo_bar', company = 'hoge';
 const tag = ['foo', 'bar'];

@@ -2,7 +2,7 @@
 import 'package:ramyeon_counter/utility/extension_methods/em_bool.dart';
 import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
 // Model
-import 'package:ramyeon_counter/models/model/repository/rating_repository.dart';
+import 'package:ramyeon_counter/models/model/ramyeon/repository/rating_repository.dart';
 // Package
 import 'package:flutter/material.dart';
 // Widget

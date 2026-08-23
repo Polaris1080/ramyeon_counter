@@ -1,10 +1,10 @@
 // Base
-import '../base/column_behind.dart';
-import '../base/em_castable_query_map.dart';
-import '../base/model_base.dart';
+import '../../base/column_behind.dart';
+import '../../base/em_castable_query_map.dart';
+import '../../base/model_base.dart';
 // Table
-import '../database/ramyeon/table/company_table_columns.dart';
-import '../database/ramyeon/table/ramyeon_table_columns.dart';
+import '../../database/ramyeon/table/company_table_columns.dart';
+import '../../database/ramyeon/table/ramyeon_table_columns.dart';
 // Model
 import 'company.dart';
 

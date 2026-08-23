@@ -3,8 +3,8 @@ import 'package:ramyeon_counter/models/database/ramyeon/ramyeon_database_tables.
 import 'package:ramyeon_counter/models/database/ramyeon/table/ramyeon_table_columns.dart';
 import 'package:ramyeon_counter/models/database/ramyeon/table/stock_table_columns.dart';
 import 'package:ramyeon_counter/ramyeon_database.dart';
-import 'package:ramyeon_counter/models/model/ramyeon.dart';
-import 'package:ramyeon_counter/models/model/stock.dart';
+import 'package:ramyeon_counter/models/model/ramyeon/ramyeon.dart';
+import 'package:ramyeon_counter/models/model/ramyeon/stock.dart';
 import 'package:ramyeon_counter/models/base/context_base.dart';
 import 'package:ramyeon_counter/models/base/model_base.dart';
 // Package
