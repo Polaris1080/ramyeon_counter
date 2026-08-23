@@ -1,6 +1,6 @@
 // Base
 import 'column_behind.dart';
-import '../database/table_columns_base.dart';
+import '../database/table_columns_definition.dart';
 import 'package:meta/meta_meta.dart';
 
 /// Model 'not' exist table

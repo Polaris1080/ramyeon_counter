@@ -1,4 +1,4 @@
-import '../../table_columns_base.dart';
+import '../../table_columns_definition.dart';
 
 enum RamyeonTableColumns {
   id,
