@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 // Partical
 part 'image_background_vm.dart';
 
-class ImageBackground extends StatelessWidget {
-  const ImageBackground({super.key, required this.vm, this.child});
-
-  final ImageBackgroundViewModel vm;
-
-  /* Argument */
-  @protected
-  final Widget? child;
-
+class const ImageBackground({
+  super.key,
+  required final ImageBackgroundViewModel vm,
+  final Widget? _child,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +17,7 @@ class ImageBackground extends StatelessWidget {
           repeat: ImageRepeat.repeat,
         ),
       ),
-      child: child,
+      child: _child,
     );
   }
 }

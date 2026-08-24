@@ -1,7 +1,7 @@
 part of 'image_background.dart';
 
 class ImageBackgroundViewModel extends ChangeNotifier {
-  ImageBackgroundViewModel({required String path}) : _path = path;
+  ImageBackgroundViewModel({required this._path});
 
   /// BackGround(cork)
   ImageBackgroundViewModel.cork() : _path = 'assets/images/cork.png';

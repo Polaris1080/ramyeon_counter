@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 // Partial
 part 'layered_text_vm.dart';
 
-class LayeredText extends StatelessWidget {
-  const LayeredText({super.key, required this.vm});
-
-  final LayeredTextViewModel vm;
-
+class const LayeredText({super.key, required final LayeredTextViewModel vm})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -22,4 +19,5 @@ class LayeredText extends StatelessWidget {
   }
 }
 
+/// [LayeredText]_[Color] selector.
 enum LayeredTextColor { primary, tertiary }
