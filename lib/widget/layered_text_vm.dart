@@ -10,7 +10,6 @@ class LayeredTextViewModel(
 }) extends ChangeNotifier {
   this : assert(overflow != .ellipsis); //（ellipsisだと表示が乱れる）
 
-  /* Text */
   /// 内容
   @OneTime()
   String get title => _title;
@@ -19,7 +18,6 @@ class LayeredTextViewModel(
   @OneTime()
   int? get maxLines => _maxLines;
 
-  /* Style */
   /// Stroked text as border.
   @OneTime()
   TextStyle get borderStyle => _borderStyle;

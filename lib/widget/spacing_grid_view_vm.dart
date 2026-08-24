@@ -1,35 +1,31 @@
 part of 'spacing_grid_view.dart';
 
-class SpacingGridViewViewModel extends ChangeNotifier {
+class SpacingGridViewViewModel({
+  required final int? _itemCount,
+  required final Size _itemSize,
+  required final double _windowWidth,
+}) extends ChangeNotifier {
+  /* Setting */
   static const Size _minSpacing = .new(5.0, 10.0);
 
-  SpacingGridViewViewModel({
-    required int? itemCount,
-    required Size itemSize,
-    required double windowWidth,
-  }) : _count = itemCount,
-       _itemSize = itemSize,
-       _windowWidth = windowWidth {
-    crossAxisCount = _calculateCrossAxisCount();
-  }
-
-  /// 個数
+  /// Item count
   @OneTime()
-  int? get count => _count;
+  int? get count => _itemCount;
 
-  /* Spacing */
-  /// 内
+  /// Inner padding
+  @OneTime()
   SliverGridDelegateWithMaxCrossAxisExtent get gridviewDelegate => .new(
     maxCrossAxisExtent: _itemSize.width,
-    mainAxisSpacing: verticalSpacing,
-    crossAxisSpacing: horizontalSpacing,
+    mainAxisSpacing: _verticalSpacing,
+    crossAxisSpacing: _horizontalSpacing,
     mainAxisExtent: _itemSize.height,
   );
 
-  /// 外
+  /// Outer padding
+  @OneTime()
   EdgeInsets get gridviewPadding => EdgeInsets.symmetric(
-    vertical: verticalSpacing,
-    horizontal: horizontalSpacing,
+    vertical: _verticalSpacing,
+    horizontal: _horizontalSpacing,
   );
 
   /// エラー対策用：[GridView]が表示できる横幅があるか？
@@ -37,25 +33,19 @@ class SpacingGridViewViewModel extends ChangeNotifier {
   bool get gridviewVisible =>
       _windowWidth > _itemSize.width + _minSpacing.width * 2;
 
-  /// 縦の間隔
-  double get verticalSpacing => min(
-    max(horizontalSpacing, _minSpacing.height), // 最低値
-    crossAxisCount * _minSpacing.width, // 最高値
+  double get _verticalSpacing => min(
+    max(_horizontalSpacing, _minSpacing.height), // 最低値
+    _crossAxisCount * _minSpacing.width, // 最高値
   );
 
-  /// 横の間隔
-  double get horizontalSpacing =>
-      (_windowWidth - crossAxisCount * _itemSize.width) /
-      (crossAxisCount + 1); // 両端＋列間
+  double get _horizontalSpacing =>
+      (_windowWidth - _crossAxisCount * _itemSize.width) /
+      (_crossAxisCount + 1); // 両端＋列間
 
-  /// [GridView]の列数
-  late final int crossAxisCount;
+  /// [GridView] lines.
+  late final int _crossAxisCount = _calculateCrossAxisCount();
   int _calculateCrossAxisCount({int count = 1}) =>
       _itemSize.width * count + _minSpacing.width * (count + 1) < _windowWidth
       ? _calculateCrossAxisCount(count: ++count)
       : count - 1;
-
-  final int? _count;
-  final Size _itemSize;
-  final double _windowWidth;
 }

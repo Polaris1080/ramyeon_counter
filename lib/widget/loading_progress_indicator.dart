@@ -1,5 +1,6 @@
-/* Package */
+// Package
 import 'package:flutter/material.dart';
+// Annotation
 import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 // Partical
 part 'loading_progress_indicator_vm.dart';

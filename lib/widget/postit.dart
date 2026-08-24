@@ -1,21 +1,18 @@
 // Package
 import 'package:flutter/material.dart';
+// Annotation
 import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 // Partial
 part 'postit_vm.dart';
 
-class Postit extends StatelessWidget {
+class const Postit({
+  super.key,
+  required final PostitViewModel vm,
+  final Widget? _child,
+}) extends StatelessWidget {
   /* Setting */
   @protected
   static const Size defaultSize = Size(150.0, 150.0);
-
-  const Postit({super.key, required this.vm, this.child});
-
-  final PostitViewModel vm;
-
-  /* Argument */
-  @protected
-  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +29,7 @@ class Postit extends StatelessWidget {
       width: vm.width,
       height: vm.height,
       decoration: BoxDecoration(boxShadow: [shadow], color: vm.color),
-      child: child,
+      child: _child,
     );
   }
 }

@@ -1,22 +1,17 @@
 // Package
 import 'dart:math';
+
 import 'package:flutter/material.dart';
+// Annotation
 import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 // Partial
 part 'spacing_grid_view_vm.dart';
 
-class SpacingGridView extends StatelessWidget {
-  const SpacingGridView({
-    super.key,
-    required this.vm,
-    required this.itemBuilder,
-  });
-
-  final SpacingGridViewViewModel vm;
-
-  /* Argument */
-  final Widget? Function(BuildContext, int) itemBuilder;
-
+class const SpacingGridView({
+  super.key,
+  required final SpacingGridViewViewModel vm,
+  required final Widget? Function(BuildContext, int) itemBuilder,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(

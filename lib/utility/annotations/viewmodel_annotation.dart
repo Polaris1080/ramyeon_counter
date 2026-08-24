@@ -10,7 +10,7 @@ class const TwoWay();
 class const OneWay();
 
 /// Widget --> ViewModel
-@Target({TargetKind.field, TargetKind.getter})
+@Target({TargetKind.field, TargetKind.setter})
 class const OneWayToSource();
 
 /// Widget --- ViewModel
