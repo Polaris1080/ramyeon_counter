@@ -13,7 +13,8 @@ class SpacingGridViewViewModel extends ChangeNotifier {
     crossAxisCount = _calculateCrossAxisCount();
   }
 
-  /// 個数【OneTime】
+  /// 個数
+  @OneTime()
   int? get count => _count;
 
   /* Spacing */
@@ -31,7 +32,8 @@ class SpacingGridViewViewModel extends ChangeNotifier {
     horizontal: horizontalSpacing,
   );
 
-  /// エラー対策用：[GridView]が表示できる横幅があるか？【OneTime】
+  /// エラー対策用：[GridView]が表示できる横幅があるか？
+  @OneTime()
   bool get gridviewVisible =>
       _windowWidth > _itemSize.width + _minSpacing.width * 2;
 

@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 // Model
 import 'package:ramyeon_counter/models/model/ramyeon/repository/rating_repository.dart';
 import 'package:ramyeon_counter/models/model/ramyeon/repository/stock_repository.dart';
-import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
+import 'package:ramyeon_counter/utility/extension_types/ramyeon_id.dart';
 // (Widget)
 import 'package:ramyeon_counter/page/detail/dialog/add_dialog.dart';
 import 'package:ramyeon_counter/page/detail/dialog/eat_sheet.dart';

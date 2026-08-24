@@ -5,7 +5,7 @@ import '../../../database/ramyeon/table/company_table_columns.dart';
 import '../../../database/ramyeon/table/ramyeon_table_columns.dart';
 import '../../../database/ramyeon/ramyeon_database.dart';
 // Extention
-import 'package:ramyeon_counter/utility/extension_type/ramyeon_id.dart';
+import 'package:ramyeon_counter/utility/extension_types/ramyeon_id.dart';
 // Model
 import '../ramyeon.dart';
 // Package

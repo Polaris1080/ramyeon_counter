@@ -11,14 +11,17 @@ class LayeredTextViewModel(
   this : assert(overflow != .ellipsis); //（ellipsisだと表示が乱れる）
 
   /* Text */
-  /// 内容【OneTime】
+  /// 内容
+  @OneTime()
   String get title => _title;
 
-  /// 列（制限）【OneTime】
+  /// 列（制限）
+  @OneTime()
   int? get maxLines => _maxLines;
 
   /* Style */
-  /// Stroked text as border.【OneTime】
+  /// Stroked text as border.
+  @OneTime()
   TextStyle get borderStyle => _borderStyle;
   final TextStyle _borderStyle = TextStyle(
     color: switch (color) {
@@ -34,7 +37,8 @@ class LayeredTextViewModel(
     },
   );
 
-  /// Solid text as fill.【OneTime】
+  /// Solid text as fill.
+  @OneTime()
   TextStyle get baseStyle => _baseStyle;
   final TextStyle _baseStyle = TextStyle(
     color: switch (color) {

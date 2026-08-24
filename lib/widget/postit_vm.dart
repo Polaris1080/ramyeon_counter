@@ -12,7 +12,8 @@ class PostitViewModel extends ChangeNotifier {
        _size = size;
 
   /* Color */
-  /// 色【OneWay】
+  /// 色
+  @OneWay()
   Color get color => _overrideColor ?? _defaultColor;
   set overrideColor(Color? value) {
     if (_overrideColor == value) {
@@ -22,10 +23,12 @@ class PostitViewModel extends ChangeNotifier {
   }
 
   /* Size */
-  /// 横【OneTime】
+  /// 横
+  @OneTime()
   double get width => _size.width;
 
-  /// 縦【OneTime】
+  /// 縦
+  @OneTime()
   double get height => _size.height;
 
   final Color _defaultColor;

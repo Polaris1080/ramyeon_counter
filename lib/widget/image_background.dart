@@ -1,5 +1,6 @@
 // Package
 import 'package:flutter/material.dart';
+import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 // Partical
 part 'image_background_vm.dart';
 

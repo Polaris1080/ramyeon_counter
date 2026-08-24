@@ -1,6 +1,7 @@
 // Package
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
+import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 // Partial
 part 'layered_text_vm.dart';
 

@@ -6,7 +6,8 @@ class LoadingProgressIndicatorViewModel(
   Duration? duration,
 }) extends ChangeNotifier {
   /* Color */
-  /// バーの色【OneWay】
+  /// バーの色
+  @OneWay()
   Color get color => _overrideColor ?? ColorScheme.of(_context).tertiary;
   set overrideColor(Color? value) {
     if (_overrideColor == value) {
@@ -20,7 +21,8 @@ class LoadingProgressIndicatorViewModel(
       : null;
 
   /* Delay */
-  /// 遅延時間【OneTime】
+  /// 遅延時間
+  @OneTime()
   Future get delay => Future.delayed(_duration);
   final Duration _duration = duration ?? const Duration();
 }
