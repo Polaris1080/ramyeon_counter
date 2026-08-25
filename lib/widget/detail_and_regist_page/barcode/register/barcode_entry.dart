@@ -1,14 +1,10 @@
 part of '../barcode_register.dart';
 
-class BarcodeEntry extends StatelessWidget {
-  /* Setting */
+class const BarcodeEntry(
+  @protected final BarcodeRegisterViewModel vm, {
+  super.key,
+}) extends StatelessWidget {
   static const _entryWidth = 170.0, _sectionWidth = 300.0, _spacing = 15.0;
-
-  const BarcodeEntry(this.vm, {super.key});
-
-  /* Value */
-  @protected
-  final BarcodeRegisterViewModel vm;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +44,7 @@ class BarcodeEntry extends StatelessWidget {
 
     /* Rayout */
     final int steps = (2 - (MediaQuery.of(context).size.width ~/ _sectionWidth))
-        .minmax(min:1, max:2); // (minStep, maxStep)
+        .minmax(min: 1, max: 2); // (minStep, maxStep)
 
     return switch (steps) {
       2 => Column(

@@ -1,4 +1,4 @@
-// Extention-type
+// Extention
 import 'count.dart';
 import 'jam.dart';
 

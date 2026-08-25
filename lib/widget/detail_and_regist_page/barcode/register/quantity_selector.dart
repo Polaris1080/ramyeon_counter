@@ -1,14 +1,10 @@
 part of '../barcode_register.dart';
 
-class QuantitySelector extends StatelessWidget {
-  /* Setting */
+class const QuantitySelector(
+  @protected final BarcodeRegisterViewModel vm, {
+  super.key,
+}) extends StatelessWidget {
   static const _count = 5, _tooltip = '個数', _unit = '個';
-
-  const QuantitySelector(this.vm, {super.key});
-
-  /* Value */
-  @protected
-  final BarcodeRegisterViewModel vm;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +14,7 @@ class QuantitySelector extends StatelessWidget {
         onSelectionChanged: vm.countChanged,
         selected: {vm.countSelected.value},
         showSelectedIcon: false,
-        segments: _count.toRangeIterable().select((i, _) {
+        segments: _count.toRangeIterable().map((i) {
           return switch ((vm.countSelected == i, vm.source.containsKey(i))) {
             // 選択されており、その個数で登録されている
             (true, true) => ButtonSegment<int>(
@@ -55,6 +51,7 @@ class QuantitySelector extends StatelessWidget {
   }
 }
 
+/* extension(self) */
 extension on int {
   /* Method */
   String get fullWidthDigits => toString().fullWidthDigits;

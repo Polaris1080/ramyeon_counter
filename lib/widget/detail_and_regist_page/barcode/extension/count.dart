@@ -1,1 +1,1 @@
-extension type Count(int value) implements int {}
+extension type Count(int value) implements int;

@@ -1,1 +1,1 @@
-extension type Jam(int value) implements int {}
+extension type Jam(int value) implements int;

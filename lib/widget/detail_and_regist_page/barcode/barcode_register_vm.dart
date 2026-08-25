@@ -1,17 +1,18 @@
-// Extension-type
+// Extension
 import 'extension/count.dart';
 import 'extension/jam.dart';
+
 // Package
 import 'package:flutter/material.dart';
 
-class BarcodeRegisterViewModel extends ChangeNotifier {
-  /* Setting */
-  static final regexp = RegExp(r'^\d{8}$|^\d{13}$');
-
-  BarcodeRegisterViewModel() {
+class BarcodeRegisterViewModel() extends ChangeNotifier {
+  this {
     _sourceChanged(); // 初期化
     notifyListeners();
   }
+
+  /* Setting */
+  static final regexp = RegExp(r'^\d{8}$|^\d{13}$');
 
   Jam? get barcode => _barcode;
   Jam? _barcode;

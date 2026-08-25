@@ -1,19 +1,15 @@
+// Base
+import '../parts/barcode_chip.dart';
+
 // Package
-
 import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/widget/detail_and_regist_page/barcode/parts/barcode_chip.dart';
 
-class DeletableBarcodeChip extends BarcodeChip {
-  const DeletableBarcodeChip(
-    super.data, {
-    super.key,
-    super.chipWidth = BarcodeChip.defaultWidth,
-    this.onDeleted,
-  });
-
-  /* Argument */
-  final Function()? onDeleted;
-
+class const DeletableBarcodeChip(
+  super.data, {
+  super.key,
+  super.chipWidth,
+  final Function()? _onDeleted,
+}) extends BarcodeChip {
   @override
   Widget build(BuildContext context) {
     return InputChip(
@@ -23,8 +19,8 @@ class DeletableBarcodeChip extends BarcodeChip {
       ),
       padding: padding,
       labelPadding: labelPadding,
-      onDeleted: onDeleted,
-      onPressed: onDeleted == null ? () {} : null,
+      onDeleted: _onDeleted,
+      onPressed: _onDeleted == null ? () {} : null,
     );
   }
 }

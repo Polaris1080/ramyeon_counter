@@ -44,7 +44,7 @@ class BarcodeRegister extends StatelessWidget {
         ListenableBuilder(
           listenable: vm,
           builder: (context, _) =>
-              DeletableBarcodeViewer(source: vm.source, viewmodel: vm),
+              DeletableBarcodeViewer(source: vm.source, vm: vm),
         ),
       ],
     );

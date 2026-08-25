@@ -1,17 +1,10 @@
 part of '../barcode_register.dart';
 
-class DeletableBarcodeViewer extends BarcodeViewer {
-  const DeletableBarcodeViewer({
-    super.key,
-    required super.source,
-    required BarcodeRegisterViewModel viewmodel,
-  }) : vm = viewmodel;
-
-  /* Value */
-  @protected
-  final BarcodeRegisterViewModel vm;
-
-  /* Widget */
+class const DeletableBarcodeViewer({
+  super.key,
+  required super.source,
+  required final BarcodeRegisterViewModel vm,
+}) extends BarcodeViewer {
   @protected
   @override
   Widget barcodeChip(BuildContext context, MapEntry<Count, Jam> source) =>
@@ -35,9 +28,8 @@ class DeletableBarcodeViewer extends BarcodeViewer {
               title: const Text("削除しますか？"),
               content: Text(source.displayData),
               actions: definication.entries
-                  .select(
-                    (s, _) =>
-                        TextButton(onPressed: s.value, child: Text(s.key)),
+                  .map(
+                    (e) => TextButton(onPressed: e.value, child: Text(e.key)),
                   )
                   .toList(),
             );
