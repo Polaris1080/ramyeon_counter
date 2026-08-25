@@ -1,14 +1,12 @@
 // Base
-import 'package:ramyeon_counter/widget/detail_and_regist_page/base/chip_based_viewer.dart';
+import '../base/chip_based_viewer.dart';
 
-// Extension-method
-import 'extension/em_barcode_data.dart';
-// Extension-type
+// Extension
 import 'extension/count.dart';
+import 'extension/em_barcode_data.dart';
 import 'extension/jam.dart';
 
 // Package
-import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 
 // Parts
@@ -24,7 +22,7 @@ class const BarcodeViewer({
       spacing: super.spacing.width,
       runSpacing: super.spacing.height,
       children: source.entries
-          .select((barcodeData, _) => barcodeChip(context, barcodeData))
+          .map((barcodeData) => barcodeChip(context, barcodeData))
           .toList(),
     );
   }

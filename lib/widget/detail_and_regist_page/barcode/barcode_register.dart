@@ -1,5 +1,9 @@
-// Extension-method
+// Extension
 import 'package:ramyeon_counter/utility/extension_methods/em_num.dart';
+
+import 'extension/em_barcode_data.dart';
+import 'extension/count.dart';
+import 'extension/jam.dart';
 
 // Package
 import 'dart:io';
@@ -8,33 +12,24 @@ import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// ViewModel
-import 'barcode_register_vm.dart';
-// DeletableBarcodeViewer
+// Other
 import 'barcode_viewer.dart';
+import 'barcode_register_vm.dart';
 import 'parts/deletable_barcode_chip.dart';
-import 'extension/em_barcode_data.dart';
-import 'extension/count.dart';
-import 'extension/jam.dart';
+
 // Partical
 part 'register/barcode_entry.dart';
 part 'register/deletable_barcode_viewer.dart';
 part 'register/quantity_selector.dart';
 
-class BarcodeRegister extends StatelessWidget {
-  /* Setting */
-  static const _verticalSpacing = 10.0;
-
-  const BarcodeRegister(this.vm, {super.key});
-
-  /* Value */
-  @protected
-  final BarcodeRegisterViewModel vm;
-
+class const BarcodeRegister(
+  @protected final BarcodeRegisterViewModel vm, {
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: _verticalSpacing,
+      spacing: 10.0, // Vertical spacing.
       children: [
         /* Barcode */
         BarcodeEntry(vm),

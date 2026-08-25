@@ -1,4 +1,6 @@
 // Extension
+import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
+
 import 'extension/count.dart';
 import 'extension/jam.dart';
 
@@ -11,35 +13,33 @@ class BarcodeRegisterViewModel() extends ChangeNotifier {
     notifyListeners();
   }
 
-  /* Setting */
   static final regexp = RegExp(r'^\d{8}$|^\d{13}$');
 
+  @OneWay()
   Jam? get barcode => _barcode;
   Jam? _barcode;
 
+  @OneWay()
   Count get countSelected => _countSelected;
   Count _countSelected = Count(1);
 
-  /* source */
+  @OneWay()
   Map<Count, Jam> get source => _source;
   final Map<Count, Jam> _source = {
     Count(1): Jam(8801073114920),
     Count(5): Jam(8801073143319),
   };
 
-  /// 追加
   void _addSource() {
     _source[countSelected] = barcode!;
     _sourceChanged();
   }
 
-  /// 削除
   void _removeSource(Count key) {
     _source.remove(key);
     _sourceChanged();
   }
 
-  /// 変更された
   void _sourceChanged() {
     void selectCount() {
       int c = 1;
