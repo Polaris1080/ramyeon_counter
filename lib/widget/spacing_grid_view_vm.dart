@@ -6,7 +6,7 @@ class SpacingGridViewViewModel({
   required final double _windowWidth,
 }) extends ChangeNotifier {
   /* Setting */
-  static const Size _minSpacing = .new(5.0, 10.0);
+  static const _minSpacing = Size(5.0, 10.0);
 
   /// Item count
   @OneTime()
@@ -33,9 +33,10 @@ class SpacingGridViewViewModel({
   bool get gridviewVisible =>
       _windowWidth > _itemSize.width + _minSpacing.width * 2;
 
-  double get _verticalSpacing => min(
-    max(_horizontalSpacing, _minSpacing.height), // 最低値
-    _crossAxisCount * _minSpacing.width, // 最高値
+  /* Behind */
+  double get _verticalSpacing => _horizontalSpacing.minmax(
+    min: _minSpacing.height,
+    max: _crossAxisCount * _minSpacing.width,
   );
 
   double get _horizontalSpacing =>

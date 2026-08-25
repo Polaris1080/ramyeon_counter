@@ -4,13 +4,14 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 // Annotation
 import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
+import 'package:ramyeon_counter/utility/extension_methods/em_double.dart';
 // Partial
 part 'spacing_grid_view_vm.dart';
 
 class const SpacingGridView({
   super.key,
   required final SpacingGridViewViewModel vm,
-  required final Widget? Function(BuildContext, int) itemBuilder,
+  required final Widget? Function(BuildContext, int) _itemBuilder,
 }) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class const SpacingGridView({
         child: GridView.builder(
           gridDelegate: vm.gridviewDelegate,
           itemCount: vm.count,
-          itemBuilder: itemBuilder,
+          itemBuilder: _itemBuilder,
         ),
       ),
     );

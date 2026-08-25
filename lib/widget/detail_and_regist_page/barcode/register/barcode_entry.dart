@@ -48,7 +48,7 @@ class BarcodeEntry extends StatelessWidget {
 
     /* Rayout */
     final int steps = (2 - (MediaQuery.of(context).size.width ~/ _sectionWidth))
-        .minmax(1, 2); // (minStep, maxStep)
+        .minmax(min:1, max:2); // (minStep, maxStep)
 
     return switch (steps) {
       2 => Column(

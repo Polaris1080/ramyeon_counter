@@ -1,5 +1,6 @@
 // Base
 import 'custom_app_bar_base.dart';
+
 // Extention-method
 import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
 // Package
@@ -25,7 +26,9 @@ class HomeAppBar extends CustomAppBarBase {
                 },
                 style: TextStyle(
                   // [300:20, 330:22, 360:24...]
-                  fontSize: (windowWidth ~/ 30).minmax(20, 32).toDouble(),
+                  fontSize: (windowWidth ~/ 30)
+                      .minmax(min: 20, max: 32)
+                      .toDouble(),
                 ),
                 overflow: .visible,
               ),
@@ -39,7 +42,9 @@ class HomeAppBar extends CustomAppBarBase {
                   },
                   color: .tertiary,
                   // [300:16, 315:17, 330:18...]
-                  fontSize: ((windowWidth ~/ 15) - 4).minmax(16, 36).toDouble(),
+                  fontSize: ((windowWidth ~/ 15) - 4)
+                      .minmax(min: 16, max: 36)
+                      .toDouble(),
                   overflow: .visible,
                 ),
               ),
