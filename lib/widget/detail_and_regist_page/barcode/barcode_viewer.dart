@@ -10,24 +10,17 @@ import 'extension/jam.dart';
 import 'package:flutter/material.dart';
 
 // Parts
-import './parts/barcode_chip.dart';
+import 'parts/barcode_chip.dart';
 
 class const BarcodeViewer({
   super.key,
   @protected required final Map<Count, Jam> source,
 }) extends ChipBasedViewer {
   @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: super.spacing.width,
-      runSpacing: super.spacing.height,
-      children: source.entries
-          .map((barcodeData) => barcodeChip(context, barcodeData))
-          .toList(),
-    );
-  }
+  List<Widget> chips(BuildContext context) => source.entries
+      .map((barcodeData) => barcodeChip(context, barcodeData))
+      .toList();
 
-  /* Widget */
   @protected
   Widget barcodeChip(BuildContext context, MapEntry<Count, Jam> source) =>
       BarcodeChip(vm: .new(data: source.displayData));

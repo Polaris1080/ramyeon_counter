@@ -12,7 +12,7 @@ import '../../base/viewer_chip_base_vm.dart';
 // Partical
 part 'tag_chip_vm.dart';
 
-class const TagChip(final TagChipViewModel vm, {super.key})
+class const TagChip({super.key, required final TagChipViewModel vm})
     extends ViewerChipBase {
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,17 @@
 // Package
 import 'package:flutter/material.dart';
 
-abstract class ChipBasedViewer extends StatelessWidget {
-  /* Setting */
-  @protected
-  Size get spacing => Size(10.0, 10.0);
+abstract class const ChipBasedViewer({super.key}) extends StatelessWidget {
+  static const _spacing = Size(10.0, 10.0);
 
-  const ChipBasedViewer({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: _spacing.width,
+      runSpacing: _spacing.height,
+      children: chips(context),
+    );
+  }
+
+  List<Widget> chips(BuildContext context);
 }
