@@ -9,11 +9,8 @@ class const BarcodeEntry(
   @override
   Widget build(BuildContext context) {
     /* Widget */
-    Widget addButton() => ListenableBuilder(
-      listenable: vm,
-      builder: (context, _) =>
-          IconButton(icon: Icon(Icons.add), onPressed: vm.addButtonClicked()),
-    );
+    Widget addButton() =>
+        IconButton(icon: Icon(Icons.add), onPressed: vm.addButtonClicked());
 
     Widget scanButton() => IconButton(
       icon: Icon(Icons.barcode_reader),

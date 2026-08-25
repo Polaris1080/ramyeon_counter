@@ -1,6 +1,7 @@
-// Extension
+// Annotation
 import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 
+// Extension
 import 'extension/count.dart';
 import 'extension/jam.dart';
 
@@ -55,16 +56,18 @@ class BarcodeRegisterViewModel() extends ChangeNotifier {
     notifyListeners();
   }
 
-  /* Command(DeletableBarcodeViewer) */
+  /* Command */
+  /* (DeletableBarcodeViewer) */
+  void removeButtonClicked(Count key) => _removeSource(key);
+
+  /* (Entry) */
   VoidCallback? addButtonClicked() =>
       barcode == null ||
           source.containsKey(countSelected) ||
           source.containsValue(barcode!)
       ? null
       : _addSource;
-  void removeButtonClicked(Count key) => _removeSource(key);
-
-  /* Command(BarcodeEntry) */
+      
   void textformChanged(String value) {
     _barcode = regexp.hasMatch(value) ? Jam(int.parse(value)) : null;
     notifyListeners();
@@ -75,7 +78,7 @@ class BarcodeRegisterViewModel() extends ChangeNotifier {
     _ => null,
   };
 
-  /* Command(QuantitySelector) */
+  /* (QuantitySelector) */
   void countChanged(Set<int> newSelection) {
     _countSelected = Count(newSelection.first);
     notifyListeners();

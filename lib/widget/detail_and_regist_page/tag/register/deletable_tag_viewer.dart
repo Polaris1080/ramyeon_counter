@@ -19,7 +19,7 @@ class const DeletableTagsViewer({
               Navigator.pop(context);
             },
             '削除': () {
-              vm.remove(1);
+              vm.removeSource(1);
               Navigator.pop(context);
             },
           };

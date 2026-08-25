@@ -1,3 +1,6 @@
+// Base
+import '../base/chip_based_register.dart';
+
 // Extension
 import 'package:ramyeon_counter/utility/extension_methods/em_num.dart';
 
@@ -22,28 +25,21 @@ part 'register/barcode_entry.dart';
 part 'register/deletable_barcode_viewer.dart';
 part 'register/quantity_selector.dart';
 
-class const BarcodeRegister(
-  @protected final BarcodeRegisterViewModel vm, {
-  super.key,
-}) extends StatelessWidget {
+class const BarcodeRegister(final BarcodeRegisterViewModel vm, {super.key})
+    extends ChipBasedRegister {
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      spacing: 10.0, // Vertical spacing.
-      children: [
-        /* Barcode */
-        BarcodeEntry(vm),
-        /* Selector */
-        QuantitySelector(vm),
-        /* Viewer */
-        ListenableBuilder(
-          listenable: vm,
-          builder: (context, _) =>
-              DeletableBarcodeViewer(source: vm.source, vm: vm),
-        ),
-      ],
-    );
-  }
+  List<Widget> get components => [
+    // Entry
+    BarcodeEntry(vm),
+    // Selector
+    QuantitySelector(vm),
+    // Viewer
+    ListenableBuilder(
+      listenable: vm,
+      builder: (context, _) =>
+          DeletableBarcodeViewer(source: vm.source, vm: vm),
+    ),
+  ];
 }
 
 /* 後で使うかも */
