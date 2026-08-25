@@ -1,11 +1,12 @@
 part of 'ramyeon_image_register.dart';
 
-class RamyeonImageRegisterViewModel extends RamyeonImageBaseViewModel {
-  RamyeonImageRegisterViewModel({required super.brandId});
-
+class RamyeonImageRegisterViewModel({required super.brandId})
+    extends RamyeonImageBaseViewModel {
   /// Captured image path.
+  @OneWay()
   String? get temporaryImagePath => _temporaryImagePath;
   String? _temporaryImagePath;
+  @protected
   set temporaryImagePath(String value) {
     if (_temporaryImagePath != value) {
       _temporaryImagePath = value;
@@ -13,7 +14,7 @@ class RamyeonImageRegisterViewModel extends RamyeonImageBaseViewModel {
     }
   }
 
-  /* Event */
+  /* Command */
   Future onCaptureButtonPressed() async {
     // Capture image.
     final XFile? image = await ImagePicker().pickImage(
@@ -40,7 +41,7 @@ class RamyeonImageRegisterViewModel extends RamyeonImageBaseViewModel {
     // Serialize image.
     final file = File(temporaryImagePath!);
     if (await file.exists()) {
-      await file.copy(await thumbnailPath);
+      await file.copy(thumbnailPath);
     }
   }
 }

@@ -1,15 +1,12 @@
 part of 'ramyeon_image_viewer.dart';
 
-class RamyeonImageViewerDetail extends StatelessWidget {
-  /* Setting */
+class const RamyeonImageViewerDetail(
+  /// [RamyeonImageViewer] image
+  final Image image, {
+  super.key,
+}) extends StatelessWidget {
   static const _padding = 20.0,
       _imageSize = BoxConstraints(maxWidth: 1024, maxHeight: 1024);
-
-  const RamyeonImageViewerDetail(this.image, {super.key});
-
-  /* Argument */
-  /// [RamyeonImageViewer] image
-  final Image image;
 
   @override
   Widget build(BuildContext context) {

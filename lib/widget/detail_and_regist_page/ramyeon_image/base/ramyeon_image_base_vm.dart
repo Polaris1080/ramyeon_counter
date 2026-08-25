@@ -1,41 +1,48 @@
-// Package
 import 'dart:io';
+
+// Annotation
+import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
+
+// Package
 import 'package:flutter/material.dart';
-//import 'package:path_provider/path_provider.dart';
 
-class RamyeonImageBaseViewModel extends ChangeNotifier {
-  RamyeonImageBaseViewModel({required this.brandId}) {
-    // TODO:暫定
-    final path = thumbnailPath;
-    _imagePath = File(path).existsSync() ? path : null;
-    _isImageLoaded = _imagePath != null;
-    // thumbnailPath.then(
-    //   (path) => {
-    //     _imagePath = File(path).existsSync() ? path : null,
-    //     _isImageLoaded = _imagePath != null,
-    //   },
-    // );
-  }
+class RamyeonImageBaseViewModel({required final int brandId})
+    extends ChangeNotifier {
+  /// Now hovering.
+  @OneWay()
+  bool get isHovering => _isHovering;
+  bool _isHovering = false;
 
-  /* Argument */
-  final int brandId;
+  /// Image opacity while hovering.
+  @OneWay()
+  double get hoveringOpacity => isHovering ? 0.8 : 1.0;
 
-  /* Value */
-  bool get isImageLoaded => _isImageLoaded;
-  bool _isImageLoaded = false;
-  set isImageLoaded(bool value) {
-    if (_isImageLoaded != value) {
-      _isImageLoaded = value;
+  /// Image file path.
+  @OneWay()
+  String? get imagePath => _imagePath;
+  late String? _imagePath = File(thumbnailPath).existsSync()
+      ? thumbnailPath
+      : null;
+  @protected
+  set imagePath(String value) {
+    if (_imagePath != value) {
+      _imagePath = value;
       notifyListeners();
     }
   }
 
-  /* Hover */
-  bool get isHovering => _isHovering;
-  bool _isHovering = false;
+  final String thumbnailPath = 'C:/Users/Polar/Documents/${brandId}_full.JPG';
 
-  double get hoveringOpacity => isHovering ? 0.8 : 1.0;
+  /// Image file path exist.
+  @OneWay()
+  bool get isImagePathExist => imagePath != null;
 
+  /// Image loading success.
+  @OneWay()
+  bool get isImageLoaded => _isImageLoaded;
+  late bool _isImageLoaded = _imagePath != null;
+
+  /* Command */
   void hoverRegionEnter(_) {
     _isHovering = true;
     notifyListeners();
@@ -46,21 +53,7 @@ class RamyeonImageBaseViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /* Path */
-  String? get imagePath => _imagePath;
-  String? _imagePath;
-  set imagePath(String value) {
-    if (_imagePath != value) {
-      _imagePath = value;
-      notifyListeners();
-    }
+  void imageLoadingErrorOccurred() {
+    _isImageLoaded = false;
   }
-
-  bool get isImagePathExist => imagePath != null;
-
-  /* Function */
-  // TODO:暫定
-  String get thumbnailPath => 'C:/Users/Polar/Documents/${brandId}_full.JPG';
-  // Future<String> get thumbnailPath async =>
-  //     '${(await getApplicationDocumentsDirectory()).path}/thumbnail/${brandId}_full.JPG';
 }

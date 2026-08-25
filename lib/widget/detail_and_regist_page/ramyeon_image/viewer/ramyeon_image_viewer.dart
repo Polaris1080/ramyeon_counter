@@ -1,16 +1,18 @@
 // Base
 import '../base/ramyeon_image_base.dart';
 import '../base/ramyeon_image_base_vm.dart';
+
 // Package
 import 'package:flutter/material.dart';
 // Partical
 part 'ramyeon_image_viewer_detail.dart';
 part 'ramyeon_image_viewer_vm.dart';
 
-class RamyeonImageViewer extends RamyeonImageBase {
-  const RamyeonImageViewer({super.key, required this.vm}) : super(vm);
-
-  final RamyeonImageViewerViewModel vm;
+class const RamyeonImageViewer({
+  super.key,
+  required final RamyeonImageViewerViewModel vm,
+}) extends RamyeonImageBase {
+  this : super(vm);
 
   @override
   Widget overlayArea(BuildContext context) {

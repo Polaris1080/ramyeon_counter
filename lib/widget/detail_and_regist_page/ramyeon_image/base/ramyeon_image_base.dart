@@ -1,19 +1,19 @@
 // Base
 import 'ramyeon_image_base_vm.dart';
+
 // Package
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-abstract class RamyeonImageBase extends StatelessWidget {
+abstract class const RamyeonImageBase(RamyeonImageBaseViewModel vm, {super.key})
+    extends StatelessWidget {
   /* Setting */
   static const heroTag = 'imageHero',
       _circularBackgroundColor = Colors.blue,
       _circularIconColor = Colors.white,
       _circularClipRadius = 10.0;
 
-  const RamyeonImageBase(RamyeonImageBaseViewModel vm, {super.key}) : _vm = vm;
-
-  final RamyeonImageBaseViewModel _vm;
+  final RamyeonImageBaseViewModel _vm = vm;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ abstract class RamyeonImageBase extends StatelessWidget {
                     // ...error
                     errorBuilder: (context, error, stackTrace) {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
-                        _vm.isImageLoaded = false;
+                        _vm.imageLoadingErrorOccurred();
                       });
                       return _emptyBorder(context);
                     },
