@@ -1,12 +1,12 @@
+/// @docImport './table/barcode_table_columns.dart';
+/// @docImport './table/company_table_columns.dart';
+/// @docImport './table/ramyeon_table_columns.dart';
+/// @docImport './table/rating_table_columns.dart';
+/// @docImport './table/stock_table_columns.dart';
+library;
+
 // Base
 import '../base/database_tables_base.dart';
-
-// Table
-import './table/barcode_table_columns.dart';
-import './table/company_table_columns.dart';
-import './table/ramyeon_table_columns.dart';
-import './table/rating_table_columns.dart';
-import './table/stock_table_columns.dart';
 
 enum RamyeonDatabaseTables implements DatabaseTablesBase {
   /// [BarcodeTableColumns]

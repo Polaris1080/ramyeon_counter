@@ -1,8 +1,9 @@
+/// @docImport '../../model/ramyeon/company.dart';
+/// @docImport '../../model/ramyeon/ramyeon.dart';
+library;
+
 // Base
 import '../../base/model_base.dart';
-// Model
-import '../../model/ramyeon/company.dart';
-import '../../model/ramyeon/ramyeon.dart';
 
 class RamyeonListData({
   /// [Ramyeon].id
