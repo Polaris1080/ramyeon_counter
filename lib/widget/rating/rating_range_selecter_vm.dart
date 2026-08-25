@@ -1,10 +1,11 @@
 // Annotation
 import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 
+// Extension
+import 'package:ramyeon_counter/utility/extension_methods/em_range_values.dart';
+
 // Package
 import 'package:flutter/material.dart';
-
-import '../../utility/extension_methods/em_range_values.dart';
 
 class RatingRangeSelecterViewModel extends ChangeNotifier {
   /* Setting */
