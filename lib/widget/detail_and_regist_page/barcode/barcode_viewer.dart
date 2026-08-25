@@ -10,7 +10,7 @@ import 'extension/jam.dart';
 import 'package:flutter/material.dart';
 
 // Parts
-import 'parts/barcode_chip.dart';
+import 'chip/barcode_chip.dart';
 
 class const BarcodeViewer({
   super.key,

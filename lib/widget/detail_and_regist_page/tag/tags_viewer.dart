@@ -5,7 +5,7 @@ import '../base/chip_based_viewer.dart';
 import 'package:flutter/material.dart';
 
 // Parts
-import 'parts/tag_chip.dart';
+import 'chip/tag_chip.dart';
 
 class const TagsViewer({
   super.key,

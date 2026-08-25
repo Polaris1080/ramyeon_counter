@@ -15,7 +15,7 @@ import 'package:flutter/services.dart';
 // Other
 import 'barcode_viewer.dart';
 import 'barcode_register_vm.dart';
-import 'parts/deletable_barcode_chip.dart';
+import 'chip/deletable_barcode_chip.dart';
 
 // Partical
 part 'register/barcode_entry.dart';
