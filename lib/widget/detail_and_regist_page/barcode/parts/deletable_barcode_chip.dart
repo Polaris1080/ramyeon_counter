@@ -1,26 +1,32 @@
+// Annotation
+import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
+
 // Base
-import '../parts/barcode_chip.dart';
+import 'barcode_chip.dart';
 
 // Package
 import 'package:flutter/material.dart';
 
-class const DeletableBarcodeChip(
-  super.data, {
+// Partial
+part 'deletable_barcode_chip_vm.dart';
+
+class const DeletableBarcodeChip({
   super.key,
-  super.chipWidth,
-  final Function()? _onDeleted,
+  required final DeletableBarcodeChipViewModel vm,
 }) extends BarcodeChip {
+  this : super(vm: vm);
+
   @override
   Widget build(BuildContext context) {
     return InputChip(
       label: SizedBox(
-        width: chipWidth,
-        child: Text(data, textAlign: .end),
+        width: vm.width,
+        child: Text(vm.data, textAlign: .end),
       ),
       padding: padding,
       labelPadding: labelPadding,
-      onDeleted: _onDeleted,
-      onPressed: _onDeleted == null ? () {} : null,
+      onDeleted: vm.onIconPressed,
+      onPressed: vm.onBodyPressed,
     );
   }
 }

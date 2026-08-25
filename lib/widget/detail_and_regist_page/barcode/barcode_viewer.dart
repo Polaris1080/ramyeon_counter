@@ -32,5 +32,5 @@ class const BarcodeViewer({
   /* Widget */
   @protected
   Widget barcodeChip(BuildContext context, MapEntry<Count, Jam> source) =>
-      BarcodeChip(source.displayData);
+      BarcodeChip(vm: .new(data: source.displayData));
 }
