@@ -1,10 +1,11 @@
 // Package
-import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
-// ViewModel
-import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/register/tag_register_vm.dart';
 
+// Other
 import 'tags_viewer.dart';
+import 'register/tag_register_vm.dart';
+import 'chip/deletable_tag_chip.dart';
+
 // Partical
 part 'register/deletable_tags_viewer.dart';
 part 'register/tag_entry.dart';
@@ -25,7 +26,7 @@ class RamyeonTagRegister extends StatelessWidget {
         ListenableBuilder(
           listenable: vm,
           builder: (context, child) =>
-              DeletableTagsViewer(viewmodel: vm, source: vm.tag.toSet()),
+              DeletableTagsViewer(vm: vm, source: vm.tag.toSet()),
         ),
       ],
     );

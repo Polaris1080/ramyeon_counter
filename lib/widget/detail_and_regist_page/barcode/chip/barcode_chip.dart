@@ -3,11 +3,10 @@ import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 
 // Base
 import '../../base/viewer_chip_base.dart';
+import '../../base/viewer_chip_base_vm.dart';
 
 // Package
 import 'package:flutter/material.dart';
-
-import '../../base/viewer_chip_base_vm.dart';
 
 // Partical
 part 'barcode_chip_vm.dart';
