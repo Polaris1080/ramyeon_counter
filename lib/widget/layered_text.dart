@@ -1,5 +1,4 @@
 // Package
-import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 // Annotation
 import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
@@ -12,11 +11,9 @@ class const LayeredText({super.key, required final LayeredTextViewModel vm})
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: .hardEdge,
-      children: [
-        ...[vm.borderStyle, vm.baseStyle].select(
-          (style, _) => Text(vm.title, style: style, maxLines: vm.maxLines),
-        ),
-      ],
+      children: [vm.borderStyle, vm.baseStyle]
+          .map((style) => Text(vm.title, style: style, maxLines: vm.maxLines))
+          .toList(),
     );
   }
 }
