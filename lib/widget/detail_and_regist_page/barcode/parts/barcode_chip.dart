@@ -1,21 +1,20 @@
 // Annotation
 import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 
+// Base
+import '../../base/viewer_chip_base.dart';
+
 // Package
 import 'package:flutter/material.dart';
+
+import '../../base/viewer_chip_base_vm.dart';
 
 // Partical
 part 'barcode_chip_vm.dart';
 
 class const BarcodeChip({super.key, required BarcodeChipViewModel vm})
-    extends StatelessWidget {
+    extends ViewerChipBase {
   final BarcodeChipViewModel _vm = vm;
-
-  /* Setting */
-  @protected
-  EdgeInsets get padding => const .all(0);
-  @protected
-  EdgeInsets get labelPadding => const .all(0);
 
   @override
   Widget build(BuildContext context) {

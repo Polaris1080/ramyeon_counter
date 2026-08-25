@@ -1,11 +1,24 @@
+// Annotation
+//import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
+
+// Base
+import '../../base/viewer_chip_base.dart';
+
 // Package
 import 'package:flutter/material.dart';
 
-class TagChip extends ActionChip {
-  TagChip(String data, {super.key, Function()? onPressed})
-    : super(
-        label: Text(data),
-        padding: EdgeInsets.all(0),
-        onPressed: onPressed ?? () {},
-      );
+import '../../base/viewer_chip_base_vm.dart';
+
+// Partical
+part 'tag_chip_vm.dart';
+
+class const TagChip(final TagChipViewModel vm, {super.key})
+    extends ViewerChipBase {
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+      label: Text(vm.data, textAlign: .end),
+      padding: padding,
+    );
+  }
 }

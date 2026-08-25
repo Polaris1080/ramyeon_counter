@@ -1,6 +1,9 @@
 // Package
 import 'package:flutter/material.dart';
 
-class ViewerChipBase extends Chip {
-  const ViewerChipBase({super.key, required super.label});
+abstract class const ViewerChipBase({super.key}) extends StatelessWidget {
+  @protected
+  EdgeInsets get padding => const .all(0);
+  @protected
+  EdgeInsets get labelPadding => const .all(0);
 }
