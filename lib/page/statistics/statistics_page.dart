@@ -16,9 +16,9 @@ import 'package:ramyeon_counter/page/statistics/statistics_page_vm.dart';
 import 'package:ramyeon_counter/utility/extension_methods/em_bool_notifier.dart';
 // Widget
 import 'parts/ranking_table.dart';
-import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
+import 'package:ramyeon_counter/widget/other/loading_progress_indicator.dart';
 import 'package:ramyeon_counter/widget/custom_appbar/default_app_bar.dart';
-import 'package:ramyeon_counter/widget/image_background.dart';
+import 'package:ramyeon_counter/widget/other/image_background.dart';
 // Partical
 part 'statistics_navigation.dart';
 part 'parts/all_or_year_selector.dart';

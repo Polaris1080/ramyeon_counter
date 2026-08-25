@@ -13,8 +13,8 @@ import 'card/history_card_base.dart';
 import 'card/history_price_card.dart';
 import 'card/history_rating_card.dart';
 import 'package:ramyeon_counter/widget/custom_appbar/default_app_bar.dart';
-import 'package:ramyeon_counter/widget/image_background.dart';
-import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
+import 'package:ramyeon_counter/widget/other/image_background.dart';
+import 'package:ramyeon_counter/widget/other/loading_progress_indicator.dart';
 // Other
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
 // Partial

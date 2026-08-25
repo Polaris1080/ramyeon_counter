@@ -4,7 +4,7 @@ import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 // Model
 import 'package:ramyeon_counter/models/model/ramyeon/repository/stock_repository.dart';
-import 'package:ramyeon_counter/widget/postit.dart';
+import 'package:ramyeon_counter/widget/other/postit.dart';
 
 import 'postit/stock_postit_data.dart';
 
@@ -13,9 +13,9 @@ import 'package:ramyeon_counter/utility/extension_methods/em_bool_notifier.dart'
 import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
 // Widget
 import 'package:ramyeon_counter/widget/custom_appbar/default_app_bar.dart';
-import 'package:ramyeon_counter/widget/image_background.dart';
-import 'package:ramyeon_counter/widget/loading_progress_indicator.dart';
-import 'package:ramyeon_counter/widget/spacing_grid_view.dart';
+import 'package:ramyeon_counter/widget/other/image_background.dart';
+import 'package:ramyeon_counter/widget/other/loading_progress_indicator.dart';
+import 'package:ramyeon_counter/widget/other/spacing_grid_view.dart';
 // Partial
 part 'stock_page_vm.dart';
 part 'actions/select_mode_action.dart';

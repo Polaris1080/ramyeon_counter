@@ -1,4 +1,4 @@
-import 'package:ramyeon_counter/widget/layered_text.dart';
+import 'package:ramyeon_counter/widget/other/layered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
