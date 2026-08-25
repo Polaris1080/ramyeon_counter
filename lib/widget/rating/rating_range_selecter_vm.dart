@@ -4,6 +4,8 @@ import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 // Package
 import 'package:flutter/material.dart';
 
+import '../../utility/extension_methods/em_range_values.dart';
+
 class RatingRangeSelecterViewModel extends ChangeNotifier {
   /* Setting */
   static const _defaultRange = RangeValues(1.0, 10.0);
@@ -12,7 +14,7 @@ class RatingRangeSelecterViewModel extends ChangeNotifier {
   @OneWay()
   int get max => range.end.floor();
   set max(int value) {
-    _range = .new(range.start, value.toDouble());
+    _range = _range.update(end: value);
     notifyListeners();
   }
 
@@ -20,7 +22,7 @@ class RatingRangeSelecterViewModel extends ChangeNotifier {
   @OneWay()
   int get min => range.start.floor();
   set min(int value) {
-    _range = .new(value.toDouble(), range.end);
+    _range = _range.update(start: value);
     notifyListeners();
   }
 
