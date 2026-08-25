@@ -1,8 +1,12 @@
-// Package
-import 'package:flutter/material.dart';
 // Annotation
 import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
+
+// Extension
 import 'package:ramyeon_counter/utility/extension_methods/em_num.dart';
+
+// Package
+import 'package:flutter/material.dart';
+
 // Partial
 part 'spacing_grid_view_vm.dart';
 

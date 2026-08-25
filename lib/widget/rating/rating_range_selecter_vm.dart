@@ -1,3 +1,7 @@
+// Annotation
+import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
+
+// Package
 import 'package:flutter/material.dart';
 
 class RatingRangeSelecterViewModel extends ChangeNotifier {
@@ -5,9 +9,18 @@ class RatingRangeSelecterViewModel extends ChangeNotifier {
   static const _defaultRange = RangeValues(1.0, 10.0);
 
   /// 上限
+  @OneWay()
   int get max => range.end.floor();
   set max(int value) {
     _range = .new(range.start, value.toDouble());
+    notifyListeners();
+  }
+
+  /// 下限
+  @OneWay()
+  int get min => range.start.floor();
+  set min(int value) {
+    _range = .new(value.toDouble(), range.end);
     notifyListeners();
   }
 
@@ -15,13 +28,7 @@ class RatingRangeSelecterViewModel extends ChangeNotifier {
   RangeValues get range => _range;
   RangeValues _range = _defaultRange;
 
-  /// 下限
-  int get min => range.start.floor();
-  set min(int value) {
-    _range = .new(value.toDouble(), range.end);
-    notifyListeners();
-  }
-
+  /* Command */
   void ratingChanged(int value) {
     final absMin = (value - min).abs(), absMax = (value - max).abs();
     switch ((min - max).abs()) {

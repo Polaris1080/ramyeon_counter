@@ -1,17 +1,19 @@
-// Package
-import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/utility/extension_methods/em_num.dart';
-
 // Base
 import 'rating_widget_base.dart';
+
+// Entension
+import 'package:ramyeon_counter/utility/extension_methods/em_num.dart';
+
+// Package
+import 'package:flutter/material.dart';
+
 // Other
 import 'rating_range_selecter_vm.dart';
 
-class RatingRangeSelecter extends RatingWidgetBase {
-  const RatingRangeSelecter(this.vm, {super.key});
-
-  final RatingRangeSelecterViewModel vm;
-
+class const RatingRangeSelecter(
+  final RatingRangeSelecterViewModel vm, {
+  super.key,
+}) extends RatingWidgetBase {
   @override
   Widget starParts(int index) {
     final rate = index + 1;

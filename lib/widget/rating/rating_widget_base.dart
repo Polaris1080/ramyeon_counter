@@ -3,11 +3,11 @@ import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-abstract class RatingWidgetBase extends StatelessWidget {
+abstract class const RatingWidgetBase({super.key}) extends StatelessWidget {
+  this : assert(items % _rows == 0);
+
   /* Setting */
   static const items = 10, min = 1, max = 10, _rows = 2;
-
-  const RatingWidgetBase({super.key}) : assert(items % _rows == 0);
 
   /* Frame */
   @nonVirtual
@@ -16,16 +16,15 @@ abstract class RatingWidgetBase extends StatelessWidget {
     return Wrap(
       alignment: .start,
       runAlignment: .center,
-      children: [
-        ...RangeIterable(0, items)
-            .batch(items ~/ _rows)
-            .select(
-              (row, _) => Row(
-                mainAxisSize: .min,
-                children: [...row.select((rate, _) => starParts(rate))],
-              ),
+      children: RangeIterable(0, items)
+          .batch(items ~/ _rows)
+          .select(
+            (row, _) => Row(
+              mainAxisSize: .min,
+              children: [...row.select((rate, _) => starParts(rate))],
             ),
-      ],
+          )
+          .toList(),
     );
   }
 
