@@ -2,7 +2,7 @@
 import 'custom_app_bar_base.dart';
 
 // Extention-method
-import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
+import 'package:ramyeon_counter/utility/extension_methods/em_num.dart';
 // Package
 import 'package:flutter/material.dart';
 // Widget

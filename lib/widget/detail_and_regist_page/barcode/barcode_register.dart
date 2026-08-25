@@ -1,10 +1,13 @@
 // Extension-method
-import 'package:ramyeon_counter/utility/extension_methods/em_int.dart';
+import 'package:ramyeon_counter/utility/extension_methods/em_num.dart';
+
 // Package
 import 'dart:io';
+
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 // ViewModel
 import 'barcode_register_vm.dart';
 // DeletableBarcodeViewer

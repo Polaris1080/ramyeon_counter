@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 // Annotation
 import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
-import 'package:ramyeon_counter/utility/extension_methods/em_double.dart';
+import 'package:ramyeon_counter/utility/extension_methods/em_num.dart';
 // Partial
 part 'spacing_grid_view_vm.dart';
 

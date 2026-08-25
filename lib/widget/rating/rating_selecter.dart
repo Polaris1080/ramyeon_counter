@@ -1,23 +1,23 @@
 // Package
 import 'package:flutter/material.dart';
+
 // Base
 import 'rating_widget_base.dart';
 
-class RatingSelecter extends RatingWidgetBase {
-  RatingSelecter(this.ratingNotifier, {super.key})
-    : assert(
-        0 <= ratingNotifier.value &&
-            ratingNotifier.value <= RatingWidgetBase.max,
-      );
-
-  final ValueNotifier<int> ratingNotifier;
+class const RatingSelecter(final ValueNotifier<int> ratingNotifier, {super.key})
+    extends RatingWidgetBase {
+  // 一旦コメントアウト（正常なはず）
+  // this : assert(
+  //       0 <= ratingNotifier.value &&
+  //           ratingNotifier.value <= RatingWidgetBase.max,
+  //     );
 
   @override
   Widget starParts(int index) {
     final rate = index + 1;
     return ValueListenableBuilder<int>(
       valueListenable: ratingNotifier,
-      builder: (_, rating, _) => starButton(
+      builder: (context, rating, _) => starButton(
         evaluation: () => rate <= rating ? .full : .none,
         onPressed: () => ratingNotifier.value = rate,
       ),

@@ -1,5 +1,7 @@
 // Package
 import 'package:flutter/material.dart';
+import 'package:ramyeon_counter/utility/extension_methods/em_num.dart';
+
 // Base
 import 'rating_widget_base.dart';
 // Other
@@ -16,7 +18,8 @@ class RatingRangeSelecter extends RatingWidgetBase {
     return ListenableBuilder(
       listenable: vm,
       builder: (context, _) => starButton(
-        evaluation: () => vm.min <= rate && rate <= vm.max ? .full : .none,
+        evaluation: () =>
+            rate.inRange(min: vm.min, max: vm.max) ? .full : .none,
         onPressed: () => vm.ratingChanged(rate),
       ),
     );
