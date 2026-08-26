@@ -7,9 +7,9 @@ class StockPostit extends Postit {
       _postitContentPadding = 5.0;
 
   StockPostit(
-    BuildContext context, {
+    BuildContext context,
+    StockPageViewModel vm, {
     super.key,
-    required ValueNotifier<bool> isSelectMode,
     required ValueNotifier<bool> isSelected,
     required StockPostitData data,
   }) : super(
@@ -84,10 +84,10 @@ class StockPostit extends Postit {
                    ),
                  ),
                  /* CheckBox */
-                 ValueListenableBuilder(
-                   valueListenable: isSelectMode,
-                   builder: (context, flag, w) =>
-                       Visibility(visible: flag, child: w!),
+                 ListenableBuilder(
+                   listenable: vm,
+                   builder: (context, w) =>
+                       Visibility(visible: vm.isSelectMode, child: w!),
                    child: Align(
                      alignment: Alignment.topRight,
                      child: ValueListenableBuilder(

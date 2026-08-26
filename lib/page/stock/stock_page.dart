@@ -25,18 +25,10 @@ part 'stock_page_vm.dart';
 part 'actions/select_mode_action.dart';
 part 'postit/stock_postit.dart';
 
+// ignore: prefer_const_constructors_in_immutables (No const!)
 class StockPage({super.key, required int? brandId, final Color? packageColor})
     extends StatelessWidget {
-  this {
-    isSelectMode.addListener(_isSelectModeChanged);
-  }
-
-  /* Value */
   final StockPageViewModel vm = .new(brandId);
-
-  /// To [SelectModeAction]
-  final ValueNotifier<bool> isSelectMode = .new(false);
-  void _isSelectModeChanged() => vm.isSelected.forEach((f) => f.value = false);
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +36,7 @@ class StockPage({super.key, required int? brandId, final Color? packageColor})
       /* Color change */
       data: Theme.of(context).colorOverride(packageColor),
       child: Scaffold(
-        appBar: DefaultAppBar(
-          context,
-          '在庫',
-          actions: [SelectModeAction(vm, isSelectMode: isSelectMode)],
-        ),
+        appBar: DefaultAppBar(context, '在庫', actions: [SelectModeAction(vm)]),
         /* CorkBoard */
         body: ImageBackground(
           vm: .cork(),
@@ -84,11 +72,7 @@ class StockPage({super.key, required int? brandId, final Color? packageColor})
       itemSize: StockPostit.size,
       windowWidth: MediaQuery.of(context).size.width,
     ),
-    itemBuilder: (context, i) => StockPostit(
-      context,
-      data: data[i],
-      isSelectMode: isSelectMode,
-      isSelected: vm.isSelected[i],
-    ),
+    itemBuilder: (context, i) =>
+        StockPostit(context, vm, data: data[i], isSelected: vm.isSelected![i]),
   );
 }
