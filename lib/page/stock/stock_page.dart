@@ -1,7 +1,11 @@
+// Annotation
+import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
+
 // Package
 import 'package:intl/intl.dart';
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
+
 // Model
 import 'package:ramyeon_counter/models/model/ramyeon/repository/stock_repository.dart';
 import 'package:ramyeon_counter/widget/other/postit.dart';
@@ -21,17 +25,14 @@ part 'stock_page_vm.dart';
 part 'actions/select_mode_action.dart';
 part 'postit/stock_postit.dart';
 
-class StockPage extends StatelessWidget {
-  StockPage({super.key, required int? brandId, this.packageColor})
-    : vm = .new(brandId) {
+class StockPage({super.key, required int? brandId, final Color? packageColor})
+    extends StatelessWidget {
+  this {
     isSelectMode.addListener(_isSelectModeChanged);
   }
 
-  /* Argument */
-  final Color? packageColor;
-
   /* Value */
-  final StockPageViewModel vm;
+  final StockPageViewModel vm = .new(brandId);
 
   /// To [SelectModeAction]
   final ValueNotifier<bool> isSelectMode = .new(false);
@@ -46,7 +47,7 @@ class StockPage extends StatelessWidget {
         appBar: DefaultAppBar(
           context,
           '在庫',
-          actions: [SelectModeAction(vm, isSelectMode)],
+          actions: [SelectModeAction(vm, isSelectMode: isSelectMode)],
         ),
         /* CorkBoard */
         body: ImageBackground(

@@ -1,53 +1,12 @@
 part of '../stock_page.dart';
 
-class SelectModeAction extends StatelessWidget {
-  const SelectModeAction(this.vm, this.isSelectMode, {super.key});
-
-  /* Argument */
-  final StockPageViewModel vm;
-
-  /// From [StockPage]
-  final ValueNotifier<bool> isSelectMode;
-
+class const SelectModeAction(
+  final StockPageViewModel vm, {
+  super.key,
+  required final ValueNotifier<bool> isSelectMode,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AlertDialog alertDialog(BuildContext context) {
-      final definition = {
-        'キャンセル': () {
-          isSelectMode.flip();
-          Navigator.pop(context);
-        },
-        '削除': () async {
-          // DB削除
-          await StockRepository().deleteMany(
-            // id取得
-            (vm.source!.select((s, _) => s.id))
-                .zip(
-                  vm.isSelected.select((s, _) => s.value),
-                  (id, isSelected) => isSelected ? id : null,
-                )
-                .whereType<int>()
-                .toList(),
-          );
-          // VM再読込
-          await vm.loadSource();
-          isSelectMode.flip();
-          if (context.mounted) {
-            Navigator.pop(context);
-          }
-        },
-      };
-
-      return AlertDialog(
-        title: const Text('削除しますか？'),
-        actions: definition.entries
-            .select(
-              (s, _) => TextButton(onPressed: s.value, child: Text(s.key)),
-            )
-            .toList(),
-      );
-    }
-
     return ValueListenableBuilder(
       valueListenable: isSelectMode,
       builder: (context, flag, _) => switch (flag) {
@@ -56,14 +15,12 @@ class SelectModeAction extends StatelessWidget {
           tooltip: '削除',
           color: Colors.yellow,
           onPressed: () {
-            if (vm.isSelected.any((isSelected) => isSelected.value)) {
+            if (vm.isSelected.count((isSelected) => isSelected.value) > 0) {
               showDialog(
                 context: context,
                 builder: (context) => alertDialog(context),
               );
-            }
-            // 0(None)
-            else {
+            } else {
               isSelectMode.flip();
             }
           },
@@ -75,6 +32,42 @@ class SelectModeAction extends StatelessWidget {
           onPressed: () => isSelectMode.flip(),
         ),
       },
+    );
+  }
+
+  @protected
+  AlertDialog alertDialog(BuildContext context) {
+    final definition = {
+      'キャンセル': () {
+        isSelectMode.flip();
+        Navigator.pop(context);
+      },
+      '削除': () async {
+        // DB削除
+        await StockRepository().deleteMany(
+          // id取得
+          (vm.source!.select((s, _) => s.id))
+              .zip(
+                vm.isSelected.select((s, _) => s.value),
+                (id, isSelected) => isSelected ? id : null,
+              )
+              .whereType<int>()
+              .toList(),
+        );
+        // VM再読込
+        await vm.loadSource();
+        isSelectMode.flip();
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
+      },
+    };
+
+    return AlertDialog(
+      title: const Text('削除しますか？'),
+      actions: definition.entries
+          .map((s) => TextButton(onPressed: s.value, child: Text(s.key)))
+          .toList(),
     );
   }
 }

@@ -49,16 +49,18 @@ class StockPostitData({
 }
 
 class StockPostitContext extends RamyeonContextBase {
-  Future<List<StockPostitData>> read(int? brandId) async => [
-    ...(await (await db).rawQuery('''
+  Future<List<StockPostitData>> read(int? brandId) async =>
+      (await (await db).rawQuery('''
         SELECT s.*,
                r.${RamyeonTableColumns.brand.name},
                r.${RamyeonTableColumns.packageColor.name}
-        FROM ${RamyeonDatabaseTables.stock.name}   as s
-        JOIN ${RamyeonDatabaseTables.ramyeon.name} as r 
-        ON    s.${StockTableColumns.brandId.name} = r.${RamyeonTableColumns.id.name}
-        where s.${StockTableColumns.ate.name} = 0
-        ${brandId is int ? 'and s.${StockTableColumns.brandId.name} = $brandId' : ''};
-      ''')).map((map) => StockPostitData.fromMap(map)),
-  ];
+        FROM     ${RamyeonDatabaseTables.stock.name}   as s
+        JOIN     ${RamyeonDatabaseTables.ramyeon.name} as r 
+        ON     s.${StockTableColumns.brandId.name} = r.${RamyeonTableColumns.id.name}
+        where  s.${StockTableColumns.ate.name} = 0
+      ${switch (brandId) {
+        int brandId => 'and s.${StockTableColumns.brandId.name} = $brandId',
+        _ => '',
+      }};
+      ''')).map((map) => StockPostitData.fromMap(map)).toList();
 }
