@@ -1,12 +1,10 @@
 part of '../history_page.dart';
 
-class SearchModeAction extends StatelessWidget {
-  const SearchModeAction(this.vm, this.packageColor, {super.key});
-
-  /* Argument */
-  final HistoryPageViewModelBase vm;
-  final Color? packageColor;
-
+class const SearchModeAction<T extends HistoryPageViewModelBase>(
+  final T vm,
+  final Color? packageColor, {
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
@@ -19,8 +17,7 @@ class SearchModeAction extends StatelessWidget {
         onPressed: () => showModalBottomSheet(
           context: context,
           builder: (BuildContext context) => Container(
-            // SearchSheetSize
-            constraints: .new(maxWidth: 540, maxHeight: 270),
+            constraints: .new(maxWidth: 540, maxHeight: 270), // SearchSheetSize
             child: Center(
               child: switch (vm) {
                 HistoryPricePageViewModel vm => PriceSearchSheet(
