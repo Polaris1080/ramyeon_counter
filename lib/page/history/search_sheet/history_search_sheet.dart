@@ -4,24 +4,26 @@ import 'package:ramyeon_counter/utility/extension_methods/em_theme_data.dart';
 import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 // ViewModel
 import '../view_model/history_page_vm_base.dart';
 import '../view_model/history_price_page_vm.dart';
 import '../view_model/history_rating_page_vm.dart';
+
 // Widget
 import 'package:ramyeon_counter/widget/rating/rating_range_selecter.dart';
-// Partial
-part 'price_search_sheet.dart';
-part 'rating_search_sheet.dart';
 
-abstract class HistorySearchSheetBase extends StatelessWidget {
+// Partial
+
+class HistorySearchSheet<T extends HistoryPageViewModelBase>
+    extends StatelessWidget {
   /* Setting */
   static const _buttonSpacing = 10.0, _rowSpacing = 10.0;
 
-  const HistorySearchSheetBase(this.vm, this.packageColor, {super.key});
+  const HistorySearchSheet(this.vm, this.packageColor, {super.key});
 
   /* Argument */
-  final HistoryPageViewModelBase vm;
+  final T vm;
   final Color? packageColor;
 
   @override
@@ -43,9 +45,8 @@ abstract class HistorySearchSheetBase extends StatelessWidget {
                   final df = DateFormat('y/MM/dd');
                   return Text(
                     '${df.format(vm.dateRange.start)} ~ ${df.format(vm.dateRange.end)}',
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontFamily: 'ZenMaruGothic',
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge!
+                        .copyWith(fontFamily: 'ZenMaruGothic'),
                     maxLines: 1,
                     overflow: .ellipsis,
                   );
@@ -54,7 +55,12 @@ abstract class HistorySearchSheetBase extends StatelessWidget {
             ],
           ),
           /* 2nd Row */
-          secondRow(context),
+          //secondRow(context),
+          switch (vm) {
+            HistoryPricePageViewModel() => secondRow1(context),
+            HistoryRatingPageViewModel() => secondRow2(context),
+            HistoryPageViewModelBase _ => throw UnimplementedError(),
+          },
           /* 3rd Row */
           Wrap(
             spacing: _buttonSpacing, // Horizontal Spacing
@@ -100,8 +106,38 @@ abstract class HistorySearchSheetBase extends StatelessWidget {
     );
   }
 
-  /// @override
-  Widget secondRow(BuildContext context);
+  Column secondRow1(BuildContext context) {
+    final viewModel = (vm as HistoryPricePageViewModel).priceRange;
+    return Column(
+      children: [
+        headline(context, text: '価格'),
+        ListenableBuilder(
+          listenable: viewModel,
+          /* PriceRangeSelecter */
+          // Failed to update ui::AXTree
+          builder: (context, _) => ExcludeSemantics(
+            child: RangeSlider(
+              divisions: viewModel.divisions,
+              labels: viewModel.labels,
+              max: viewModel.maxRange,
+              values: viewModel.priceRange,
+              onChanged: viewModel.priceRangeChanged,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column secondRow2(BuildContext context) {
+    final viewModel = (vm as HistoryRatingPageViewModel).ratingRange;
+    return Column(
+      children: [
+        headline(context, text: '評価'),
+        RatingRangeSelecter(viewModel),
+      ],
+    );
+  }
 
   List<({String text, VoidCallback onPressed})> thirdRow(
     BuildContext context,

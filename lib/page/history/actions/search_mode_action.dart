@@ -20,11 +20,11 @@ class const SearchModeAction<T extends HistoryPageViewModelBase>(
             constraints: .new(maxWidth: 540, maxHeight: 270), // SearchSheetSize
             child: Center(
               child: switch (vm) {
-                HistoryPricePageViewModel vm => PriceSearchSheet(
+                HistoryPricePageViewModel vm => HistorySearchSheet(
                   vm,
                   packageColor,
                 ),
-                HistoryRatingPageViewModel vm => RatingSearchSheet(
+                HistoryRatingPageViewModel vm => HistorySearchSheet(
                   vm,
                   packageColor,
                 ),
