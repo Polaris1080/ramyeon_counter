@@ -29,29 +29,50 @@ abstract class const RamyeonImageBase(RamyeonImageBaseViewModel vm, {super.key})
             // Path
             ListenableBuilder(
               listenable: _vm,
-              builder: (context, c) =>
-                  _vm.isImagePathExist ? c! : _emptyBorder(context),
+              builder: (context, _) => _vm.isImagePathExist
+                  ? ListenableBuilder(
+                      listenable: _vm,
+                      builder: (_, d) =>
+                          Opacity(opacity: _vm.hoveringOpacity, child: d!),
+                      child: Hero(
+                        tag: heroTag,
+                        // Loading(...success)
+                        child: Image.file(
+                          .new(_vm.imagePath!),
+                          fit: BoxFit.cover,
+                          // ...error
+                          errorBuilder: (context, error, stackTrace) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              _vm.imageLoadingErrorOccurred();
+                            });
+                            return _emptyBorder(context);
+                          },
+                        ),
+                      ),
+                    )
+                  : _emptyBorder(context),
+              // TODO:暫定対策
               // Visibility(Hovering)
-              child: ListenableBuilder(
-                listenable: _vm,
-                builder: (_, d) =>
-                    Opacity(opacity: _vm.hoveringOpacity, child: d!),
-                child: Hero(
-                  tag: heroTag,
-                  // Loading(...success)
-                  child: Image.file(
-                    .new(_vm.imagePath!),
-                    fit: BoxFit.cover,
-                    // ...error
-                    errorBuilder: (context, error, stackTrace) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        _vm.imageLoadingErrorOccurred();
-                      });
-                      return _emptyBorder(context);
-                    },
-                  ),
-                ),
-              ),
+              // child: ListenableBuilder(
+              //   listenable: _vm,
+              //   builder: (_, d) =>
+              //       Opacity(opacity: _vm.hoveringOpacity, child: d!),
+              //   child: Hero(
+              //     tag: heroTag,
+              //     // Loading(...success)
+              //     child: Image.file(
+              //       .new(_vm.imagePath!),
+              //       fit: BoxFit.cover,
+              //       // ...error
+              //       errorBuilder: (context, error, stackTrace) {
+              //         WidgetsBinding.instance.addPostFrameCallback((_) {
+              //           _vm.imageLoadingErrorOccurred();
+              //         });
+              //         return _emptyBorder(context);
+              //       },
+              //     ),
+              //   ),
+              //),
             ),
             overlayArea(context),
           ],
