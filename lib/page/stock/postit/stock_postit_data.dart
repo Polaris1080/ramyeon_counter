@@ -1,43 +1,64 @@
+/// @docImport 'package:ramyeon_counter/models/model/ramyeon/stock.dart';
+library;
+
+// Base
+import 'package:ramyeon_counter/models/base/model_base.dart';
+import 'package:ramyeon_counter/models/context/base/context_base.dart';
+
+// Extension
+import 'package:ramyeon_counter/models/model/base/em_castable_query_map.dart';
+
+// Package
+import 'package:flutter/material.dart';
+
 // Model
 import 'package:ramyeon_counter/models/database/ramyeon/ramyeon_database_tables.dart';
 import 'package:ramyeon_counter/models/database/ramyeon/table/ramyeon_table_columns.dart';
 import 'package:ramyeon_counter/models/database/ramyeon/table/stock_table_columns.dart';
-import 'package:ramyeon_counter/models/database/ramyeon/ramyeon_database.dart';
-import 'package:ramyeon_counter/models/model/ramyeon/ramyeon.dart';
-import 'package:ramyeon_counter/models/model/ramyeon/stock.dart';
-import 'package:ramyeon_counter/models/context/base/context_base.dart';
-import 'package:ramyeon_counter/models/base/model_base.dart';
-// Package
-import 'package:darq/darq.dart';
-import 'package:flutter/material.dart';
-// Partial
-part 'stock_postit_context.dart';
 
-class StockPostitData extends VirtualModelBase {
+class StockPostitData({
   /// [Stock].id
-  final int id;
+  required final int id,
 
   /// 商品名
-  final String brand;
+  required final String brand,
 
   /// 購入日
-  final DateTime purchaseDate;
+  required final DateTime purchaseDate,
 
   /// 賞味期限
-  final DateTime expirationDate;
+  required final DateTime expirationDate,
 
   /// 購入価格
-  final int price;
+  required final int price,
 
   /// 色
-  final Color? color;
+  final Color? color,
+}) extends VirtualModelBase {
+  factory StockPostitData.fromMap(Map<String, Object?> map) => StockPostitData(
+    id: StockTableColumns.id.cast(map),
+    brand: RamyeonTableColumns.brand.cast(map),
+    purchaseDate: StockTableColumns.expirationDate.castDateTime(map),
+    expirationDate: StockTableColumns.expirationDate.castDateTime(map),
+    price: StockTableColumns.price.cast(map),
+    color: switch (RamyeonTableColumns.packageColor.cast<int?>(map)) {
+      int color => Color(color),
+      _ => null,
+    },
+  );
+}
 
-  StockPostitData({
-    required this.id,
-    required this.brand,
-    required this.purchaseDate,
-    required this.expirationDate,
-    required this.price,
-    this.color,
-  });
+class StockPostitContext extends RamyeonContextBase {
+  Future<List<StockPostitData>> read(int? brandId) async => [
+    ...(await (await db).rawQuery('''
+        SELECT s.*,
+               r.${RamyeonTableColumns.brand.name},
+               r.${RamyeonTableColumns.packageColor.name}
+        FROM ${RamyeonDatabaseTables.stock.name}   as s
+        JOIN ${RamyeonDatabaseTables.ramyeon.name} as r 
+        ON    s.${StockTableColumns.brandId.name} = r.${RamyeonTableColumns.id.name}
+        where s.${StockTableColumns.ate.name} = 0
+        ${brandId is int ? 'and s.${StockTableColumns.brandId.name} = $brandId' : ''};
+      ''')).map((map) => StockPostitData.fromMap(map)),
+  ];
 }
