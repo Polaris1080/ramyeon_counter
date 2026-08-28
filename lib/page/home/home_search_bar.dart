@@ -3,8 +3,6 @@ part of './home_page.dart';
 // ignore: prefer_const_constructors_in_immutables
 class HomeSearchBar({super.key, required final HomePageViewModel vm})
     extends StatelessWidget {
-  static const minSize = Size(270.0, 40), maxSize = Size(540.0, 60);
-
   final TextEditingController searchbarController = TextEditingController();
 
   @override
@@ -38,11 +36,9 @@ class HomeSearchBar({super.key, required final HomePageViewModel vm})
               ),
               // ),
             ],
-            constraints: BoxConstraints(
-              minHeight: minSize.height,
-              maxHeight: maxSize.height,
-              minWidth: minSize.width,
-              maxWidth: maxSize.width,
+            constraints: BoxConstraintsFactory.fromSize(
+              min: .new(270.0, 40),
+              max: .new(540.0, 60),
             ),
             hintText: '例：ラーメン', // Placeholder.
             // Enter-key pressed
