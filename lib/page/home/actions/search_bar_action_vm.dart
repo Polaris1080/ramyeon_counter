@@ -1,10 +1,8 @@
 part of 'base/home_page_action.dart';
 
-class SearchBarActionViewModel(ColorScheme colorScheme)
+class SearchBarActionViewModel(super.colorScheme)
     extends HomePageActionViewModel {
+  @override
   @OneTime()
   String tooltip = '検索';
-
-  @OneTime()
-  Color color = colorScheme.tertiaryContainer;
 }

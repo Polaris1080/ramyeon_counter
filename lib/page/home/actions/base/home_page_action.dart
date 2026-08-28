@@ -3,6 +3,7 @@ import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 
 // Package
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 // Other
 import '../../home_page.dart';
@@ -17,4 +18,13 @@ part '../sort_list_action_vm.dart';
 
 abstract class const HomePageAction({super.key}) extends StatelessWidget;
 
-abstract class HomePageActionViewModel extends ChangeNotifier;
+abstract class HomePageActionViewModel(ColorScheme colorScheme)
+    extends ChangeNotifier {
+  /// Icon color.
+  @OneTime()
+  Color color = colorScheme.tertiaryContainer;
+
+  /// Icon tooltip.
+  @mustBeOverridden
+  String get tooltip;
+}

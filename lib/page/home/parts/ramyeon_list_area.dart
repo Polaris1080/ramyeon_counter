@@ -13,7 +13,7 @@ class RamyeonListArea extends StatelessWidget {
         // 検索し個数を求める
         future: RamyeonListDataContext().readByBrand(
           vm.searchWord,
-          order: vm.orderBy == .normal ? null : vm.orderBy.name,
+          order: vm.orderBy == .normal ? null : vm.orderBy.label,
         ),
         builder: (context, snapshot) => switch (snapshot.connectionState) {
           /* 完了 */

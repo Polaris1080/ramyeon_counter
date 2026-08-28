@@ -1,16 +1,18 @@
 part of 'base/home_page_action.dart';
 
-class CatalogModeActionViewModel(final ColorScheme _colorScheme)
+class CatalogModeActionViewModel(super.colorScheme)
     extends HomePageActionViewModel {
-  @OneTime()
-  String tooltip = '在庫';
-
+  @override
   @OneWay()
   Color get color => _mode
-      //ON  color.
+      // Mode:ON
       ? Colors.yellow
-      //OFF color.
-      : _colorScheme.tertiaryContainer;
+      // Mode:OFF
+      : super.color;
+
+  @override
+  @OneTime()
+  String tooltip = '在庫';
 
   bool _mode = false;
   @OneWayToSource()

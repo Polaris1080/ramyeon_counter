@@ -5,17 +5,9 @@ class const SortListAction({
   required final HomePageViewModel _parentVM,
   required final SortListActionViewModel vm,
 }) extends HomePageAction {
-  static const Map<RamyeonListOrder, String> menuItem = {
-    .normal: '名前',
-    .rating: '評価',
-    .price: '価格',
-    .count: '個数',
-    .limit: '期限',
-  };
-
   @override
   Widget build(BuildContext context) => MenuAnchor(
-    menuChildren: menuItem.entries
+    menuChildren: vm.menuItems.entries
         .map(
           (s) => MenuItemButton(
             child: Text(s.value),
