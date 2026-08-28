@@ -4,7 +4,6 @@ class const CatarogTile({super.key, required final RamyeonListData data})
     extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //final color = data.packageColor != null ? Color(data.packageColor!) : null;
     return ListTile(
       leading: ExcludeSemantics(
         // TODO
@@ -22,7 +21,6 @@ class const CatarogTile({super.key, required final RamyeonListData data})
           extra: [
             data.id,
             data.packageColor,
-            //color, //data.packageColor != null ? Color(data.packageColor!) : null,
           ],
         ),
       },
