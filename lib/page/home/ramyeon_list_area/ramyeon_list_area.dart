@@ -1,10 +1,20 @@
-part of '../home_page.dart';
+// Package
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class RamyeonListArea extends StatelessWidget {
-  const RamyeonListArea(this.vm, {super.key});
+// Model
+import 'package:ramyeon_counter/models/context/ramyeon/ramyeon_list_data.dart';
+import 'package:ramyeon_counter/models/context/ramyeon/behind/ramyeon_list_data_context.dart';
 
-  final HomePageViewModel vm;
+// Other
+import '../home_page.dart';
 
+// Partical
+part 'normal_tile.dart';
+part 'catarog_tile.dart';
+
+class const RamyeonListArea(final HomePageViewModel vm, {super.key})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
@@ -27,7 +37,9 @@ class RamyeonListArea extends StatelessWidget {
                   return ListenableBuilder(
                     listenable: vm,
                     builder: (context, child) {
-                      return vm.isCatalogMode ? TileA(data: d) : TileB(data: d);
+                      return vm.isCatalogMode
+                          ? NormalTile(data: d)
+                          : CatarogTile(data: d);
                     },
                   );
                 },

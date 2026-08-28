@@ -1,12 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:ramyeon_counter/models/context/ramyeon/ramyeon_list_data.dart';
+part of 'ramyeon_list_area.dart';
 
-class TileA extends StatelessWidget {
-  const TileA({super.key, required this.data});
-
-  final RamyeonListData data;
-
+class const NormalTile({super.key, required final RamyeonListData data})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(

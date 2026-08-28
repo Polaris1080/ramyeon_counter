@@ -1,15 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:ramyeon_counter/models/context/ramyeon/ramyeon_list_data.dart';
+part of 'ramyeon_list_area.dart';
 
-class TileB extends StatelessWidget {
-  const TileB({super.key, required this.data});
-
-  final RamyeonListData data;
-
+class const CatarogTile({super.key, required final RamyeonListData data})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final color = data.packageColor != null ? Color(data.packageColor!) : null;
+    //final color = data.packageColor != null ? Color(data.packageColor!) : null;
     return ListTile(
       leading: ExcludeSemantics(
         // TODO
@@ -26,7 +21,7 @@ class TileB extends StatelessWidget {
           '/detail',
           extra: [
             data.id,
-            data.packageColor
+            data.packageColor,
             //color, //data.packageColor != null ? Color(data.packageColor!) : null,
           ],
         ),
