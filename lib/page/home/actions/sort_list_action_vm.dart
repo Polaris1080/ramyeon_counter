@@ -9,9 +9,10 @@ class SortListActionViewModel(super.colorScheme)
   @OneTime()
   Map<RamyeonListOrder, String> get menuItems => .fromEntries([
     RamyeonListOrder.normal.menuItem,
-    RamyeonListOrder.rating.menuItem,
-    RamyeonListOrder.price.menuItem,
-    RamyeonListOrder.count.menuItem,
-    RamyeonListOrder.limit.menuItem,
+    // TODO:使用停止（暫定）
+    //RamyeonListOrder.rating.menuItem,
+    //RamyeonListOrder.price.menuItem,
+    //RamyeonListOrder.count.menuItem,
+    //RamyeonListOrder.limit.menuItem,
   ]);
 }

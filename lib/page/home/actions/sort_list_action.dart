@@ -3,8 +3,9 @@ part of 'base/home_page_action.dart';
 class const SortListAction({
   super.key,
   required final HomePageViewModel _parentVM,
-  required final SortListActionViewModel vm,
+  required SortListActionViewModel childVM,
 }) extends HomePageAction {
+  final SortListActionViewModel vm = childVM;
   @override
   Widget build(BuildContext context) => MenuAnchor(
     menuChildren: vm.menuItems.entries

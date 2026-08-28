@@ -1,33 +1,20 @@
-// import 'package:flutter/material.dart';
-// import 'package:ramyeon_counter/page/home/home_page.dart';
 part of './home_page.dart';
 
-class HomeSearchBar extends StatelessWidget {
-  HomeSearchBar({super.key, required this.vm});
+// ignore: prefer_const_constructors_in_immutables
+class HomeSearchBar({super.key, required final HomePageViewModel vm})
+    extends StatelessWidget {
+  static const minSize = Size(270.0, 40), maxSize = Size(540.0, 60);
 
-  final HomePageViewModel vm;
   final TextEditingController searchbarController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Spacer(),
-        ListenableBuilder(
-          listenable: vm,
-          builder: (_, w) {
-            return Visibility(
-              visible: true, // vm.isSearchBarVisible,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Center(child: w!),
-              ),
-            );
-          },
-          /* SearchBar */
-          child: SearchBar(
-            // Enter-key pressed
-            onSubmitted: (_) => vm.searchWord = searchbarController.text,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SearchAnchor(
+        builder: (BuildContext context, SearchController controller) {
+          return SearchBar(
+            controller: searchbarController,
             // Search-button clicked
             leading: Tooltip(
               message: '検索',
@@ -38,31 +25,36 @@ class HomeSearchBar extends StatelessWidget {
             ),
             // Reset-button clicked
             trailing: [
-              Tooltip(
-                message: 'リセット',
-                child: IconButton(
-                  onPressed: () {
-                    searchbarController.clear();
-                    vm.searchWord = '';
-                  },
-                  icon: const Icon(Icons.cancel_outlined),
-                ),
+              /* どうやらTooltip併用時エラー Failed to update ui::AXTree */
+              // Tooltip(
+              //   message: 'リセット',
+              //   child:
+              IconButton(
+                onPressed: () {
+                  searchbarController.clear();
+                  vm.searchWord = '';
+                },
+                icon: const Icon(Icons.cancel_outlined),
               ),
+              // ),
             ],
-            // Size
             constraints: BoxConstraints(
-              minHeight: 40.0,
-              maxHeight: 60.0,
-              minWidth: 270.0,
-              maxWidth: 540.0,
+              minHeight: minSize.height,
+              maxHeight: maxSize.height,
+              minWidth: minSize.width,
+              maxWidth: maxSize.width,
             ),
-            // Textbox
-            controller: searchbarController,
-            // Place holder
-            hintText: '例：ラーメン',
-          ),
-        ),
-      ],
+            hintText: '例：ラーメン', // Placeholder.
+            // Enter-key pressed
+            onSubmitted: (_) => vm.searchWord = searchbarController.text,
+          );
+        },
+        // TODO:余裕があれば
+        suggestionsBuilder: (
+          BuildContext context,
+          SearchController controller,
+        ) => [],
+      ),
     );
   }
 }

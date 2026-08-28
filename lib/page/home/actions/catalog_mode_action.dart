@@ -3,8 +3,9 @@ part of 'base/home_page_action.dart';
 class const CatalogModeAction({
   super.key,
   required final HomePageViewModel _parentVM,
-  required final CatalogModeActionViewModel vm,
+  required CatalogModeActionViewModel childVM,
 }) extends HomePageAction {
+  final CatalogModeActionViewModel vm = childVM;
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(

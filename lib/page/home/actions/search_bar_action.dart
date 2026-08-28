@@ -3,8 +3,9 @@ part of 'base/home_page_action.dart';
 class const SearchBarAction({
   super.key,
   required final HomePageViewModel _parentVM,
-  required final SearchBarActionViewModel vm,
+  required SearchBarActionViewModel childVM,
 }) extends HomePageAction {
+  final SearchBarActionViewModel vm = childVM;
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(

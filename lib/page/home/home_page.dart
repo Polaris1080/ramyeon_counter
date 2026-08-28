@@ -1,15 +1,11 @@
 // Package
-import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 import 'package:ramyeon_counter/models/context/ramyeon/behind/ramyeon_list_data_context.dart';
 import 'package:ramyeon_counter/models/context/ramyeon/ramyeon_list_data.dart';
 // Model
-import 'package:ramyeon_counter/models/model/ramyeon/repository/ramyeon_repository.dart';
 import 'package:ramyeon_counter/page/home/parts/tile_a.dart';
 import 'package:ramyeon_counter/page/home/parts/tile_b.dart';
-import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 // Widget
-import 'package:ramyeon_counter/widget/custom_appbar/default_app_bar.dart';
 import 'package:ramyeon_counter/page/home/parts/home_drawer.dart';
 import 'package:ramyeon_counter/widget/custom_appbar/home_app_bar.dart';
 
@@ -20,26 +16,32 @@ part 'home_search_bar.dart';
 part 'enum/ramyeon_list_order.dart';
 part 'parts/ramyeon_list_area.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
-
+// ignore: prefer_const_constructors_in_immutables
+class HomePage({super.key}) extends StatelessWidget {
   final HomePageViewModel vm = .new();
 
   @override
   Widget build(BuildContext context) {
     final ColorScheme cs = ColorScheme.of(context);
-    return Scaffold(
-      appBar: HomeAppBar(
-        context,
-        vm,
-        actions: [
-          CatalogModeAction(parentVM: vm, vm: .new(cs)),
-          SearchBarAction(parentVM: vm, vm: .new(cs)),
-          SortListAction(parentVM: vm, vm: .new(cs)),
-        ],
+    return Theme(
+      data: Theme.of(context).copyWith(
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: Colors.transparent,
+        ),
       ),
-      drawer: HomeDrawer(),
-      body: RamyeonListArea(vm),
+      child: Scaffold(
+        appBar: HomeAppBar(
+          context,
+          vm,
+          actions: [
+            CatalogModeAction(parentVM: vm, childVM: .new(cs)),
+            SearchBarAction(parentVM: vm, childVM: .new(cs)),
+            SortListAction(parentVM: vm, childVM: .new(cs)),
+          ],
+        ),
+        drawer: HomeDrawer(),
+        body: RamyeonListArea(vm),
+      ),
     );
   }
 }
