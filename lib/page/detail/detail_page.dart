@@ -1,6 +1,5 @@
 // Package
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:ramyeon_counter/models/model/ramyeon/repository/ramyeon_repository.dart';
 // Widget
 import 'package:ramyeon_counter/page/detail/buttom/detail_bottom_appbar.dart';
@@ -10,8 +9,9 @@ import 'package:ramyeon_counter/widget/detail_and_regist_page/data/ramyeon_data_
 import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/tags_viewer.dart';
 import 'package:ramyeon_counter/widget/other/image_background.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/ramyeon_image/viewer/ramyeon_image_viewer.dart';
-// Partical
-part 'actions/detail_to_edit_action.dart';
+
+// Other
+import 'actions/base/detail_page_action.dart';
 
 class DetailPage extends StatelessWidget {
   const DetailPage({super.key, required this.ramyeonId, this.packageColor});
@@ -25,7 +25,11 @@ class DetailPage extends StatelessWidget {
       appBar: DefaultAppBar(
         context,
         '詳細',
-        actions: [DetailToEditAction(ramyeonId, packageColor)],
+        actions: [
+          DetailToEditAction(
+            vm: .new(id: ramyeonId, color: packageColor),
+          ),
+        ],
       ),
       body: ImageBackground(
         vm: .paper(),

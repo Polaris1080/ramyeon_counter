@@ -1,24 +1,15 @@
-part of '../detail_page.dart';
+part of 'base/detail_page_action.dart';
 
-class DetailToEditAction extends StatelessWidget {
-  const DetailToEditAction(this.ramyeonId, this.packageColor, {super.key});
-
-  /* Argument */
-  final int ramyeonId;
-  final Color? packageColor;
-
+class const DetailToEditAction({
+  super.key,
+  required final DetailToEditActionViewModel vm,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.edit),
-      tooltip: '編集',
-      onPressed: () {
-        context.push(
-          '/detail/edit/$ramyeonId',
-          // Color渡しは対応していなかった（はず）
-          extra: packageColor?.toARGB32(),
-        );
-      },
+      tooltip: vm.tooltip,
+      onPressed: () => context.push(vm.location, extra: vm.extra),
     );
   }
 }
