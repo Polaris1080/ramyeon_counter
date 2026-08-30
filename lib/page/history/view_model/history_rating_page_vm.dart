@@ -1,5 +1,6 @@
 // Base
 import 'history_page_vm_base.dart';
+
 // Extention
 import 'package:ramyeon_counter/utility/extension_methods/em_datetime.dart';
 // Package
@@ -64,7 +65,7 @@ class HistoryRatingPageViewModel extends HistoryPageViewModelBase {
   @override
   void reset() {
     _view = _source!;
-    _ratingRange.ratingReset();
+    _ratingRange.reset();
     resetDateRange();
     notifyListeners();
   }

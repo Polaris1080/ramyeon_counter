@@ -8,9 +8,6 @@ import 'package:ramyeon_counter/utility/extension_methods/em_range_values.dart';
 import 'package:flutter/material.dart';
 
 class RatingRangeSelecterViewModel extends ChangeNotifier {
-  /* Setting */
-  static const _defaultRange = RangeValues(1.0, 10.0);
-
   /// 上限
   @OneWay()
   int get max => range.end.floor();
@@ -28,8 +25,14 @@ class RatingRangeSelecterViewModel extends ChangeNotifier {
   }
 
   /// 範囲
+  @OneWay()
   RangeValues get range => _range;
   RangeValues _range = _defaultRange;
+  static const _defaultRange = RangeValues(1.0, 10.0);
+  void reset() {
+    _range = _defaultRange;
+    notifyListeners();
+  }
 
   /* Command */
   void ratingChanged(int value) {
@@ -64,10 +67,5 @@ class RatingRangeSelecterViewModel extends ChangeNotifier {
           max = value;
         }
     }
-  }
-
-  void ratingReset() {
-    _range = _defaultRange;
-    notifyListeners();
   }
 }

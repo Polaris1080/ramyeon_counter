@@ -15,19 +15,19 @@ class RatingViewerViewModel<T extends num>(@visibleForTesting final T rating)
   List<RatingStarType> get star => _star;
   final List<RatingStarType> _star = switch (rating) {
     double r =>
-      RangeIterable.count(1, RatingWidgetBase.items, step: 2)
+      Iterable.generate(RatingWidgetBase.items, (int count) => count * 2 + 1)
           .map((s) => (r * 2).floor() - s)
-          .select<RatingStarType>(
-            (s, _) => switch (s) {
+          .map<RatingStarType>(
+            (s) => switch (s) {
               > 0 => .full,
               0 => .half,
               < 0 => .none,
               _ => throw UnimplementedError(),
             },
           ),
-    int r => RangeIterable.count(
-      0,
+    int r => Iterable.generate(
       RatingWidgetBase.items,
-    ).map((m) => r - m).select<RatingStarType>((x, _) => x > 0 ? .full : .none),
+      (int count) => count,
+    ).map((m) => r - m).map<RatingStarType>((x) => x > 0 ? .full : .none),
   }.toList();
 }

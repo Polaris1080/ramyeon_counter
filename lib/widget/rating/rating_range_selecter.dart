@@ -1,5 +1,5 @@
 // Base
-import 'rating_widget_base.dart';
+import 'base/rating_widget_base.dart';
 
 // Entension
 import 'package:ramyeon_counter/utility/extension_methods/em_num.dart';
@@ -19,7 +19,7 @@ class const RatingRangeSelecter(
     final rate = index + 1;
     return ListenableBuilder(
       listenable: vm,
-      builder: (context, _) => starButton(
+      builder: (context, _) => RatingStarButton(
         evaluation: () =>
             rate.inRange(min: vm.min, max: vm.max) ? .full : .none,
         onPressed: () => vm.ratingChanged(rate),

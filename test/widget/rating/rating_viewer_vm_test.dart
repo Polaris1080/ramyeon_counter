@@ -1,7 +1,7 @@
 import 'package:darq/darq.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ramyeon_counter/widget/rating/rating_viewer.dart';
-import 'package:ramyeon_counter/widget/rating/rating_widget_base.dart';
+import 'package:ramyeon_counter/widget/rating/base/rating_widget_base.dart';
 
 void main() {
   group('rating', () {

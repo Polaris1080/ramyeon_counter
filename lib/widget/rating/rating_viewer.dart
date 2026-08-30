@@ -2,13 +2,12 @@
 import 'package:ramyeon_counter/utility/annotations/viewmodel_annotation.dart';
 
 // Base
-import 'rating_widget_base.dart';
+import 'base/rating_widget_base.dart';
 
 // Extention
 import 'package:ramyeon_counter/utility/extension_methods/em_num.dart';
 
 // Package
-import 'package:darq/darq.dart';
 import 'package:flutter/material.dart';
 
 // Partial
@@ -19,5 +18,5 @@ class const RatingViewer<T extends num>({
   required final RatingViewerViewModel vm,
 }) extends RatingWidgetBase {
   @override
-  Widget starParts(int index) => star(type: vm.star[index]);
+  Widget starParts(int index) => RatingStar.show(type: vm.star[index]);
 }

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Base
-import 'rating_widget_base.dart';
+import 'base/rating_widget_base.dart';
 
 class const RatingSelecter(final ValueNotifier<int> ratingNotifier, {super.key})
     extends RatingWidgetBase {
@@ -17,7 +17,7 @@ class const RatingSelecter(final ValueNotifier<int> ratingNotifier, {super.key})
     final rate = index + 1;
     return ValueListenableBuilder<int>(
       valueListenable: ratingNotifier,
-      builder: (context, rating, _) => starButton(
+      builder: (context, rating, _) => RatingStarButton(
         evaluation: () => rate <= rating ? .full : .none,
         onPressed: () => ratingNotifier.value = rate,
       ),
