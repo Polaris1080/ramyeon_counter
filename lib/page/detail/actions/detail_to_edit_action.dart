@@ -8,7 +8,7 @@ class const DetailToEditAction({
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.edit),
-      tooltip: vm.tooltip,
+      tooltip: '編集', //【Icon tooltip】
       onPressed: () => context.push(vm.location, extra: vm.extra),
     );
   }
