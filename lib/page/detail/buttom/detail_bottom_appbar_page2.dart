@@ -35,7 +35,7 @@ class PageTwo extends StatelessWidget {
               showModalBottomSheet<void>(
                 context: context,
                 builder: (BuildContext context) {
-                  return EatSheet(id: RamyeonId(ramyeonId));
+                  return EatSheet(vm: .new(id: RamyeonId(ramyeonId)));
                 },
               );
             },
