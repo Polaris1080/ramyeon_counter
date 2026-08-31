@@ -12,10 +12,10 @@ class const TagsViewer({
   @protected required final Set<String> source,
 }) extends ChipBasedViewer {
   @override
-  List<Widget> chips(BuildContext context) =>
-      source.map((tag) => tagChip(context, tag)).toList();
+  List<Widget> get chips =>
+      source.map((tag) => tagChip(tag)).toList();
 
   @protected
-  Widget tagChip(BuildContext context, String source) =>
+  Widget tagChip(String source) =>
       TagChip(vm: .new(data: source));
 }

@@ -17,11 +17,10 @@ class const BarcodeViewer({
   @protected required final Map<Count, Jam> source,
 }) extends ChipBasedViewer {
   @override
-  List<Widget> chips(BuildContext context) => source.entries
-      .map((barcodeData) => barcodeChip(context, barcodeData))
-      .toList();
+  List<Widget> get chips =>
+      source.entries.map((barcodeData) => barcodeChip(barcodeData)).toList();
 
   @protected
-  Widget barcodeChip(BuildContext context, MapEntry<Count, Jam> source) =>
+  Widget barcodeChip(MapEntry<Count, Jam> source) =>
       BarcodeChip(vm: .new(data: source.displayData));
 }

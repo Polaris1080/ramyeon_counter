@@ -5,7 +5,7 @@ import '../base/chip_based_register.dart';
 import 'package:flutter/material.dart';
 
 // Other
-import 'tags_viewer.dart';
+import 'tag_viewer.dart';
 import 'tag_register_vm.dart';
 import 'chip/deletable_tag_chip.dart';
 
