@@ -10,14 +10,13 @@ import 'package:flutter/material.dart';
 // Partial
 part 'deletable_tag_chip_vm.dart';
 
-class const DeletableTagChip({
-  super.key,
-  required final DeletableTagChipViewModel vm,
-}) extends TagChip {
+class const DeletableTagChip({super.key, required DeletableTagChipViewModel vm})
+    extends TagChip {
   this : super(vm: vm);
 
   @override
   Widget build(BuildContext context) {
+    final vm = this.vm as DeletableTagChipViewModel;
     return InputChip(
       label: Text(vm.data, textAlign: .end),
       padding: padding,

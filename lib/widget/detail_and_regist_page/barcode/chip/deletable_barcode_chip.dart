@@ -12,12 +12,13 @@ part 'deletable_barcode_chip_vm.dart';
 
 class const DeletableBarcodeChip({
   super.key,
-  required final DeletableBarcodeChipViewModel vm,
+  required DeletableBarcodeChipViewModel vm,
 }) extends BarcodeChip {
   this : super(vm: vm);
 
   @override
   Widget build(BuildContext context) {
+    final vm = this.vm as DeletableBarcodeChipViewModel;
     return InputChip(
       label: SizedBox(
         width: vm.width,

@@ -20,38 +20,40 @@ class HomeAppBar extends CustomAppBarBase {
         title: ListenableBuilder(
           listenable: vm,
           builder: (context, _) {
+            /* Text */
             final windowWidth = MediaQuery.of(context).size.width;
-            return switch (vm.isCatalogMode) {
-              true => Text(
-                switch (windowWidth) {
-                  > 270 => '在庫一覧',
+            final Text normalModeText = .new(
+              switch (windowWidth) {
+                > 270 => '在庫一覧',
+                _ => '',
+              },
+              style: TextStyle(
+                // [300:20, 330:22, 360:24...]
+                fontSize: (windowWidth ~/ 30)
+                    .minmax(min: 20, max: 32)
+                    .toDouble(),
+              ),
+              overflow: .visible,
+            );
+            final LayeredText catalogModeText = .new(
+              vm: .new(
+                context,
+                title: switch (windowWidth) {
+                  > 320 => 'Ramyeon Counter',
+                  > 270 => 'Ramyeon',
                   _ => '',
                 },
-                style: TextStyle(
-                  // [300:20, 330:22, 360:24...]
-                  fontSize: (windowWidth ~/ 30)
-                      .minmax(min: 20, max: 32)
-                      .toDouble(),
-                ),
+                color: .tertiary,
+                // [300:16, 315:17, 330:18...]
+                fontSize: ((windowWidth ~/ 15) - 4)
+                    .minmax(min: 16, max: 36)
+                    .toDouble(),
                 overflow: .visible,
               ),
-              false => LayeredText(
-                vm: .new(
-                  context,
-                  title: switch (windowWidth) {
-                    > 320 => 'Ramyeon Counter',
-                    > 270 => 'Ramyeon',
-                    _ => '',
-                  },
-                  color: .tertiary,
-                  // [300:16, 315:17, 330:18...]
-                  fontSize: ((windowWidth ~/ 15) - 4)
-                      .minmax(min: 16, max: 36)
-                      .toDouble(),
-                  overflow: .visible,
-                ),
-              ),
-            };
+            );
+
+            /* Body */
+            return vm.isCatalogMode ? normalModeText : catalogModeText;
           },
         ),
         centerTitle: MediaQuery.of(context).size.width >= 360,

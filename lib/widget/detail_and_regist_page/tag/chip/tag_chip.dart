@@ -8,14 +8,12 @@ import 'package:flutter/material.dart';
 // Partical
 part 'tag_chip_vm.dart';
 
-class const TagChip({super.key, required TagChipViewModel vm})
+class const TagChip({super.key, required final TagChipViewModel vm})
     extends ViewerChipBase {
-  final TagChipViewModel _vm = vm;
-
   @override
   Widget build(BuildContext context) {
     return Chip(
-      label: Text(_vm.data, textAlign: .end),
+      label: Text(vm.data, textAlign: .end),
       padding: padding,
     );
   }

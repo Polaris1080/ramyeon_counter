@@ -5,14 +5,13 @@ class SpacingGridViewViewModel({
   required final Size _itemSize,
   required final double _windowWidth,
 }) extends ChangeNotifier {
-  /* Setting */
   static const _minSpacing = Size(5.0, 10.0);
 
-  /// Item count
+  /// Item count.
   @OneTime()
   int? get count => _itemCount;
 
-  /// Inner padding
+  /// Inner padding.
   @OneTime()
   SliverGridDelegateWithMaxCrossAxisExtent get gridviewDelegate => .new(
     maxCrossAxisExtent: _itemSize.width,
@@ -21,7 +20,7 @@ class SpacingGridViewViewModel({
     mainAxisExtent: _itemSize.height,
   );
 
-  /// Outer padding
+  /// Outer padding.
   @OneTime()
   EdgeInsets get gridviewPadding => EdgeInsets.symmetric(
     vertical: _verticalSpacing,

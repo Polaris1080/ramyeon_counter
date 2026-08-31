@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 
 abstract class const ChipBasedViewer({super.key}) extends StatelessWidget {
-  static const _spacing = Size(10.0, 10.0);
-
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: _spacing.width,
-      runSpacing: _spacing.height,
+      spacing: 10.0, //【Vertical spacing】
+      runSpacing: 10.0, //【Horizontal spacing】
       children: chips(context),
     );
   }
 
+  /// [Chip] Phenotype.
+  //@mustBeOverridden
   List<Widget> chips(BuildContext context);
 }

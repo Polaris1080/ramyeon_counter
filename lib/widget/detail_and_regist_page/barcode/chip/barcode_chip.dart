@@ -11,16 +11,15 @@ import 'package:flutter/material.dart';
 // Partical
 part 'barcode_chip_vm.dart';
 
-class const BarcodeChip({super.key, required BarcodeChipViewModel vm})
+class const BarcodeChip({super.key, required final BarcodeChipViewModel vm})
     extends ViewerChipBase {
-  final BarcodeChipViewModel _vm = vm;
 
   @override
   Widget build(BuildContext context) {
     return Chip(
       label: SizedBox(
-        width: _vm.width,
-        child: Text(_vm.data, textAlign: .end),
+        width: vm.width,
+        child: Text(vm.data, textAlign: .end),
       ),
       padding: padding,
       labelPadding: labelPadding,
