@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 class BarcodeRegisterViewModel() extends ChangeNotifier {
   this {
     _sourceChanged(); // 初期化
-    notifyListeners();
   }
 
   static final regexp = RegExp(r'^\d{8}$|^\d{13}$');
@@ -67,7 +66,7 @@ class BarcodeRegisterViewModel() extends ChangeNotifier {
           source.containsValue(barcode!)
       ? null
       : _addSource;
-      
+
   void textformChanged(String value) {
     _barcode = regexp.hasMatch(value) ? Jam(int.parse(value)) : null;
     notifyListeners();

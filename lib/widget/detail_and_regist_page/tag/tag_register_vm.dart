@@ -9,8 +9,10 @@ class TagRegisterViewModel(int? brandId) extends ChangeNotifier {
     //if (brandId != null) {}
   }
 
+  /// Validation rule.
   static final regexp = RegExp(r'^[\u3040-\u30ff]{3,5}$');
 
+  ///
   @OneWay()
   String? get tag => _tag;
   String? _tag;
@@ -18,6 +20,7 @@ class TagRegisterViewModel(int? brandId) extends ChangeNotifier {
   @OneWay()
   List<String> get source => _source;
   List<String> _source = ['からい', 'おいしい'];
+
   void _addSource() {
     final tags = _source;
     tags.add(tag!);

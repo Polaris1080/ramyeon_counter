@@ -22,7 +22,7 @@ class const RamyeonTagRegister(final TagRegisterViewModel vm, {super.key})
     // Viewer
     ListenableBuilder(
       listenable: vm,
-      builder: (context, child) =>
+      builder: (context, _) =>
           DeletableTagsViewer(vm: vm, source: vm.source.toSet()),
     ),
   ];

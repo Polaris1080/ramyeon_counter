@@ -4,7 +4,7 @@ class const QuantitySelector(
   @protected final BarcodeRegisterViewModel vm, {
   super.key,
 }) extends StatelessWidget {
-  static const _count = 5, _tooltip = '個数', _unit = '個';
+  static const _count = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -15,18 +15,19 @@ class const QuantitySelector(
         selected: {vm.countSelected.value},
         showSelectedIcon: false,
         segments: _count.toRangeIterable().map((i) {
+          const unit = "個"; //【label show unit】
           return switch ((vm.countSelected == i, vm.source.containsKey(i))) {
             // 選択されており、その個数で登録されている
             (true, true) => ButtonSegment<int>(
               value: i,
-              label: Text('${i.fullWidthDigits}$_unit'),
+              label: Text('${i.fullWidthDigits}$unit'),
               tooltip: null,
               enabled: false,
             ),
             // 選択されており、その個数で登録されていない
             (true, false) => ButtonSegment<int>(
               value: i,
-              label: Text('${i.fullWidthDigits}$_unit'),
+              label: Text('${i.fullWidthDigits}$unit'),
               tooltip: null,
               enabled: true,
             ),
@@ -41,7 +42,7 @@ class const QuantitySelector(
             (false, false) => ButtonSegment<int>(
               value: i,
               label: Text('$i'),
-              tooltip: _tooltip,
+              tooltip: "個数", //【tooltip】
               enabled: true,
             ),
           };
