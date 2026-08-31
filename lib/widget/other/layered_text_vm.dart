@@ -3,18 +3,18 @@ part of 'layered_text.dart';
 class LayeredTextViewModel(
   BuildContext context, {
   required final String _title,
-  required LayeredTextColor color, // 色
+  required LayeredTextColor color,
   final int? _maxLines,
-  double? fontSize, // 文字サイズ
-  TextOverflow? overflow, // はみ出した時どうするか
+  double? fontSize,
+  TextOverflow? overflow,
 }) extends ChangeNotifier {
   this : assert(overflow != .ellipsis); //（ellipsisだと表示が乱れる）
 
-  /// 内容
+  /// Content.
   @OneTime()
   String get title => _title;
 
-  /// 列（制限）
+  /// Line limit.
   @OneTime()
   int? get maxLines => _maxLines;
 

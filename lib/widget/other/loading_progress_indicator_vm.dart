@@ -12,7 +12,7 @@ class LoadingProgressIndicatorViewModel(
     _ => ColorScheme.of(_context),
   }.tertiary;
 
-  /// Change indicator [Color]
+  /// Change indicator [Color].
   @OneWayToSource()
   set overrideColor(Color? value) {
     if (_overrideColor == value) {

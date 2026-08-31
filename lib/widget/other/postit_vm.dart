@@ -12,7 +12,7 @@ class PostitViewModel(
     _ => ColorScheme.of(_context),
   }.primaryFixed;
 
-  /// Change indicator [Color]
+  /// Change indicator [Color].
   @OneWayToSource()
   set overrideColor(Color? value) {
     if (_overrideColor == value) {
@@ -21,11 +21,11 @@ class PostitViewModel(
     }
   }
 
-  ///
+  /// [Postit] width.
   @OneTime()
   double get width => _size.width;
 
-  ///
+  /// [Postit] height.
   @OneTime()
   double get height => _size.height;
 }

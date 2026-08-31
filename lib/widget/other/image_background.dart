@@ -17,7 +17,7 @@ class const ImageBackground({
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(vm.path),
+          image: AssetImage(vm.location),
           repeat: ImageRepeat.repeat,
         ),
       ),

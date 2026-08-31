@@ -12,7 +12,6 @@ class const Postit({
   required final PostitViewModel vm,
   final Widget? _child,
 }) extends StatelessWidget {
-  /* Setting */
   @protected
   static const Size defaultSize = Size(150.0, 150.0);
 
