@@ -7,7 +7,7 @@ class RatingStarButton extends IconButton {
     required RatingStarType Function() evaluation,
   }) : super(
          icon: RatingStar.show(type: evaluation()),
-         constraints: const BoxConstraints(),
-         padding: EdgeInsetsGeometry.all(4),
+         constraints: const BoxConstraints(), //【Icon size reset】
+         padding: EdgeInsetsGeometry.all(4), //【Icon padding】
        );
 }

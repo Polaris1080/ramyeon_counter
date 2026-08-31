@@ -1,3 +1,12 @@
 part of 'rating_widget_base.dart';
 
-enum RatingStarType { full, half, none }
+enum RatingStarType {
+  /// [FullRatingStar]
+  full,
+
+  /// [HalfRatingStar]
+  half,
+
+  /// [NoneRatingStar]
+  none,
+}

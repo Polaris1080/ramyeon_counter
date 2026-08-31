@@ -12,10 +12,19 @@ part 'star/half_rating_star.dart';
 part 'star/none_rating_star.dart';
 
 abstract class const RatingWidgetBase({super.key}) extends StatelessWidget {
-  this : assert(items % _rows == 0);
+  this : assert(items % _row == 0);
 
-  /* Setting */
-  static const items = 10, min = 1, max = 10, _rows = 2;
+  /// Range min.
+  static const min = 1;
+
+  /// Range max
+  static const max = 10;
+
+  /// [RatingStar] amount.
+  static const items = max - min + 1;
+
+  /// Frame row.
+  static const _row = 2;
 
   /* Frame */
   @nonVirtual
@@ -25,7 +34,7 @@ abstract class const RatingWidgetBase({super.key}) extends StatelessWidget {
       alignment: .start,
       runAlignment: .center,
       children: RangeIterable(0, items)
-          .batch(items ~/ _rows)
+          .batch(items ~/ _row) // items per row(I/R).
           .map(
             (row) => Row(
               mainAxisSize: .min,
@@ -36,6 +45,7 @@ abstract class const RatingWidgetBase({super.key}) extends StatelessWidget {
     );
   }
 
+  /// [RatingStar] phenotype.
   @mustBeOverridden
   Widget starParts(int index);
 }
