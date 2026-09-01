@@ -13,7 +13,7 @@ class const RatingSelecter(final ValueNotifier<int> ratingNotifier, {super.key})
   //     );
 
   @override
-  Widget starParts(int index) {
+  Widget ratingStar(int index) {
     final rate = index + 1;
     return ValueListenableBuilder<int>(
       valueListenable: ratingNotifier,

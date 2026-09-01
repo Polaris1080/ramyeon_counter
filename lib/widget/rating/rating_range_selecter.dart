@@ -15,7 +15,7 @@ class const RatingRangeSelecter(
   super.key,
 }) extends RatingWidgetBase {
   @override
-  Widget starParts(int index) {
+  Widget ratingStar(int index) {
     final rate = index + 1;
     return ListenableBuilder(
       listenable: vm,

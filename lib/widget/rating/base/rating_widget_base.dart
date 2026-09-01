@@ -7,9 +7,9 @@ import 'package:meta/meta.dart';
 part 'rating_star.dart';
 part 'rating_star_button.dart';
 part 'rating_star_type.dart';
-part 'star/full_rating_star.dart';
-part 'star/half_rating_star.dart';
-part 'star/none_rating_star.dart';
+part 'rating_star/full_rating_star.dart';
+part 'rating_star/half_rating_star.dart';
+part 'rating_star/none_rating_star.dart';
 
 abstract class const RatingWidgetBase({super.key}) extends StatelessWidget {
   this : assert(items % _row == 0);
@@ -38,7 +38,7 @@ abstract class const RatingWidgetBase({super.key}) extends StatelessWidget {
           .map(
             (row) => Row(
               mainAxisSize: .min,
-              children: row.map((rate) => starParts(rate)).toList(),
+              children: row.map((rate) => ratingStar(rate)).toList(),
             ),
           )
           .toList(),
@@ -47,5 +47,5 @@ abstract class const RatingWidgetBase({super.key}) extends StatelessWidget {
 
   /// [RatingStar] phenotype.
   @mustBeOverridden
-  Widget starParts(int index);
+  Widget ratingStar(int index);
 }

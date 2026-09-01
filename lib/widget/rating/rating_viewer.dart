@@ -18,5 +18,5 @@ class const RatingViewer<T extends num>({
   required final RatingViewerViewModel vm,
 }) extends RatingWidgetBase {
   @override
-  Widget starParts(int index) => RatingStar.show(type: vm.star[index]);
+  Widget ratingStar(int index) => RatingStar.show(type: vm.star[index]);
 }
