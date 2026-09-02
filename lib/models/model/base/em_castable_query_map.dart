@@ -25,3 +25,31 @@ extension EmCastableQueryMap on Enum {
     assert(type is! DateTime, 'Use .castDateTime');
   }
 }
+
+extension EmCastableColumuName on String {
+  /// normal
+  T cast<T>(Map<String, Object?> map) {
+    _assert(T);
+    return map[this] as T;
+  }
+
+  /// list
+  List<T> castList<T>(Map<String, Object?> map, {Pattern pattern = ','}) {
+    _assert(T);
+    return (cast<String>(map)).split(pattern).map((m) => m as T).toList();
+  }
+
+  /// bool
+  bool castBool(Map<String, Object?> map) => cast<int>(map) > 0;
+
+  /// datetime
+  DateTime? castDateTime(Map<String, Object?> map) {
+    return DateTime.tryParse(cast<String>(map));
+  }
+
+  /* Function */
+  void _assert(Type type) {
+    assert(type is! bool, 'Use .castBool');
+    assert(type is! DateTime, 'Use .castDateTime');
+  }
+}

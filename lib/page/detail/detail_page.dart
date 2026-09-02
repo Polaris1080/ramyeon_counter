@@ -1,12 +1,10 @@
 // Package
 import 'package:flutter/material.dart';
-import 'package:ramyeon_counter/models/model/ramyeon/repository/ramyeon_repository.dart';
 // Widget
 import 'package:ramyeon_counter/page/detail/buttom/detail_bottom_appbar.dart';
-import 'package:ramyeon_counter/utility/extension_types/ramyeon_id.dart';
+import 'package:ramyeon_counter/page/detail/detail_page_vm.dart';
 import 'package:ramyeon_counter/widget/custom_appbar/default_app_bar.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/data/ramyeon_data_viewer.dart';
-import 'package:ramyeon_counter/widget/detail_and_regist_page/data/ramyeon_data_viewer_vm.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/tag/tag_viewer.dart';
 import 'package:ramyeon_counter/widget/other/image_background.dart';
 import 'package:ramyeon_counter/widget/detail_and_regist_page/ramyeon_image/viewer/ramyeon_image_viewer.dart';
@@ -20,7 +18,7 @@ class DetailPage({super.key, required this.ramyeonId, this.packageColor})
   final int ramyeonId;
   final Color? packageColor;
 
-  final RamyeonDataViewerViewModel dataViewerVM = .new(ramyeonId: ramyeonId);
+  final DetailPageViewModel vm = .new(ramyeonId: ramyeonId);
 
   @override
   Widget build(BuildContext context) {
@@ -69,18 +67,18 @@ class DetailPage({super.key, required this.ramyeonId, this.packageColor})
                       maxWidth: 240,
                     ),
                     //height: 200,
-                    child: RamyeonDataViewer(vm: dataViewerVM),
+                    child: FutureBuilder(
+                      future: vm.loadDataViewerData,
+                      builder: (_, _) => RamyeonDataViewer(data: vm.data),
+                    ),
                   ),
                 ],
               ),
             ),
             /* 2nd Row(Tag) */
             FutureBuilder(
-              future: RamyeonRepository().readTag(RamyeonId(ramyeonId)),
-              builder: (context, snapshot) => switch (snapshot.data) {
-                Set<String> tags => TagsViewer(source: tags.toSet()),
-                _ => const SizedBox(),
-              },
+              future: vm.loadTagsViewerData,
+              builder: (_, _) => TagsViewer(source: vm.tag),
             ),
             Spacer(),
           ],

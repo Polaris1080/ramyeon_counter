@@ -41,12 +41,7 @@ class RatingRepository extends RamyeonRepositoryBase {
     whereArgs: [id],
   );
 
-  Future<double> averageByBrandId(int brandId) async => (await (await db).query(
-    table.name,
-    columns: ['avg(rating) as average'],
-    where: '${RatingTableColumns.brandId.name} = ?',
-    whereArgs: [brandId],
-  )).map((e) => (e['average'] as double?) ?? 0.0).first;
+
 
   Future consume(RamyeonId id, int rating) async {
     await (await db).transaction((txn) async {
