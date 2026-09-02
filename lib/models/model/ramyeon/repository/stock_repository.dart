@@ -5,6 +5,7 @@ import '../../../database/ramyeon/table/stock_table_columns.dart';
 import '../../../database/ramyeon/ramyeon_database.dart';
 // Model
 import '../stock.dart';
+
 // Package
 import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -37,6 +38,22 @@ class StockRepository extends RamyeonRepositoryBase {
 
   Future<List<int>> deleteMany(List<int> ids) async =>
       await Future.wait(ids.select((s, _) => delete(s)));
+
+  Future<(double?, String?)> avgPriceByBrandId(int brandId) async =>
+      (await (await db).rawQuery(
+            '''
+    SELECT avg(price) as average, max(purchaseDate) as date FROM ${table.name}
+      WHERE ${StockTableColumns.brandId.name} = ?
+      AND purchaseDate >= datetime(
+    (SELECT max(purchaseDate) FROM stock WHERE brandId = ?),
+     '-1 year');
+    ''',
+            [brandId, brandId],
+          ))
+          .select(
+            (s, _) => (s['average'] as double?, s['date'] as String? ?? ''),
+          )
+          .first;
 
   Future<int> countByBrandId(int brandId) async => (await (await db).rawQuery(
     '''

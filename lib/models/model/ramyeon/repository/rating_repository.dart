@@ -3,11 +3,14 @@ import '../../base/repository_base.dart';
 import '../../../database/ramyeon/ramyeon_database_tables.dart';
 import '../../../database/ramyeon/table/rating_table_columns.dart';
 import '../../../database/ramyeon/ramyeon_database.dart';
+
 // Extention-Type
 import 'package:ramyeon_counter/utility/extension_types/ramyeon_id.dart';
+
 // Model
 import '../rating.dart';
 import '../stock.dart';
+
 // Package
 import 'package:darq/darq.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -37,6 +40,13 @@ class RatingRepository extends RamyeonRepositoryBase {
     where: '${RatingTableColumns.id.name} = ?',
     whereArgs: [id],
   );
+
+  Future<double> averageByBrandId(int brandId) async => (await (await db).query(
+    table.name,
+    columns: ['avg(rating) as average'],
+    where: '${RatingTableColumns.brandId.name} = ?',
+    whereArgs: [brandId],
+  )).map((e) => (e['average'] as double?) ?? 0.0).first;
 
   Future consume(RamyeonId id, int rating) async {
     await (await db).transaction((txn) async {

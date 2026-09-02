@@ -2,13 +2,7 @@ part of 'rating_viewer.dart';
 
 class RatingViewerViewModel<T extends num>(@visibleForTesting final T rating)
     extends ChangeNotifier {
-  this
-    : assert(
-        rating.inRange(
-          min: RatingWidgetBase.min as T,
-          max: RatingWidgetBase.max as T,
-        ),
-      );
+  this : assert(rating.inRange(min: 0.0 as T, max: RatingWidgetBase.max as T));
 
   /// 形状
   @OneTime()
